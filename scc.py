@@ -3,6 +3,7 @@ from time import sleep
 import ConfigParser
 import argparse
 import codecs
+import difflib
 import git
 import os
 import re
@@ -12,11 +13,11 @@ from scc_website.apps.repositories import models
 
 # Command line parser
 parser = argparse.ArgumentParser(description='Source Control Correlator')
-parser.add_argument("--author", action='store_true')
+parser.add_argument("--analysis", action='store_true')
+parser.add_argument("--author-info", action='store_true')
 parser.add_argument("--config", default="linux.ini")
 parser.add_argument("--debug", action='store_true')
 parser.add_argument("--init-db", action='store_true')
-parser.add_argument("--skip", action='store_true')
 args = parser.parse_args()
 
 # Config parsing
@@ -24,8 +25,8 @@ config = ConfigParser.RawConfigParser()
 config.read(args.config)
 repository_id = config.getint('repository', 'id')
 repository_directory = config.get('repository', 'directory')
-if not args.skip:
-    fix_regex = re.compile(config.get('repository', 'regex'), re.I)
+if args.analysis:
+    fix_re = re.compile(config.get('repository', 'regex'), re.I)
 
 # Variables
 django_repository = models.Repository.objects.get(pk=repository_id)
@@ -37,10 +38,15 @@ commit_generator = repository.iter_commits('master')
 commit_lock = threading.Lock()
 log_file = codecs.open("scc.log", "ab", "utf8")
 log_lock = threading.Lock()
+if args.analysis:
+    temp_branch_num = 1
 
 # Regular expressions
 email_re = re.compile(r'[A-Z0-9._%+-]+@([A-Z0-9_%+-]+\.)+'
                       r'(\(NONE\)|[A-Z0-9_%+-]+)', re.IGNORECASE)
+line_numbers_re = re.compile(r"@@ -(\d+),\d+ \+(\d+),\d+ @@")
+comment_re = re.compile(r"^\s*(/\*|\*|//)")
+filetypes_re = re.compile(r"\.(cpp|c|h|hpp)$", re.IGNORECASE)
 
 # Logging function
 def log(string):
@@ -107,6 +113,13 @@ def init_author(name, email):
             author = models.Author.objects.create(repository=django_repository, name=name, email=email)
     finally:
         database_lock.release()
+    return author
+
+def init_commit(author, sha1, utc_time, local_time):
+    try:
+        models.Commit.objects.get(author=author, sha1=sha1)
+    except:
+        models.Commit.objects.create(author=author, sha1=sha1, utc_time=utc_time, local_time=local_time)
 
 def get_author(email):
     return models.Author.objects.get(repository=django_repository, email=email)
@@ -114,6 +127,7 @@ def get_author(email):
 class SCCThread(threading.Thread):
 
     def run(self):
+        global temp_branch_num
         while True:
             # Get the next commit if available, stop otherwise
             commit_lock.acquire()
@@ -121,6 +135,41 @@ class SCCThread(threading.Thread):
                 commit = commit_generator.next()
                 name = commit.author.name
                 email = commit.author.email
+                sha1 = commit.hexsha
+                if args.init_db:
+                    gmt_time = datetime.utcfromtimestamp(commit.authored_date)
+                    local_time = datetime.utcfromtimestamp(commit.authored_date-commit.author_tz_offset)
+                if args.analysis:
+                    diffs = []
+                    if not len(commit.parents) > 1 and fix_re.search(commit.message):
+                        try:
+                            diff_index = commit.diff("%s~1" % commit.hexsha)
+                        # An exception occurs if this commit does not have any previous commits
+                        except:
+                            diff_index = []
+                            
+                        for diff in diff_index:
+                            # Set the blobs
+                            current_blob = diff.a_blob
+                            previous_blob = diff.b_blob
+
+                            # End early
+                            if ((previous_blob is None) or (current_blob is None)):
+                                continue
+
+                            # Set the files
+                            current_file = current_blob.path
+                            previous_file = previous_blob.path
+
+                            # Ignore files which are not .c, .h or .cpp
+                            if not (filetypes_re.search(previous_file) and filetypes_re.search(current_file)):
+                                continue
+
+                            # Read the data and get the lines
+                            current_lines = current_blob.data_stream.read().splitlines()
+                            previous_lines = previous_blob.data_stream.read().splitlines()
+
+                            diffs.append((previous_file, previous_lines, current_file, current_lines))
             except StopIteration:
                 break
             finally:
@@ -128,11 +177,207 @@ class SCCThread(threading.Thread):
                 
             (name, email) = clean_author(name, email)
             if args.init_db:
-                init_author(name, email)
+                author = init_author(name, email)
+                init_commit(author, sha1, gmt_time, local_time)
+
+            if args.analysis and len(diffs) > 0:
+                fix_commit = models.Commit.objects.get(author__repository=django_repository, sha1=sha1)
+                try:
+                    bug = models.Bug.objects.get(fix_commits=fix_commit)
+                except:
+                    bug = models.Bug.objects.create()
+                    bug.fix_commits.add(fix_commit)
+
+                for diff in diffs:
+                    (previous_file, previous_lines, current_file, current_lines) = diff
+
+                    # Variables for the diff
+                    added_blocks = []
+                    removed_blocks = []
+                    modified_blocks = []
+
+                    # Compute the diff
+                    active = False
+                    in_removed_block = False
+                    in_added_block = False
+                    in_modified_block = False
+                    comment_block = False
+                    for line in difflib.unified_diff(previous_lines, current_lines):
+                        if line.startswith("@@"):
+                            active = True
+
+                        if active:
+                            if line.startswith("@@"):
+                                m = line_numbers_re.match(line)
+                                previous_line_number = int(m.group(1)) - 1
+                                current_line_number = int(m.group(2)) - 1
+                            elif line.startswith("-"):                            
+                                # End added block
+                                if in_added_block:
+                                    in_added_block = False
+                                    if(in_modified_block):
+                                        in_modified_block = False
+                                        if not comment_block:
+                                            modified_blocks.append((removed_blocks.pop(),(start_line_number, current_line_number)))
+                                        else:
+                                            removed_blocks.pop()
+                                    else:
+                                        if not comment_block:
+                                            added_blocks.append((start_line_number, current_line_number))
+                                    comment_block = False
+
+                                # Comment check
+                                if comment_block:
+                                    if not comment_re.match(line[1:]):
+                                        comment_block = False
+
+                                previous_line_number += 1
+
+                                # Start new removed block
+                                if not in_removed_block:
+                                    in_removed_block = True
+                                    start_line_number = previous_line_number
+                                    # Check if it's also a block of comments
+                                    if comment_re.match(line[1:]):
+                                        comment_block = True
+
+                            elif line.startswith("+"):
+                                # End removed block (this is a modified block)
+                                if in_removed_block:
+                                    in_removed_block = False
+                                    in_modified_block = True
+                                    removed_blocks.append((start_line_number, previous_line_number))
+
+                                # Comment check
+                                if comment_block:
+                                    if not comment_re.match(line[1:]):
+                                        comment_block = False
+
+                                current_line_number += 1
+
+                                # Start new added block
+                                if not in_added_block:
+                                    in_added_block = True
+                                    start_line_number = current_line_number
+                                    # Check if it's also a block of comments
+                                    if comment_re.match(line[1:]):
+                                        comment_block = True
+                                    else:
+                                        comment_block = False
+                            else:
+                                # End removed block
+                                if in_removed_block:
+                                    in_removed_block = False
+                                    if not comment_block:
+                                        removed_blocks.append((start_line_number, previous_line_number))
+                                    comment_block = False
+
+                                # End added block
+                                if in_added_block:
+                                    in_added_block = False
+                                    if(in_modified_block):
+                                        in_modified_block = False
+                                        if not comment_block:
+                                            modified_blocks.append((removed_blocks.pop(),(start_line_number, current_line_number)))
+                                        else:
+                                            removed_blocks.pop()
+                                    else:
+                                        if not comment_block:
+                                            added_blocks.append((start_line_number, current_line_number))
+
+                                    comment_block = False
+
+                                previous_line_number += 1
+                                current_line_number += 1
+
+                    # Done looking at the diff; added_blocks, removed_blocks and modified_blocks are valid
+
+                    # Do the blaming
+                    commit_lock.acquire()
+                    try:
+                        if (len(removed_blocks) + len(modified_blocks)) > 0:
+                            try:
+                                previous_blame = git_cmd.blame(["-l", "-s", "-w", "--root", "%s~1" % sha1, previous_file]).splitlines()
+                            except:
+                                git_cmd.checkout(["-b", "scc_temp_%d" % temp_branch_num, "%s~1" % sha1])
+                                temp_branch_num += 1
+                                previous_blame = git_cmd.blame(["-l", "-s", "-w", "--root", "%s~1" % sha1, previous_file]).splitlines()
+                        if len(added_blocks) > 0:
+                            try:
+                                current_blame = git_cmd.blame(["-l", "-s", "-w", "--root", sha1, current_file]).splitlines()
+                            except:
+                                git_cmd.checkout(["-b", "scc_temp_%d" % temp_branch_num, sha1])
+                                temp_branch_num += 1
+                                current_blame = git_cmd.blame(["-l", "-s", "-w", "--root", sha1, current_file]).splitlines()
+                    finally:
+                        commit_lock.release()
+
+                    # Dictionary for bug introduction points
+                    introduction = {}
+
+                    for block in added_blocks:
+                        # Look at the commit before the block
+                        # Reminder: the commit after is at index block[1]
+                        sha = current_blame[block[0]-2].split()[0]
+                        if sha in introduction:
+                            introduction[sha] += 1
+                        else:
+                            introduction[sha] = 1
+
+                    for block in removed_blocks:
+                        for i in xrange(block[0], block[1]+1):
+                            sha = previous_blame[i-1].split()[0]
+                            if sha in introduction:
+                                introduction[sha] += 1
+                            else:
+                                introduction[sha] = 1
+
+                    for block in modified_blocks:
+                        removed_block = block[0]
+                        for i in xrange(removed_block[0], removed_block[1]+1):
+                            sha = previous_blame[i-1].split()[0]
+                            if sha in introduction:
+                                introduction[sha] += 1
+                            else:
+                                introduction[sha] = 1
+
+                    # if VERBOSE_DEBUG:
+                    #     print "Listing introduction points"
+                    #     for (commit_sha1,num) in introduction.iteritems():
+                    #         print commit_sha1, num
+
+                    for (commit_sha1,num) in introduction.iteritems():
+                        introduction_commit = models.Commit.objects.get(author__repository=django_repository, sha1=commit_sha1)
+                        bug.introduction_commits.add(introduction_commit)
+                        bug.introduction_commits.add(introduction_commit)
+                        bug.introduction_commits.add(introduction_commit)
+                            
+                            # intro_commit = repo.commit(commit_sha1)
+                            # # Again, check that the email is not None
+                            # intro_commit_email = intro_commit.author.email
+                            # if not intro_commit_email:
+                            #     intro_commit_email = ""
+                            # django_author = models.Author.objects.get_or_create(repository=django_repo, name=intro_commit.author.name, email=intro_commit_email)[0]
+                            # django_commit = models.Commit.objects.get_or_create(author=django_author, sha1=commit_sha1, utc_time=datetime.utcfromtimestamp(intro_commit.authored_date), local_time=datetime.utcfromtimestamp(intro_commit.authored_date-commit.author_tz_offset))[0]
+                            # django_introduction.commits.add(django_commit)
+
 
 # Spawn the threads, wait, and clean-up
+threads = []
 for x in xrange(8):
    SCCThread().start()
+# for thread in threads:
+#     thread.join()
 while not threading.active_count() == 1:
     sleep(1)
 log_file.close()
+
+# Clean up
+if args.analysis:
+    try:
+        i = 1
+        while(True):
+            git_cmd.branch(["-D", "scc_temp_%d" % i])
+            i += 1
+    except:
+        pass
