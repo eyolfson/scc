@@ -1,0 +1,65 @@
+\section{Future Work}
+\label{sec-future}
+
+There are a few parts of the implementation which could be improved to
+reduce the number of false positives. First, our fix detection for
+commit messages is very simplistic and could be improved to determine
+fixes which do not refer to any bugs. We can also introduce additional
+logic to ignore code which has been moved or renamed. The author
+information for experience also did not seem reliable, due to the fact
+that we treat every name and e-mail pair as a unique author. However, this
+might not be the case if the authors simply changed their e-mail address. 
+
+We could also add additional extensions to the database including: categorizing
+authors by their official roles, and classifing the size of each commit as
+well to determine if larger commits are more likely to contain bugs.
+
+In addition we would like to add additional software projects to the
+database. Another goal is to release the data to the community so
+others may extend and add to it. We believe there are much more
+interesting results which could be found using our database.
+
+\section{Conclusion}
+\label{sec-conclusion}
+
+Resolving bugs represent a substantial amount of time and cost in
+software projects. It is important to investigate the cause of bugs in
+order to reduce the amount of bugs which occur. We believe that the
+data we have collected will be beneficial for the software quality
+assurance and software developing personnel to use the correlations we
+found, and investigate other possible correlations from the data we
+collected and stored in a database. From manually checking a random
+sample we found our data to be representative. Our data has
+revealed that Thursdays have a high bug introduction rate relative to
+the total number of commits for that day, while Mondays have the
+lowest bug introduction rates. There may be many reasons behind this
+correlation, but we believe it might be that people are being worn out towards the
+end of the week, and as such are more likely to introduce bugs, except
+this would mean that Fridays would be worst - which is not the
+case. It could also be that on Fridays people are more alert and focused
+because they are excited for the weekend. It was strange that Mondays
+yielded the best results for time to code, but this could be the case
+because people are just back from the weekend and they are fully
+charged, ready to work. Another possible theory for Monday's results,
+which is that people delegate easier tasks for Mondays because its the
+start of the week, or spend more time planning and laying out
+templates of what they will be coding, and as such are not as prone to
+introducing bugs. This of course could be proven by checking the size of
+the commits and what kind of changes are being made on Mondays. Our
+data also showed that coding between 12AM and 9AM is a bad idea, while
+the best time is between 11AM and 3PM. This is not a very surprising
+result, considering how most users sleep during these hours, and if
+they happen to be doing any coding during these hours, it would be
+considered to be outside of their usual working hours - making them
+more prone to errors.  From our commits that were organized by author
+classification, it seems that daily committers are less prone to bug
+introduction than those who are classified as day job users. One
+theory that could potentially explain this result is that hobbyist
+working on open source projects do it because they are highly
+interested, while day job users are doing it to get payed, so the
+difference in motivations could negatively affect the performance
+of the developer. Finally our data shows that bug lifetimes decay
+exponentially, and on average are longer for larger projects. This
+result of course is positive because it indicates that the majority of
+bugs are dealt with fairly quickly.
+

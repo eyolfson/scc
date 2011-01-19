@@ -1,0 +1,43 @@
+\section{Introduction}
+
+The area of bug detection and resolution is currently a very active area of research
+in the software related disciplines. The process of detecting and resolving software
+bugs is an extremely costly process because of the manpower required to perform
+quality assurance on the developed software and having developers perform the fixes.
+It is estimated that 20\% - 30\% of the time spent on a software project is spent on
+testing and integration \cite{2004-industry}. In addition to the cost of manpower,
+the time required to complete these tasks can be costly on the release date of the
+software. As such, for the majority of software companies, the process of quality
+assurance is costly and time consuming. To put the cost into perspective, a study
+conducted by the National Institute of Standard and Technology in 2002 reported that
+software bugs cost the economy of the United States approximately \$59.5 billion
+annually \cite{2002-economic}. The study also showed that approximately 64\% of
+the costs of software bug fixes are incurred by the end users, making this issue
+of extreme importance for the consumers as well \cite{2002-economic}.
+
+In our paper we will show the data collected from two large projects, which
+are complex and representative of most software projects, namely Linux and Firefox.
+Our data includes: percentage of bugs introduced vs total percentage of commits for
+every day of the week, percentage of bugs introduced every hour vs percentage of total commits
+every hour, percentage of introduction vs percentage of total commits by author classification,
+percentage of bugs introduced vs percentage of total commits grouped by author experience,
+and bug lifetime.
+
+Our paper does not focus on solving a problem, but instead tries to find correlations between
+bug introductions and days of the week, hours of the day, commit introductions by author
+experience, commit introductions by author classification, and bug life time. This information
+can be used to try and reveal any potential correlations that could help leaders
+in the software industry determine ways to minimize any potential effects
+of working on a certain day, or during a certain hour. Collecting and analyzing
+data with regards to bug introduction will surely be beneficial to reducing bug
+introduction rates by examining some of the potential causes.
+
+This paper will be organized in the following fashion: Section
+\ref{sec-idea} will give an insight to our idea and how we approached
+the problem, Section \ref{sec-impl} discusses our implementation for
+automatically finding bug introduction points, Section
+\ref{sec-results} presents the results we found, Section
+\ref{sec-related} will discuss the related academic work which our
+work compliments, Section \ref{sec-future} explores possible future
+work, and finally Section \ref{sec-conclusion} concludes our work.
+
