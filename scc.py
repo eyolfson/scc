@@ -99,7 +99,7 @@ def clean_author(name, email):
         
         if args.debug:
             log("Author('%s', '%s') changed e-mail from '%s'" % (name, email, old_email))
-    return (name, email)
+    return (name[0:75], email[0:75])
 
 def init_author(name, email):
     # Need a lock so we don't get 2 entries with the same e-mail
@@ -348,8 +348,6 @@ class SCCThread(threading.Thread):
 
                     for (commit_sha1,num) in introduction.iteritems():
                         introduction_commit = models.Commit.objects.get(author__repository=django_repository, sha1=commit_sha1)
-                        bug.introduction_commits.add(introduction_commit)
-                        bug.introduction_commits.add(introduction_commit)
                         bug.introduction_commits.add(introduction_commit)
                             
                             # intro_commit = repo.commit(commit_sha1)
