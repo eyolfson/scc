@@ -34,7 +34,8 @@ as the authors of the commits\footnote{Name/email.}.  We record the
 following data for each commit: author, time, number of lines changed,
 and number of times the commit introduced a bug later corrected. For
 each author, we record the name, email(s), experience and
-classification.
+classification. We define the bug lifetime as the time from the
+earliest commit which introduced a bug to the bug-fixing commit.
 
 We compute an author's experience and classification based on the
 frequency and duration of that author's commits to a project. Author
@@ -48,6 +49,11 @@ commiters who worked on the repository as part of their day job,
 namely those for which 85\% of commits are between 8 AM and 4 PM
 Monday to Friday.
 
-% TODO: manual inspection, bug lifetime
+\paragraph{Validation.}
+To validate our data we randomly sample commits, manually verify that
+the commit is a bug-fix and that the correct commits introduced the
+bug. We focused our manual efforts on changes which included
+additions, as conceptually, they are the largest threat to validity.
+% Currently there are no false negative rates, we probably have time to sample non fix commits
 
 * time zone information
