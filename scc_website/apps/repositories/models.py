@@ -38,3 +38,4 @@ class CommitInformation(models.Model):
     lines_removed = models.IntegerField()
     lines_modified = models.IntegerField()
     lines_changed = models.IntegerField()
+    merge = models.BooleanField()

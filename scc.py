@@ -19,6 +19,7 @@ parser.add_argument("--commit-info", action='store_true')
 parser.add_argument("--config", default="linux.ini")
 parser.add_argument("--debug", action='store_true')
 parser.add_argument("--init-db", action='store_true')
+parser.add_argument("--fixm", action='store_true')
 args = parser.parse_args()
 
 # Config parsing
@@ -137,6 +138,7 @@ class SCCThread(threading.Thread):
                 name = commit.author.name
                 email = commit.author.email
                 sha1 = commit.hexsha
+                merge = len(commit.parents) > 1
                 if args.init_db:
                     gmt_time = datetime.utcfromtimestamp(commit.authored_date)
                     local_time = datetime.utcfromtimestamp(commit.authored_date-commit.author_tz_offset)
@@ -172,6 +174,7 @@ class SCCThread(threading.Thread):
 
                             diffs.append((previous_file, previous_lines, current_file, current_lines))
                 if args.commit_info:
+                    merge = len(commit.parents) > 1
                     diffs = []
                     try:
                         diff_index = commit.diff("%s~1" % commit.hexsha)
@@ -222,119 +225,120 @@ class SCCThread(threading.Thread):
                     lines_added = 0
                     lines_modified = 0
 
-                    for diff in diffs:
-                        (previous_file, previous_lines, current_file, current_lines) = diff
+                    if not merge:
+                        for diff in diffs:
+                            (previous_file, previous_lines, current_file, current_lines) = diff
 
-                        # Variables for the diff
-                        added_blocks = []
-                        removed_blocks = []
-                        modified_blocks = []
+                            # Variables for the diff
+                            added_blocks = []
+                            removed_blocks = []
+                            modified_blocks = []
 
-                        # Compute the diff
-                        active = False
-                        in_removed_block = False
-                        in_added_block = False
-                        in_modified_block = False
-                        comment_block = False
-                        for line in difflib.unified_diff(previous_lines, current_lines):
-                            if line.startswith("@@"):
-                                active = True
-
-                            if active:
+                            # Compute the diff
+                            active = False
+                            in_removed_block = False
+                            in_added_block = False
+                            in_modified_block = False
+                            comment_block = False
+                            for line in difflib.unified_diff(previous_lines, current_lines):
                                 if line.startswith("@@"):
-                                    m = line_numbers_re.match(line)
-                                    previous_line_number = int(m.group(1)) - 1
-                                    current_line_number = int(m.group(2)) - 1
-                                elif line.startswith("-"):                            
-                                    # End added block
-                                    if in_added_block:
-                                        in_added_block = False
-                                        if(in_modified_block):
-                                            in_modified_block = False
-                                            if not comment_block:
-                                                modified_blocks.append((removed_blocks.pop(),(start_line_number, current_line_number)))
+                                    active = True
+
+                                if active:
+                                    if line.startswith("@@"):
+                                        m = line_numbers_re.match(line)
+                                        previous_line_number = int(m.group(1)) - 1
+                                        current_line_number = int(m.group(2)) - 1
+                                    elif line.startswith("-"):                            
+                                        # End added block
+                                        if in_added_block:
+                                            in_added_block = False
+                                            if(in_modified_block):
+                                                in_modified_block = False
+                                                if not comment_block:
+                                                    modified_blocks.append((removed_blocks.pop(),(start_line_number, current_line_number)))
+                                                else:
+                                                    removed_blocks.pop()
                                             else:
-                                                removed_blocks.pop()
-                                        else:
-                                            if not comment_block:
-                                                added_blocks.append((start_line_number, current_line_number))
-                                        comment_block = False
-
-                                    # Comment check
-                                    if comment_block:
-                                        if not comment_re.match(line[1:]):
+                                                if not comment_block:
+                                                    added_blocks.append((start_line_number, current_line_number))
                                             comment_block = False
 
-                                    previous_line_number += 1
+                                        # Comment check
+                                        if comment_block:
+                                            if not comment_re.match(line[1:]):
+                                                comment_block = False
 
-                                    # Start new removed block
-                                    if not in_removed_block:
-                                        in_removed_block = True
-                                        start_line_number = previous_line_number
-                                        # Check if it's also a block of comments
-                                        if comment_re.match(line[1:]):
-                                            comment_block = True
+                                        previous_line_number += 1
 
-                                elif line.startswith("+"):
-                                    # End removed block (this is a modified block)
-                                    if in_removed_block:
-                                        in_removed_block = False
-                                        in_modified_block = True
-                                        removed_blocks.append((start_line_number, previous_line_number))
+                                        # Start new removed block
+                                        if not in_removed_block:
+                                            in_removed_block = True
+                                            start_line_number = previous_line_number
+                                            # Check if it's also a block of comments
+                                            if comment_re.match(line[1:]):
+                                                comment_block = True
 
-                                    # Comment check
-                                    if comment_block:
-                                        if not comment_re.match(line[1:]):
-                                            comment_block = False
-
-                                    current_line_number += 1
-
-                                    # Start new added block
-                                    if not in_added_block:
-                                        in_added_block = True
-                                        start_line_number = current_line_number
-                                        # Check if it's also a block of comments
-                                        if comment_re.match(line[1:]):
-                                            comment_block = True
-                                        else:
-                                            comment_block = False
-                                else:
-                                    # End removed block
-                                    if in_removed_block:
-                                        in_removed_block = False
-                                        if not comment_block:
+                                    elif line.startswith("+"):
+                                        # End removed block (this is a modified block)
+                                        if in_removed_block:
+                                            in_removed_block = False
+                                            in_modified_block = True
                                             removed_blocks.append((start_line_number, previous_line_number))
-                                        comment_block = False
 
-                                    # End added block
-                                    if in_added_block:
-                                        in_added_block = False
-                                        if(in_modified_block):
-                                            in_modified_block = False
-                                            if not comment_block:
-                                                modified_blocks.append((removed_blocks.pop(),(start_line_number, current_line_number)))
+                                        # Comment check
+                                        if comment_block:
+                                            if not comment_re.match(line[1:]):
+                                                comment_block = False
+
+                                        current_line_number += 1
+
+                                        # Start new added block
+                                        if not in_added_block:
+                                            in_added_block = True
+                                            start_line_number = current_line_number
+                                            # Check if it's also a block of comments
+                                            if comment_re.match(line[1:]):
+                                                comment_block = True
                                             else:
-                                                removed_blocks.pop()
-                                        else:
+                                                comment_block = False
+                                    else:
+                                        # End removed block
+                                        if in_removed_block:
+                                            in_removed_block = False
                                             if not comment_block:
-                                                added_blocks.append((start_line_number, current_line_number))
+                                                removed_blocks.append((start_line_number, previous_line_number))
+                                            comment_block = False
 
-                                        comment_block = False
+                                        # End added block
+                                        if in_added_block:
+                                            in_added_block = False
+                                            if(in_modified_block):
+                                                in_modified_block = False
+                                                if not comment_block:
+                                                    modified_blocks.append((removed_blocks.pop(),(start_line_number, current_line_number)))
+                                                else:
+                                                    removed_blocks.pop()
+                                            else:
+                                                if not comment_block:
+                                                    added_blocks.append((start_line_number, current_line_number))
 
-                                    previous_line_number += 1
-                                    current_line_number += 1
+                                            comment_block = False
+
+                                        previous_line_number += 1
+                                        current_line_number += 1
 
 
-                        for block in removed_blocks:
-                            lines_removed += (block[1] - block[0] + 1)
-                        for block in added_blocks:
-                            lines_added += (block[1] - block[0] + 1)
-                        for block in modified_blocks:
-                            lines_modified += (block[1][1] - block[1][0] + 1)
+                            for block in removed_blocks:
+                                lines_removed += (block[1] - block[0] + 1)
+                            for block in added_blocks:
+                                lines_added += (block[1] - block[0] + 1)
+                            for block in modified_blocks:
+                                lines_modified += (block[1][1] - block[1][0] + 1)
 
                     #print introduction_count
                     lines_changed = lines_removed + lines_added + lines_modified
-                    models.CommitInformation.objects.create(commit=this_commit, lines_changed=lines_changed, lines_removed=lines_removed, lines_added=lines_added, lines_modified=lines_modified, introduction_count=introduction_count)
+                    models.CommitInformation.objects.create(commit=this_commit, lines_changed=lines_changed, lines_removed=lines_removed, lines_added=lines_added, lines_modified=lines_modified, introduction_count=introduction_count, merge=merge)
                 
 
             if args.analysis and len(diffs) > 0:
@@ -505,8 +509,7 @@ class SCCThread(threading.Thread):
 
                     for (commit_sha1,num) in introduction.iteritems():
                         introduction_commit = models.Commit.objects.get(author__repository=django_repository, sha1=commit_sha1)
-                        bug.introduction_commits.add(introduction_commit)
-                            
+                        bug.introduction_commits.add(introduction_commit)   
                             # intro_commit = repo.commit(commit_sha1)
                             # # Again, check that the email is not None
                             # intro_commit_email = intro_commit.author.email
@@ -515,13 +518,18 @@ class SCCThread(threading.Thread):
                             # django_author = models.Author.objects.get_or_create(repository=django_repo, name=intro_commit.author.name, email=intro_commit_email)[0]
                             # django_commit = models.Commit.objects.get_or_create(author=django_author, sha1=commit_sha1, utc_time=datetime.utcfromtimestamp(intro_commit.authored_date), local_time=datetime.utcfromtimestamp(intro_commit.authored_date-commit.author_tz_offset))[0]
                             # django_introduction.commits.add(django_commit)
-            if args.author_info:
-                author = models.Commit.objects.get(author__repository=django_repository, sha1=sha1).author
+            if args.fixm:
+                this_commit = models.Commit.objects.get(author__repository=django_repository, sha1=sha1)
+                ci = models.CommitInformation.objects.get(commit=this_commit)
+                
+                ci.merge = merge
+                ci.save()
+
                 
                 
 
 # Spawn the threads, wait, and clean-up
-if args.init_db or args.analysis or args.commit_info:
+if args.init_db or args.analysis or args.commit_info or args.fixm:
     threads = []
     for x in xrange(8):
         SCCThread().start()
@@ -547,7 +555,7 @@ if args.author_info:
         dates.sort()
 
         classification = ''
-        months_of_experience = 0
+        days_of_experience = 0
         day_job = False
 
         if len(dates) == 1:
@@ -569,7 +577,7 @@ if args.author_info:
                     monthly_commits += 1
                 last_date = date
 
-            months_of_experience = (dates[-1] - dates[0]).days/30
+            days_of_experience = (dates[-1] - dates[0]).days
             if daily_commits >= weekly_commits:
                 if daily_commits >= monthly_commits:
                     classification = 'D'
@@ -594,6 +602,6 @@ if args.author_info:
         try:
             models.AuthorInformation.objects.get(author=author)
         except:
-            models.AuthorInformation.objects.create(author=author, classification=classification, day_job=day_job, experience=months_of_experience)
+            models.AuthorInformation.objects.create(author=author, classification=classification, day_job=day_job, experience=days_of_experience)
 
 log_file.close()

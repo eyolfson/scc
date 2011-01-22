@@ -1,13 +1,3 @@
-- find the commits which fixed a bug
-- a bug is an _
-- work backwards to find the commits which introduced the bug (ignore merge commits)
- - using the diff information
- - talk about additions/removals/modifications
- - blame
-- talk about which type of data we collect
- - author information
- - commit information which
-
 Our goal is to find commits which fix a bug, along with the commits
 which introduced that bug. First, we detect a bug-fixing commit $c$ by
 searching the commit messages for common keywords such as ``fix'' and
@@ -50,10 +40,11 @@ namely those for which 85\% of commits are between 8 AM and 4 PM
 Monday to Friday.
 
 \paragraph{Validation.}
-To validate our data we randomly sample commits, manually verify that
-the commit is a bug-fix and that the correct commits introduced the
-bug. We focused our manual efforts on changes which included
+To validate our data we randomly sample commits then manually verify
+that the commit is a bug-fix and that the correct commits introduced
+the bug. We focus our manual efforts on changes which include
 additions, as conceptually, they are the largest threat to validity.
+
 % Currently there are no false negative rates, we probably have time to sample non fix commits
 
 * time zone information
