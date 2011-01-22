@@ -1,0 +1,59 @@
+- find the commits which fixed a bug
+- a bug is an _
+- work backwards to find the commits which introduced the bug (ignore merge commits)
+ - using the diff information
+ - talk about additions/removals/modifications
+ - blame
+- talk about which type of data we collect
+ - author information
+ - commit information which
+
+Our goal is to find commits which fix a bug, along with the commits
+which introduced that bug. First, we detect a bug-fixing commit $c$ by
+searching the commit messages for common keywords such as ``fix'' and
+``bug''. Next, we work backwards to locate the commits that introduced
+the bug fixed in $c$. Using commit $c$ as a starting point, we compute
+a diff for each file between the version after $c$ and the previous
+version of that file, and record the line numbers changed in
+$c$. Finally, we use the repository metadata to find the commit(s)
+$c'$ which were responsible for the previous versions of the files
+which were fixed, and we conclude that the commits $c'$ introduced the
+bug.
+
+Note that any change in $c$ which removes or modifies an existing line
+of code is easy to attribute to a previous commit $c'$, since the
+affected line of code existed in $c'$. However, a change in $c$ which
+adds a new line of code has no corresponding change in any previous
+revision, since this line did not previously exist. In that case, we
+attribute responsibility to the commit which introduced the line just
+before the new line.
+
+\paragraph{Data collected.}
+Executing the above algorithm gives us data about each commit, as well
+as the authors of the commits\footnote{Name/email.}.  We record the
+following data for each commit: author, time, number of lines changed,
+and number of times the commit introduced a bug later corrected. For
+each author, we record the name, email(s), experience and
+classification. We define the bug lifetime as the time from the
+earliest commit which introduced a bug to the bug-fixing commit.
+
+We compute an author's experience and classification based on the
+frequency and duration of that author's commits to a project. Author
+experience counts the time between an author's earliest and latest
+commits. Author classification describes the author's most-common
+frequency between consecutive commits: daily, weekly, monthly, and
+single. Note that, for author classification purposes, we ignore
+consecutive commits within 30 minutes of each other. As a sub-class of
+the daily commiter classification, we also use a heuristic to identify
+commiters who worked on the repository as part of their day job,
+namely those for which 85\% of commits are between 8 AM and 4 PM
+Monday to Friday.
+
+\paragraph{Validation.}
+To validate our data we randomly sample commits, manually verify that
+the commit is a bug-fix and that the correct commits introduced the
+bug. We focused our manual efforts on changes which included
+additions, as conceptually, they are the largest threat to validity.
+% Currently there are no false negative rates, we probably have time to sample non fix commits
+
+* time zone information
