@@ -1,5 +1,80 @@
 \section{Introduction}
 
+Software demands high reliability. However, as its complexity increases, 
+modern software inevitably contain bugs, which hurt software reliability.
+The modern software development paradigm further complicates the situation: 
+Many modern software, e.g., Firefox, the Linux kernel, Apache, and Eclipse, 
+are developed by hundreds of or thousands of developers over decades~\cite{ccomment} 
+in a distributed manner. Developers with different programming experiences, 
+different time commitments, different programming styles, from all over the world,
+work on the same software project at different times. They join and leave a project 
+from time to time over decades. 
+
+Therefore, code developed in the modern paradigm has different social characteristics 
+that are beyond the code itself. For example, different code segments in the same
+software project may written by developers with  
+varies level of expertise, different time 
+commitment, different working hours, diverse culture, etc.
+The code may be checked in at different times in different time zones. 
+
+Such social characteristics provide a rich and unique source of information for us to 
+understand software bugs. Just to name one example, it would be beneficial to know if  
+commit time have implications on the qualify of the commit. 
+Are commits submitted after midnight more buggy than other commits? 
+Such correlation results may be useful to predict what commits are more likely
+to be buggy so that we can budget more testing effort on these commits, just
+like prior studies~\cite{graves00predicting, guo04robust, ostrand05predicting},
+which predict bugs based on code complexity, 
+code locations, amount of in-house testing, etc. 
+Another interesting question is, whether more experienced developers are more likely or less
+likely to introduce buggy commits. 
+
+In this paper, we study the social characteristics of modern software to understand 
+the correlation between these social characteristics with the quality of the software.  
+Specifically, we study the latest version of the Linux kernel and XXX with XXX-XXX millions lines 
+of code, XXX-XXX versions, developed over XXX-XXX years. We study ...
+
+A challenge for studying the ``bugginess'' of commits is
+that it is hard to know the ``bugginess" of a commit as bugs in the commit are often not 
+discovered or reported until days, months, or even years after the commit. 
+We use a reverse chronological method to address this challenge. Specifically, we 
+start from bug fixes, and  extract the bug introduction time for these bug fixes 
+by using the version control system. Then we can know collectively when these fixes 
+are introduced. %, hence we can learn 
+%at a certain time of the day (e.g., each hour), how many of the bugs are introduced.
+In particular,
+we leverage the ``git blame'' functionality to identify the last modification time of each 
+buggy line. 
+
+Our major findings 
+%that can benefit language/tool designers and system programmers 
+include ($\S$ denotes in which
+section the finding and its {\em implications} are discussed):
+
+\begin{list}{\labelitemi}{\topsep=0pt\parsep=0pt\leftmargin=9pt\itemindent=0pt}
+
+\vspace{0.05in}
+  \item {\bf Finding 1 ($\S$\ref{sec:finding1}):} 
+Commits that are checked into the softare repository between XXX-XXX AM  are  XXX\% more likely
+to be incorrect. 
+The result indicate that developers may want to double check the code they write  
+before they commit between these hours. It may also to beneficial for the version control
+system to warn the developers of late night commits to improve software reliability. 
+  
+
+\item {\bf Finding 2 ($\S$\ref{sec:finding2}):} 
+\item {\bf Finding 3 ($\S$\ref{sec:finding3}):} 
+\end{list}
+
+
+%Developers spend a large amount of time
+%diagnosing bugs and fixing bugs by applying patches over the buggy software versions. 
+%As modern software are often very complex and developed by thousands of developers 
+%distributedly over many years, many of the patches are not correct, e.g., not fixing
+%the bug, or introducing new bugs, etc~\cite{}. A recent study shows that XXX\% of patches
+%are buggy. 
+
+\comment{
 The area of bug detection and resolution is currently a very active area of research
 in the software related disciplines. The process of detecting and resolving software
 bugs is an extremely costly process because of the manpower required to perform
@@ -40,4 +115,4 @@ automatically finding bug introduction points, Section
 \ref{sec-related} will discuss the related academic work which our
 work compliments, Section \ref{sec-future} explores possible future
 work, and finally Section \ref{sec-conclusion} concludes our work.
-
+}
