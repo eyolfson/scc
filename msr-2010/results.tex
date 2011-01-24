@@ -68,21 +68,21 @@ half of the overall fixes, we believe this is an upper bound on our
 false positive rate. Taking this into account we believe our data is
 representative and the results that we obtained are valid and meaningful.
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{linux_bug_introduction_day_of_week.png}
+\includegraphics[width=0.45\textwidth]{linux_bug_introduction_day_of_week.png}
 \end{center}
 \caption{Linux percentage of bug introductions and percentage of total commits per day}
 \label{fig-linux-weekday}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-\includegraphics[width=0.6\textwidth]{firefox_bug_introduction_day_of_week.png}
+\includegraphics[width=0.45\textwidth]{firefox_bug_introduction_day_of_week.png}
 \end{center}
 \caption{Firefox percentage of bug introductions and percentage of total commits per day}
 \label{fig-firefox-weekday}
-\end{figure*}
+\end{figure}
 
 First we determine if the day of the week has any impact on the
 likelihood of producing bugs. For the following graphs the percentage
@@ -99,21 +99,21 @@ the problem before writing it on Monday when they know exactly what to
 do. It may also be correlated to the size of the change which we plan
 to investigate later as an addition to our technique.
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{linux_hour_of_day.png}
+\includegraphics[width=0.45\textwidth]{linux_hour_of_day.png}
 \end{center}
 \caption{Linux percentage of bug introductions and percentage of total commits per hour}
 \label{fig-linux-hour}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{firefox_hour_of_day.png}
+\includegraphics[width=0.45\textwidth]{firefox_hour_of_day.png}
 \end{center}
 \caption{Firefox percentage of bug introductions and percentage of total commits per hour}
 \label{fig-firefox-hour}
-\end{figure*}
+\end{figure}
 
 Next we determine if the hour has any impact. Our results from Linux
 and Firefox are shown in Figure \ref{fig-linux-hour} and Figure
@@ -127,21 +127,21 @@ produce mistakes. It does however indicate the hours that programmers
 are at the peak of their productiveness in terms of not creating
 additional bugs.
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{linux_per_class.png}
+\includegraphics[width=0.45\textwidth]{linux_per_class.png}
 \end{center}
 \caption{Linux percentage of bug introductions and percentage of total commits per author classification}
 \label{fig-linux-class}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-\includegraphics[width=0.6\textwidth]{firefox_per_class.png}
+\includegraphics[width=0.45\textwidth]{firefox_per_class.png}
 \end{center}
 \caption{Firefox percentage of bug introductions and percentage of total commits per author classification}
 \label{fig-firefox-class}
-\end{figure*}
+\end{figure}
 
 We then investigated how each classification of developers fair in
 terms of their likelihood of creating a bug. The results from Linux
@@ -156,21 +156,21 @@ likely to produce bugs. The cause of this could be that the developers
 with this as their day job are required to make changes, while the
 daily developers are motivated purely by interest.
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{linux_day_per_experience.png}
+\includegraphics[width=0.45\textwidth]{linux_day_per_experience.png}
 \end{center}
 \caption{Linux percentage of bug introductions and percentage of total commits per author experience}
 \label{fig-linux-experience}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-\includegraphics[width=0.6\textwidth]{firefox_day_per_experience.png}
+\includegraphics[width=0.45\textwidth]{firefox_day_per_experience.png}
 \end{center}
 \caption{Firefox percentage of bug introductions and percentage of total commits per author experience}
 \label{fig-firefox-experience}
-\end{figure*}
+\end{figure}
 
 The final head-to-head comparison we performed is based on the amount
 of experience per author. We divided them up into 6 months intervals. 
@@ -187,21 +187,21 @@ believe these results may not be accurate due to the possiblity of
 our experience metric being crude and not representative of the 
 actual experience with the project.
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{linux_bug_life.png}
+\includegraphics[width=0.45\textwidth]{linux_bug_life.png}
 \end{center}
 \caption{Linux number of bugs against bug lifetimes in months}
 \label{fig-linux-buglife}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}
+\begin{figure}
 \begin{center}
-\includegraphics[width=0.9\textwidth]{firefox_bug_life.png}
+\includegraphics[width=0.45\textwidth]{firefox_bug_life.png}
 \end{center}
 \caption{Firefox number of bugs against bug lifetimes in months}
 \label{fig-firefox-buglife}
-\end{figure*}
+\end{figure}
 
 Finally we determined the bug lifetimes for both projects to contrast
 them to previous work. We plotted the number of bugs for each lifetime
