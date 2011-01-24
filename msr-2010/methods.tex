@@ -41,6 +41,11 @@ commiters who worked on the repository as part of their day job,
 namely those for which 85\% of commits are between 8 AM and 4 PM
 Monday to Friday.
 
+% maybe move this to the results section
+We only considered patches and bugs that are introduced after April 16th, 2005, when
+the Linux kernel started to use Git, because the patches before this date do not have 
+time information that is accurate to the hour.
+
 \paragraph{Validation.}
 To validate our data we randomly sample commits then manually verify
 that the commit is a bug-fix and that the correct commits introduced
@@ -52,11 +57,8 @@ additions, as conceptually, they are the largest threat to validity.
 * time zone information
 
 
-We only considered patches and bugs that are introduced after April 16th, 2005, when
-the Linux kernel started to use Git, because the patches before this date do not have 
-time information that is accurate to the hour.
 
-\subsection{Threats to Validity}
+\paragraph{Threats to Validity}
 While we believe that the commits from the examined software well represent commits in 
 open source software, we do not intend to draw any general conclusions about
 all software. 
@@ -69,6 +71,10 @@ then the time information we collected is imprecise. For example, a Git recorded
 for the developer who made the commit. Fortunately, Git records all commits in the developers' local time 
 together with the time zone information. Therefore, we used the local time of each commit to collect 
 the data shown in this paper. 
+
+As it takes some time for a buggy commit to be discovered, the recent commits that are buggy may not 
+have been discovered yet, hence are missing in our statistics. However, as our data are collected over a long period time, 
+we expect our data to be representative and the recent commits should exhibit similar characteristics as the rest of the commits. 
 
 The commit time does not necessary correspond to the coding time of a commit. A developer may wait 
 for a long time before they commit their code. Studying how coding time correlates with code quality remains as our future work. 
