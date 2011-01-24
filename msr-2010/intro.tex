@@ -26,26 +26,36 @@ to be buggy so that we can budget more testing effort on these commits, just
 like prior studies~\cite{graves00predicting, guo04robust, ostrand05predicting},
 which predict bugs based on code complexity, 
 code locations, amount of in-house testing, etc. 
-Another interesting question is, whether more experienced developers are more likely or less
+Another interesting question is, whether more experienced developers are more or less
 likely to introduce buggy commits. 
 
 In this paper, we study the social characteristics of modern software to understand 
-the correlation between these social characteristics with the quality of the software.  
+the correlation between these social characteristics with the correctness of the software.  
 Specifically, we study the latest version of the Linux kernel and XXX with XXX-XXX millions lines 
 of code, XXX-XXX versions, developed over XXX-XXX years. We study ...
 
-A challenge for studying the ``bugginess'' of commits is
-that it is hard to know the ``bugginess" of a commit as bugs in the commit are often not 
+There are two main challenges in studying software social characteristics.
+First, it is challenging to know if a commit is buggy or not,
+% A challenge for studying the ``bugginess'' of commits is
+%that it is hard to know whether a commit is correct or not at the time of commit, 
+as bugs in the commit are often not 
 discovered or reported until days, months, or even years after the commit. 
 We use a reverse chronological method to address this challenge. Specifically, we 
-start from bug fixes, and  extract the bug introduction time for these bug fixes 
-by using the version control system. Then we can know collectively when these fixes 
-are introduced. %, hence we can learn 
-%at a certain time of the day (e.g., each hour), how many of the bugs are introduced.
-In particular,
-we leverage the ``git blame'' functionality to identify the last modification time of each 
-buggy line. 
+start from bug fixes (commits that fix software bugs), and then use the version 
+control system to understand when the corresponding bugs were introducted. 
+In other words, we extract the bug introduction time for bug fixes 
+from the software version control systems. Then we can know 
+collectively when bugs are more likely to be introduced.  
+%In particular, we leverage the ``git blame'' functionality to identify the last modification time of each buggy line.
 
+Additionally, it is difficult to know how experienced the developers are in an open source development
+environment as such information is not documented and subjective. 
+We make our best-effort approximation by calculating the length and frequency of a developer
+contributing to an open source project, which allows us to discover important findings 
+and implications regarding developers' experience level and code correctness. 
+
+In addition to the social characteristics, we also study several other commit characteristics, such as
+the commit sizes, XXX, XXX, etc. 
 Our major findings 
 %that can benefit language/tool designers and system programmers 
 include ($\S$ denotes in which
@@ -60,7 +70,6 @@ to be incorrect.
 The result indicate that developers may want to double check the code they write  
 before they commit between these hours. It may also to beneficial for the version control
 system to warn the developers of late night commits to improve software reliability. 
-  
 
 \item {\bf Finding 2 ($\S$\ref{sec:finding2}):} 
 \item {\bf Finding 3 ($\S$\ref{sec:finding3}):} 
