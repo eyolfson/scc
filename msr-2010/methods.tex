@@ -78,3 +78,56 @@ we expect our data to be representative and the recent commits should exhibit si
 
 The commit time does not necessary correspond to the coding time of a commit. A developer may wait 
 for a long time before they commit their code. Studying how coding time correlates with code quality remains as our future work. 
+
+
+\note{The following code figures are good examples. We should reorganized and add them to the beginning of Section~\ref{sec:method}.
+I would show and describe Listing 2 first, then Listing 3 (with time and author info added), and maybe finally Listing 1 (do we really need Listing 1?). 
+You can use minipage in Latex or other drawing tools to combine all 3 listings into one nice figure.  - Lin}
+
+We demonstrate our technique on a simple example, for instance say
+there is a change in the code repository such as the one in Listing
+\ref{lst-introduction}. The listings contain a {\em unified diff}
+between the current version in the commit and the previous version,
+which is what we use in our tool. The bug here is that when {\em i} is
+equal to 256 the code should actually use the {\em do\_unicode}
+function. A commit which fixes this bug is shown in Listing \ref{lst-fix}.
+
+
+\begin{lstlisting}[caption=An example bug introduction,label=lst-introduction, frame=single]
+Commit: f4ce718c...
+Message: I hope this works.
+@@ -100,0 +100,5 @@
++    if (i <= 256) {
++        do_ascii(i);
++    else {
++        do_unicode(i);
++    }
+\end{lstlisting}
+
+\begin{lstlisting}[caption=An example bug fix,label=lst-fix,frame=single]
+Commit: 2cdc03fe...
+Message: I fixed a bug!
+@@ -100,1 +100,1 @@
+-    if (i <= 256) {
++    if (i < 256) {
+\end{lstlisting}
+
+Our goal is to be able to find the commit which introduced the bug and
+also link it to the commit which included the fix. We found most
+developers indicate that their change is a fix by including the keyword "fix"
+in the commit message. We perform a simple keyword search with the word "fix"
+to find these commits. For this example we should find the commit
+starting with 2cdc03fe. From the unified diff we know line 100 was
+modified from the previous version on line 100. We then perform a {\em
+  git-blame} on the previous version which indicates the last commit
+which changed the line. The output of the blame is shown in Listing
+\ref{lst-blame}
+
+\begin{lstlisting}[caption=Blame of the previous version,label=lst-blame,frame=single]
+f4ce718c...  100    if (i <= 256) {
+\end{lstlisting}
+
+Using the blame information we found the original commit which
+introduced the bug, and can enter it into our database. This
+technique of blaming can be used for any modifications or removals
+

@@ -1,5 +1,7 @@
 \section{Introduction}
 
+\note{Jon, can you fill in the XXX? - Lin}
+
 Software demands high reliability. However, as its complexity increases, 
 modern software inevitably contain bugs, which hurt software reliability.
 The modern software development paradigm further complicates the situation: 
@@ -19,7 +21,7 @@ The code may be checked in at different times in different time zones.
 
 Such social characteristics provide a rich and unique source of information for us to 
 understand software bugs. Just to name one example, it would be beneficial to know if  
-commit time have implications on the qualify of the commit. 
+commit time (time of day, day of week, etc.) have implications on the qualify of the commit. 
 Are commits submitted after midnight more buggy than other commits? 
 Such correlation results may be useful to predict what commits are more likely
 to be buggy so that we can budget more testing effort on these commits, just
@@ -29,24 +31,28 @@ code locations, amount of in-house testing, etc.
 Another interesting question is, whether more experienced developers are more or less
 likely to introduce buggy commits. 
 
-In this paper, we study the social characteristics of modern software to understand 
-the correlation between these social characteristics with the correctness of the software.  
-Specifically, we study the latest version of the Linux kernel and XXX with XXX-XXX millions lines 
-of code, XXX-XXX versions, developed over XXX-XXX years. We study ...
 
-There are two main challenges in studying software social characteristics.
+\subsection{Challenges}
+There are two main challenges in studying the correlation of commit correctness and software social characteristics.
 First, it is challenging to know if a commit is buggy or not,
-% A challenge for studying the ``bugginess'' of commits is
-%that it is hard to know whether a commit is correct or not at the time of commit, 
 as bugs in the commit are often not 
 discovered or reported until days, months, or even years after the commit. 
-We use a reverse chronological method to address this challenge. Specifically, we 
-start from bug fixes (commits that fix software bugs), and then use the version 
-control system to understand when the corresponding bugs were introducted. 
+We use a reverse chronological method~\cite{2005-changes} to address this challenge. 
+Specifically, we start from {\em bug-fixing commits}, commits that fix software bugs, 
+and then use the version control system to understand when the corresponding bugs were introducted. 
 In other words, we extract the bug introduction time for bug fixes 
 from the software version control systems. Then we can know 
-collectively when bugs are more likely to be introduced.  
+collectively when bugs are more likely to be introduced. 
 %In particular, we leverage the ``git blame'' functionality to identify the last modification time of each buggy line.
+
+However, it is difficult to find bug-fixing commits in the sea of software commits.
+The prior work~\cite{2005-changes} considers a commit whose commit message contains a bug 
+ID that links between a bug report in a bug database to be bug-fixing commits. While this
+approach works for some software such as Mozilla, it does not work for software that 
+rarely contain links from commit messages to bug reports, e.g., the Linux kernel.
+We address this problem by applying heuristics to extract bug-fixing commits by examining
+the commits themselves without analyzing bug reports at all. Our results show that our
+heuristics have XXX\% accuracy.  
 
 Additionally, it is difficult to know how experienced the developers are in an open source development
 environment as such information is not documented and subjective. 
@@ -54,12 +60,24 @@ We make our best-effort approximation by calculating the length and frequency of
 contributing to an open source project, which allows us to discover important findings 
 and implications regarding developers' experience level and code correctness. 
 
-In addition to the social characteristics, we also study several other commit characteristics, such as
+\subsection{Contributions}
+In this paper, we study the social characteristics of modern software to understand 
+the correlation between these social characteristics with the correctness of the software.  
+Specifically, we study the latest version of the Linux kernel and XXX with XXX-XXX millions lines 
+of code, XXX-XXX versions, developed over XXX-XXX years. We study the correlation between 
+the commit correctness and the time of day of the commit, the day of week of the commit, 
+the committing developers' experience and activity frequency respectively.  
+%...
+%In addition to the above social characteristics, we also 
+In addition, we study several other commit characteristics, such as
 the commit sizes, XXX, XXX, etc. 
+
 Our major findings 
 %that can benefit language/tool designers and system programmers 
-include ($\S$ denotes in which
-section the finding and its {\em implications} are discussed):
+are summarized below ($\S$ denotes in which
+section the finding and its {\em implications} are discussed). To the best of our
+knowledge, we are the {\em first} to study the correlation between the commit time of day and
+the commit correctness. 
 
 \begin{list}{\labelitemi}{\topsep=0pt\parsep=0pt\leftmargin=9pt\itemindent=0pt}
 
