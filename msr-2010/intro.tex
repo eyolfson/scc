@@ -33,7 +33,7 @@ likely to introduce buggy commits.
 
 
 \subsection{Challenges}
-There are two main challenges in studying the correlation of commit correctness and software social characteristics.
+There are several challenges in studying the correlation of commit correctness and software social characteristics.
 First, it is challenging to know if a commit is buggy or not,
 as bugs in the commit are often not 
 discovered or reported until days, months, or even years after the commit. 
@@ -45,14 +45,14 @@ from the software version control systems. Then we can know
 collectively when bugs are more likely to be introduced. 
 %In particular, we leverage the ``git blame'' functionality to identify the last modification time of each buggy line.
 
-However, it is difficult to find bug-fixing commits in the sea of software commits.
+It is difficult to find bug-fixing commits in the sea of software commits.
 The prior work~\cite{2005-changes} considers a commit whose commit message contains a bug 
-ID that links between a bug report in a bug database to be bug-fixing commits. While this
+ID that links to a bug report in a bug database to be a bug-fixing commit. While this
 approach works for some software such as Mozilla, it does not work for software that 
 rarely contain links from commit messages to bug reports, e.g., the Linux kernel.
 We address this problem by applying heuristics to extract bug-fixing commits by examining
-the commits themselves without analyzing bug reports at all. Our results show that our
-heuristics have XXX\% accuracy.  
+the commits themselves without analyzing bug reports at all. As shown later in Section~\ref{sec:results}, 
+our heuristics have an accuracy of XXX\% in identifying bug-fixing commits.
 
 Additionally, it is difficult to know how experienced the developers are in an open source development
 environment as such information is not documented and subjective. 
