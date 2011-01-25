@@ -39,10 +39,10 @@ as bugs in the commit are often not
 discovered or reported until days, months, or even years after the commit. 
 We use a reverse chronological method~\cite{2005-changes} to address this challenge. 
 Specifically, we start from {\em bug-fixing commits}, commits that fix software bugs, 
-and then use the version control system to understand when the corresponding bugs were introducted. 
-In other words, we extract the bug introduction time for bug fixes 
-from the software version control systems. Then we can know 
-collectively when bugs are more likely to be introduced. 
+and then leverage the version control system to understand when the corresponding bugs were introducted. 
+%In other words, we extract the bug introduction time for bug fixes 
+%from the software version control systems. 
+Then we can know collectively when bugs are more likely to be introduced. 
 %In particular, we leverage the ``git blame'' functionality to identify the last modification time of each buggy line.
 
 It is difficult to find bug-fixing commits in the sea of software commits.
