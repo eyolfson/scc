@@ -1,14 +1,25 @@
 \section{Results}
 \label{sec-results}
+In this section, we present the results obtained from carrying out our
+methodology, and discuss some of their implications. First, we validated
+our results by random sampling, which allowed us to estimate our
+false-positives rate. Next, we report on our results and interpret
+our time-of-day, day-of-week, and author classification findings.
 
-We began by randomly sampling 1000 bugs from both Linux and Firefox
-and determined the types of changes, the results are shown in Table
-\ref{tbl-changes}. Overall the percentages are similar for both
-software projects except for when there are no changes and changes
-which are only modifications. We believe this is because most of the
-bugs only applied to JavaScript for Firefox which we did not analyze,
-and they contain the class of bugs which are fixed by simple
-modifications.
+\paragraph{Validation} 
+To validate our results, we randomly sampled 1000 bugs from both Linux
+and Firefox and classified changes related to these bugs.
+% more detail!
+Table~\ref{tbl-changes} presents our results. A major difference
+between Linux and Firefox is in the ``none'' row, where Linux has
+7.7\% of changes while Firefox has 43\% of changes. We believe that
+this is because our analysis does not consider changes to JavaScript,
+which is an important part of Firefox; these changes also appear to
+actually be ``modify'' changes, which differs by a similar amount
+in the other direction.
+
+% we need to have a more detailed story above. The other numbers
+% aren't actually similar either. -PL
 
 \begin{table}
 \begin{center}
@@ -39,34 +50,39 @@ All           & 17.0 $\pm$ 2.33 & 17.4 $\pm$ 2.35\\
 
 We also noted that approximately 7.7\% of the bug fixes for Linux were
 purely for comments, indicating that developers spend a non-trivial
-amount of time on comments. For Linux approximately 51\% of the
-changes do not include additions. We manually checked the 49\% more
-difficult cases to evaluate the effectiveness of our technique.
+amount of time on comments. For Linux, approximately 51\% of the
+changes do not include additions. We therefore manually checked (a
+subsample of) the 49\% more difficult cases to evaluate the
+effectiveness of our heuristic for additions.
 
-For Linux we manually checked a random sample of 50 bugs with the
-following types: 11 additions, 16 additions and modifications, 6 additions
-and removals, and 17 with all types of changes. We found 10 of the 50
-to be false positives. Similarly for Firefox we randomly sampled 50
-bugs with the following types: 9 additions, 3 additions and
-modifications, 18 additions and removals, and 20 with all types of
-changes. We found 13 of the 50 to be false positives.
+For Linux, we manually checked a random sample of 50 bugs: 11
+additions, 16 additions and modifications, 6 additions and removals,
+and 17 with all types of changes. We found 10 of the 50 bugs to be
+false positives. Similarly, for Firefox, we randomly sampled 50 bugs:
+9 additions, 3 additions and modifications, 18 additions and removals,
+and 20 with all types of changes. We found 13 of the 50 to be false
+positives. 
 
-The are five main sources of false positives we found, first we cover
-the rare cases. For one, the commit message we determined as a fix
-actually referred to fixing a merge conflict. Next, the blamed author
-was not correct due to them being the original author of the code, not
-the one who missed a check added at a later time. Finally a removal of
-dead code would trigger a non-existent bug. The more common cases
-involved reverting a change so it could be added in a later version
-and a code clean-up which involved moving functions or
-renaming. However in some cases you could argue that some of the code
-clean-ups should be counted as a bug.
+We next describe our false positives, which included three rare cases
+and two common cases. The rare cases included: 1) our analysis
+classified a commit message for fixing a merge commit as describing a
+fix. 2) We found an author incorrectly blamed for a bug: the bug arose
+from a check which was only required, and inadvertently omitted, from
+a later revision. 3) The removal of dead code triggered an (invalid)
+bug report. More commonly, we found that sometimes 4) a change was
+reverted but re-added in a later version; and 5) refactoring changes,
+which moved or renamed functions. One might argue that such changes
+could actually be bug fixes.
+
+% we didn't say what blame means.
 
 Our false positive rates are currently between 20\%-26\% for the
 difficult cases of bug fixes. Since these account for approximately
 half of the overall fixes, we believe this is an upper bound on our
 false positive rate. Taking this into account we believe our data is
 representative and the results that we obtained are valid and meaningful.
+
+% I don't understand this paragraph.
 
 \begin{figure}
 \begin{center}
@@ -84,20 +100,23 @@ representative and the results that we obtained are valid and meaningful.
 \label{fig-firefox-weekday}
 \end{figure}
 
-First we determine if the day of the week has any impact on the
-likelihood of producing bugs. For the following graphs the percentage
-of introduction commits indicates the amount of commits out of the
-total number of commits which are bug introductions. Our results from
-Linux are shown in Figure \ref{fig-linux-weekday}. We see that
-Saturday is the worst day followed by Thursday, while Monday has the
-fewest percentage of bug introductions. The results for Firefox are
-shown in Figure \ref{fig-firefox-weekday} and agree with Thursday
-being one of the worse days while Monday is the best for committing
-changes which do not introduce bugs. A possible explanation is that
-developers rest over the weekend and have ample time to think about
-the problem before writing it on Monday when they know exactly what to
-do. It may also be correlated to the size of the change which we plan
-to investigate later as an addition to our technique.
+\paragraph{Day-of-week Results} Having determined our false positive rate, 
+we continue by presenting the results of our analysis.  First, we
+determine if the day of the week has any impact on the likelihood of
+producing bugs. For the following graphs, the percentage of
+introduction commits indicates the amount of commits which are bug
+introductions, as a propostion of the total number of
+commits. Figure~\ref{fig-linux-weekday} presents our results for
+Linux. We see that Saturday is the worst day, followed by Thursday,
+while Monday has the fewest percentage of bug introductions. The
+results for Firefox are shown in Figure~\ref{fig-firefox-weekday} and
+agree with Thursday being one of the worst days, while Monday is the
+best day for committing changes which do not introduce bugs. A
+possible explanation is that developers rest over the weekend and have
+ample time to think about the problem before coding a solution on
+Monday, when they know exactly what to do. Per-day bugginess may also
+be correlated with the size of the change, which we plan to investigate
+later, as an addition to our technique.
 
 \begin{figure}
 \begin{center}
@@ -115,17 +134,17 @@ to investigate later as an addition to our technique.
 \label{fig-firefox-hour}
 \end{figure}
 
-Next we determine if the hour has any impact. Our results from Linux
-and Firefox are shown in Figure \ref{fig-linux-hour} and Figure
-\ref{fig-firefox-hour} respectfully. Both show a significant increase
-in the amount of commits which introduce a bug between midnight and 9
-AM. After this time there is a significant reduction in the amount of
-bug introductions between 11 AM and 3 PM. After 3 PM however, the
-likelihood of bug introductions fluctuates from hour to hour. This
-result is not very surprising since tired programmers are more likely to
-produce mistakes. It does however indicate the hours that programmers
-are at the peak of their productiveness in terms of not creating
-additional bugs.
+\paragraph{Time-of-day Results} We next investigated whether the hour of a commit has any impact on
+its bugginess. Figures~\ref{fig-linux-hour} and~\ref{fig-firefox-hour}
+present results from Linux and Firefox, respectively. Both figures
+show a significant increase in the amount of commits which introduce a
+bug between midnight and 9AM. After 9AM, there is a significant
+reduction in the amount of bug introductions between 11AM and 3PM.
+However, after 3PM, the likelihood of bug introductions fluctuates
+from hour to hour. This result is not very surprising, since tired
+programmers are more likely to produce mistakes. It does, however,
+indicate the hours that programmers are at the peak of their
+productiveness, in terms of not creating additional bugs.
 
 \begin{figure}
 \begin{center}
@@ -143,18 +162,22 @@ additional bugs.
 \label{fig-firefox-class}
 \end{figure}
 
-We then investigated how each classification of developers fair in
-terms of their likelihood of creating a bug. The results from Linux
-and Firefox are shown in Figure \ref{fig-linux-class} and Figure
-\ref{fig-firefox-class} respectfully. We see that developers who
-commit changes daily are a very significant portion of both projects
-and not developers that work on code as part of their day job. This
-trend is likely to be common to most open source projects. We also see
-for both projects the daily developers are less likely to produce
-bugs. On the other hand developers with this as their day job are more
-likely to produce bugs. The cause of this could be that the developers
-with this as their day job are required to make changes, while the
-daily developers are motivated purely by interest.
+\paragraph{Developer Activity Classification} 
+We then investigated how each classification of developers fare in
+terms of their likelihood of creating a
+bug. Figures~\ref{fig-linux-class} and~\ref{fig-firefox-class} present
+our results from Linux and Firefox, respectively.  They show that
+developers who commit changes daily, but not as their day job,
+contribute significantly to both projects. We believe that this
+characteristic should be shared by most open-source projects. Also,
+note that for both projects, the daily developers are less likely to
+produce bugs, while day-job developers
+are more likely to produce bugs. % why do we know this?
+A possible cause is that day-job developers are required to make changes,
+while the daily developers are motivated purely by interest, and
+unlikely to be pressured to fix bugs on any particular schedule.
+
+% we need to say what the two bars mean in the figure.
 
 \begin{figure}
 \begin{center}
@@ -172,8 +195,9 @@ daily developers are motivated purely by interest.
 \label{fig-firefox-experience}
 \end{figure}
 
+\paragraph{Developer Experience Classification}
 The final head-to-head comparison we performed is based on the amount
-of experience per author. We divided them up into 6 months intervals. 
+of experience per author. We divided them up into 6-month intervals. 
 Our results from Linux and Firefox are shown in Figure
 \ref{fig-linux-experience} and Figure \ref{fig-firefox-experience}
 respectfully. For Linux authors with less than 2 years of experience

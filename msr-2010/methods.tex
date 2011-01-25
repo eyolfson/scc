@@ -20,7 +20,7 @@ revision, since this line did not previously exist. In that case, we
 attribute responsibility to the commit which introduced the line just
 before the new line.
 
-\paragraph{Data collected.}
+\paragraph{Data collected}
 Executing the above algorithm gives us data about each commit, as well
 as the authors of the commits\footnote{Name/email.}.  We record the
 following data for each commit: author, time, number of lines changed,
@@ -46,7 +46,7 @@ We only considered patches and bugs that are introduced after April 16th, 2005, 
 the Linux kernel started to use Git, because the patches before this date do not have 
 time information that is accurate to the hour.
 
-\paragraph{Validation.}
+\paragraph{Validation}
 To validate our data we randomly sample commits then manually verify
 that the commit is a bug-fix and that the correct commits introduced
 the bug. We focus our manual efforts on changes which include
