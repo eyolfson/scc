@@ -7,7 +7,7 @@ false-positives rate. Next, we report on our results and interpret
 our time-of-day, day-of-week, and author classification findings.
 
 \paragraph{Validation} 
-To validate our results, we randomly sampled 1000 bugs from both Linux
+To validate our results, we first observed the types of commits from both Linux
 and Firefox and classified changes related to these bugs.
 % more detail!
 Table~\ref{tbl-changes} presents our results. A major difference
@@ -27,21 +27,21 @@ in the other direction.
 \multicolumn{1}{c}{} & \multicolumn{2}{c}{\textbf{Amount (\%)}} \\
 \textbf{Type of Change} & \multicolumn{1}{c|}{\textbf{Linux}} & \multicolumn{1}{c}{\textbf{Firefox}}\\
 \hline
-None          &  7.7 $\pm$ 1.65 & 43.0 $\pm$ 3.07\\
+None          & 10.5 & 45.4\\
 \hline
-Add           & 11.0 $\pm$ 1.94 & 6.9 $\pm$ 1.57\\
+Add           & 12.4 &  6.3\\
 \hline
-Remove        &  2.0 $\pm$ 0.87 & 1.8 $\pm$ 0.82\\
+Modify        & 23.7 & 14.4\\
 \hline
-Modify        & 35.7 $\pm$ 2.97 & 13.8 $\pm$ 2.14\\
+Remove        &  4.7 &  2.1\\
 \hline
-Add/Modify    & 14.9 $\pm$ 2.20 & 11.6 $\pm$ 1.98\\
+Add/Modify    & 16.0 & 10.6\\
 \hline
-Add/Remove    &  5.8 $\pm$ 1.45 & 2.3 $\pm$ 0.93\\
+Add/Remove    &  4.3 &  1.9\\
 \hline
-Modify/Remove &  5.9 $\pm$ 1.46 & 3.2 $\pm$ 1.09 \\
+Modify/Remove &  7.4 &  4.2\\
 \hline
-All           & 17.0 $\pm$ 2.33 & 17.4 $\pm$ 2.35\\
+All           & 21.0 & 15.1\\
 \end{tabular}
 \end{center}
 \caption{The types of changes between bug introductions and fixes from random sampling}
@@ -75,14 +75,10 @@ which moved or renamed functions. One might argue that such changes
 could actually be bug fixes.
 
 % we didn't say what blame means.
-
-Our false positive rates are currently between 20\%-26\% for the
-difficult cases of bug fixes. Since these account for approximately
-half of the overall fixes, we believe this is an upper bound on our
-false positive rate. Taking this into account we believe our data is
-representative and the results that we obtained are valid and meaningful.
-
-% I don't understand this paragraph.
+ 
+Our false positive rate has an upper bound between 20\%-26\%. We
+believe this is an upper bound since we manually checked the more
+difficult bug-fixing cases. Therefore our data is representative.
 
 \begin{figure}
 \begin{center}
@@ -240,5 +236,3 @@ refined. We also see the average lifetime is lower for Firefox, this
 may be due to the complexity of the software, size of the software or
 the amount of users (the more users and complex, the more likely bugs will be
 revealed).
-
-
