@@ -1,6 +1,6 @@
 \section{Experimental Methods}
 \label{sec:method}
-Our goal is to find commits which fix a bug, along with the commits
+Our goal is to find commits which report fixing a bug, as well as the commits
 which introduced that bug. First, we detect a bug-fixing commit $c$ by
 searching the commit messages for common keywords such as ``fix'' and
 ``bug''. Next, we work backwards to locate the commits that introduced
@@ -21,63 +21,75 @@ attribute responsibility to the commit which introduced the line just
 before the new line.
 
 \paragraph{Data collected}
-Executing the above algorithm gives us data about each commit, as well
-as the authors of the commits\footnote{Name/email.}.  We record the
-following data for each commit: author, time, number of lines changed,
-and number of times the commit introduced a bug later corrected. For
-each author, we record the name, email(s), experience and
-classification. We define the bug lifetime as the time from the
-earliest commit which introduced a bug to the bug-fixing commit.
+Executing the above algorithm gives us data about a number of commits
+in the repository, as well as about the authors of these commits.  We
+record the following data for each commit: author (as a name/email
+pair), time, number of lines changed, and number of times the commit
+introduced a bug later corrected. For each author, we record the name,
+email(s), experience and classification. We define a bug lifetime's to
+be the time from the earliest commit which introduced a bug to the
+bug-fixing commit.
 
 We compute an author's experience and classification based on the
 frequency and duration of that author's commits to a project. Author
 experience counts the time between an author's earliest and latest
-commits. Author classification describes the author's most-common
-frequency between consecutive commits: daily, weekly, monthly, and
-single. Note that, for author classification purposes, we ignore
-consecutive commits within 30 minutes of each other. As a sub-class of
-the daily commiter classification, we also use a heuristic to identify
-commiters who worked on the repository as part of their day job,
-namely those for which 85\% of commits are between 8 AM and 4 PM
-Monday to Friday.
+commits to the project. Author classification describes the author's
+most-common frequency between consecutive commits: daily, weekly,
+monthly, and single. Note that, for author classification purposes, we
+ignore consecutive commits within 30 minutes of each other. As a
+sub-class of the daily commiter classification, we also use a
+heuristic to identify commiters who worked on the repository as part
+of their day job, namely those for which 85\% of commits are between 8
+AM and 4 PM Monday to Friday.
 
-% maybe move this to the results section
-We only considered patches and bugs that are introduced after April 16th, 2005, when
-the Linux kernel started to use Git, because the patches before this date do not have 
-time information that is accurate to the hour.
+\paragraph{Threats to Validity}
+We describe a number of threats to validity: ....
 
-\paragraph{Validation}
-To validate our data we randomly sample commits then manually verify
-that the commit is a bug-fix and that the correct commits introduced
-the bug. We focus our manual efforts on changes which include
-additions, as conceptually, they are the largest threat to validity.
+A first threat to (construct) validity is that we must properly
+identify bug-fixing and bug-introducing commits. To assess this
+threat, we randomly sampled commits that our analysis identified to be
+bug fixes, manually verified whether or not they were fixes, and
+checked that we properly identified the commit that introduced the
+bug. Most of the time in our manual verification was spent on changes
+with additions, because we were most concerned about our somewhat
+arbitrary attribution of responsibility to the line just before the
+new line.
+
+\note{How does that last line go together with the ``random sample'' bit? -PL}
 
 % Currently there are no false negative rates, we probably have time to sample non fix commits
 
-* time zone information
+While we believe that the commits from the examined software well
+represent commits in open source software, we do not intend to draw
+any general conclusions about all software.  Like any other
+characteristic study, our findings should be considered together with
+our evaluation methodology.
 
+We expect our methodology to properly account for developers in
+different time zones. Git records each developer's local time (and
+time zone) with a commit, thereby avoiding potential imprecisions in
+our time-of-day results. We present all of our results in the local
+time of the committer.
 
+\note{We need to be sure that this is the case for all of the commits that
+got imported from other source control systems also. -PL}
 
-\paragraph{Threats to Validity}
-While we believe that the commits from the examined software well represent commits in 
-open source software, we do not intend to draw any general conclusions about
-all software. 
-Similar to any characteristic study, our
-findings should be considered together with our evaluation methodology.
+Because our methodology only identifies bugs which have later been
+corrected, it will definitely omit recently-introduced bugs, as well
+as longer-running bugs which have not yet been corrected. While this
+implies that our results will omit some bugs, we do not believe that
+this omission affects our validity, because there is no reason to
+believe that there are important differences in the characteristics we
+measure for fixed and unfixed bugs.
 
-One caveat is that the commits are performed at different time zones as the studied software is 
-developed distributed by many developers. If the recorded commit time is for one fixed time zone,
-then the time information we collected is imprecise. For example, a Git recorded midnight may be afternoon
-for the developer who made the commit. Fortunately, Git records all commits in the developers' local time 
-together with the time zone information. Therefore, we used the local time of each commit to collect 
-the data shown in this paper. 
-
-As it takes some time for a buggy commit to be discovered, the recent commits that are buggy may not 
-have been discovered yet, hence are missing in our statistics. However, as our data are collected over a long period time, 
-we expect our data to be representative and the recent commits should exhibit similar characteristics as the rest of the commits. 
-
-The commit time does not necessary correspond to the coding time of a commit. A developer may wait 
-for a long time before they commit their code. Studying how coding time correlates with code quality remains as our future work. 
+Finally, developers work on a patch over a (possibly-discontiguous)
+time interval, but the code repository only records the endpoint of
+that interval. The bug database may contain more information about the
+starting point of the interval (e.g. it records when a bug is assigned
+to a developer), but still does not capture any information about the
+work patterns of the developer within the interval. There may be
+correlations between the coding time (the width of the interval) and
+code quality. We intend to investigate these issues in future work.
 
 
 \note{The following code figures are good examples. We should reorganized and add them to the beginning of Section~\ref{sec:method}.
