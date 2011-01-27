@@ -1,4 +1,27 @@
-There are many factors which may contribute to patch quality, our goal
+
+Modern software is often developed over years with hundreds of thousands of 
+commits, which are associated with a rich amount of social characteristics, such as
+the committing time of the day, author experience, and author committing activity frequency. 
+It is important to know how these social characteristics correlate with the ``bugginess''
+of the commits, because such correlation results can be very useful for
+software developers and software engineering researchers.
+For example, the correlation results can be useful to alter developers 
+and predict buggy commits.
+
+In this paper, we study the correlation between
+the commit bugginess and the time of day of the commit, the day of week of the commit,
+the experience and activity frequency of the authors of the commits respectively on
+two widely-used open source projects, the Linux kernel and PostgreSQL.
+We have discovered several interesting findings, which together with their implications
+are presented and discussed in the paper.
+
+%Our main findings include: (1) commits submitted between midnight and 3 AM are significantly
+%buggier and commits submitted between 7-9 AM are less buggier, implying that 
+%developers may want to double check their own midnight commits; and (2) 
+%daily commiting developers produce less buggy commits, indicating that we may want to 
+%have daily commiting developers code-review other developers' commits. 
+
+\comment{There are many factors which may contribute to patch quality, our goal
 is to find these correlations. Previous studies used day of the week
 in order to find correlations. We extend this by using time of the day
 and author frequency/experience. We discuss the impact of our work
@@ -7,7 +30,8 @@ through motivating examples, which may lead to higher quality code.
 We implemented a tool for software repositories which determines
 bug-fixing and bug-introducing commits. We describe our implementation
 and evaluate it on open source projects. Finally, we present our
-findings from these projects.
+findings from these projects.}
+
 
 %% If we need more information...
 %%
