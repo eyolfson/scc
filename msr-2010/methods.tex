@@ -67,33 +67,37 @@ be the time from the earliest commit which introduced a bug to the
 bug-fixing commit.
 
 We compute an author's experience and classification based on the
-frequency and duration of that author's commits to a project. Author
-experience counts the time between an author's earliest and latest
-commits to the project. Author classification describes the author's
-most-common frequency between consecutive commits: daily, weekly,
-monthly, and single. Note that, for author classification purposes, we
-ignore consecutive commits within 30 minutes of each other. As a
-sub-class of the daily commiter classification, we also use a
-heuristic to identify commiters who worked on the repository as part
-of their day job, namely those for which 85\% of commits are between 8
-AM and 4 PM Monday to Friday.
+frequency and duration of that author's commits to a particular
+project. Author experience counts the time between an author's
+earliest and latest commits to the project. Author classification
+describes the author's most-common frequency between consecutive
+commits: daily, weekly, monthly, and single. Note that, for author
+classification purposes, we ignore consecutive commits within 30
+minutes of each other. As a sub-class of the daily commiter
+classification, we also use a heuristic to identify commiters who
+worked on the repository as part of their day job, namely those for
+which 85\% of commits are between 8 AM and 4 PM Monday to Friday.
 
 \paragraph{Threats to Validity}
-We describe a number of threats to validity: ....
+We discuss a number of threats to validity and how we address them,
+including general threats to construct validity and external validity,
+and specific threats to our particular methodology, including the
+effects of time zones, missing recently-introduced bugs, and
+identifying the entire bug-fix processes with the commit times.
 
 A first threat to (construct) validity is that we must properly
 identify bug-fixing and bug-introducing commits. To assess this
-threat, we randomly sample commits that our analysis identified to be
-bug fixes and manually verify whether or not they are fixes to
-determine the false positive rate. Vice-versa, we randomly sample
-commits identified not to be bug fixes and manually verify these
-results to determine the false negative rate.
+threat, we estimate the false positive rate by randomly sampling
+commits that our analysis identified to be bug fixes and manually
+verifying whether or not they are indeed fixes.  We also estimate the
+false negative rate by randomly sampling commits identified not to be
+bug fixes and manually verifying that these commits are not fixes.
 
-While we believe that the commits from the examined software well
-represent commits in open source software, we do not intend to draw
-any general conclusions about all software.  Like any other
-characteristic study, our findings should be considered together with
-our evaluation methodology.
+While we believe that the commits from the software that we examined
+well represent commits in open source software, we do not intend to
+claim external validity and draw any general conclusions about all
+software.  Like any other characteristic study, our findings should be
+considered together with our evaluation methodology.
 
 We expect our methodology to properly account for developers in
 different time zones. Git records each developer's local time (and
@@ -109,11 +113,12 @@ this omission affects our validity, because there is no reason to
 believe that there are important differences in the characteristics we
 measure for fixed and unfixed bugs.
 
-Finally, developers work on a patch over a (possibly-discontiguous)
-time interval, but the code repository only records the endpoint of
-that interval. The bug database may contain more information about the
-starting point of the interval (e.g. it records when a bug is assigned
-to a developer), but still does not capture any information about the
-work patterns of the developer within the interval. There may be
-correlations between the coding time (the width of the interval) and
-code quality. We intend to investigate these issues in future work.
+Finally, developers work on a patch over time interval, which is
+possibly-discontiguous, but the code repository only records the
+endpoint of that interval. The bug database may contain more
+information about the starting point of the interval (e.g. it records
+when a bug is assigned to a developer), but still does not capture any
+information about the work patterns of the developer within the
+interval. There may be correlations between the coding time (the width
+of the interval) and code quality. We intend to investigate these
+issues in future work.
