@@ -12,6 +12,42 @@ $c'$ which were responsible for the previous versions of the files
 which were fixed, and we conclude that the commits $c'$ introduced the
 bug.
 
+Consider the commit in Listing \ref{lst-fix} (presented as a diff),
+which we find using ``fix'' as a keyword, the line which caused the
+bug is line 100 (in this case the original author used less than or
+equal to instead of strictly less than). We found most developers
+indicate that their change is a fix by including the keyword ``fix''
+in the commit message. We perform a blame on this commit, which is
+shown in Listing \ref{lst-blame}, and determine that its source is the
+commit starting with f4ce718c (which is shown in Listing
+\ref{lst-introduction}. We add this commit as a bug-introduction
+commit for this bug-fix and store it in the database.
+
+    \begin{lstlisting}[caption=An example bug-fix,label=lst-fix,frame=single]
+Commit: 2cdc03fe...
+Author: Alice <alice@project.com>
+Message: I fixed a bug!
+@@ -100,1 +100,1 @@
+-    if (i <= 128) {
++    if (i < 128) {
+    \end{lstlisting}
+
+    \begin{lstlisting}[caption=Blame of the bug-fix,label=lst-blame,frame=single]
+f4ce718c...  100    if (i <= 128) {
+    \end{lstlisting}
+
+    \begin{lstlisting}[caption=An example bug-introduction,label=lst-introduction, frame=single]
+Commit: f4ce718c...
+Author: Bob <bob@project.com>
+Message: I hope this works.
+@@ -100,0 +100,5 @@
++    if (i <= 128) {
++        do_ascii(i);
++    else {
++        do_unicode(i);
++    }
+    \end{lstlisting}
+
 Note that any change in $c$ which removes or modifies an existing line
 of code is easy to attribute to a previous commit $c'$, since the
 affected line of code existed in $c'$. However, a change in $c$ which
@@ -47,17 +83,11 @@ We describe a number of threats to validity: ....
 
 A first threat to (construct) validity is that we must properly
 identify bug-fixing and bug-introducing commits. To assess this
-threat, we randomly sampled commits that our analysis identified to be
-bug fixes, manually verified whether or not they were fixes, and
-checked that we properly identified the commit that introduced the
-bug. Most of the time in our manual verification was spent on changes
-with additions, because we were most concerned about our somewhat
-arbitrary attribution of responsibility to the line just before the
-new line.
-
-\note{How does that last line go together with the ``random sample'' bit? -PL}
-
-% Currently there are no false negative rates, we probably have time to sample non fix commits
+threat, we randomly sample commits that our analysis identified to be
+bug fixes and manually verify whether or not they are fixes to
+determine the false positive rate. Vice-versa, we randomly sample
+commits identified not to be bug fixes and manually verify these
+results to determine the false negative rate.
 
 While we believe that the commits from the examined software well
 represent commits in open source software, we do not intend to draw
@@ -70,9 +100,6 @@ different time zones. Git records each developer's local time (and
 time zone) with a commit, thereby avoiding potential imprecisions in
 our time-of-day results. We present all of our results in the local
 time of the committer.
-
-\note{We need to be sure that this is the case for all of the commits that
-got imported from other source control systems also. -PL}
 
 Because our methodology only identifies bugs which have later been
 corrected, it will definitely omit recently-introduced bugs, as well
@@ -90,59 +117,3 @@ to a developer), but still does not capture any information about the
 work patterns of the developer within the interval. There may be
 correlations between the coding time (the width of the interval) and
 code quality. We intend to investigate these issues in future work.
-
-
-\note{The following code figures are good examples. We should reorganized and add them to the beginning of Section~\ref{sec:method}.
-I would show and describe Listing 2 first, then Listing 3 (with time and author info added), and maybe finally Listing 1 (do we really need Listing 1?). 
-You can use minipage in Latex or other drawing tools to combine all 3 listings into one nice figure.  - Lin}
-
-\note{define bug-introduction time}
-
-
-We demonstrate our technique on a simple example, for instance say
-there is a change in the code repository such as the one in Listing
-\ref{lst-introduction}. The listings contain a {\em unified diff}
-between the current version in the commit and the previous version,
-which is what we use in our tool. The bug here is that when {\em i} is
-equal to 256 the code should actually use the {\em do\_unicode}
-function. A commit which fixes this bug is shown in Listing \ref{lst-fix}.
-
-
-\begin{lstlisting}[caption=An example bug introduction,label=lst-introduction, frame=single]
-Commit: f4ce718c...
-Message: I hope this works.
-@@ -100,0 +100,5 @@
-+    if (i <= 256) {
-+        do_ascii(i);
-+    else {
-+        do_unicode(i);
-+    }
-\end{lstlisting}
-
-\begin{lstlisting}[caption=An example bug fix,label=lst-fix,frame=single]
-Commit: 2cdc03fe...
-Message: I fixed a bug!
-@@ -100,1 +100,1 @@
--    if (i <= 256) {
-+    if (i < 256) {
-\end{lstlisting}
-
-Our goal is to be able to find the commit which introduced the bug and
-also link it to the commit which included the fix. We found most
-developers indicate that their change is a fix by including the keyword "fix"
-in the commit message. We perform a simple keyword search with the word "fix"
-to find these commits. For this example we should find the commit
-starting with 2cdc03fe. From the unified diff we know line 100 was
-modified from the previous version on line 100. We then perform a {\em
-  git-blame} on the previous version which indicates the last commit
-which changed the line. The output of the blame is shown in Listing
-\ref{lst-blame}
-
-\begin{lstlisting}[caption=Blame of the previous version,label=lst-blame,frame=single]
-f4ce718c...  100    if (i <= 256) {
-\end{lstlisting}
-
-Using the blame information we found the original commit which
-introduced the bug, and can enter it into our database. This
-technique of blaming can be used for any modifications or removals
-
