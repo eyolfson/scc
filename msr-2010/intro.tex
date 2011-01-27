@@ -7,10 +7,11 @@ modern software inevitably contain bugs, which hurt software reliability.
 The modern software development paradigm further complicates the situation: 
 Many modern software, e.g., Firefox, the Linux kernel, Apache, and Eclipse, 
 are developed by hundreds of or thousands of developers over decades~\cite{ccomment} 
-in a distributed manner. Developers with different programming experiences, 
+in a distributed manner. The software often receives hundreds of commits per day (Section~\ref{sec:results}). 
+Developers with different programming experiences, 
 different time commitments, different programming styles, from all over the world,
 work on the same software project at different times. They join and leave a project 
-from time to time over decades. 
+from time to time over decades.
 
 Therefore, code developed in the modern paradigm has different social characteristics 
 that are beyond the code itself. For example, different code segments in the same
@@ -20,7 +21,7 @@ commitment, different working hours, diverse culture, etc.
 The code may be checked in at different times in different time zones. 
 
 Such social characteristics provide a rich and unique source of information for us to 
-understand software bugs. Just to name one example, it would be beneficial to know if  
+understand the software and software bugs. Just to name one example, it would be beneficial to know if  
 commit time (time of day, day of week, etc.) have implications on the qualify of the commit. 
 Are commits submitted after midnight more buggy than other commits? 
 Such correlation results may be useful to predict what commits are more likely
@@ -63,8 +64,8 @@ and implications regarding developers' experience level and code correctness.
 \subsection{Contributions}
 In this paper, we study the social characteristics of modern software to understand 
 the correlation between these social characteristics with the correctness of the software.  
-Specifically, we study the latest version of the Linux kernel and XXX with XXX-XXX millions lines 
-of code, XXX-XXX versions, developed over XXX-XXX years. We study the correlation between 
+Specifically, we study the latest version of the Linux kernel and XXX with XXX-XXX commits, 
+XXX-XXX millions lines of code, XXX-XXX versions, developed over XXX-XXX years. We study the correlation between 
 the commit correctness and the time of day of the commit, the day of week of the commit, 
 the committing developers' experience and activity frequency respectively.  
 %...
