@@ -15,9 +15,11 @@ from scc_website.apps.repositories import models
 parser = argparse.ArgumentParser(description='Source Control Correlator')
 parser.add_argument("--analysis", action='store_true')
 parser.add_argument("--author-info", action='store_true')
+parser.add_argument("--commit-info", action='store_true')
 parser.add_argument("--config", default="linux.ini")
 parser.add_argument("--debug", action='store_true')
 parser.add_argument("--init-db", action='store_true')
+parser.add_argument("--fixm", action='store_true')
 args = parser.parse_args()
 
 # Config parsing
@@ -136,6 +138,7 @@ class SCCThread(threading.Thread):
                 name = commit.author.name
                 email = commit.author.email
                 sha1 = commit.hexsha
+                merge = len(commit.parents) > 1
                 if args.init_db:
                     gmt_time = datetime.utcfromtimestamp(commit.authored_date)
                     local_time = datetime.utcfromtimestamp(commit.authored_date-commit.author_tz_offset)
@@ -170,6 +173,37 @@ class SCCThread(threading.Thread):
                             previous_lines = previous_blob.data_stream.read().splitlines()
 
                             diffs.append((previous_file, previous_lines, current_file, current_lines))
+                if args.commit_info:
+                    merge = len(commit.parents) > 1
+                    diffs = []
+                    try:
+                        diff_index = commit.diff("%s~1" % commit.hexsha)
+                    # An exception occurs if this commit does not have any previous commits
+                    except:
+                        diff_index = []
+
+                    for diff in diff_index:
+                        # Set the blobs
+                        current_blob = diff.a_blob
+                        previous_blob = diff.b_blob
+
+                        # End early
+                        if ((previous_blob is None) or (current_blob is None)):
+                            continue
+
+                        # Set the files
+                        current_file = current_blob.path
+                        previous_file = previous_blob.path
+
+                        # Ignore files which are not .c, .h or .cpp
+                        if not (filetypes_re.search(previous_file) and filetypes_re.search(current_file)):
+                            continue
+
+                        # Read the data and get the lines
+                        current_lines = current_blob.data_stream.read().splitlines()
+                        previous_lines = previous_blob.data_stream.read().splitlines()
+
+                        diffs.append((previous_file, previous_lines, current_file, current_lines))
             except StopIteration:
                 break
             finally:
@@ -179,6 +213,133 @@ class SCCThread(threading.Thread):
             if args.init_db:
                 author = init_author(name, email)
                 init_commit(author, sha1, gmt_time, local_time)
+
+            if args.commit_info:
+                this_commit = models.Commit.objects.get(author__repository=django_repository, sha1=sha1)
+                
+                try:
+                    models.CommitInformation.objects.get(commit=this_commit)
+                except:
+                    introduction_count = this_commit.introductions.count()
+                    lines_removed = 0
+                    lines_added = 0
+                    lines_modified = 0
+
+                    if not merge:
+                        for diff in diffs:
+                            (previous_file, previous_lines, current_file, current_lines) = diff
+
+                            # Variables for the diff
+                            added_blocks = []
+                            removed_blocks = []
+                            modified_blocks = []
+
+                            # Compute the diff
+                            active = False
+                            in_removed_block = False
+                            in_added_block = False
+                            in_modified_block = False
+                            comment_block = False
+                            for line in difflib.unified_diff(previous_lines, current_lines):
+                                if line.startswith("@@"):
+                                    active = True
+
+                                if active:
+                                    if line.startswith("@@"):
+                                        m = line_numbers_re.match(line)
+                                        previous_line_number = int(m.group(1)) - 1
+                                        current_line_number = int(m.group(2)) - 1
+                                    elif line.startswith("-"):                            
+                                        # End added block
+                                        if in_added_block:
+                                            in_added_block = False
+                                            if(in_modified_block):
+                                                in_modified_block = False
+                                                if not comment_block:
+                                                    modified_blocks.append((removed_blocks.pop(),(start_line_number, current_line_number)))
+                                                else:
+                                                    removed_blocks.pop()
+                                            else:
+                                                if not comment_block:
+                                                    added_blocks.append((start_line_number, current_line_number))
+                                            comment_block = False
+
+                                        # Comment check
+                                        if comment_block:
+                                            if not comment_re.match(line[1:]):
+                                                comment_block = False
+
+                                        previous_line_number += 1
+
+                                        # Start new removed block
+                                        if not in_removed_block:
+                                            in_removed_block = True
+                                            start_line_number = previous_line_number
+                                            # Check if it's also a block of comments
+                                            if comment_re.match(line[1:]):
+                                                comment_block = True
+
+                                    elif line.startswith("+"):
+                                        # End removed block (this is a modified block)
+                                        if in_removed_block:
+                                            in_removed_block = False
+                                            in_modified_block = True
+                                            removed_blocks.append((start_line_number, previous_line_number))
+
+                                        # Comment check
+                                        if comment_block:
+                                            if not comment_re.match(line[1:]):
+                                                comment_block = False
+
+                                        current_line_number += 1
+
+                                        # Start new added block
+                                        if not in_added_block:
+                                            in_added_block = True
+                                            start_line_number = current_line_number
+                                            # Check if it's also a block of comments
+                                            if comment_re.match(line[1:]):
+                                                comment_block = True
+                                            else:
+                                                comment_block = False
+                                    else:
+                                        # End removed block
+                                        if in_removed_block:
+                                            in_removed_block = False
+                                            if not comment_block:
+                                                removed_blocks.append((start_line_number, previous_line_number))
+                                            comment_block = False
+
+                                        # End added block
+                                        if in_added_block:
+                                            in_added_block = False
+                                            if(in_modified_block):
+                                                in_modified_block = False
+                                                if not comment_block:
+                                                    modified_blocks.append((removed_blocks.pop(),(start_line_number, current_line_number)))
+                                                else:
+                                                    removed_blocks.pop()
+                                            else:
+                                                if not comment_block:
+                                                    added_blocks.append((start_line_number, current_line_number))
+
+                                            comment_block = False
+
+                                        previous_line_number += 1
+                                        current_line_number += 1
+
+
+                            for block in removed_blocks:
+                                lines_removed += (block[1] - block[0] + 1)
+                            for block in added_blocks:
+                                lines_added += (block[1] - block[0] + 1)
+                            for block in modified_blocks:
+                                lines_modified += (block[1][1] - block[1][0] + 1)
+
+                    #print introduction_count
+                    lines_changed = lines_removed + lines_added + lines_modified
+                    models.CommitInformation.objects.create(commit=this_commit, lines_changed=lines_changed, lines_removed=lines_removed, lines_added=lines_added, lines_modified=lines_modified, introduction_count=introduction_count, merge=merge)
+                
 
             if args.analysis and len(diffs) > 0:
                 fix_commit = models.Commit.objects.get(author__repository=django_repository, sha1=sha1)
@@ -348,8 +509,7 @@ class SCCThread(threading.Thread):
 
                     for (commit_sha1,num) in introduction.iteritems():
                         introduction_commit = models.Commit.objects.get(author__repository=django_repository, sha1=commit_sha1)
-                        bug.introduction_commits.add(introduction_commit)
-                            
+                        bug.introduction_commits.add(introduction_commit)   
                             # intro_commit = repo.commit(commit_sha1)
                             # # Again, check that the email is not None
                             # intro_commit_email = intro_commit.author.email
@@ -358,17 +518,23 @@ class SCCThread(threading.Thread):
                             # django_author = models.Author.objects.get_or_create(repository=django_repo, name=intro_commit.author.name, email=intro_commit_email)[0]
                             # django_commit = models.Commit.objects.get_or_create(author=django_author, sha1=commit_sha1, utc_time=datetime.utcfromtimestamp(intro_commit.authored_date), local_time=datetime.utcfromtimestamp(intro_commit.authored_date-commit.author_tz_offset))[0]
                             # django_introduction.commits.add(django_commit)
+            if args.fixm:
+                this_commit = models.Commit.objects.get(author__repository=django_repository, sha1=sha1)
+                ci = models.CommitInformation.objects.get(commit=this_commit)
+                
+                ci.merge = merge
+                ci.save()
 
+                
+                
 
 # Spawn the threads, wait, and clean-up
-threads = []
-for x in xrange(8):
-   SCCThread().start()
-# for thread in threads:
-#     thread.join()
-while not threading.active_count() == 1:
-    sleep(1)
-log_file.close()
+if args.init_db or args.analysis or args.commit_info or args.fixm:
+    threads = []
+    for x in xrange(8):
+        SCCThread().start()
+    while not threading.active_count() == 1:
+        sleep(1)
 
 # Clean up
 if args.analysis:
@@ -379,3 +545,63 @@ if args.analysis:
             i += 1
     except:
         pass
+
+
+if args.author_info:
+    for author in models.Author.objects.filter(repository=django_repository):
+        dates = []
+        for commit in author.commit_set.all():
+            dates.append(commit.local_time)
+        dates.sort()
+
+        classification = ''
+        days_of_experience = 0
+        day_job = False
+
+        if len(dates) == 1:
+            classification = 'S'
+        else:
+            daily_commits = 0
+            weekly_commits = 0
+            monthly_commits = 0
+            last_date = dates[0]
+            for date in dates[1:]:
+                delta = date - last_date
+                if delta.days == 0 and delta.seconds < 1800:
+                    pass
+                elif delta.days < 7:
+                    daily_commits += 1
+                elif delta.days < 31:
+                    weekly_commits += 1
+                else:
+                    monthly_commits += 1
+                last_date = date
+
+            days_of_experience = (dates[-1] - dates[0]).days
+            if daily_commits >= weekly_commits:
+                if daily_commits >= monthly_commits:
+                    classification = 'D'
+                else:
+                    classification = 'M'
+            else:
+                if weekly_commits >= monthly_commits:
+                    classification = 'W'
+                else:
+                    classification = 'M'
+            
+            # Day job check
+            if classification == "D":
+                day_commits = 0
+                for date in dates:
+                    if not (date.weekday == 5 or date.weekday == 6) and (date.hour >=8 and date.hour <= 16):
+                        day_commits += 1
+
+                if float(day_commits)/float(len(dates)) > 0.85:
+                    day_job = True
+
+        try:
+            models.AuthorInformation.objects.get(author=author)
+        except:
+            models.AuthorInformation.objects.create(author=author, classification=classification, day_job=day_job, experience=days_of_experience)
+
+log_file.close()

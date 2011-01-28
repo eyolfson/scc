@@ -30,3 +30,12 @@ class AuthorInformation(models.Model):
     classification = models.CharField(max_length=1, choices=CLASSIFICATION_CHOICES)
     day_job = models.BooleanField()
     experience = models.IntegerField()
+
+class CommitInformation(models.Model):
+    commit = models.OneToOneField(Commit, primary_key=True)
+    introduction_count = models.IntegerField()
+    lines_added = models.IntegerField()
+    lines_removed = models.IntegerField()
+    lines_modified = models.IntegerField()
+    lines_changed = models.IntegerField()
+    merge = models.BooleanField()

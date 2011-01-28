@@ -1,0 +1,146 @@
+\section{Introduction}
+
+\note{Jon, can you fill in the XXX? - Lin}
+
+Software demands high reliability. However, as its complexity increases, 
+modern software inevitably contain bugs, which hurt software reliability.
+The modern software development paradigm further complicates the situation: 
+Many modern software, e.g., Firefox, the Linux kernel, Apache, and Eclipse, 
+are developed by hundreds of or thousands of developers over decades~\cite{ccomment} 
+in a distributed manner. The software often receives hundreds of commits per day (Section~\ref{sec:results}). 
+Developers with different programming experiences, 
+different time commitments, different programming styles, from all over the world,
+work on the same software project at different times. They join and leave a project 
+from time to time over decades.
+
+Therefore, code developed in the modern paradigm has different social characteristics 
+that are beyond the code itself. For example, different code segments in the same
+software project may written by developers with  
+varies level of expertise, different time 
+commitment, different working hours, diverse culture, etc.
+The code may be checked in at different times in different time zones. 
+
+Such social characteristics provide a rich and unique source of information for us to 
+understand the software and software bugs. Just to name one example, it would be beneficial to know if  
+commit time (time of day, day of week, etc.) have implications on the qualify of the commit. 
+Are commits submitted after midnight more buggy than other commits? 
+Such correlation results may be useful to predict what commits are more likely
+to be buggy so that we can budget more testing effort on these commits, just
+like prior studies~\cite{graves00predicting, guo04robust, ostrand05predicting},
+which predict bugs based on code complexity, 
+code locations, amount of in-house testing, etc. 
+Another interesting question is, whether more experienced developers are more or less
+likely to introduce buggy commits. 
+
+
+\subsection{Challenges}
+There are several challenges in studying the correlation of commit correctness and software social characteristics.
+First, it is challenging to know if a commit is buggy or not,
+as bugs in the commit are often not 
+discovered or reported until days, months, or even years after the commit. 
+We use a reverse chronological method~\cite{2005-changes} to address this challenge. 
+Specifically, we start from {\em bug-fixing commits}, commits that fix software bugs, 
+and then leverage the version control system to understand when the corresponding bugs were introducted. 
+%In other words, we extract the bug introduction time for bug fixes 
+%from the software version control systems. 
+Then we can know collectively when bugs are more likely to be introduced. 
+%In particular, we leverage the ``git blame'' functionality to identify the last modification time of each buggy line.
+
+It is difficult to find bug-fixing commits in the sea of software commits.
+The prior work~\cite{2005-changes} considers a commit whose commit message contains a bug 
+ID that links to a bug report in a bug database to be a bug-fixing commit. While this
+approach works for some software such as Mozilla, it does not work for software that 
+rarely contain links from commit messages to bug reports, e.g., the Linux kernel.
+We address this problem by applying heuristics to extract bug-fixing commits by examining
+the commits themselves without analyzing bug reports at all. As shown later in Section~\ref{sec:results}, 
+our heuristics have an accuracy of XXX\% in identifying bug-fixing commits.
+
+Additionally, it is difficult to know how experienced the developers are in an open source development
+environment as such information is not documented and subjective. 
+We make our best-effort approximation by calculating the length and frequency of a developer
+contributing to an open source project, which allows us to discover important findings 
+and implications regarding developers' experience level and code correctness. 
+
+\subsection{Contributions}
+In this paper, we study the social characteristics of modern software to understand 
+the correlation between these social characteristics with the correctness of the software.  
+Specifically, we study the latest version of the Linux kernel and XXX with XXX-XXX commits, 
+XXX-XXX millions lines of code, XXX-XXX versions, developed over XXX-XXX years. We study the correlation between 
+the commit correctness and the time of day of the commit, the day of week of the commit, 
+the committing developers' experience and activity frequency respectively.  
+%...
+%In addition to the above social characteristics, we also 
+In addition, we study several other commit characteristics, such as
+the commit sizes, XXX, XXX, etc. 
+
+Our major findings 
+%that can benefit language/tool designers and system programmers 
+are summarized below ($\S$ denotes in which
+section the finding and its {\em implications} are discussed). To the best of our
+knowledge, we are the {\em first} to study the correlation between the commit time of day and
+the commit correctness. 
+
+\begin{list}{\labelitemi}{\topsep=0pt\parsep=0pt\leftmargin=9pt\itemindent=0pt}
+
+\vspace{0.05in}
+  \item {\bf Finding 1 ($\S$\ref{sec:finding1}):} 
+Commits that are checked into the softare repository between XXX-XXX AM  are  XXX\% more likely
+to be incorrect. 
+The result indicate that developers may want to double check the code they write  
+before they commit between these hours. It may also to beneficial for the version control
+system to warn the developers of late night commits to improve software reliability. 
+
+\item {\bf Finding 2 ($\S$\ref{sec:finding2}):} 
+\item {\bf Finding 3 ($\S$\ref{sec:finding3}):} 
+\end{list}
+
+
+%Developers spend a large amount of time
+%diagnosing bugs and fixing bugs by applying patches over the buggy software versions. 
+%As modern software are often very complex and developed by thousands of developers 
+%distributedly over many years, many of the patches are not correct, e.g., not fixing
+%the bug, or introducing new bugs, etc~\cite{}. A recent study shows that XXX\% of patches
+%are buggy. 
+
+\comment{
+The area of bug detection and resolution is currently a very active area of research
+in the software related disciplines. The process of detecting and resolving software
+bugs is an extremely costly process because of the manpower required to perform
+quality assurance on the developed software and having developers perform the fixes.
+It is estimated that 20\% - 30\% of the time spent on a software project is spent on
+testing and integration \cite{2004-industry}. In addition to the cost of manpower,
+the time required to complete these tasks can be costly on the release date of the
+software. As such, for the majority of software companies, the process of quality
+assurance is costly and time consuming. To put the cost into perspective, a study
+conducted by the National Institute of Standard and Technology in 2002 reported that
+software bugs cost the economy of the United States approximately \$59.5 billion
+annually \cite{2002-economic}. The study also showed that approximately 64\% of
+the costs of software bug fixes are incurred by the end users, making this issue
+of extreme importance for the consumers as well \cite{2002-economic}.
+
+In our paper we will show the data collected from two large projects, which
+are complex and representative of most software projects, namely Linux and Firefox.
+Our data includes: percentage of bugs introduced vs total percentage of commits for
+every day of the week, percentage of bugs introduced every hour vs percentage of total commits
+every hour, percentage of introduction vs percentage of total commits by author classification,
+percentage of bugs introduced vs percentage of total commits grouped by author experience,
+and bug lifetime.
+
+Our paper does not focus on solving a problem, but instead tries to find correlations between
+bug introductions and days of the week, hours of the day, commit introductions by author
+experience, commit introductions by author classification, and bug life time. This information
+can be used to try and reveal any potential correlations that could help leaders
+in the software industry determine ways to minimize any potential effects
+of working on a certain day, or during a certain hour. Collecting and analyzing
+data with regards to bug introduction will surely be beneficial to reducing bug
+introduction rates by examining some of the potential causes.
+
+This paper will be organized in the following fashion: Section
+\ref{sec-idea} will give an insight to our idea and how we approached
+the problem, Section \ref{sec-impl} discusses our implementation for
+automatically finding bug introduction points, Section
+\ref{sec-results} presents the results we found, Section
+\ref{sec-related} will discuss the related academic work which our
+work compliments, Section \ref{sec-future} explores possible future
+work, and finally Section \ref{sec-conclusion} concludes our work.
+}

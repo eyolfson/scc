@@ -1,0 +1,125 @@
+\section{Related Work}
+\label{sec-related}
+
+Difference between this paper and the MSR'05 paper:
+
+- time of day
+
+- developer experience 
+
+- different data collection technique: does not reply on the link between a commit and a bug report
+
+Need some literature search regarding studies on developer experience
+
+\note{The following is a good starting point, but they need to be grouped and shortened.  - Lin}
+
+
+No single solution has been found for solving the problem of bug
+introduction, but a lot of work has been done to try and minimize the
+problem, because it is un-likely that it could be completely
+resolved. Some of the things that could have been done is spend more
+time on software design to minimize the introduction of design related
+bugs by taking into account all the accumulated experiences to avoid
+repeating any mistakes that lead to bugs. Finally, companies have made
+strides in improving testing methodologies and automating the testing
+process as much as possible, which lead to savings of approximately
+\$22.5 billion \cite{2004-industry}. The works presented below are
+mostly geared towards data collection for analysis, and trying to find
+potential sources that could be contributing to bug-introducing
+changes to see what can be done to minimize bug-introduction.
+
+\paragraph{When do changed induce fixes?}
+
+
+One of the relevant academic works is this paper, which analyzes CVS
+achieves for fix-inducing changes. In other words, they examine code
+changes that lead to problems. They discuss a methodology to
+automatically locate fix-inducing changes by linking a version archive
+to a bug database such as BUGZILLA \cite{2005-changes}. The authors
+examined the history for Mozilla and Eclipse for their data
+collection. The results they collected yielded that fix-inducing
+changes show distinct patterns with respect to their size and the day
+of the week they occurred. They discuss the general idea behind the
+process of finding fix-inducing changes as: 1. Start with a bug report
+in the bug database, indicating a fixed problem, extract the
+associated change from the version archive to get the location of the
+fix, and finally determine the earlier change at this location that
+was applied before the bug was reported. The authors describe
+syntactic and semantic analysis for the first step in the their
+process of identifying potential fixes. Finally, through the use of
+diff and annotate commands, as well as cycling through different
+versions of the code, the authors are able to locate fix-inducing
+changes. The study concluded that most bugs are introduced on Fridays
+and Sundays. This work was important because it provided us with a
+guideline for a methodology for extracting fix-inducing changes.
+
+\paragraph{Automatic identification of bug-introducing changes}
+The authors try to automate the process of finding bug-introducing
+changes, which would remove the manual work associated with going
+through bug reports or commit logs to collect this type of
+information. They use the SZZ algorithm, which traces from the
+location of the fix where the bug was introduced, and as such extract
+the time \cite{2006-automatic}.The weakness with this algorithm is
+that sometimes it makes false detections because not all modifications
+are fixes, and a moderate improvement from using just SZZ is the use
+of annotation graphs. Another improvement was ignoring format changes,
+which reduce a large number of false positives. This paper has
+inspired the approach we used for automating the process of
+identifying bug-introducing changes, which was key for collecting a
+large pool of data.
+
+\paragraph{How long did it take to fix bugs?}
+In this paper the author try to measure software quality as a function
+of the number of bugs. The authors examine the bug fix time of files
+in two open source software: ArgoUML and PostgreSQL, and tackle this
+issue by identifying when bugs are introduced and when the bugs are
+fixed \cite{2006-long}. The argument is files with the greatest
+bug-fix times, whose bug counts are greater than average, may need
+more attention to determine why bug fixes take such a long time –
+potentially indicating the need for code refactoring to achieve faster
+bug fixes in the future. The authors first extracted change histories
+of the two projects, ArgoUML and PostgreSQL, using the Kenyon
+infrastructure. To identify a bug-fix, they searched for keywords such
+as fixed or bugs and they also searched for references to bug
+reports. They then applied the identified bug-introducing changes by
+applying the fix-inducing change identification algorithms described
+in the paper “When do changes induce fixes?” which I mentioned
+earlier.  This work is of course relevant because it gives us a
+methodology for extracting bug-fix times.
+
+\paragraph{If your bug database could talk}
+This is another relevant work, where the authors perform experiments
+that demonstrate how to relate developer, code, and process to defects
+in the code. This work tries to understand why some programs are more
+failure-prone than others.  To answer this question, we have to know
+which programs are more failure-prone than others – to search for
+properties of the programs or its development process that commonly
+correlate with defect density. The authors try to answer questions
+like “can one predict failure-proneness from metrics like code
+complexity?”, “what does a high number of bugs found after release?”,
+and “do some developers write more failure-prone code than
+others?”. After examining Eclipse database, some of the conclusions
+that the authors made were: new or combination of existing metrics
+need to be explored to study the relationship between complexity of
+code to the presence of bugs in a given class, it is difficult to
+predict post-release failures solely from process measurements, and
+there is a high variance in failure density in files owned by
+different developers \cite{2006-if}. Their methodology for extracting
+information from bug reports from BUGZILLA will be very useful for our
+project.
+
+\paragraph{On the Nature of Commits}
+This paper studies the nature of commits in two dimensions: define the
+size of commits in terms of number of files, and classify commits
+based on the content of their comments \cite{hattori2008nature}. The
+authors investigated the distribution of commits according to the
+number of files, and their results show that the majority of commits
+contain a large number of files. The authors also developed a
+classification system for commits according to development and
+maintenance activities based on the content of their commits, a system
+that is more suitable for open source projects. Some of the major
+findings made by the authors include: the majority of the commits are
+not related to the development activities, corrective actions generate
+more tiny commits, and development activities are spread among all
+sizes of commits.
+

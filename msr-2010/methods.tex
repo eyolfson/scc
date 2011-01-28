@@ -1,0 +1,119 @@
+\section{Experimental Methods}
+\label{sec:method}
+Our goal is to find commits which report fixing a bug, as well as the commits
+which introduced that bug. First, we detect a bug-fixing commit $c$ by
+searching the commit messages for common keywords such as ``fix'' and
+``bug''. Next, we work backwards to locate the commits that introduced
+the bug fixed in $c$. Using commit $c$ as a starting point, we compute
+a diff for each file between the version after $c$ and the previous
+version of that file, and record the line numbers changed in
+$c$. Finally, we use the repository metadata to find the commit(s)
+$c'$ which were responsible for the previous versions of the files
+which were fixed, and we conclude that the commits $c'$ introduced the
+bug.
+
+Consider the commit in Listing \ref{lst-fix} (presented as a diff),
+which we find using ``fix'' as a keyword, the line which caused the
+bug is line 100 (in this case the original author used less than or
+equal to instead of strictly less than). We found most developers
+indicate that their change is a fix by including the keyword ``fix''
+in the commit message. We perform a blame on this commit, which is
+shown in Listing \ref{lst-blame}, and determine that its source is the
+commit starting with f4ce718c (which is shown in Listing
+\ref{lst-introduction}. We add this commit as a bug-introduction
+commit for this bug-fix and store it in the database.
+
+    \begin{lstlisting}[caption=An example bug-fix,label=lst-fix,frame=single]
+Commit: 2cdc03fe...
+Author: Alice <alice@project.com>
+Message: I fixed a bug!
+@@ -100,1 +100,1 @@
+-    if (i <= 128) {
++    if (i < 128) {
+    \end{lstlisting}
+
+    \begin{lstlisting}[caption=Blame of the bug-fix,label=lst-blame,frame=single]
+f4ce718c...  100    if (i <= 128) {
+    \end{lstlisting}
+
+    \begin{lstlisting}[caption=An example bug-introduction,label=lst-introduction, frame=single]
+Commit: f4ce718c...
+Author: Bob <bob@project.com>
+Message: I hope this works.
+@@ -100,0 +100,5 @@
++    if (i <= 128) {
++        do_ascii(i);
++    else {
++        do_unicode(i);
++    }
+    \end{lstlisting}
+
+Note that any change in $c$ which removes or modifies an existing line
+of code is easy to attribute to a previous commit $c'$, since the
+affected line of code existed in $c'$. However, a change in $c$ which
+adds a new line of code has no corresponding change in any previous
+revision, since this line did not previously exist. In that case, we
+attribute responsibility to the commit which introduced the line just
+before the new line.
+
+\paragraph{Data collected}
+Executing the above algorithm gives us data about a number of commits
+in the repository, as well as about the authors of these commits.  We
+record the following data for each commit: author (as a name/email
+pair), time, number of lines changed, and number of times the commit
+introduced a bug later corrected. For each author, we record the name,
+email(s), experience and classification. We define a bug lifetime's to
+be the time from the earliest commit which introduced a bug to the
+bug-fixing commit.
+
+We compute an author's experience and classification based on the
+frequency and duration of that author's commits to a project. Author
+experience counts the time between an author's earliest and latest
+commits to the project. Author classification describes the author's
+most-common frequency between consecutive commits: daily, weekly,
+monthly, and single. Note that, for author classification purposes, we
+ignore consecutive commits within 30 minutes of each other. As a
+sub-class of the daily commiter classification, we also use a
+heuristic to identify commiters who worked on the repository as part
+of their day job, namely those for which 85\% of commits are between 8
+AM and 4 PM Monday to Friday.
+
+\paragraph{Threats to Validity}
+We describe a number of threats to validity: ....
+
+A first threat to (construct) validity is that we must properly
+identify bug-fixing and bug-introducing commits. To assess this
+threat, we randomly sample commits that our analysis identified to be
+bug fixes and manually verify whether or not they are fixes to
+determine the false positive rate. Vice-versa, we randomly sample
+commits identified not to be bug fixes and manually verify these
+results to determine the false negative rate.
+
+While we believe that the commits from the examined software well
+represent commits in open source software, we do not intend to draw
+any general conclusions about all software.  Like any other
+characteristic study, our findings should be considered together with
+our evaluation methodology.
+
+We expect our methodology to properly account for developers in
+different time zones. Git records each developer's local time (and
+time zone) with a commit, thereby avoiding potential imprecisions in
+our time-of-day results. We present all of our results in the local
+time of the committer.
+
+Because our methodology only identifies bugs which have later been
+corrected, it will definitely omit recently-introduced bugs, as well
+as longer-running bugs which have not yet been corrected. While this
+implies that our results will omit some bugs, we do not believe that
+this omission affects our validity, because there is no reason to
+believe that there are important differences in the characteristics we
+measure for fixed and unfixed bugs.
+
+Finally, developers work on a patch over a (possibly-discontiguous)
+time interval, but the code repository only records the endpoint of
+that interval. The bug database may contain more information about the
+starting point of the interval (e.g. it records when a bug is assigned
+to a developer), but still does not capture any information about the
+work patterns of the developer within the interval. There may be
+correlations between the coding time (the width of the interval) and
+code quality. We intend to investigate these issues in future work.

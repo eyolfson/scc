@@ -1,0 +1,233 @@
+% This is "sig-alternate.tex" V1.9 April 2009
+% This file should be compiled with V2.4 of "sig-alternate.cls" April 2009
+%
+% ----------------------------------------------------------------------------------------------------------------
+% This .tex file (and associated .cls V2.4) produces:
+%       1) The Permission Statement
+%       2) The Conference (location) Info information
+%       3) The Copyright Line with ACM data
+%       4) NO page numbers
+%
+% as against the acm_proc_article-sp.cls file which
+% DOES NOT produce 1) thru' 3) above.
+%
+% Using 'sig-alternate.cls' you have control, however, from within
+% the source .tex file, over both the CopyrightYear
+% (defaulted to 200X) and the ACM Copyright Data
+% (defaulted to X-XXXXX-XX-X/XX/XX).
+% e.g.
+% \CopyrightYear{2007} will cause 2007 to appear in the copyright line.
+% \crdata{0-12345-67-8/90/12} will cause 0-12345-67-8/90/12 to appear in the copyright line.
+%
+%
+% For tracking purposes - this is V1.9 - April 2009
+
+\documentclass{sig-alternate}
+
+\clubpenalty=300 %10000
+\widowpenalty=300 %10000
+%\brokenpenalty=1000 %10000
+
+\usepackage{times}
+
+%------------------------------------------------------------------------- 
+% take the % away on next line to produce the final camera-ready version 
+%\pagestyle{empty}
+
+%------------------------------------------------------------------------- 
+\usepackage{arydshln}
+\usepackage{boxedminipage}
+\usepackage{xspace}
+\usepackage{listings}
+
+%Squeeze space in bibliographybg
+  \let\oldthebibliography=\thebibliography
+  \let\endoldthebibliography=\endthebibliography
+  \renewenvironment{thebibliography}[1]{%
+    \begin{oldthebibliography}{#1}%
+      \setlength{\parskip}{0ex}%
+      \setlength{\itemsep}{0ex}%
+  }%
+  {%
+    \end{oldthebibliography}%
+  }
+
+\lstset{language=C}
+
+\newcommand{\code}{\tt \small}
+
+\newcommand{\comment}[1]{{}}
+%\newcommand{\bfc}[1]{bug-fixing commits}
+%\newcommand{\bic}[1]{bug-introduction commits}
+\newcommand{\note}[1]{{\bf *** NOTE: {#1} ***}}
+
+
+\begin{document}
+%
+% --- Author Metadata here ---
+\conferenceinfo{MSR}{'11 Honolulu, Hawaii, USA}
+%\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
+%\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
+% --- End of Author Metadata ---
+
+\title{When And Why A Bug Is Introduced}
+%% \subtitle{Subtitle Text, if any}
+
+
+%\title{Alternate {\ttlit ACM} SIG Proceedings Paper in LaTeX
+%Format\titlenote{(Produces the permission block, and
+%copyright information). For use with
+%SIG-ALTERNATE.CLS. Supported by ACM.}}
+%\subtitle{[Extended Abstract]
+%\titlenote{A full version of this paper is available as
+%%\textit{Author's Guide to Preparing ACM SIG Proceedings Using
+%\LaTeX$2_\epsilon$\ and BibTeX} at
+%\texttt{www.acm.org/eaddress.htm}}}
+%
+% You need the command \numberofauthors to handle the 'placement
+% and alignment' of the authors beneath the title.
+%
+% For aesthetic reasons, we recommend 'three authors at a time'
+% i.e. three 'name/affiliation blocks' be placed beneath the title.
+%
+% NOTE: You are NOT restricted in how many 'rows' of
+% "name/affiliations" may appear. We just ask that you restrict
+% the number of 'columns' to three.
+%
+% Because of the available 'opening page real-estate'
+% we ask you to refrain from putting more than six authors
+% (two rows with three columns) beneath the article title.
+% More than six makes the first-page appear very cluttered indeed.
+%
+% Use the \alignauthor commands to handle the names
+% and affiliations for an 'aesthetic maximum' of six authors.
+% Add names, affiliations, addresses for
+% the seventh etc. author(s) as the argument for the
+% \additionalauthors command.
+% These 'additional authors' will be output/set for you
+% without further effort on your part as the last section in
+% the body of your article BEFORE References or any Appendices.
+
+\numberofauthors{1} %  in this sample file, there are a *total*
+% of EIGHT authors. SIX appear on the 'first-page' (for formatting
+% reasons) and the remaining two appear in the \additionalauthors section.
+%
+\author{
+% You can go ahead and credit any number of authors here,
+% e.g. one 'row of three' or two rows (consisting of one row of three
+% and a second row of one, two or three).
+%
+% The command \alignauthor (no curly braces needed) should
+% precede each author name, affiliation/snail-mail address and
+% e-mail address. Additionally, tag each line of
+% affiliation/address with \affaddr, and tag the
+% e-mail address with \email.
+%
+% 1st. author
+\alignauthor
+Jon Eyolfson, Lin Tan, Patrick Lam\\ 
+       \affaddr{University of Waterloo} \\
+       \affaddr{200 University Avenue West}\\
+       \affaddr{Waterloo, ON N2L3G1, Canada} \\ 
+       \affaddr{\em \{jeyolfso, lintan, patrick.lam\}@uwaterloo.ca}
+}
+
+
+
+\maketitle
+
+%% \category{CR-number}{subcategory}{third-level}
+
+%% \terms
+%% term1, term2
+
+%% \keywords
+%% runtime monitoring, verification, tracematches, dynamic binary translation
+
+\maketitle
+
+\begin{abstract}
+\input{abstract}
+%% \comment{In this paper we attempt to find a correlation between the commit time
+%% of a code change and the rate of introduction of bugs. In other words,
+%% are developers more prone to bug-inducing changes during certain hours
+%% of the day or not. Before we start our search we were expecting our
+%% results to show that before lunch hour, in anticipation of going for
+%% lunch, and towards the end of the working day in anticipation of going
+%% home. Previous studies have explored whether there is a correlation
+%% between the bug-inducing changes rate and the day of the week, various
+%% mining techniques of bug-inducing changes, but to our knowledge no
+%% work has been to try and find a specific time slots during the day
+%% when developers might be more likely to introduce bugs. We mined data
+%% from Linux and Firefox using their software repositories. We developed
+%% an automated method for extracting information which finds a patch
+%% containing a fix and links it to patches which introduced the bug,
+%% which required the fix. We found the false positive rate to be under
+%% 20\% after randomly sampling 100 reports. Our study has found that Thursday is a bad day to code, while
+%% Mondays are surprisingly good. Also between 12AM and 9AM, developers are more prone
+%% to introducing errors, while the least amount of bugs are introduced between
+%% 11AM and 3PM. Our data also shows that daily committers are less prone to introducing
+%% bugs, while day-job users are more prone. Finally, the bug lifetimes seem to decay
+%% exponentially, and on average is longer for larger projects.}
+\end{abstract}
+
+
+
+% There's nothing stopping you putting the seventh, eighth, etc.
+% author on the opening page (as the 'third row') but we ask,
+% for aesthetic reasons that you place these 'additional authors'
+% in the \additional authors block, viz.
+\additionalauthors{}
+%\date{30 July 1999}
+
+% Just remember to make sure that the TOTAL number of authors
+% is the number that will appear on the first page PLUS the
+% number that will appear in the \additionalauthors section.
+
+
+% A category with the (minimum) three required fields
+%\category{}{}{}[]
+%\category{}{}{}[]
+
+%\category{H.4}{Information Systems Applications}{Miscellaneous}
+%A category including the fourth, optional field follows...
+%\category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
+
+%\terms{Theory}
+
+%\keywords{Empirical Study, Bug detection}
+
+
+%------------------------------------------------------------------------------
+
+
+
+\input intro
+\input methods
+%\input idea % idea, design, and methods
+\input results
+\input related
+\input conclusions
+
+
+
+%\input{intro}
+%\input{design}
+%\input{methodology}
+%\input{results}
+%\input{discussion}
+%\input{related}
+%\input{conclusions}
+
+
+
+
+{\small 
+\bibliographystyle{abbrv}
+\bibliography{paper}
+}
+
+
+%\theendnotes
+
+\end{document}
