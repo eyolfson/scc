@@ -169,8 +169,8 @@ class SCCThread(threading.Thread):
                                 continue
 
                             # Read the data and get the lines
-                            current_lines = current_blob.data_stream.read().splitlines()
-                            previous_lines = previous_blob.data_stream.read().splitlines()
+                            current_lines = current_blob.data_stream.read().replace('\r','').splitlines()
+                            previous_lines = previous_blob.data_stream.read().replace('\r','').splitlines()
 
                             diffs.append((previous_file, previous_lines, current_file, current_lines))
                 if args.commit_info:
@@ -200,8 +200,8 @@ class SCCThread(threading.Thread):
                             continue
 
                         # Read the data and get the lines
-                        current_lines = current_blob.data_stream.read().splitlines()
-                        previous_lines = previous_blob.data_stream.read().splitlines()
+                        current_lines = current_blob.data_stream.read().replace('\r','').splitlines()
+                        previous_lines = previous_blob.data_stream.read().replace('\r','').splitlines()
 
                         diffs.append((previous_file, previous_lines, current_file, current_lines))
             except StopIteration:
@@ -458,18 +458,18 @@ class SCCThread(threading.Thread):
                     try:
                         if (len(removed_blocks) + len(modified_blocks)) > 0:
                             try:
-                                previous_blame = git_cmd.blame(["-l", "-s", "-w", "--root", "%s~1" % sha1, previous_file]).splitlines()
+                                previous_blame = git_cmd.blame(["-l", "-s", "-w", "--root", "%s~1" % sha1, previous_file]).replace('\r','').splitlines()
                             except:
                                 git_cmd.checkout(["-b", "scc_temp_%d" % temp_branch_num, "%s~1" % sha1])
                                 temp_branch_num += 1
-                                previous_blame = git_cmd.blame(["-l", "-s", "-w", "--root", "%s~1" % sha1, previous_file]).splitlines()
+                                previous_blame = git_cmd.blame(["-l", "-s", "-w", "--root", "%s~1" % sha1, previous_file]).replace('\r','').splitlines()
                         if len(added_blocks) > 0:
                             try:
-                                current_blame = git_cmd.blame(["-l", "-s", "-w", "--root", sha1, current_file]).splitlines()
+                                current_blame = git_cmd.blame(["-l", "-s", "-w", "--root", sha1, current_file]).replace('\r','').splitlines()
                             except:
                                 git_cmd.checkout(["-b", "scc_temp_%d" % temp_branch_num, sha1])
                                 temp_branch_num += 1
-                                current_blame = git_cmd.blame(["-l", "-s", "-w", "--root", sha1, current_file]).splitlines()
+                                current_blame = git_cmd.blame(["-l", "-s", "-w", "--root", sha1, current_file]).replace('\r','').splitlines()
                     finally:
                         commit_lock.release()
 
@@ -508,7 +508,16 @@ class SCCThread(threading.Thread):
                     #         print commit_sha1, num
 
                     for (commit_sha1,num) in introduction.iteritems():
+                        #try:
                         introduction_commit = models.Commit.objects.get(author__repository=django_repository, sha1=commit_sha1)
+                        # except:
+                        #     log("Looking at commit %s" % sha1)
+                        #     log("Filename: %s or %s" % (previous_file, current_file))
+                        #     log("Added blocks: %s" % added_blocks.__str__())
+                        #     log("Modified blocks: %s" % modified_blocks.__str__())
+                        #     log("Removed blocks: %s" % removed_blocks.__str__())
+                        #     log("Cannot find %s" % commit_sha1)
+                        #     raise
                         bug.introduction_commits.add(introduction_commit)   
                             # intro_commit = repo.commit(commit_sha1)
                             # # Again, check that the email is not None
@@ -518,14 +527,7 @@ class SCCThread(threading.Thread):
                             # django_author = models.Author.objects.get_or_create(repository=django_repo, name=intro_commit.author.name, email=intro_commit_email)[0]
                             # django_commit = models.Commit.objects.get_or_create(author=django_author, sha1=commit_sha1, utc_time=datetime.utcfromtimestamp(intro_commit.authored_date), local_time=datetime.utcfromtimestamp(intro_commit.authored_date-commit.author_tz_offset))[0]
                             # django_introduction.commits.add(django_commit)
-            if args.fixm:
-                this_commit = models.Commit.objects.get(author__repository=django_repository, sha1=sha1)
-                ci = models.CommitInformation.objects.get(commit=this_commit)
-                
-                ci.merge = merge
-                ci.save()
-
-                
+    
                 
 
 # Spawn the threads, wait, and clean-up
@@ -578,16 +580,19 @@ if args.author_info:
                 last_date = date
 
             days_of_experience = (dates[-1] - dates[0]).days
-            if daily_commits >= weekly_commits:
-                if daily_commits >= monthly_commits:
-                    classification = 'D'
+            if len(dates) >= 20:
+                if daily_commits >= weekly_commits:
+                    if daily_commits >= monthly_commits:
+                        classification = 'D'
+                    else:
+                        classification = 'M'
                 else:
-                    classification = 'M'
+                    if weekly_commits >= monthly_commits:
+                        classification = 'W'
+                    else:
+                        classification = 'M'
             else:
-                if weekly_commits >= monthly_commits:
-                    classification = 'W'
-                else:
-                    classification = 'M'
+                classification = 'O'
             
             # Day job check
             if classification == "D":

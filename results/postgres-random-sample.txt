@@ -1,0 +1,1957 @@
+=== Fix Commits ===
+Commit: 961eb5716b9e60c6f9c1d1fcde52c092aba05926
+Message:
+Fixed minor bug in ResultSet for jdbc2 reported by Matthew Denner that absolute doesnt handle negative row numbers correctly.
+Comment:
+Good, however it is in a Java file.
+
+G: 1, B: 0
+
+Commit: 4688e6d9cb50c1ca8112060f46103927e757ed45
+Message:
+Fix pg_ctl bug where detection of binary location from postmaster.opts
+wasn't working.
+Comment:
+Good, however the copyright date is also modified.
+
+G: 2, B: 0
+
+Commit: 3d7a9ac76977959eabf4bbbc675fb0e153b36aa2
+Message:
+Fix breakage for pltcl modules. pg_get_enconv_by_encoding() has been
+changed since CREATE CONVERSION supported.
+Comment:
+Good, forgot to change a one file after a reimplementation.
+
+G: 3, B: 0
+
+Commit: 738d13833e8036f171e02326db2cefdd402706a9
+Message:
+AIX shlib fix for building libpq.so from Tomoyuki Niijima
+Comment:
+Good, but it's a Makefile fix which will be ignored.
+
+G: 4, B: 0
+
+Commit: 5fc2d7e45148b92ea082356b425562c3cb971954
+Message:
+Suppress timezone (%Z) part of timestamp display when running on Windows,
+because on that platform strftime produces localized zone names in varying
+encodings.  Even though it's only in a comment, this can cause encoding
+errors when reloading the dump script.  Per suggestion from Andreas
+Seltenreich.  Also, suppress %Z on Windows in the %s escape of
+log_line_prefix ... not sure why this one is different from the other two,
+but it shouldn't be.
+Comment:
+Good, but again copyright information (problem is specific to Windows),
+
+G: 5, B: 0
+
+Commit: 7c13781ee7a617235f24617e3bd7628cda95df15
+Message:
+First phase of project to use fixed OIDs for all system catalogs and
+indexes.  Extend the macros in include/catalog/*.h to carry the info
+about hand-assigned OIDs, and adjust the genbki script and bootstrap
+code to make the relations actually get those OIDs.  Remove the small
+number of RelOid_pg_foo macros that we had in favor of a complete
+set named like the catname.h and indexing.h macros.  Next phase will
+get rid of internal use of names for looking up catalogs and indexes;
+but this completes the changes forcing an initdb, so it looks like a
+good place to commit.
+Along the way, I made the shared relations (pg_database etc) not be
+'bootstrap' relations any more, so as to reduce the number of hardwired
+entries and simplify changing those relations in future.  I'm not
+sure whether they ever really needed to be handled as bootstrap
+relations, but it seems to work fine to not do so now.
+Comment:
+Bad, this is an implementation change, not a bug fix.
+
+G: 5, B: 1
+
+Commit: 3a372d61d0799ea82124887262d18ca21e385f22
+Message:
+Kris Jurka pointed out that the qualified_name production wasn't
+working as intended --- for some reason, FROM a.b.c was getting
+parsed as if it were a function name and not a qualified name.
+I think there must be a bug in bison, because it should have
+complained that the grammar was ambiguous.  Anyway, fix it along
+the same lines previously used for func_name vs columnref, and get
+rid of the right-recursion in attrs that seems to have confused
+bison.
+Comment:
+Good, but changes are in a grammar (.y) file.
+
+G: 6, B: 1
+
+Commit: 1ccc67600bce722ac6edd695e06b451ff75cdc4d
+Message:
+Fix race condition that could allow two concurrent transactions
+to insert the same key into a supposedly unique index.  The bug is of
+low probability, and may not explain any of the recent reports of
+duplicated rows; but a bug is a bug.
+Comment:
+Good.
+
+G: 7, B: 1
+
+Commit: cc8dc825d8c39e8afc9709e7400a973147786284
+Message:
+Fix typo for default units for timespan input.
+Place single-ticks around bad argument in elog messages.
+Fix tabbing of large lookup tables (ugh).
+Comment:
+Bad, this is mostly just noise. It's formating changes and new string
+dislay.
+
+G: 7, B: 2
+
+Commit: 23e2f9ebf701274594abeb8d36c7c01eb6b3919b
+Message:
+Fix spelling error, per Michael Fuhr.
+Comment:
+Good, but it's in the documentation.
+
+G: 8, B: 2
+
+Commit: d09753421954c601c9d73b7a0f4a3e9c637c9a0b
+Message:
+Fix possible core dump from pgbench -d option.  Julius Stroffek
+Comment:
+Good, it's a little mistake.
+
+G: 9, B: 2
+
+Commit: e2617c856eddb805b7b966319dad271ecaf5fb4c
+Message:
+Fix for compile warning, from Ernst Molitor.
+Comment:
+Good, not a very productive change though.
+
+G: 10, B: 2
+
+Commit: 960f6a5fdf9aafea93585cd7a4cef5044aebe078
+Message:
+Fix for SunOS4 horology test
+Comment:
+Good, it just added a test though and will be ignored.
+
+G: 11, B: 2
+
+Commit: 41accb0e1a152135397fcaa984fcb5e34af5a06d
+Message:
+Fix another place that assumed 'x = lcons(y, z)' would not have any
+side-effect on the original list z.  I fear we have a few more of these
+to track down yet :-(.
+Comment:
+Good, also interesting message.
+
+G: 12, B: 2
+
+Commit: d8f4eff89c0e4583d196779b15c93e23d8885c42
+Message:
+Mark as done, fix grammar:
+
+< * Prevent index uniqueness checks when UPDATE does not modifying column
+> * Prevent index uniqueness checks when UPDATE does not modify the column
+235c235
+< 	o Make PL/PgSQL %TYPE schema-aware
+> 	o -Make PL/PgSQL %TYPE schema-aware
+Comment:
+Bad, this is part of a todo.
+
+G: 12, B: 3
+
+Commit: e84f8a46568ee27099b4b507b3285135351c60cd
+Message:
+Fix for postgres started from command line, sends 'Z' protocol
+flag.
+Comment:
+Good, wrong function, but also has a changed copyright in the puts.
+
+G: 13, B: 3
+
+Commit: 5b0fa0c28c9fb85fb637620a482571a361c7bad4
+Message:
+Fix make_tuple_from_row to support nested rowtypes, per gripe from
+Roman Neuhauser.  Update some obsolete comments for exec_eval_datum, too.
+Comment:
+Good, however iffy, since it looks like a design change kind of.
+
+G: 14, B: 3
+
+Commit: 095a0c83d5034b7a3c6332a685c2254c57b384cb
+Message:
+Fix compile problem for missing LONG_LONG_MIN on BSD/OS.
+Comment:
+Good, however ignored again.
+
+G: 15, B: 3
+
+Commit: 2e9468f2c850f2b712d23d110042cf14678c6791
+Message:
+Fix a few typos in the latest 8.5alpha3 release notes.
+Comment:
+Good, but again ignored.
+
+G: 16, B: 3
+
+Commit: 6b44d796c7e10337537a1fa7591bb5e89d900152
+Message:
+Fix misspelled error message.
+Comment:
+Good, lots of these are typos...
+
+G: 17, B: 3
+
+Commit: 16661d60abe1068f8cf83601d994fedb85e80b50
+Message:
+> A quick look shows that when you use --with-libraries=/foo/bar the
+> generated link line for libraries says
+>
+>  -L/foo/bar -lpq
+>
+> and it should probably be the other way around (as it is for the
+> executables).
+>
+> So I suspect we need some makefile tuning.
+
+You were correct. This patch fixes it.
+
+Jim C. Nasby
+Comment:
+Good, again a build fix.
+
+G: 18, B: 3
+
+Commit: d1b0d965b115fcd74219a4397c46c10ba18a62a8
+Message:
+Cosmetic PL/PgSQL fix: declare the second parameter plpgsql_dstring_append
+as a const char *, so that we don't need to cast away a const in gram.y
+Comment:
+Bad, it's a cosmetic fix as indicated in the message.
+
+G: 18, B: 4
+
+Commit: 29a26b25ba624fc7cf11558bd691a1429a0fb252
+Message:
+Fix several mistaken xreflabel entries, including those spotted by
+Michael Fuhr.
+Comment:
+Good, and ignored anyways (.sgml file).
+
+G: 19, B: 4
+
+Commit: a86e06cb9bebe52dc6051576a788297ae5e7afec
+Message:
+Fix HP/ux port for tas.s
+Comment:
+Good, I'll take their word for it, it's assembly.
+
+G: 20, B: 4
+
+Commit: 30036d8bda049142041b878ed1b9f3077c714ad9
+Message:
+Fix SGML tag misspelling.
+Comment:
+Good, ignored.
+
+G: 21, B: 4
+
+Commit: 21cf022fa9ef657fda580ca0eaf24a99b2a19819
+Message:
+Fix version warning bug in recently applied adjustments to psql startup.
+
+Gregory Stark
+Comment:
+Good, wrong placement.
+
+G: 22, B: 4
+
+Commit: 9249bdaabd3729ab47ebbebf7932881b3c7c8ee2
+Message:
+SGML markup fixes.
+Comment:
+Good, ignored.
+
+G: 23, B: 4
+
+Commit: e997758cb67526549b56a89658f7a42104716cf0
+Message:
+More pgcrypto fixes: avoid bogus alignment assumptions in sha2,
+be more wary about having a value for BYTE_ORDER, clean up randomly-
+chosen ways of including Postgres core headers.
+Marko Kreen and Tom Lane
+Comment:
+Good.
+
+G: 24, B: 4
+
+Commit: fa471dac021909b2f640ad28f47747aa46a39edb
+Message:
+Trivial fix: remove some stray leading whitespace.
+Comment:
+Good, ignored.
+
+G: 25, B: 4
+
+Commit: 0cec8fe26c4c76bcc72b78c194a1aa026748c6dc
+Message:
+Fix syntax error introduced in last update.
+Comment:
+Good, ignored.
+
+G: 26, B: 4
+
+Commit: 34ec0c81af793c9f74f8e8e0be87f0c1135c5e1a
+Message:
+Fix compiler warnings on 64-bit boxes: difference between
+pointers are int64, but warnings are emitted for position info in
+error messages in parser, so, just cast it to int32
+Comment:
+Good.
+
+G: 27, B: 4
+
+Commit: bdf6c4f0121c1251692196d730e588d29f17eb25
+Message:
+Update porting list.
+Fix markup to get clean compile.
+Comment:
+Good, ignored.
+
+G: 28, B: 4
+
+Commit: a9049a4a2862e86c4424646179b5dbbc6721e1e7
+Message:
+Header file fixes for MINDOUBLE
+Comment:
+Good, ignored and some type of bug.
+
+G: 29, B: 4
+
+Commit: 98f27aaef34291246c09ce5d0e0fba4f4477467a
+Message:
+Fix assorted security-grade bugs in the regex engine.  All of these problems
+are shared with Tcl, since it's their code to begin with, and the patches
+have been copied from Tcl 8.5.0.  Problems:
+
+CVE-2007-4769: Inadequate check on the range of backref numbers allows
+crash due to out-of-bounds read.
+CVE-2007-4772: Infinite loop in regex optimizer for pattern '($|^)*'.
+CVE-2007-6067: Very slow optimizer cleanup for regex with a large NFA
+representation, as well as crash if we encounter an out-of-memory condition
+during NFA construction.
+
+Part of the response to CVE-2007-6067 is to put a limit on the number of
+states in the NFA representation of a regex.  This seems needed even though
+the within-the-code problems have been corrected, since otherwise the code
+could try to use very large amounts of memory for a suitably-crafted regex,
+leading to potential DOS by driving the system into swap, activating a kernel
+OOM killer, etc.
+
+Although there are certainly plenty of ways to drive the system into effective
+DOS with poorly-written SQL queries, these problems seem worth treating as
+security issues because many applications might accept regex search patterns
+from untrustworthy sources.
+
+Thanks to Will Drewry of Google for reporting these problems.  Patches by Will
+Drewry and Tom Lane.
+
+Security: CVE-2007-4769, CVE-2007-4772, CVE-2007-6067
+Comment:
+Good, although it's a third party library.
+
+G: 30, B: 4
+
+Commit: fc6da31ae1f0a3f5e420eac398a4c076965c3ab6
+Message:
+Rewrite ProcessConfigFile() to avoid misbehavior at EOF, as per report
+from Andrus Moor.  The former state-machine-style coding wasn't actually
+doing much except obscuring the control flow, and it didn't extend
+readily to fix this case, so I just took it out.  Also, add a
+YY_FLUSH_BUFFER call to ensure the lexer is reset correctly if the
+previous scan failed partway through the file.
+Comment:
+Bad, it's more of a code clean-up.
+
+G: 30, B: 5
+
+Commit: 4a19bd87411dba4315cdacdb98c62d8758142d47
+Message:
+- Fix help output: replace 'f' with 't' and change desc
+- Add extra arg to formatStringLiteral to specify how to handle LF & TAB.
+  I opted for encoding them except in procedure bodies & comments
+- Fixed bug in tar file input when restoring blobs
+Comment:
+Good, maybe bad though since it would generate a lot of blames.
+
+G: 31, B: 5
+
+Commit: ad7b47aa02ecc15211643e250862948438c1639f
+Message:
+Fix sloppy macro coding (not enough parentheses).
+Comment:
+Good, although some of it moved code around.
+
+G: 32, B: 6
+
+Commit: 77a41e71a3550a438e579da170db86c61bd61e4b
+Message:
+Fix plpgsql to avoid reference to already-freed memory when returning a
+pass-by-reference data type and the RETURN statement is within an EXCEPTION
+block.  Bug introduced by my fix of 2007-01-28 to use per-subtransaction
+ExprContexts/EStates; since that wasn't back-patched into older branches,
+only 8.2 and HEAD are affected.  Per report from Gary Winslow.
+Comment:
+Good.
+
+G: 33, B: 6
+
+Commit: 7d02575ad1a608533637c7ec07cf5f7db81122e9
+Message:
+Fixes for libpgtcl from Massimo
+Comment:
+Good.
+
+G: 34, B: 6
+
+Commit: 60f54d629d9211d676a79743f169221824293261
+Message:
+Try this fix for the tas.s code...
+Comment:
+Good.
+
+G: 35, B: 7
+
+Commit: 1d3a1613c5d2b4a3a29bfde593e76efb65f2dd29
+Message:
+Remove Windows-specific definition of S_ISDIR().  This should not be here;
+if there are any Windows configurations where port/win32.h fails to
+provide the macro, it should be fixed in the latter file not here.
+Comment:
+Good.
+
+G: 36, B: 7
+
+Commit: 742ac738c33a1a6adf11a7e69c65f102b602a1e5
+Message:
+For libpq/Makefile OPT_PGPORT, remove .o extension after we test
+configure's LIBOBJS.  Should fix buildfarm failures.
+Comment:
+Good, ignored.
+
+G: 37, B: 7
+
+Commit: 31b9e3fc683bdbcdc063791e427b00e23c0bb1f2
+Message:
+Temporarily back out fixes for unary minus parsing.
+Will re-introduce for v6.4 but requires fixes for automatic type
+ conversion beforehand.
+Comment:
+Bad, backing out of change.
+
+G: 37, B: 8
+
+Commit: b07f4b4efb1eb9873f493613ed3c7ab69bf51b78
+Message:
+Configure fix for install script search.
+Comment:
+Good, ignored.
+
+G: 38, B: 8
+
+Commit: 543790104a74681f4f96c9b7f12e9de440927aa5
+Message:
+Fix the build for when SHOW_MEMORY_STATS is defined. The reference to
+the nonexistent ShowStats variable is simply removed, per Gavin Sherry.
+Comment:
+Good.
+
+G: 39, B: 8
+
+Commit: 399da7d882dff22b7ad926fb07aafeda2feab999
+Message:
+Fix thinko in tok_is_keyword(): it was looking at the wrong union variant
+of YYSTYPE, and hence returning the wrong answer for cases where a plpgsql
+"unreserved keyword" really does conflict with a variable name.  Obviously
+I didn't test this enough :-(.  Per bug #5524 from Peter Gagarinov.
+Comment:
+Good.
+
+G: 40, B: 8
+
+Commit: a6944611e262744bc4742e24d1a2bfed2f20fa31
+Message:
+Fix copy to make it more robust against unexpected character
+sequences. This is done by disabling multi-byte awareness when it's
+not necessary. This is kind of a workaround, not a perfect solution.
+However, there is no ideal way to parse broken multi-byte character
+sequences. So I guess this is the best way what we could do right
+now...
+Comment:
+Good.
+
+G: 41, B: 8
+
+Commit: 843657b06656c66fdf5fb45588a1e0691d9a395d
+Message:
+attached is take-2 of a patch which fixes a bug related
+to the use of getpwuid when running in standalone mode.
+this patch allocates some persistent storage (using
+strdup) to store the username obtained with getpwuid
+in src/backend/main/main.c.  this is necessary because
+later on, getpwuid is called again (in ValidateBinary).
+
+the man pages for getpwuid on SCO OpenServer, FreeBSD,
+and Darwin all have words to this effect (this is from
+the SCO OpenServer man page):
+
+  Note
+  ====
+  All information is contained in a static area, so it must
+  be copied if it is to be saved. Otherwise, it may be
+  overwritten on subsequent calls to these routines.
+
+in particular, on my platform, the storage used to hold
+the pw_name from the first call is overwritten such that
+it looks like an empty username.  this causes a problem
+later on in SetSessionUserIdFromUserName.
+
+i'd assume this isn't a problem on most platforms because
+getpwuid is called with the same UID both times, and the
+same thing ends up happening to that static storage each
+time.  however, that's not guaranteed, and is _not_ what
+happens on my platform (at least :).
+
+this is for the version of 7.1 available via anon cvs as
+of Tue Jan 23 15:14:00 2001 PST:
+  .../src/backend/main/main.c,v 1.37 2000/12/31 18:04:35 tgl Exp
+
+-michael thornburgh, zenomt@armory.com
+Comment:
+Good.
+
+G: 42, B: 8
+
+Commit: eb610fb8f1c2efe4f4dd454563598d4841a1b732
+Message:
+Compile fix for jdbc1.
+Comment:
+
+Commit: d4a95fd7ab5f3294eec134bf970fb01a5be2c950
+Message:
+Allow more variations on valid floating point numbers (e.g. ".1", "1e6").
+Reintroduce fixes for unary minus parsing with leading spaces.
+Comment:
+
+Commit: 1f5ca045a435bc6aa9c98d7296973925c5208add
+Message:
+Disallow aggregate functions in UPDATE commands (unless within a sub-SELECT).
+This is disallowed by the SQL spec because it doesn't have any very sensible
+interpretation.  Historically Postgres has allowed it but behaved strangely.
+As of PG 8.1 a server crash is possible if the MIN/MAX index optimization gets
+applied; rather than try to "fix" that, it seems best to just enforce the
+spec restriction.  Per report from Josh Drake and Alvaro Herrera.
+Comment:
+
+Commit: 0184c6835cb99057f3d99f4b5a62965221e2bf13
+Message:
+Rearrange MSVC errcode hack, fix incorrect _MSC_VER test.  Magnus
+Comment:
+
+Commit: c45eb536423d81d72aa88e0b198215d145109c80
+Message:
+Spell fix.  Andrew.
+Comment:
+
+Commit: 1d66a1cca1e0ad649beba720466461b4af7fddd4
+Message:
+ECPG only copied #include statements instead of processing them according to
+commandline option "-i". This change fixes this and adds a test case. It also
+honors #include_next, although this is probably never used for embedded SQL.
+Comment:
+
+Commit: 33572dd7ed094129037d4154a710c96218c50ed6
+Message:
+Fix for constbyval .
+Comment:
+
+Commit: 53e95eee84e0f8c680ad813091e7226abb24214e
+Message:
+Fix for rare race-condition-like failure: if a backend receives SIGUSR2
+(notify/SI-overrun interrupt) while it is in process of doing proc_exit,
+it is possible for Async_NotifyHandler() to try to start a transaction
+when one is already running.  This leads to Asserts() or worse.  I think
+it may only be possible to occur when frontend synchronization is lost
+(ie, the elog(FATAL) in SocketBackend() fires), but that is a standard
+occurrence after error during COPY.  In any case, I have seen this
+failure occur during regression tests, so it is definitely possible.
+Comment:
+
+Commit: 37e0a016547abb3526b685d7aacbd0a4d57f6937
+Message:
+Save a few cycles in plpgsql simple-expression initialization.
+
+Instead of using ExecPrepareExpr, call ExecInitExpr.  The net change here
+is that we don't apply expression_planner() to the expression tree.  There
+is no need to do so, because that tree is extracted from a fully planned
+plancache entry, so all the needed work is already done.  This reduces
+the setup costs by about a factor of 2 according to some simple tests.
+Oversight noted while fooling around with the simple-expression code for
+previous fix.
+Comment:
+
+Commit: da7f60c9d3859a7c5392b3fe3ffbd285f0102872
+Message:
+Fixes: Incorrect syntax for copy command
+
+By: Erich Stamberger <eberger@gewi.kfunigraz.ac.at>
+Comment:
+
+Commit: eae5184d11d67edf49c114e15abc0223df8f5432
+Message:
+Hi,
+
+ the to_char() source code is large, here are regression tests for
+numeric/timestamp/int8 part. It is probably enough test for formatting
+code in the formatting.c module. The others (float4/float8/int4) types
+share this formatting code and eventual bugs for these types aren't
+few probable.
+
+ Patch fix timestamp_to_char() for infinity/invalid timestamp too.
+
+
+                                                Karel
+Comment:
+
+Commit: e075271c178720199fe95ba6f3482bcb5ce12df7
+Message:
+Fix socket file permissions, from Goran Thyni.
+Comment:
+
+Commit: a9ed49d5b5661626280fca3f45c3d8ae3f9b69e4
+Message:
+From: Oliver Elphick <olly@lfix.co.uk>
+
+If PQfn() receives NOTICEs from the backend, it fails because there is no
+provision to deal with them.
+
+This patch (supplied by Anders Hammarquist <iko@netg.se> to me as Debian
+maintainer of postgresql) cures the problem:
+Comment:
+
+Commit: a239af02c3585f4355737230bc54902e8217f76e
+Message:
+Fix the various forms of AT TIME ZONE to accept either timezones found
+in the zic database or zone names found in the date token table.  This
+preserves the old ability to do AT TIME ZONE 'PST' along with the new
+ability to do AT TIME ZONE 'PST8PDT'.  Per gripe from Bricklen Anderson.
+Also, fix some inconsistencies in usage of TZ_STRLEN_MAX --- the old
+code had the potential for one-byte buffer overruns, though given
+alignment considerations it's unlikely there was any real risk.
+Comment:
+
+Commit: 89765fa555b7d215c931e8aa542ac865b86c635a
+Message:
+Fix compile error caused by patch application.
+Comment:
+
+Commit: f7587aeba898b8b558741006564b86e9d298c0bc
+Message:
+> Am Dienstag, 17. August 2004 14:26 schrieb Fabien COELHO:
+> > The patch adds missing the "libpgport.a" file to the installation under
+> > "install-all-headers". It is needed by some contribs. I install the
+> > library in "pkglibdir", but I was wondering whether it should be "libdir"?
+
+Please find attached a small patch against current CVS head that fixes
+pgport library installation so that it goes to libdir instead of
+pkglibdir. It works for me.
+
+Fabien Coelho
+Comment:
+
+Commit: 46f4cdeb7adddf270aef3d7222934c9fa512843a
+Message:
+Fix typo
+Comment:
+
+Commit: 9de3aa65f01fb51cbc725e8508ea233e4e92c46c
+Message:
+Rewrite the GiST insertion logic so that we don't need the post-recovery
+cleanup stage to finish incomplete inserts or splits anymore. There was two
+reasons for the cleanup step:
+
+1. When a new tuple was inserted to a leaf page, the downlink in the parent
+needed to be updated to contain (ie. to be consistent with) the new key.
+Updating the parent in turn might require recursively updating the parent of
+the parent. We now handle that by updating the parent while traversing down
+the tree, so that when we insert the leaf tuple, all the parents are already
+consistent with the new key, and the tree is consistent at every step.
+
+2. When a page is split, we need to insert the downlink for the new right
+page(s), and update the downlink for the original page to not include keys
+that moved to the right page(s). We now handle that by setting a new flag,
+F_FOLLOW_RIGHT, on the non-rightmost pages in the split. When that flag is
+set, scans always follow the rightlink, regardless of the NSN mechanism used
+to detect concurrent page splits. That way the tree is consistent right after
+split, even though the downlink is still missing. This is very similar to the
+way B-tree splits are handled. When the downlink is inserted in the parent,
+the flag is cleared. To keep the insertion algorithm simple, when an
+insertion sees an incomplete split, indicated by the F_FOLLOW_RIGHT flag, it
+finishes the split before doing anything else.
+
+These changes allow removing the whole "invalid tuple" mechanism, but I
+retained the scan code to still follow invalid tuples correctly. While we
+don't create any such tuples anymore, we want to handle them gracefully in
+case you pg_upgrade a GiST index that has them. If we encounter any on an
+insert, though, we just throw an error saying that you need to REINDEX.
+
+The issue that got me into doing this is that if you did a checkpoint while
+an insert or split was in progress, and the checkpoint finishes quickly so
+that there is no WAL record related to the insert between RedoRecPtr and the
+checkpoint record, recovery from that checkpoint would not know to finish
+the incomplete insert. IOW, we have the same issue we solved with the
+rm_safe_restartpoint mechanism during normal operation too. It's highly
+unlikely to happen in practice, and this fix is far too large to backpatch,
+so we're just going to live with in previous versions, but this refactoring
+fixes it going forward.
+
+With this patch, you don't get the annoying
+'index "FOO" needs VACUUM or REINDEX to finish crash recovery' notices
+anymore if you crash at an unfortunate moment.
+Comment:
+
+Commit: 421089dc3538d688fdfb9ef92efc3b0e7052013c
+Message:
+Cleanup for canonicalization fixes, from Tom.
+Comment:
+
+Commit: b7a86e4046ce480614a3adae0ddcc52d6673c020
+Message:
+Fixed wrong hasAggs when aggregate columns of view aren't
+selected.
+
+Disabled ability of defining DISTINCT or ORDER BY on views.
+
+Jan
+Comment:
+
+Commit: 7b05ef5b63bb91eff2433e5eb187b0eb5a81653e
+Message:
+fix typo in a comment
+Comment:
+
+Commit: 805e0c45899d08dbc8593341010004772dcd1ee8
+Message:
+Fixes for char_length() changes.
+Comment:
+
+Commit: cb8539f9be6ce6dca18a6a5cdbc69439d2e919ce
+Message:
+Attached is a patch that fixes these leaks, and does a couple other
+things as well:
+  * Computes and saves a cancel key for each backend.  * fflush
+  before forking, to eliminate double-buffering problems
+    between postmaster and backends.
+
+Other cleanups.
+
+Tom Lane
+Comment:
+
+Commit: 9b178555fc1f5087c120ff4d26380395bc655a03
+Message:
+Per previous discussions, get rid of use of sync(2) in favor of
+explicitly fsync'ing every (non-temp) file we have written since the
+last checkpoint.  In the vast majority of cases, the burden of the
+fsyncs should fall on the bgwriter process not on backends.  (To this
+end, we assume that an fsync issued by the bgwriter will force out
+blocks written to the same file by other processes using other file
+descriptors.  Anyone have a problem with that?)  This makes the world
+safe for WIN32, which ain't even got sync(2), and really makes the world
+safe for Unixen as well, because sync(2) never had the semantics we need:
+it offers no way to wait for the requested I/O to finish.
+
+Along the way, fix a bug I recently introduced in xlog recovery:
+file truncation replay failed to clear bufmgr buffers for the dropped
+blocks, which could result in 'PANIC:  heap_delete_redo: no block'
+later on in xlog replay.
+Comment:
+
+Commit: f5c23ca20811c62c87c35c0b45f74572b0b77955
+Message:
+Fix leakage of proc-related storage in plpython's inline handler.
+Per report from Andres Freund.
+Comment:
+
+Commit: 833d91ae5e811f923d341dbcf1c89a34d6cdbae5
+Message:
+Fix ordering of default sync options to match code.
+Comment:
+
+Commit: ab7c49c98811f539db9294c8f2d1a15380e025f6
+Message:
+Fix assorted poorly-thought-out message strings: use %u not %d for printing
+OIDs, avoid random line breaks in strings somebody might grep for.
+Comment:
+
+Commit: b4c8dcb294d8138bb66891d62e4f43196da01d52
+Message:
+Fixed incorrect output of indicator structs using the name of the data struct.
+Comment:
+
+Commit: db020733059dd6eb3fa400dd8d80bfad0d19c71f
+Message:
+Fix dblink_get_result() as reported by Oleksiy Shchukin. Refactor a bit
+while we're at it per request by Tom Lane. Specifically, don't try to
+perform dblink_send_query() via dblink_record_internal() -- it was
+inappropriate and ugly.
+Comment:
+
+Commit: 44cf948467d5f76632af26893ff048e17961ad1a
+Message:
+Fix up error messages when looking up functions and operators to not
+ make the sometimes misleading claim that more than one candidate was
+ identified. Now say "Unable to identify...".
+Comment:
+
+Commit: 39fccf0277939be2d32594325cc0a009e959271e
+Message:
+On Windows, cause get_progname to strip any .EXE suffix.
+Andrew Dunstan
+Comment:
+
+Commit: 738dc876eddca3b4706ad1a57446e222f0829a77
+Message:
+Here are some patches to fix up the regression tests so that the union
+test passes.  Interestingly, the fix involves no changes or special
+cases in the union test and actually removes a special case for the
+numerology test.  Thus, following the strategy outlined below is a
+definite improvement over the previous situation.
+
+Cheers,
+Brook
+Comment:
+
+Commit: 28519de02dc779f643eded3da09e1d826780f9f0
+Message:
+Fix a couple of broken links to third-party sites.
+Comment:
+
+Commit: 9858a3a43f9c40f445699dae7f9d1839cb42fc4c
+Message:
+Sir Mordred The Traitor <mordred@s-mail.com> writes:
+> Upon invoking a polygon(integer, circle) function a
+> src/backend/utils/adt/geo_ops.c:circle_poly() function will gets
+> called, which suffers from a buffer overflow.
+>
+> 2) A src/backend/adt/utils/geo_ops.c:path_encode() fails to detect a
+> buffer overrun condition. It is called in multiple places, the most
+> interesting are path_out() and poly_out() functions.
+
+> 5) A src/backend/utils/adt/geo_ops.c:path_add() also fails to detect
+> a simple buffer overrun.
+
+I've attached a patch which should fix these problems.
+
+Neil Conway
+Comment:
+
+Commit: 8e75b36aeb4ec0ba0264b4a64b602f7c09c0b776
+Message:
+Fix unportable, non-spec-compliant use of offsetof() with a nonconstant
+member offset.
+Comment:
+
+Commit: c786796d0a7931d67a38840d899c4e45ef4c7bf6
+Message:
+Fix computation of PG_VERSION_NUM by configure: remove unnecessary and
+unportable backslashes in awk script (per Patrick Welche), and add
+brackets to prevent autoconf from mangling sed's regexp (the sed call
+here never did what was expected).
+Comment:
+
+Commit: c9445f08826b37d9acbc82adc77a578deaa8eff9
+Message:
+The following patch for JDBC fixes an issue with jdbc running on a
+non-multibyte database loosing 8bit characters.  This patch will cause
+the jdbc driver to ignore the encoding reported by the database when
+multibyte isn't enabled and use the JVM default in that case.
+
+Barry Lind
+Comment:
+
+Commit: 6dff9bc97d32f68f517a568cadf91bdca54fb733
+Message:
+Fix broken markup.
+Comment:
+
+Commit: c029a6a49e3782ec5f1a61eb9a495ebd2a56077d
+Message:
+Fix contrib/pgstattuple and contrib/pageinspect to prevent attempts to read
+temporary tables of other sessions; that is unsafe because of the way our
+buffer management works.  Per report from Stuart Bishop.
+This is redundant with the bufmgr.c checks in HEAD, but not at all redundant
+in the back branches.
+Comment:
+
+Commit: 3eb9da524ddb85c213108e5aeadc6e8b18f6875f
+Message:
+Fix a few typos in the DTrace docs. Patch from Euler Taveira de Oliveira,
+along with an additional typo I noticed along the way.
+Comment:
+
+Commit: 8d70ed84ba577abf9e985518024fb92e2081dac9
+Message:
+Remove outdated comments from the regression test files.
+
+Since 2004, int2 and int4 operators do detect overflow; this was fixed by
+commit 4171bb869f234281a13bb862d3b1e577bf336242.
+
+Extracted from a larger patch by Andres Freund.
+Comment:
+
+Commit: 3661d1d6e0342332c98c7a7ad5849e7e963f9615
+Message:
+This patch fixes the find_my_exec code for pgstat backends. Required for
+TZ stuff (and possibly others) to work in the pgstat backends.
+
+Magnus Hagander
+Comment:
+
+Commit: 2c535bfe81ad7cd77d561cd92c441a4787047aa1
+Message:
+Fix incorrect optimization of foreign-key checks.  When an UPDATE on the
+referencing table does not change the tuple's FK column(s), we don't bother
+to check the PK table since the constraint was presumably already valid.
+However, the check is still necessary if the tuple was inserted by our own
+transaction, since in that case the INSERT trigger will conclude it need not
+make the check (since its version of the tuple has been deleted).  We got this
+right for simple cases, but not when the insert and update are in different
+subtransactions of the current top-level transaction; in such cases the FK
+check would never be made at all.  (Hence, problem dates back to 8.0 when
+subtransactions were added --- it's actually the subtransaction version of a
+bug fixed in 7.3.5.)  Fix, and add regression test cases.  Report and fix by
+Affan Salman.
+Comment:
+
+Commit: 33e06ebccbc21677be6dbc112e3d150bd13b17cb
+Message:
+Add a new system view, pg_cursors, that displays the currently available
+cursors. Patch from Joachim Wieland, review and ediorialization by Neil
+Conway. The view lists cursors defined by DECLARE CURSOR, using SPI, or
+via the Bind message of the frontend/backend protocol. This means the
+view does not list the unnamed portal or the portal created to implement
+EXECUTE. Because we do list SPI portals, there might be more rows in
+this view than you might expect if you are using SPI implicitly (e.g.
+via a procedural language).
+
+Per recent discussion on -hackers, the query string included in the
+view for cursors defined by DECLARE CURSOR is based on
+debug_query_string. That means it is not accurate if multiple queries
+separated by semicolons are submitted as one query string. However,
+there doesn't seem a trivial fix for that: debug_query_string
+is better than nothing. I also changed SPI_cursor_open() to include
+the source text for the portal it creates: AFAICS there is no reason
+not to do this.
+
+Update the documentation and regression tests, bump the catversion.
+Comment:
+
+Commit: 5a5cb300967416846c06982fa34fff9ad4900e6b
+Message:
+Fix tolower loops to go in  proper direction for cache.
+Comment:
+
+Commit: 48d9d8e1318eb1d4b94d7f02a86b9e9716369947
+Message:
+Fix a couple of planner bugs introduced by the new ability to discard
+ORDER BY <constant> as redundant.  One is that this means query_planner()
+has to canonicalize pathkeys even when the query jointree is empty;
+the canonicalization was always a no-op in such cases before, but no more.
+Also, we have to guard against thinking that a set-returning function is
+"constant" for this purpose.  Add a couple of regression tests for these
+evidently under-tested cases.  Per report from Greg Stark and subsequent
+experimentation.
+Comment:
+
+Commit: 72347776744083d080f4c46dd6fc7e81bcf9a0c7
+Message:
+Apply entab fix from Marko Kreen for these problems:
+
+- halt.c did not include stdlib.h, thus missed exit() prototype
+- Makefile ignores BINDIR for install.
+- Makefile calls install with user/group args, thus failing for regular user.
+
+While trying it I noticed that the Makefile does not support VPATH builds ...
+Comment:
+
+Commit: d876c2580352fad94a22e57792a12da9ec9b85dd
+Message:
+Fix:
+
+nodeAgg.c: WARN -> NOTICE for elog
+parse_oper.c: was created after patch for fmgr_info, so function call wrong
+scan.c: regenerated for i386_solaris using flex 2.5.4
+gethostname.c: required prototype for gethostname() function
+config.h.in: create prototype for isinfo() function
+
+isinf.c: "fake" isinf() under i386_solaris using fpclass() call...
+Comment:
+
+Commit: 2751a249cbb314990642c67cf1ad7d638eac5911
+Message:
+Oops, in the previous fix to prevent a cursor that's being used in a FOR
+loop from being dropped, I missed subtransaction cleanup. Pinned portals
+must be dropped at subtransaction cleanup just as they are at main
+transaction cleanup.
+
+Per bug #5556 by Robert Walker. Backpatch to 8.0, 7.4 didn't have
+subtransactions.
+Comment:
+
+Commit: f0b4ae697fcbaf5844e83f4cec43c33480d6f814
+Message:
+Backend makefile cleanup. make maintainer-clean is now completely
+functional.
+
+Handle include file installation in src/include/Makefile
+
+genbki.sh improvements: Don't substitute anything by config.status,
+instead pass in AWK and CPP through environment. Change calling
+convention to support named output files, so we get to see error
+messages on stderr.
+
+Rename bootstrap template files and install them into PREFIX/share.
+Update initdb to that effect and other readability improvements
+in initdb.
+Comment:
+
+Commit: 7ecfaccf19380cd50c5d467b080c9ed1f5dca3cc
+Message:
+Fix two flaws in comments I just introduced, pointed out by Tom.
+Comment:
+
+Commit: 494b82b718fd0227026552fd1715a7930309de78
+Message:
+Fix typo. #ifdef MUTIBYTE --> #ifdef MULTIBYTE
+Comment:
+
+=== Non-Fix Commits ===
+Commit: 664f93ce18c43d116d698e58683bcce9e96f006b
+Merge: False
+Message:
+Un-break custom_variable_classes kluge ... mea culpa.
+Comment:
+Good, seems like an implemenation change (also ignored .l file).
+
+G: 1, B: 0
+
+Commit: c9d040d85e8fd7221cafac13f53880d120d5baa0
+Merge: False
+Message:
+Un-break code generated by ECPGRelease production.
+Comment:
+Good, (actually bad but it's ignored anyways because its a .y).
+
+G: 2, B: 0
+
+Commit: bf2a115f2f0d103dc4299c6ee2ce1936aa1d7f64
+Merge: False
+Message:
+Remove dash in pg_ctl signal name.  It broke with getopt_long dash
+reorganization processing, and it is clearer without the dash anyway.
+Comment:
+Bad, since it seems like a bug-fix that relied on a third party library.
+
+G: 2, B: 1
+
+Commit: 2a197c7cce3535d5769e3a0764c65791657be843
+Merge: False
+Message:
+Add TODO.detail:
+
+> 	o Queries across databases or servers (two-phase commit) [2phase]
+Comment:
+Good, just a TODO.
+
+G: 3, B: 1
+
+Commit: da123b7c58fb8f75bcaf14cf5521e54222ede52b
+Merge: False
+Message:
+Update installation instructions and put mostly everything in one place.
+Also, some editing in PL/Perl and PL/Python chapters.
+Comment:
+Good, documentation update.
+
+G: 4, B: 1
+
+Commit: 6792b4bba31cc137d4e090a6be2cfb453695b31a
+Merge: False
+Message:
+Install libpgport.lib as needed by some client programs.
+
+Dave Page
+Comment:
+Good, new addition.
+
+G: 5, B: 1
+
+Commit: ede3b762a35578ddb81a6e73f629736b248e0197
+Merge: False
+Message:
+Back out win32 patch so we can apply it separately.
+Comment:
+Good, this isn't a bug-fix and something we want to ignore.
+
+G: 6, B: 1
+
+Commit: 0b532c944b8e2afc36ff8080bf2ad10f69f63e3e
+Merge: False
+Message:
+Remove Tom mention on array items.
+Comment:
+Good, and screw Tom apparently.
+
+G: 7, B: 1
+
+Commit: 4f3ecf94f5f8d2496b8ea189ff5dbade3ff87dd9
+Merge: False
+Message:
+Update TODO list.
+Comment:
+Good.
+
+G: 8, B: 1
+
+Commit: 3de3e719f539e39df86e1bc6a106c92d72175280
+Merge: False
+Message:
+Stamp 7.2 for release.
+Comment:
+Good.
+
+G: 9, B: 1
+
+Commit: 2abbf392bd9c8e6e0b8d56a25f4d1c246a3b0e1e
+Merge: False
+Message:
+Removed old Assert's used during development.
+Comment:
+Good, clean-up.
+
+G: 10, B: 1
+
+Commit: a86e70b8f8bbacbba3d9e5b8a3adf22c01b19d2b
+Merge: False
+Message:
+Remove sslinfo copyright with author permission, keep author attribution.
+
+Victor Wagner
+Comment:
+Good, documentation.
+
+G: 11, B: 1
+
+Commit: 38f0ffd36c6298b018de21aa623e3532df7846d8
+Merge: False
+Message:
+#define  TriggerRelationName "pg_trigger"
+Comment:
+Good, just added what the message is.
+
+G: 12, B: 1
+
+Commit: 60915ed2c26bd22600f56d24c8729f4d530f5b4c
+Merge: False
+Message:
+Change gmake to $(MAKE) so backend compiles on system with no "gmake".
+Comment:
+Good, extra feature.
+
+G: 13, B: 1
+
+Commit: a9236028554ca0e11797c887373c1a34800a4fa6
+Merge: False
+Message:
+Add pg_column_size() to return storage size of a column, including
+possible compression.
+
+Mark Kirkwood
+Comment:
+Good, new function.
+
+G: 14, B: 1
+
+Commit: 68c67fc8a8ddb06743051f94b98a3ae78ce62b0b
+Merge: False
+Message:
+Applied patch to update translation file, submitted by Zhenbang Wei
+
+ Modified Files:
+ 	jdbc/org/postgresql/errors_zh_TW.properties
+Comment:
+Good, just added translations.
+
+G: 15, B: 1
+
+Commit: bf00aec8d057cfc1c0036660876968ce1f85fb9d
+Merge: False
+Message:
+If configure finds that inet_aton() is not present on this platform,
+include the version from backend/port into libpq.
+There is a second-rate implementation of inet_aton() already present
+in fe-connect.c, #ifdef'd WIN32.  That ought to be removed in favor
+of using the better version from port/.  However, since I'm not in a
+position to test the WIN32 code, I will leave well enough alone for
+this release...
+Comment:
+Good, just an include file.
+
+G: 16, B: 1
+
+Commit: 532ca3083d4d9e2182b57b87744662201521272d
+Merge: False
+Message:
+Avoid bare 'struct Node;' declaration --- provokes annoying warnings
+on some compilers.
+Comment:
+Good, compiler warning.
+
+G: 17, B: 1
+
+Commit: 99bf328237d89e0fd22821a940d4af0506353218
+Merge: False
+Message:
+Remove the useless and rather inconsistent return values of EncodeDateOnly,
+EncodeTimeOnly, EncodeDateTime, EncodeInterval.  These don't have any good
+reason to fail, and their callers were mostly not checking anyway.
+Comment:
+Good, implementation change.
+
+G: 18, B: 1
+
+Commit: 4d3d2e2b0325e3d6d524c6801b7439d3aaea4520
+Merge: False
+Message:
+Remove obsolete comment about 'fsm' argument, which isn't an argument
+anymore.
+Comment:
+Good.
+
+G: 19, B: 1
+
+Commit: c2f0d565f319f7a75f0178758e9270c96d0c807f
+Merge: False
+Message:
+Now that hashjoin is reliable for large joins (knock on wood),
+remove optimizer's arbitrary limit on how large a join it will use hashing
+for.  (The limit was too large to prevent the problems we'd been seeing,
+anyway...)
+Comment:
+Good.
+
+G: 20, B: 1
+
+Commit: 8c8c0108e8f39b291286eaf3cc5c482ecc305f48
+Merge: False
+Message:
+Add comment to pg_atoi.
+Comment:
+Good.
+
+G: 21, B: 1
+
+Commit: 26db818710f3e62234cfee0324046a33bc101392
+Merge: False
+Message:
+It looks like the multibyte regress tests only work if both
+the database encoding and the client encoding match the encoding expected
+by the test.  So, force both of them to be set from the MULTIBYTE
+environment var.  This allows regress tests to be run successfully in
+multibyte environments other than the compiled-in default.
+Comment:
+Good, actually bad but its in a .sh file so it's ignored.
+
+G: 22, B: 1
+
+Commit: 9b8a73326e99821caf33c36c081cb307e17422d4
+Merge: False
+Message:
+Introduce wal_level GUC to explicitly control if information needed for
+archival or hot standby should be WAL-logged, instead of deducing that from
+other options like archive_mode. This replaces recovery_connections GUC in
+the primary, where it now has no effect, but it's still used in the standby
+to enable/disable hot standby.
+
+Remove the WAL-logging of "unlogged operations", like creating an index
+without WAL-logging and fsyncing it at the end. Instead, we keep a copy of
+the wal_mode setting and the settings that affect how much shared memory a
+hot standby server needs to track master transactions (max_connections,
+max_prepared_xacts, max_locks_per_xact) in pg_control. Whenever the settings
+change, at server restart, write a WAL record noting the new settings and
+update pg_control. This allows us to notice the change in those settings in
+the standby at the right moment, they used to be included in checkpoint
+records, but that meant that a changed value was not reflected in the
+standby until the first checkpoint after the change.
+
+Bump PG_CONTROL_VERSION and XLOG_PAGE_MAGIC. Whack XLOG_PAGE_MAGIC back to
+the sequence it used to follow, before hot standby and subsequent patches
+changed it to 0x9003.
+Comment:
+Good, implementation change.
+
+G: 23, B: 1
+
+Commit: 0061719728595152a7bd0f5309b113bc89f7c707
+Merge: False
+Message:
+Add massive new docs from Peter Mount.
+Includes markup for the introductory portions suitable for the User's Guide
+ but just put the class reference material inside a huge <programlisting>
+ block. Figure out what to do later...
+Comment:
+Good.
+
+G: 24, B: 1
+
+Commit: 8e76187790aab1366e7d44cd46e1d94b7ca14ebd
+Merge: False
+Message:
+More cleanups with ideas from Peter.
+Comment:
+Good.
+
+G: 25, B: 1
+
+Commit: 9fbd52808e92d16ae9815a1e6d515829bf7bd025
+Merge: False
+Message:
+Adopt latest bison's spelling of 'syntax error' rather than 'parse error'
+for grammar-detected problems.  Revert Makefile hack that kept it looking
+like the pre-bison-1.875 output.
+Comment:
+Good.
+
+G: 26, B: 1
+
+Commit: 2f19e2894091d0b6e7669aad0df97d192520ecef
+Merge: False
+Message:
+there are no includes files in backend, there should be, so why look
+there?
+Comment:
+Good.
+
+G: 27, B: 1
+
+Commit: 60b198a768247cfe2484ec18039a1ffba204c51e
+Merge: False
+Message:
+Update FAQ_DEV:  elog => ereport.
+Comment:
+Good.
+
+G: 28, B: 1
+
+Commit: e5cff3fe641c35d4a1f73c9c79679799098edb41
+Merge: False
+Message:
+Get rid of the following size limit.
+1) Query size limit(was 65536) for >=7.0 servers.
+2) Text size limit(was 8190) for 7.1 servers.
+Comment:
+Good.
+
+G: 29, B: 1
+
+Commit: fffb5819ca9a48610c4a6f7ef45269ef2e506712
+Merge: False
+Message:
+Adjust constant-folding of CASE expressions so that the simple comparison
+form of CASE (eg, CASE 0 WHEN 1 THEN ...) can be constant-folded as it
+was in 7.4.  Also, avoid constant-folding result expressions that are
+certainly unreachable --- the former coding was a bit cavalier about this
+and could generate unexpected results for all-constant CASE expressions.
+Add regression test cases.  Per report from Vlad Marchenko.
+Comment:
+Good, this is an implementation change.
+
+G: 30, B: 1
+
+Commit: 77015b59aafe0ec58b2ae15285b419ade6eae818
+Merge: False
+Message:
+vacuum_cost_limit has a minimum value of 1, not zero;  update
+postgresql.conf comment to match.
+Comment:
+Good, arguably bad, but it's in a comment and ignored.
+
+G: 31, B: 1
+
+Commit: 434165295a4c512c64f12f0e4b6f84d352e4159f
+Merge: False
+Message:
+isinf() doesn't exist under i386_solaris, so code it such that
+it is (!isnan() && !finite()) instead
+Comment:
+Good, agruably bad, but it's in a Makefile and ignored.
+
+G: 32, B: 1
+
+Commit: 30735adfe4a6682a35545b5b830263740655c923
+Merge: False
+Message:
+do not use unsetenv.c on mingw
+Comment:
+Good, maybe bad, but it's ignored.
+
+G: 33, B: 1
+
+Commit: 68be513f8b8db24c2a70f9571addc9508a32698c
+Merge: False
+Message:
+If we don't have any stats for a boolean column, assume
+the disbursion is 0.5, not something small.
+Comment:
+Good.
+
+G: 34, B: 1
+
+Commit: c16afb4e24d8d3a3182938bfe78c72d4a73a16a0
+Merge: False
+Message:
+Whoever touched this code last doesn't seem to understand
+what a header file is for :-(
+Comment:
+Good, code clean-up.
+
+G: 35, B: 1
+
+Commit: 20d4005c306eaaaf3e0a61d9d7ab369a91f81ed1
+Merge: False
+Message:
+Remove a couple of debugging messages that have been #ifdef'd out for ages.
+Seems silly to ask translators to expend work on these, especially in
+pluralized variants.
+Comment:
+Good.
+
+G: 36, B: 1
+
+Commit: 0b392314315a55aa201f53b2ba71986be91ebc69
+Merge: False
+Message:
+Avoid memory leak if pgstat_vacuum_stat is interrupted partway through.
+The temporary hash tables made by pgstat_collect_oids should be allocated
+in a short-term memory context, which is not the default behavior of
+hash_create.  Noted while looking through hash_create calls in connection
+with Robert Haas' recent complaint.
+
+This is a pre-existing bug, but it doesn't seem important enough to
+back-patch.  The hash table is not so large that it would matter unless this
+happened many times within a session, which seems quite unlikely.
+Comment:
+Bad, this is a bug.
+
+G: 36, B: 2
+
+Commit: a1d63d92329a1ff202ce1acf869c9d9e2a4c0e79
+Merge: False
+Message:
+Have threads wait for parent to test thread-specific pointers before
+exiting.
+Comment:
+Bad, probably a race condition, TODO.
+
+G: 36, B: 3
+
+Commit: 3e40ff58c5ab7c7a8b1d5ab735824cee6cc51de9
+Merge: False
+Message:
+Upgrade to my2pg 1.9
+Comment:
+Good.
+
+G: 37, B: 3
+
+Commit: 47a86fa02d0ff58438dea2ef2005a6cd8938f8c4
+Merge: False
+Message:
+Add code comment about Linux stack randomization and shared memory.
+Comment:
+Good.
+
+G: 38, B: 3
+
+Commit: 529a24a22b0a2e44b6510f7bfcc020b9e43727ee
+Merge: False
+Message:
+Remove some unnecessary conversion work in build_regtype_array().
+Comment:
+Good.
+
+G: 39, B: 3
+
+Commit: b98b75eb3bf4d1be59e13ce954612c8bab81b08e
+Merge: False
+Message:
+Remove MMCacheLock -- it is no longer used. Per ITAGAKI Takahiro.
+Comment:
+Good.
+
+G: 40, B: 3
+
+Commit: 2aa39a4cb1b1d30144193a5b348b8b364e3843ef
+Merge: False
+Message:
+Done:
+
+< * Have sequence dependency track use of DEFAULT sequences,
+<   seqname.nextval?
+> * -Have sequence dependency track use of DEFAULT sequences
+Comment:
+Good, todo list.
+
+G: 41, B: 3
+
+Commit: e11f1677185b1427b697652f7bb4fb08b1b80077
+Merge: False
+Message:
+Document quote_ident and quote_literal in the main list of string functions,
+as suggested by Josh Berkus.
+Comment:
+Good.
+
+G: 42, B: 3
+
+Commit: f61d70c2ac83b62b6d3458d3e46a71b9f1671e54
+Merge: False
+Message:
+Undo \dT change.  Not worth it.
+Comment:
+Good.
+
+G: 43, B: 3
+
+Commit: 7b78474da35604152805b2fdd939326e1bc364da
+Merge: False
+Message:
+Make CLUSTER MVCC-safe.  Heikki Linnakangas
+Comment:
+Good.
+
+G: 44. B: 3
+
+Commit: 04957acd91933b14790e639964fa7bc0005ec4fd
+Merge: False
+Message:
+Update FAQ for 7.2.3 version.
+Comment:
+Good.
+
+G: 45, B: 3
+
+Commit: d340e006262dcc773b26a62f580a83e63d9c685d
+Merge: False
+Message:
+Update date only.
+Comment:
+Good.
+
+G: 46, B: 3
+
+Commit: ec7a6bd9a23486d4eb0351de4a0c6dab5028f1ea
+Merge: False
+Message:
+Replace "--" and "---" with "&mdash;" as appropriate, for better-looking
+output.
+Comment:
+Good.
+
+G: 47, B: 3
+
+Commit: ff4281472a973e8610a5f8455e14dec9ea85936d
+Merge: False
+Message:
+Add missing include.
+Comment:
+
+Commit: 0a1ed443f85ba1ffec47a18e19386294b9cb86dc
+Merge: False
+Message:
+Add configure checks to see if 'using namespace std' and
+'#include <string>' work in the local C++ compiler.
+Comment:
+
+Commit: adac22bf8a451eef87ff5693cde021e738191c24
+Merge: False
+Message:
+When we added the ability to have zero-element ARRAY[] constructs by adding an
+explicit cast to show the intended array type, we forgot to teach ruleutils.c
+to print out such constructs properly.  Found by noting bogus output from
+recent changes in polymorphism regression test.
+Comment:
+
+Commit: 4aefba907760ed506df18d968cf6e5e44f0cfe24
+Merge: False
+Message:
+*** empty log message ***
+Comment:
+
+Commit: ad8181c477d2128a9d242c71e613cab3db0b0867
+Merge: False
+Message:
+Add:
+
+> * Have AFTER triggers execute after the appropriate SQL statement in a
+>   function, not at the end of the function
+Comment:
+
+Commit: 0459b591fc90b197ed31923b170c658cc30758d5
+Merge: False
+Message:
+Update release timeline to use unnumber lists HTML.
+Comment:
+
+Commit: 1c2d9cb63774f46f70f20ca8daa70f451886da1f
+Merge: False
+Message:
+It seems the regression tests don't cover copy in/out at all, so
+code that I had assumed was working had not been tested.  Naturally,
+it was broken ...
+
+Tom Lane
+Comment:
+
+Commit: e13c5cd33ba687a2d850ef067d8568bdafe93014
+Merge: False
+Message:
+Add:
+
+>
+> * Allow the size of the buffer cache used by temporary objects to be
+>   specified as a GUC variable
+>
+>   Larger local buffer cache sizes requires more efficient handling of
+>   local cache lookups.
+Comment:
+
+Commit: 80dab5bd69cd5bcd064a7da9f3d1b22eb770925a
+Merge: False
+Message:
+A catalog cache that never caches isn't much of a cache :-(.  Mea culpa.
+Thanks to Brian Hirt for pointing out the performance lossage.
+Comment:
+
+Commit: 538d685a1a266e2149587bf895d1b494afd37bd3
+Merge: False
+Message:
+Some more cleanup of CVS keyword noise.
+
+Poking around for remaining occurrences of CVS keyword strings, I came
+across one that apparently reflects the use of a $Revision: ...$ string
+in the original input data.  Dunno why anybody would be using that in
+an MTA's Received: lines, but there it is.  Put it back to the way that
+it was originally, according to inspection of the CVS repo.
+Comment:
+
+Commit: e4d97cb70efddfc07b79cc4d8490da9132cf9b26
+Merge: False
+Message:
+Update info for BeOS and MacOS-X-darwin as supported platforms.
+Comment:
+
+Commit: 2ce1a60bfa82b44c5ae5e65aedac391c54e8bf8e
+Merge: False
+Message:
+No master server overhead for middleware replication.
+Comment:
+
+Commit: cb00b7faa5849d8460198f7ced1cfdd0a92cfe53
+Merge: False
+Message:
+I'm in TODO mood today ...
+
+* Document/trigger/rule so changes to pg_shadow recreate pg_pwd
+
+I did it with a trigger and it seems to work like a charm. The function
+that already updates the file for create and alter user has been made a
+built-in "SQL" function and a trigger is created at initdb time.
+
+Comments around the pg_pwd updating function seem to be worried about
+this
+routine being called concurrently, but I really don't see a reason to
+worry about this. Verify for yourself. I guess we never had a system
+trigger before, so treat this with care, and feel free to adjust the
+nomenclature as well.
+
+--
+Peter Eisentraut                  Sernanders väg 10:115
+Comment:
+
+Commit: 11fd91579a1a4366ff2c05a9a3e04b0443948dea
+Merge: False
+Message:
+Repair.
+Comment:
+
+Commit: 9fdb5012935eab8321db467515db24fae54fe1e2
+Merge: False
+Message:
+Install spi.h and trigger.in
+Comment:
+
+Commit: 1d734b79a3a284d62acbee10ab5f481bd9208227
+Merge: False
+Message:
+Adjust bcc to work for thread changes.
+Comment:
+
+Commit: b17c49e95dee48c9b226e8b435fa67d5d424d462
+Merge: False
+Message:
+Add #include "postgres.h"
+Comment:
+
+Commit: 50bbb3a11d04228d92397b19fc7f2db730854300
+Merge: False
+Message:
+Add:
+
+> * Return proper effected tuple count from complex commands [return]
+Comment:
+
+Commit: 445ce6954fbdfb1858e7e8d20daf610e9f46a30c
+Merge: False
+Message:
+Information is now in the chapter on syntax in the User's Guide.
+Comment:
+
+Commit: f8b6b5f14fcd480d5c45eb77bd6e29b11098d860
+Merge: False
+Message:
+Cleanup markup and minor editing to prepare for first release.
+Comment:
+
+Commit: 40a95aa25b6345d5cb2e9410423b7af51792051d
+Merge: False
+Message:
+Use unsigned into for slock_t for pre-sparcv8plus.
+Comment:
+
+Commit: f4253b0b4994c35dd04ec6f6f96d98a763d11a8e
+Merge: False
+Message:
+Archive cleanups.
+Comment:
+
+Commit: d22ec67605e77b6f0d85ea400820e90dd162e538
+Merge: False
+Message:
+Add Teodor:
+
+> * Teodor is Teodor Sigaev <teodor@sigaev.ru>
+Comment:
+
+Commit: 71b3e93c5051e662d193e8f37a2875c7478d7083
+Merge: False
+Message:
+Duplicates handling...
+Comment:
+
+Commit: c41536ea5677a7bddb7534e009036d4b1de29306
+Merge: False
+Message:
+Update Peter Mount's email address in README.
+Comment:
+
+Commit: 2890c33084ab7ef3fe985cb72cb46ac5fe5ebf02
+Merge: False
+Message:
+Build two more .DEF files for ecpg instead of using default ones.
+Comment:
+
+Commit: 3b5152cac61610b0333057482f0f88c9d8d7d67d
+Merge: False
+Message:
+Improve comments in sample config files.
+Comment:
+
+Commit: 606db06f83f442b4a20b2f770c9bd3811c33589b
+Merge: False
+Message:
+Improve manual's discussion of locking and MVCC.
+Comment:
+
+Commit: e4c2967edb09cd2c9918a2ef9c5ee636ef40cb52
+Merge: False
+Message:
+Clarify comment.
+Comment:
+
+Commit: ffb8f73890a9998a7737434aefe190926369ee80
+Merge: False
+Message:
+Bunch of copy fitting and style sheet tweakage to get decent looking print
+output (from pdfjadetex).  Also updated instructions to install documentation
+processing toolchain.
+Comment:
+
+Commit: 34f0a8e72d6a27462efaadc88dfe6288075fb0ea
+Merge: False
+Message:
+*** empty log message ***
+Comment:
+
+Commit: 8f17e53f0e8be8a316336a99f0fdc925030b3d51
+Merge: False
+Message:
+Move pg_encoding_mblen() from common.c to wchar.c.
+Comment:
+
+Commit: adf1c52ce6c58791355286dec54311267e2765ad
+Merge: False
+Message:
+updates for new startup sequence, some reformatting
+Comment:
+
+Commit: d245b6bd9f55f33f851f6501f02a6e9cb1305e75
+Merge: False
+Message:
+Document SPI_push() and SPI_pop().
+Comment:
+
+Commit: a82aa45a4d73606c90bcc6e7436764620a54f091
+Merge: False
+Message:
+An actual README file for the regression tests
+
+Submitted by: Dr. George
+Comment:
+
+Commit: 317ea8bf39f2732bb6504cb090346560ce26535d
+Merge: False
+Message:
+Remove win32 port directory.  Forgot to do it earlier.
+Comment:
+
+Commit: 3eb6cc491d76a19a6798c1656e0a188213083dd5
+Merge: False
+Message:
+changed define(port) to define(PORTNAME_port)
+Added needed include file.
+Comment:
+
+Commit: c10575ff005c330d0475345621b7d381eb510c48
+Merge: False
+Message:
+Rewrite comment code for better modularity, and add necessary locking.
+
+Review by Alvaro Herrera, KaiGai Kohei, and Tom Lane.
+Comment:
+
+Commit: 215b90d3d70f357154d1b06ba986481104360eb3
+Merge: False
+Message:
+Allow extract() to accept the same field selectors as date_part(), not just
+the ones specified by SQL.
+Comment:
+
+Commit: 79fae4a7642821c48d0a57a58645aa8b95a1a030
+Merge: False
+Message:
+Readme about GiST's algorithms
+Comment:
+
+Commit: 9f5f2124754ccd605671bfe952c220b46a0e730b
+Merge: False
+Message:
+Allow the planner to collapse explicit inner JOINs together, rather than
+necessarily following the JOIN syntax to develop the query plan.  The old
+behavior is still available by setting GUC variable JOIN_COLLAPSE_LIMIT
+to 1.  Also create a GUC variable FROM_COLLAPSE_LIMIT to control the
+similar decision about when to collapse sub-SELECT lists into their parent
+lists.  (This behavior existed already, but the limit was always
+GEQO_THRESHOLD/2; now it's separately adjustable.)
+Comment:
+
+Commit: 8cca25728bdacb31dfdcaf9f8b5fb61ca3438819
+Merge: False
+Message:
+Change return type of:
+       pg_mb2wchar(const unsigned char *, pg_wchar *);
+       pg_mb2wchar_with_len(const unsigned char *, pg_wchar *, int);
+from void to int. Now they return the number of
+wide chars.
+Comment:
+
+Commit: 83fa037b731aa67e7626d143d30d75cae2018af5
+Merge: False
+Message:
+Changed ECPG outofscope handling to always print out statements in the same order
+so regression testing is possible,
+
+by Zoltan Boszormenyi
+Comment:
+
+Commit: bae8102f52863bdb29b5c5e1ee7e27a8b0f5b9c7
+Merge: False
+Message:
+After archive recovery, mark the last WAL segment from the parent timeline
+ready for archival. It was marked at the next checkpoint anyway, but
+waiting for the next checkpoint is an unnecessary delay.
+
+Fujii Masao
+Comment:
+
+Commit: d825e55c1315baeea58a3752b86a2a1c4c77e03c
+Merge: False
+Message:
+Update pg_dumpall again.
+Comment:
+
+Commit: 7657bce7a05302be3a3bb3e70012e8d02160c016
+Merge: False
+Message:
+Clean up doc/Makefile to install manual pages.
+Comment:
+
+Commit: 6c3083afe17e4251f86576e26d0be7b0f7d2f674
+Merge: False
+Message:
+Add items:
+
+< * Add transaction_timestamp(), statement_timestamp(), clock_timestamp() functionality
+> * Add transaction_timestamp(), statement_timestamp(), clock_timestamp()
+>   functionality
+278c279
+<   one column
+>   one column or expression indexes, perhaps using per=index statistics
+846a848
+> * Remove kerberos4 from source tree?
+Comment:
+
+Commit: 5cf785a4de1fd393983da8888ae0ece3a0945e9c
+Merge: False
+Message:
+Include hash table name in all the internal-error elog messages in
+dynahash.c.  Sergey Koposov's current open problem shows the possible
+usefulness of this, and it doesn't add much code.
+Comment:
+
+Commit: 23185085b979263449ad903c62e382e532d2d593
+Merge: False
+Message:
+Add index entries for all GUC configuration parameters.
+Comment:
+
+Commit: 893678eda7de9db57beccfd2755836c1bea39112
+Merge: False
+Message:
+applied Kris Jurka's patch for numeric
+Comment:
+
+Positive-positives: 8/50
+False-negatives: 3/50

@@ -1,0 +1,12 @@
+- finish pg, done
+- false pos / false neg, done
+- fix the classification, done
+- more metrics for buginess like density
+- time of day and author experience influence buginess
+- the author bins
+- varaince
+- add categories for commits
+- commit vs author (or merge information)
+- number of other projects for each author
+- lit search for number of commits which are comments (Lin)
+- timezone corrections for postgres (Patrick)
