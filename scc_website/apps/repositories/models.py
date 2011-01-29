@@ -24,6 +24,7 @@ class AuthorInformation(models.Model):
         ('D', 'Daily'),
         ('W', 'Weekly'),
         ('M', 'Monthly'),
+        ('O', 'Other'),
         ('S', 'Single'),
     )
     author = models.OneToOneField(Author, primary_key=True)
