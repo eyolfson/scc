@@ -106,6 +106,20 @@ appear to work on the repository as part of their day job, namely
 those for which 85\% of commits are between 8 AM and 4 PM Monday to
 Friday.
 
+\paragraph{Time zone adjustments}
+All Postgres commits prior to September 18, 2010 (when the project
+switched to the Git version control system) contain timestamps in UTC
+(Coordinated Universal Time). To enable us to reason about time-of-day
+effects for committers, who work in local time zones, we used
+publicly-available information (such as the Postgres
+contributor-information page, which lists locations for core team
+members, and time zones included in mailing list messages) to deduce
+time zones for all 34 Postgres committers. We then used the Python
+time zone utilities to convert the time for each commit (which was in
+UTC for CVS commits, and in local times for git commits) into a local
+time for the committer. We assume that the committer is indeed in
+our estimated; we discuss this threat to validity in greater detail below.
+
 \paragraph{Threats to Validity}
 We discuss a number of threats to validity and how we address them,
 including general threats to construct validity and external validity,
@@ -131,14 +145,17 @@ We expect our methodology to properly account for developers in
 different time zones. Git records each developer's local time (and
 time zone) with a commit, thereby avoiding potential imprecisions in
 our time-of-day results. This works well for the Linux repository,
-which is a native Git repository. The accuracy of the commit times for
-the Postgres repository depends on the accuracy of our time adjustment
-algorithm for the part of the history that was originally a CVS
-history. We believe that committers don't often change time zones and
-usually work from their home time zone, but the validity of our
-adjustment does depend on the validity our assumptions about home time
-zones. We present all of our results in the local
-time of the committer.
+which is a native Git repository as of 2005. In that repository, the
+local time might be inaccurate if a developer commits from a server in
+a different time zone; however, we expect that most of the 8000 Linux
+contributors will commit locally on a machine with accurate local
+time.  The accuracy of the commit times for the Postgres repository
+depends on the accuracy of our time adjustment algorithm for the part
+of the history that was originally a CVS history. We believe that
+committers don't often change time zones and usually work from their
+home time zone, but the validity of our adjustment does depend on the
+validity our assumptions about home time zones. We present all of our
+results in the local time of the committer.
 
 Because the Postgres repository was converted from CVS to git, the
 accuracy of the conversion is another potential threat to validity.  In
@@ -152,12 +169,6 @@ mitigating threats to validity from repository corruption. Also, note
 that the conversion to git obviates the need to identify transactions
 from CVS histories, as in~\cite{zimmermann-msr-2004}.
 
-% if developers ssh to a remote computer in a different time zone, the version control system 
-% would have recorded the wrong time.
-% but for PostgresSQL, we manually check where the authors are
-% and for Linux, there are 8xxx developers, so we expected the incorrectly recorded time for a few developeres do not 
-% affect the representativeness of all the developers 
-
 Because our methodology only identifies bugs which have later been
 corrected, it will definitely omit recently-introduced bugs, as well
 as longer-running bugs which have not yet been corrected. While this
@@ -166,12 +177,35 @@ this omission affects our validity, because there is no reason to
 believe that there are important differences in the characteristics we
 measure for fixed and unfixed bugs.
 
-Finally, developers work on a patch over time interval, which is
-possibly-discontiguous, but the code repository only records the
-endpoint of that interval. The bug database may contain more
-information about the starting point of the interval (e.g. it records
-when a bug is assigned to a developer), but still does not capture any
-information about the work patterns of the developer within the
-interval. There may be correlations between the coding time (the width
-of the interval) and code quality. We intend to investigate these
-issues in future work.
+Also, developers work on a patch over a possibly-discontiguous time
+interval. However, the code repository only records the endpoint of
+that interval.  The bug database may contain more information about
+the starting point of the interval (e.g. it records when a bug is
+assigned to a developer), but still does not capture any information
+about the work patterns of the developer within the interval. There
+may be correlations between the coding time (the width of the
+interval) and code quality. We intend to investigate these issues in
+future work.
+
+Some patches are committed by someone other than the author
+of the patch. This occurs especially often for external
+contributors. Third-party commits add more uncertainty about when a
+patch was originally written, and confound our data about patch
+authors.  We believe, however, that it is still reasonable to ascribe
+responsibility for the patch to its commiter, who would presumably
+have reviewed a patch before committing it.
+
+Finally, we discuss threats to our author classification. Our day-job
+classification is based on the somewhat-arbitrary hours of 8AM-4PM.
+Although many software companies have flexible hours, we expect that
+developers who work on a project as their day job would still have the
+bulk of their commits between those hours.  Also, our author
+experience information only counts the participation of an author to a
+particular project; a highly-experienced developer may be classified
+as a newbie developer for one of our projects due to a short history
+of contributions to that project. We expect, however, that there is
+some value to characterizing authors by their participation in a
+single project when analyzing their contributions to that project. It
+would be possible to survey developers' participation across multiple
+projects by studying the public record, but such a study is beyond the
+scope of this paper.
