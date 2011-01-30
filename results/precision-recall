@@ -1,0 +1,40 @@
+
+T: bug-fixing commits
+F: not bug-fixing commits
+
+---------------------------------------
+Linux: 
+
+Classified\Actual  T  F
+T		  43  7 
+F	          6  44
+
+ratio of classfied as T/F: R= 57,028/222,332 = 25.65%
+
+Converted to (Row F divides R):  
+Classified\Actual  T  F
+T		  43  7 
+F	          23.39  171.54
+
+Precision = 43/50 = 86%
+Recall = 43/(43+23.39) = 64.8% 
+
+
+---------------------------------------
+
+PostgreSQL:
+
+Classified\Actual  T  F
+T		  42  8 
+F	          3  47
+
+ratio of classfied as T/F: R= 4,399/31,098 = 14.1%
+
+Converted to (Row F divides R):  
+Classified\Actual  T  F
+T		  42  8 
+F	          21.21  X 
+
+Precision = 42/50 = 84%
+Recall = 42/(42+21.21) = 66.4% 
+

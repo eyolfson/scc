@@ -4,14 +4,19 @@
 \paragraph{Day of Week of Commits}
 The most related work~\cite{2005-changes} studied the day of week of commits and
 showed that the commits on Fridays are buggier. 
-This study differs mainly in the following three aspects:
-- time of day
-
-- developer experience 
-
-- different data collection technique: does not reply on the link between a commit and a bug report
-
-Need some literature search regarding studies on developer experience
+This paper differs mainly in the following three aspects.
+Firstly, we investigated how the commits' time of day correlates with the bugginess of commits, 
+which has not been studied before to the best of our knowledge.
+Secondly, we studied the correlation between commit bugginess and developers' activities and 
+experience, which the previous works did not study.
+Lastly, we used different data collection techniques. Specifically, we do not reply on the link 
+between a commit and a bug report, which allow us to study software for which such links are 
+not maintained or not well maintained by the developers. For example, we manually examined a random sample 
+of our bug-fixing commits in the Linux kernel, and found that only 2.3\% of the bug-fixing commits
+are linked to a bug report. 
+While using CVS may increase the precision of the analysis, our results show high precision (\postP-\linuxP) 
+for both the Linux kernel and PostgreSQL.
+%(1/43= 2.3\%)
 
 \paragraph{Empirical Studies on Commits}
 Previous study~\cite{largeCommits} classifies commits into different categories, one of which 
