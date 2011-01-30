@@ -26,39 +26,13 @@ time information that is accurate to the hour.
 % we need to have a more detailed story above. The other numbers
 % aren't actually similar either. -PL
 
-\begin{table}
-\begin{center}
-\begin{tabular}{l|r|r}
-\multicolumn{1}{c}{} & \multicolumn{2}{c}{\textbf{Amount (\%)}} \\
-\textbf{Type of Change} & \multicolumn{1}{c|}{\textbf{Linux}} & \multicolumn{1}{c}{\textbf{Firefox}}\\
-\hline
-None          & 10.5 & 45.4\\
-\hline
-Add           & 12.4 &  6.3\\
-\hline
-Modify        & 23.7 & 14.4\\
-\hline
-Remove        &  4.7 &  2.1\\
-\hline
-Add/Modify    & 16.0 & 10.6\\
-\hline
-Add/Remove    &  4.3 &  1.9\\
-\hline
-Modify/Remove &  7.4 &  4.2\\
-\hline
-All           & 21.0 & 15.1\\
-\end{tabular}
-\end{center}
-\caption{The types of changes between bug introductions and fixes from random sampling}
-\label{tbl-changes}
-\end{table}
 
-We also noted that approximately 7.7\% of the bug fixes for Linux were
-purely for comments, indicating that developers spend a non-trivial
-amount of time on comments. For Linux, approximately 51\% of the
-changes do not include additions. We therefore manually checked (a
-subsample of) the 49\% more difficult cases to evaluate the
-effectiveness of our heuristic for additions.
+%% We also noted that approximately 7.7\% of the bug fixes for Linux were
+%% purely for comments, indicating that developers spend a non-trivial
+%% amount of time on comments. For Linux, approximately 51\% of the
+%% changes do not include additions. We therefore manually checked (a
+%% subsample of) the 49\% more difficult cases to evaluate the
+%% effectiveness of our heuristic for additions.
 
 For Linux, we manually checked a random sample of 50 bugs: 11
 additions, 16 additions and modifications, 6 additions and removals,
@@ -87,18 +61,18 @@ difficult bug-fixing cases. Therefore our data is representative.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.45\textwidth]{linux_bug_introduction_day_of_week.png}
+\includegraphics[width=0.45\textwidth]{linux-bugginess-day.pdf}
 \end{center}
-\caption{Linux percentage of bug introductions and percentage of total commits per day}
-\label{fig-linux-weekday}
+\caption{Linux percentage of buggy commits per day}
+\label{fig-linux-bugginess-day}
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.45\textwidth]{firefox_bug_introduction_day_of_week.png}
+\includegraphics[width=0.45\textwidth]{postgresql-bugginess-day.pdf}
 \end{center}
-\caption{Firefox percentage of bug introductions and percentage of total commits per day}
-\label{fig-firefox-weekday}
+\caption{PostgreSQL percentage of buggy commits per day}
+\label{fig-postgresql-bugginess-day}
 \end{figure}
 
 \paragraph{Day-of-week Results} Having determined our false positive rate, 
@@ -107,10 +81,10 @@ determine if the day of the week has any impact on the likelihood of
 producing bugs. For the following graphs, the percentage of
 introduction commits indicates the amount of commits which are bug
 introductions, as a propostion of the total number of
-commits. Figure~\ref{fig-linux-weekday} presents our results for
+commits. Figure~\ref{fig-linux-bugginess-day} presents our results for
 Linux. We see that Saturday is the worst day, followed by Thursday,
 while Monday has the fewest percentage of bug introductions. The
-results for Firefox are shown in Figure~\ref{fig-firefox-weekday} and
+results for Firefox are shown in Figure~\ref{fig-postgresql-bugginess-day} and
 agree with Thursday being one of the worst days, while Monday is the
 best day for committing changes which do not introduce bugs. A
 possible explanation is that developers rest over the weekend and have
@@ -121,22 +95,22 @@ later, as an addition to our technique.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.45\textwidth]{linux_hour_of_day.png}
+\includegraphics[width=0.45\textwidth]{linux-bugginess-hour.pdf}
 \end{center}
-\caption{Linux percentage of bug introductions and percentage of total commits per hour}
-\label{fig-linux-hour}
+\caption{Linux percentage of buggy commits per hour}
+\label{fig-linux-bugginess-hour}
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.45\textwidth]{firefox_hour_of_day.png}
+\includegraphics[width=0.45\textwidth]{postgresql-bugginess-hour.pdf}
 \end{center}
-\caption{Firefox percentage of bug introductions and percentage of total commits per hour}
-\label{fig-firefox-hour}
+\caption{PostgreSQL percentage of buggy commits per hour}
+\label{fig-postgresql-bugginess-hour}
 \end{figure}
 
 \paragraph{Time-of-day Results} We next investigated whether the hour of a commit has any impact on
-its bugginess. Figures~\ref{fig-linux-hour} and~\ref{fig-firefox-hour}
+its bugginess. Figures~\ref{fig-postgresql-bugginess-hour} and~\ref{fig-postgresql-bugginess-hour}
 present results from Linux and Firefox, respectively. Both figures
 show a significant increase in the amount of commits which introduce a
 bug between midnight and 9AM. After 9AM, there is a significant
@@ -147,21 +121,21 @@ programmers are more likely to produce mistakes. It does, however,
 indicate the hours that programmers are at the peak of their
 productiveness, in terms of not creating additional bugs.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.45\textwidth]{linux_per_class.png}
-\end{center}
-\caption{Linux percentage of bug introductions and percentage of total commits per author classification}
-\label{fig-linux-class}
-\end{figure}
+%% \begin{figure}
+%% \begin{center}
+%% \includegraphics[width=0.45\textwidth]{linux_per_class.png}
+%% \end{center}
+%% \caption{Linux percentage of bug introductions and percentage of total commits per author classification}
+%% \label{fig-linux-class}
+%% \end{figure}
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.45\textwidth]{firefox_per_class.png}
-\end{center}
-\caption{Firefox percentage of bug introductions and percentage of total commits per author classification}
-\label{fig-firefox-class}
-\end{figure}
+%% \begin{figure}
+%% \begin{center}
+%% \includegraphics[width=0.45\textwidth]{firefox_per_class.png}
+%% \end{center}
+%% \caption{Firefox percentage of bug introductions and percentage of total commits per author classification}
+%% \label{fig-firefox-class}
+%% \end{figure}
 
 \paragraph{Developer Activity Classification} 
 We then investigated how each classification of developers fare in
@@ -180,21 +154,21 @@ unlikely to be pressured to fix bugs on any particular schedule.
 
 % we need to say what the two bars mean in the figure.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.45\textwidth]{linux_day_per_experience.png}
-\end{center}
-\caption{Linux percentage of bug introductions and percentage of total commits per author experience}
-\label{fig-linux-experience}
-\end{figure}
+%% \begin{figure}
+%% \begin{center}
+%% \includegraphics[width=0.45\textwidth]{linux_day_per_experience.png}
+%% \end{center}
+%% \caption{Linux percentage of bug introductions and percentage of total commits per author experience}
+%% \label{fig-linux-experience}
+%% \end{figure}
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.45\textwidth]{firefox_day_per_experience.png}
-\end{center}
-\caption{Firefox percentage of bug introductions and percentage of total commits per author experience}
-\label{fig-firefox-experience}
-\end{figure}
+%% \begin{figure}
+%% \begin{center}
+%% \includegraphics[width=0.45\textwidth]{firefox_day_per_experience.png}
+%% \end{center}
+%% \caption{Firefox percentage of bug introductions and percentage of total commits per author experience}
+%% \label{fig-firefox-experience}
+%% \end{figure}
 
 \paragraph{Developer Experience Classification}
 The final head-to-head comparison we performed is based on the amount
@@ -212,21 +186,21 @@ believe these results may not be accurate due to the possiblity of
 our experience metric being crude and not representative of the 
 actual experience with the project.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.45\textwidth]{linux_bug_life.png}
-\end{center}
-\caption{Linux number of bugs against bug lifetimes in months}
-\label{fig-linux-buglife}
-\end{figure}
+%% \begin{figure}
+%% \begin{center}
+%% \includegraphics[width=0.45\textwidth]{linux_bug_life.png}
+%% \end{center}
+%% \caption{Linux number of bugs against bug lifetimes in months}
+%% \label{fig-linux-buglife}
+%% \end{figure}
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.45\textwidth]{firefox_bug_life.png}
-\end{center}
-\caption{Firefox number of bugs against bug lifetimes in months}
-\label{fig-firefox-buglife}
-\end{figure}
+%% \begin{figure}
+%% \begin{center}
+%% \includegraphics[width=0.45\textwidth]{firefox_bug_life.png}
+%% \end{center}
+%% \caption{Firefox number of bugs against bug lifetimes in months}
+%% \label{fig-firefox-buglife}
+%% \end{figure}
 
 Finally we determined the bug lifetimes for both projects to contrast
 them to previous work. We plotted the number of bugs for each lifetime
@@ -241,3 +215,89 @@ refined. We also see the average lifetime is lower for Firefox, this
 may be due to the complexity of the software, size of the software or
 the amount of users (the more users and complex, the more likely bugs will be
 revealed).
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{linux-bugginess-author-class.pdf}
+\end{center}
+\caption{Linux percentage of buggy commits per author classification}
+\label{fig-linux-bugginess-author-class}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{postgresql-bugginess-author-class.pdf}
+\end{center}
+\caption{PostgreSQL percentage of buggy commits per author classification}
+\label{fig-postgresql-bugginess-author-class}
+\end{figure}
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{linux-introductions-day.pdf}
+\end{center}
+\caption{Linux introductions per commit per day}
+\label{fig-linux-introductions-day}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{postgresql-introductions-day.pdf}
+\end{center}
+\caption{PostgreSQL introductions per commit per day}
+\label{fig-postgresql-introductions-day}
+\end{figure}
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{linux-severity-day.pdf}
+\end{center}
+\caption{Linux severity of changes per day}
+\label{fig-linux-severity-day}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{postgresql-severity-day.pdf}
+\end{center}
+\caption{PostgreSQL severity of changes per day}
+\label{fig-postgresql-severity-day}
+\end{figure}
+
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{linux-introductions-hour.pdf}
+\end{center}
+\caption{Linux introductions per commit per hour}
+\label{fig-linux-introductions-hour}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{postgresql-introductions-hour.pdf}
+\end{center}
+\caption{PostgreSQL introductions per commit per hour}
+\label{fig-postgresql-introductions-hour}
+\end{figure}
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{linux-severity-hour.pdf}
+\end{center}
+\caption{Linux severity of changes per hour}
+\label{fig-linux-severity-hour}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{postgresql-severity-hour.pdf}
+\end{center}
+\caption{PostgreSQL severity of changes per hour}
+\label{fig-postgresql-severity-hour}
+\end{figure}

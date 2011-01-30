@@ -1,5 +1,8 @@
+- Check references
+- Need some literature search regarding studies on developer experience
+- sample another 50 commits that we think are not bug-fixing commits for each project to increase recall [lower priority] 
 - More metrics like severity, etc, and results [in progress]
-- Literature search for number of commits which are comments (Lin)
+- Literature search for number of commits which are comments (Lin) [in progrss]
 - Classify commits?
 - Per author information, outside of their normal times [in progress]
 - Find if time of day and author classification influence bugginess [done graphs]

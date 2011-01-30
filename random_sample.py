@@ -32,7 +32,7 @@ for commit in repository.iter_commits('master'):
         else:
             non_fix_commits.append(entry)
 
-output = open('random-smaple.txt', 'wb')
+output = open('random-sample.txt', 'wb')
 output.write('=== Fix Commits ===\n')
 for entry in random.sample(fix_commits, 100):
     output.write('Commit: %s\n' % entry[0])
