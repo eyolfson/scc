@@ -1,0 +1,943 @@
+=== Non-Fix Commits ===
+Commit: b131e04eae22e653efc3b9b6a861faa10e4894b8
+Merge: False
+Message:
+DocBook: Don't use graphics callouts
+
+By default, when a callout is used, DocBook will try to use
+a graphics image for callouts. This requires that the graphics
+to be copied to the documentation directory. As this is not
+done, use the text callouts: (1), (2), ...
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab@redhat.com>
+Comment:
+Good.
+
+G: 1, B: 0
+
+Commit: f328f81b54ecc19d2d13710dca01e5f01f1ff449
+Merge: False
+Message:
+x86_64: prepare shared kernel/syscall.c
+
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Good.
+
+G: 2, B: 0
+
+Commit: ecc0b32645bf19a3a240e72be3022ab3b46ad3d0
+Merge: False
+Message:
+drm/radeon: Add radeon.test parameter for running BO GPU copy tests.
+
+If enabled, during initialization BO GTT->VRAM and VRAM->GTT GPU copies are
+tested across the whole GTT aperture.
+
+This has helped uncover the benchmark copy size bug and verify the maximum
+aperture size supported by the AGP bridge in my PowerBook.
+
+Signed-off-by: Michel Dänzer <daenzer@vmware.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Comment:
+Good.
+
+G: 3, B: 0
+
+Commit: 9d0fcba67e47ff398a6fa86476d4884d472dc98a
+Merge: False
+Message:
+perf, x86: Call x86_setup_perfctr() from .hw_config()
+
+The perfctr setup calls are in the corresponding .hw_config()
+functions now. This makes it possible to introduce config functions
+for other pmu events that are not perfctr specific.
+
+Also, all of a sudden the code looks much nicer.
+
+Signed-off-by: Robert Richter <robert.richter@amd.com>
+Signed-off-by: Peter Zijlstra <a.p.zijlstra@chello.nl>
+LKML-Reference: <1271190201-25705-4-git-send-email-robert.richter@amd.com>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Good, code clean-up.
+
+G: 4, B: 0
+
+Commit: f8b890ab4ca60c05b5621b267712709d329f7612
+Merge: False
+Message:
+sh: Flag T-bit for syscall restart.
+
+Signed-off-by: Paul Mundt <lethal@linux-sh.org>
+Comment:
+Good.
+
+G: 5, B: 0
+
+Commit: 58e89c274f202d7fd59694b7b74fa676018435a2
+Merge: True
+Message:
+Merge branches 'sh-fixes-for-linus' and 'rmobile-fixes-for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/lethal/sh-2.6
+
+* 'sh-fixes-for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/lethal/sh-2.6:
+  sh: intc: Fix up build failure introduced by radix tree changes.
+  MAINTAINERS: update the sh git tree entry.
+  sh: clkfwk: fix up compiler warnings.
+  sh: intc: Fix up initializers for gcc 4.5.
+  rtc: rtc-sh - fix a memory leak
+
+* 'rmobile-fixes-for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/lethal/sh-2.6:
+  ARM: mach-shmobile: ap4evb: add fsib 44100Hz rate
+  MAINTAINERS: update the ARM SH-Mobile git tree entry.
+  ARM: mach-shmobile: ap4evb: Mark NOR boot loader partitions read-only.
+  ARM: mach-shmobile: intc-sh7372: fix interrupt number
+Comment:
+Good, merge.
+
+G: 6, B: 0
+
+Commit: 3caf02ee280a171074476d346d01dc0f5e05b22c
+Merge: False
+Message:
+[SCSI] fcoe: kfree() -> kfree_skb()
+
+sk_buff pointers should use kfree_skb() instead of vanilla kfree().
+
+Found by smatch (http://repo.or.cz/w/smatch.git).
+
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Robert Love <robert.w.love@intel.com>
+Signed-off-by: James Bottomley <James.Bottomley@HansenPartnership.com>
+Comment:
+Bad, this is a bug fix from smatch.
+
+G: 6, B: 1
+
+Commit: e7c70825a758403cfb476903f3145e6a8c0dd3b5
+Merge: False
+Message:
+RealView: Add support for the Cortex-A8 Platform Baseboard
+
+This patch adds support for RealView/PB-A8, a platform based on
+Cortex-A8 with support for PCI-E and compact flash.
+
+Signed-off-by: Bahadir Balban <bahadir.balban@arm.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Comment:
+Good.
+
+G: 7, B: 1
+
+Commit: a4edd1da20af79b2e92efeee3ca94831c8024d61
+Merge: False
+Message:
+xfs: add a separate lock class for the per-mount list of dquots
+
+We can have both a a quota hash chain and the per-mount list locked at
+the same time.  But given that both use the same struct dqhash as list
+head we have to tell lockdep that they are different lock classes.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Dave Chinner <david@fromorbit.com>
+Comment:
+Good, reorganized.
+
+G: 8, B: 1
+
+Commit: d0c1fd7a8f4cadb95b093d2600ad627f432c5edb
+Merge: False
+Message:
+[NETFILTER] nf_conntrack_proto_tcp.c: Mistyped state corrected.
+
+Signed-off-by: Jozsef Kadlecsik <kadlec@blackhole.kfki.hu>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Bad, old author used the wrong variable.
+
+G: 8, B: 2
+
+Commit: 6c77fd649fab4bea1b44cb534381a22e37650bc3
+Merge: False
+Message:
+[MTD] onenand: Add panic_write function to the onenand driver
+
+Implement the panic_write function for the onenand driver. This waits
+for any active command to complete/timeout, performs the write, waits
+for it to complete and then returns.
+
+Signed-off-by: Richard Purdie <rpurdie@rpsys.net>
+Signed-off-by: David Woodhouse <dwmw2@infradead.org>
+Comment:
+Good.
+
+G: 9, B: 2
+
+Commit: 84814d642a4f1f294bd675ab11aae1ca54c6cedb
+Merge: False
+Message:
+eCryptfs: don't encrypt file key with filename key
+
+eCryptfs has file encryption keys (FEK), file encryption key encryption
+keys (FEKEK), and filename encryption keys (FNEK).  The per-file FEK is
+encrypted with one or more FEKEKs and stored in the header of the
+encrypted file.  I noticed that the FEK is also being encrypted by the
+FNEK.  This is a problem if a user wants to use a different FNEK than
+their FEKEK, as their file contents will still be accessible with the
+FNEK.
+
+This is a minimalistic patch which prevents the FNEKs signatures from
+being copied to the inode signatures list.  Ultimately, it keeps the FEK
+from being encrypted with a FNEK.
+
+Signed-off-by: Tyler Hicks <tyhicks@linux.vnet.ibm.com>
+Cc: Serge Hallyn <serue@us.ibm.com>
+Acked-by: Dustin Kirkland <kirkland@canonical.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 10, B: 2
+
+Commit: b72519b518211ecb7c4c7b5e660ac6235ca7d1b7
+Merge: False
+Message:
+ALSA: hda - Clean up for ALC262 HP model auto-mute functions
+
+Just clean up, no functional changes.
+
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Comment:
+Good.
+
+G: 11, B: 2
+
+Commit: 5e1dbdb458ada37f7e97265cb2ea87c55fd5d034
+Merge: False
+Message:
+[ARM] sa1100: match clock by dev_name(dev)
+
+Continuing the move away from implementations which give an excuse
+for other bad implementations, convert SA1100 to lookup its singular
+clock by dev_name(dev) rather than by id.
+
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 12, B: 2
+
+Commit: bd4956b8ec2075e965492647e0c7006a36efe5d9
+Merge: False
+Message:
+V4L/DVB (3893): Convert calls from _pllbuf() to _calc_reg()
+
+Johannes Stezenbach suggested this change - definite improvement.
+
+Signed-off-by: Andrew de Quincey <adq_dvb@lidskialf.net>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@infradead.org>
+Comment:
+Good, not really a bug-fix.
+
+G: 13, B: 2
+
+Commit: 2ca2ebfd952d0338a0972c1f1f56b9b0c1a3b09c
+Merge: False
+Message:
+MIPS: Don't corrupt page tables on vmalloc fault.
+
+The code after the vmalloc_fault: label in do_page_fault() modifies
+user page tables, this is not correct for 64-bit kernels.
+
+For 64-bit kernels we should go straight to the no_context handler
+skipping vmalloc_fault.
+
+Signed-off-by: David Daney <ddaney@caviumnetworks.com>
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+Comment:
+Bad, this is definitely a bug.
+
+G: 13, B: 3
+
+Commit: c7e9cb4c0c6d6807e9b07ec1b01fecac0c7b0532
+Merge: True
+Message:
+Merge branch 'kvm-updates/2.6.30' of git://git.kernel.org/pub/scm/virt/kvm/kvm
+
+* 'kvm-updates/2.6.30' of git://git.kernel.org/pub/scm/virt/kvm/kvm:
+  KVM: Explicity initialize cpus_hardware_enabled
+Comment:
+Good.
+
+G: 14, B: 3
+
+Commit: edf7245362f7b8b8c76c4a6cad3604bf80884848
+Merge: False
+Message:
+ext4: Remove unnecessary quota functions
+
+ext4_dquot_initialize() and ext4_dquot_drop() is no longer
+needed because of modified quota locking.
+
+Signed-off-by: Jan Kara <jack@suse.cz>
+Comment:
+Good.
+
+G: 15, B: 3
+
+Commit: 3fd09c45bfbcf77949ed6db36e67c1681424fedb
+Merge: False
+Message:
+ehea: Detect 16GB hugepages for firmware restriction
+
+All kernel memory which is used for kernel/hardware data transfer must
+be registered with firmware using "memory regions". 16GB hugepages
+may not be part of a memory region due to firmware restrictions.
+This patch modifies the walk_memory_resource callback fn to filter
+hugepages and add only standard memory to the busmap which is later
+on used for MR registration.
+
+Signed-off-by: Thomas Klein <tklein@de.ibm.com>
+Signed-off-by: Jeff Garzik <jgarzik@redhat.com>
+Comment:
+Good.
+
+G: 16, B: 3
+
+Commit: 4b8879df8c21bed3efd1eb2da5d72501199aba29
+Merge: False
+Message:
+[XFS] Propagate xfs_qm_dqflush_all() errors.
+
+xfs_qm_dqflush_all() can return flush errors. Ensure they are propagated
+into the quotacheck code to determine if the quotacheck succeeded or not.
+
+SGI-PV: 980084
+SGI-Modid: xfs-linux-melb:xfs-kern:30786a
+
+Signed-off-by: David Chinner <dgc@sgi.com>
+Signed-off-by: Niv Sardi <xaiki@sgi.com>
+Signed-off-by: Lachlan McIlroy <lachlan@sgi.com>
+Comment:
+Bad, they didn't check the return value of the function.
+
+G: 16, B: 4
+
+Commit: db6f30078dcb0117336f20275e4828c86132e46e
+Merge: False
+Message:
+tulip: implement wake-on-lan support
+
+Based on a patch from http://simon.baatz.info/wol-support-for-an983b/
+
+Tested to resume from suspend by magic packet.
+
+Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 17, B: 4
+
+Commit: 162b96e63e518aa6ff029ce23de12d7f027483bf
+Merge: False
+Message:
+ioat2,3: cacheline align software descriptor allocations
+
+All the necessary fields for handling an ioat2,3 ring entry can fit into
+one cacheline.  Move ->len prior to ->txd in struct ioat_ring_ent, and
+move allocation of these entries to a hw-cache-aligned kmem cache to
+reduce the number of cachelines dirtied for descriptor management.
+
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Comment:
+Good, optimization.
+
+G: 18, B: 4
+
+Commit: dca1d9f6d7ae428c193f32bd3e9a4ca13176648b
+Merge: True
+Message:
+Merge branch 'for-linus' of master.kernel.org:/home/rmk/linux-2.6-arm
+
+* 'for-linus' of master.kernel.org:/home/rmk/linux-2.6-arm: (370 commits)
+  ARM: S3C2443: Add set_rate and round_rate calls for armdiv clock
+  ARM: S3C2443: Remove #if 0 for clk_mpll
+  ARM: S3C2443: Update notes on MPLLREF clock
+  ARM: S3C2443: Further clksrc-clk conversions
+  ARM: S3C2443: Change to using plat-samsung clksrc-clk implementation
+  USB: Fix s3c-hsotg build following Samsung platform header moves
+  ARM: S3C64XX: Reintroduce unconditional build of audio device
+  ARM: 5961/1: ux500: fix CLKRST addresses
+  ARM: 5977/1: arm: Enable backtrace printing on oops when PC is corrupted
+  ASoC: Fix S3C64xx IIS driver for Samsung header reorg
+  ARM: S3C2440: Fix plat-s3c24xx move of s3c2440/s3c2442 support
+  [ARM] pxa: fix typo in mxm8x10.h
+  [ARM] pxa/raumfeld: set GPIO drive bits for LED pins
+  [ARM] pxa/zeus: Add support for mcp2515 CAN bus
+  [ARM] pxa/zeus: Add support for onboard max6369 watchdog
+  [ARM] pxa/zeus: Add Eurotech as the manufacturer
+  [ARM] pxa/zeus: Correct the USB host initialisation flags
+  [ARM] pxa/zeus: Allow usage of 8250-compatible UART in uncompress
+  [ARM] pxa: refactor uncompress.h for non-PXA uarts
+  [ARM] mmp2: fix incorrect calling of chip->mask_ack() for 2nd level cascaded IRQs
+  ...
+Comment:
+Good.
+
+G: 19, B: 4
+
+Commit: f1a745710f001e8c2eec6d525396083e1f4c389a
+Merge: True
+Message:
+Merge branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound-2.6
+
+* 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound-2.6:
+  sound: do not set DEVNAME for OSS devices
+  ALSA: hda - Add sanity check in PCM open callback
+  ALSA: hda - Call snd_pcm_lib_hw_rates() again after codec open callback
+  ALSA: hda - Avoid invalid formats and rates with shared SPDIF
+  ALSA: hda - Improve ASUS eeePC 1000 mixer
+  ALSA: hda - Add GPIO1 control at muting with HP laptops
+  ALSA: usx2y - reparent sound device
+  ALSA: snd_usb_caiaq: reparent sound device
+  sound: virtuoso: fix Xonar D1/DX silence after resume
+  ASoC: Only disable pxa2xx-i2s clocks if we enabled them
+  ALSA: hda - Add quirk for HP 6930p
+  ALSA: hda - Add missing static to patch_ca0110()
+  ASoC: OMAP: fix OMAP1510 broken PCM pointer callback
+  ASoC: remove BROKEN from Efika and pcm030 fabric drivers
+  ASoC: Fix typo in MPC5200 PSC AC97 driver Kconfig
+Comment:
+Good.
+
+G: 20, B: 4
+
+Commit: 96e0bf4b5193d0d97d139f99e2dd128763d55521
+Merge: False
+Message:
+tcp: Discard segments that ack data not yet sent
+
+Discard incoming packets whose ack field iincludes data not yet sent.
+This is consistent with RFC 793 Section 3.9.
+
+Change tcp_ack() to distinguish between too-small and too-large ack
+field values.  Keep segments with too-large ack fields out of the fast
+path, and change slow path to discard them.
+
+Reported-by:  Oliver Zheng <mailinglists+netdev@oliverzheng.com>
+Signed-off-by: John Dykstra <john.dykstra1@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 21, B: 4
+
+Commit: e601ef22bc5ec9332c8d785533895ee81c834b8a
+Merge: True
+Message:
+Merge with /pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+
+Signed-off-by: Steve French <sfrench@us.ibm.com>
+Comment:
+Good.
+
+G: 22, B: 4
+
+Commit: 22fba33545b731408deab6e96b6e231ee05fd10b
+Merge: False
+Message:
+vmscan: separate sc.swap_cluster_max and sc.nr_max_reclaim
+
+Currently, sc.scap_cluster_max has double meanings.
+
+ 1) reclaim batch size as isolate_lru_pages()'s argument
+ 2) reclaim baling out thresolds
+
+The two meanings pretty unrelated. Thus, Let's separate it.
+this patch doesn't change any behavior.
+
+Signed-off-by: KOSAKI Motohiro <kosaki.motohiro@jp.fujitsu.com>
+Reviewed-by: Rik van Riel <riel@redhat.com>
+Reviewed-by: Minchan Kim <minchan.kim@gmail.com>
+Cc: Mel Gorman <mel@csn.ul.ie>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 23, B: 4
+
+Commit: b368fae6abaa1736b8f26128c32947d47237b8e5
+Merge: False
+Message:
+[PATCH] sonypi: Enable ACPI events for Sony laptop hotkeys
+
+Signed-off-by: Ben Collins <bcollins@ubuntu.com>
+Cc: "Brown, Len" <len.brown@intel.com>
+Cc: linux-acpi@vger.kernel.org
+Cc: Stelian Pop <stelian@popies.net>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 24, B: 4
+
+Commit: a24b163b7c16f9e30e726319115e45ed6e683582
+Merge: False
+Message:
+[PATCH] pcnet32: remove incorrect pcnet32_free_ring
+
+During a code scan for another change I discovered that this call to
+pcnet32_free_ring must be removed.  If the open fails due to a lack of
+memory all the ring structures are removed via the call to free_ring
+and a subsequent call to open will dereference a null pointer in
+pcnet32_init_ring.
+
+Please apply to 2.6.17.
+
+Signed-off-by:  Don Fry <brazilnut@us.ibm.com>
+Signed-off-by: Jeff Garzik <jeff@garzik.org>
+Comment:
+Bad, definitely a patch.
+
+G: 24, B: 5
+
+Commit: bf976b51a32e255523c69022c1f21bf9ad527fc5
+Merge: False
+Message:
+ARM: 6012/1: ST SPEAr: Added basic header files for SPEAr platform
+
+Reviewed-by: Linus Walleij <linux.walleij@stericsson.com>
+
+Signed-off-by: Viresh Kumar <viresh.kumar@st.com>
+Signed-off-by: Shiraz Hashim <shiraz.hashim@st.com>
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 25, B: 5
+
+Commit: 68b1de15765f2b0e0925e692dab2b2fa2abd93fc
+Merge: False
+Message:
+dccp ccid-2: Algorithm to update buffer state
+
+This provides a routine to consistently update the buffer state when the
+peer acknowledges receipt of Ack Vectors; updating state in the list of Ack
+Vectors as well as in the circular buffer.
+
+While based on RFC 4340, several additional (and necessary) precautions were
+added to protect the consistency of the buffer state. These additions are
+essential, since analysis and experience showed that the basic algorithm was
+insufficient for this task (which lead to problems that were hard to debug).
+
+The algorithm now
+ * deals with HC-sender acknowledging to HC-receiver and vice versa,
+ * keeps track of the last unacknowledged but received seqno in tail_ackno,
+ * has special cases to reset the overflow condition when appropriate,
+ * is protected against receiving older information (would mess up buffer state).
+
+Note: The older code performed an unnecessary step, where the sender cleared
+Ack Vector state by parsing the Ack Vector received by the HC-receiver. Doing
+this was entirely redundant, since
+ * the receiver always puts the full acknowledgment window (groups 2,3 in 11.4.2)
+   into the Ack Vectors it sends; hence the HC-receiver is only interested in the
+   highest state that the HC-sender received;
+ * this means that the acknowledgment number on the (Data)Ack from the HC-sender
+   is sufficient; and work done in parsing earlier state is not necessary, since
+   the later state subsumes the  earlier one (see also RFC 4340, A.4).
+This older interface (dccp_ackvec_parse()) is therefore removed.
+
+Signed-off-by: Gerrit Renker <gerrit@erg.abdn.ac.uk>
+Comment:
+Good.
+
+G: 26, B: 5
+
+Commit: e22a9a8b703d05f13366c3f2e7e1aa0550bb5ca6
+Merge: False
+Message:
+[PATCH] sound: hda: detect ALC883 on MSI K9A Platinum motherboards (MS-7280)
+
+Recognize the Realtek ALC883 chip on MSI K9A Platinum motherboards
+(model no. MS-7280), enabling full sound capabilities.
+
+Signed-off-by: Leonard Norrgård <leonard.norrgard@refactor.fi>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good, this is a new feature.
+
+G: 27, B: 5
+
+Commit: 0ccfe61803ad24f1c0fe5e1f5ce840ff0f3d9660
+Merge: False
+Message:
+[TCP]: Saner thash_entries default with much memory.
+
+On systems with a very large amount of memory, the heuristics in
+alloc_large_system_hash() result in a very large TCP established hash
+table: 16 millions of entries for a 128 GB ia64 system. This makes
+reading from /proc/net/tcp pretty slow (well over a second) and as a
+result netstat is slow on these machines. I know that /proc/net/tcp is
+deprecated in favor of tcp_diag, however at the moment netstat only
+knows of the former.
+
+I am skeptical that such a large TCP established hash is often needed.
+Just because a system has a lot of memory doesn't imply that it will
+have several millions of concurrent TCP connections. Thus I believe
+that we should put an arbitrary high limit to the size of the TCP
+established hash by default. Users who really need a bigger hash can
+always use the thash_entries boot parameter to get more.
+
+I propose 2 millions of entries as the arbitrary high limit. This
+makes /proc/net/tcp reasonably fast on the system in question (0.2 s)
+while being still large enough for me to be confident that network
+performance won't suffer.
+
+This is just one way to limit the hash size, there are others; I am not
+familiar enough with the TCP code to decide which is best. Thus, I
+would welcome the proposals of alternatives.
+
+[ 2 million is still too large, thus I've modified the limit in the
+  change to be '512 * 1024'. -DaveM ]
+
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good, implementation.
+
+G: 28, B: 5
+
+Commit: 8f3eabe3835449117058efaf5e90f28bf030e859
+Merge: False
+Message:
+[S390] vmcp: add missing compat ptr conversion
+
+Signed-off-by: Heiko Carstens <heiko.carstens@de.ibm.com>
+Signed-off-by: Martin Schwidefsky <schwidefsky@de.ibm.com>
+Comment:
+Bad, this is something they missed.
+
+G: 28, B: 6
+
+Commit: b5ff992b09dbe06a4a020fbb702e29ab61290cc5
+Merge: False
+Message:
+vsprintf: reduce code size by avoiding extra check
+
+No functional change, just refactor the code so that it avoid checking
+"if (hi)" two times in a sequence, taking advantage of previous check made.
+
+It also reduces code size:
+   text    data     bss     dec     hex filename
+  15726       0       8   15734    3d76 vsprintf.o (ex lib/lib.a-BEFORE)
+  15710       0       8   15718    3d66 vsprintf.o (ex lib/lib.a-AFTER)
+
+Signed-off-by: André Goddard Rosa <andre.goddard@gmail.com>
+Acked-by: Frederic Weisbecker <fweisbec@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 29, B: 6
+
+Commit: ea2e90dfcee2c09eff8a180976ace071922663a5
+Merge: False
+Message:
+[RXRPC]: Decrease number of pointer derefs in connection.c
+
+Decrease the number of pointer derefs in net/rxrpc/connection.c
+
+Benefits of the patch:
+ - Fewer pointer dereferences should make the code slightly faster.
+ - Size of generated code is smaller
+ - improved readability
+
+Signed-off-by: Jesper Juhl <jesper.juhl@gmail.com>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 30, B: 6
+
+Commit: 80d663a42127b839e820ed934cead51cff6196d3
+Merge: False
+Message:
+crypto: des_s390: remove des3_ede128 mode
+
+des_s390 implements support for 3DES with a 128 bit key. This mode is probably
+not used anywhere, less secure than 3DES with a 192 bit key and not
+implemented in the generic des version. Removing this mode seems to be low risk
+and will ease maintenance of the code.
+
+Signed-off-by: Jan Glauber <jang@linux.vnet.ibm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Comment:
+Good.
+
+G: 31, B: 6
+
+Commit: bb979d7fc360bc37cbaff43a6fafceb897cb5e47
+Merge: False
+Message:
+autofs4: cleanup autofs mount type usage
+
+Usage of the AUTOFS_TYPE_* defines is a little confusing and appears
+inconsistent.
+
+Signed-off-by: Ian Kent <raven@themaw.net>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 32, B: 6
+
+Commit: 6dd9344cfc41bcc60a01cdc828cb278be7a10e01
+Merge: False
+Message:
+MIPS: Implement Read Inhibit/eXecute Inhibit
+
+The SmartMIPS ASE specifies how Read Inhibit (RI) and eXecute Inhibit
+(XI) bits in the page tables work.  The upper two bits of EntryLo{0,1}
+are RI and XI when the feature is enabled in the PageGrain register.
+SmartMIPS only covers 32-bit systems.  Cavium Octeon+ extends this to
+64-bit systems by continuing to place the RI and XI bits in the top of
+EntryLo even when EntryLo is 64-bits wide.
+
+Because we need to carry the RI and XI bits in the PTE, the layout of
+the PTE is changed.  There is a two instruction overhead in the TLB
+refill hot path to get the EntryLo bits into the proper position.
+Also the TLB load exception has to probe the TLB to check if RI or XI
+caused the exception.
+
+Also of note is that the layout of the PTE bits is done at compile and
+runtime rather than statically.  In the 32-bit case this allows for
+the same number of PFN bits as before the patch as the _PAGE_HUGE is
+not supported in 32-bit kernels (we have _PAGE_NO_EXEC and
+_PAGE_NO_READ instead of _PAGE_READ and _PAGE_HUGE).
+
+The patch is tested on Cavium Octeon+, but should also work on 32-bit
+systems with the Smart-MIPS ASE.
+
+Signed-off-by: David Daney <ddaney@caviumnetworks.com>
+To: linux-mips@linux-mips.org
+Patchwork: http://patchwork.linux-mips.org/patch/952/
+Patchwork: http://patchwork.linux-mips.org/patch/956/
+Patchwork: http://patchwork.linux-mips.org/patch/962/
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+Comment:
+Good.
+
+G: 33, B: 6
+
+Commit: 08d5e3eb4b2141e1031835c89a62ee3ddf896641
+Merge: False
+Message:
+[PATCH] ppc64: Remove obsolete idle_setup()
+
+Now that the idle loop is configured by each platform we don't need
+idle_setup() anymore.
+
+Signed-off-by: Michael Ellerman <michael@ellerman.id.au>
+Signed-off-by: Anton Blanchard <anton@samba.org>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 34, B: 6
+
+Commit: f687d19d223d853f6b3def29c55eb4b67bd44a40
+Merge: False
+Message:
+V4L/DVB: wm8739: convert to the new control framework
+
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@redhat.com>
+Comment:
+Good.
+
+G: 35, B: 6
+
+Commit: 3a598264436e94c410c413088a7873fcad33616c
+Merge: False
+Message:
+sh: SH-2007 board support.
+
+This patch series adds support for ITO Co., Ltd.'s SH-2007 reference
+platform (A PC-104 based SH7780 platform).
+
+This is a direct port of the out-of-tree board support from the vendor's
+kernel, originally located at:
+
+	http://ms-n.org/sh-linux/kernel/
+
+More information on the board and the vendor can be obtained from the
+vendor's site at:
+
+	http://www.itonet.co.jp/
+
+Presently supported peripherals are CF and ethernet, with support for
+the on-board IDE still pending further testing.
+
+Reviewed-by: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
+Reviewed-by: Magnus Damm <magnus.damm@gmail.com>
+Signed-off-by: Hitoshi Mitake <mitake@dcl.info.waseda.ac.jp>
+Signed-off-by: Paul Mundt <lethal@linux-sh.org>
+Comment:
+Good.
+
+G: 36, B: 6
+
+Commit: 022c3f7d82f0f1c68018696f2f027b87b9bb45c2
+Merge: False
+Message:
+Allow tcp_parse_options to consult dst entry
+
+We need tcp_parse_options to be aware of dst_entry to
+take into account per dst_entry TCP options settings
+
+Signed-off-by: Gilad Ben-Yossef <gilad@codefidence.com>
+Sigend-off-by: Ori Finkelman <ori@comsleep.com>
+Sigend-off-by: Yony Amit <yony@comsleep.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 37, B: 6
+
+Commit: 162350eb75fcb81ec0ea34f042f1deddb759aea8
+Merge: False
+Message:
+MMC: Use timeout values from CSR
+
+Hard-coded timeout values of 250ms for writes and 100ms for reads are
+currently used for MMC transactions over SPI. The spec states that the
+timeout values from the card should be used.
+
+Signed-off-by: Matthew Fleming <matthew.fleming@imgtec.com>
+Signed-off-by: Pierre Ossman <drzeus@drzeus.cx>
+Comment:
+Good.
+
+G: 38, B: 6
+
+Commit: 9203344cb8ecc554a1d36eae6661235ed422cf59
+Merge: False
+Message:
+[SCSI] aacraid: initialization timeout
+
+Received from Mark Salyzyn from Adaptec.
+
+In the rare instances where the adapter, or the motherboard, is
+misbehaving; driver initialization or shutdown becomes problematic. By
+introducing a 3 minute timeout on the first interrupt driven command
+during initialization, or the issuance of the adapter shutdown command
+during driver unload, we can resolve the lockup problems induced by
+common (but rare) hardware misbehaviors.
+
+The timeout during initialization, should it occur, is accompanied by a
+message presented to the console and the logs indicating that the user
+should inspect and resolve problems with interrupt routing.
+
+Signed-off-by: Mark Haverkamp <markh@osdl.org>
+Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
+Comment:
+Good.
+
+G: 39, B: 6
+
+Commit: 1c4a77bf54a61dde135740a563b6ec03382604e8
+Merge: False
+Message:
+pcmcia: add a few debug statements
+
+Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+Comment:
+Good.
+
+G: 40, B: 6
+
+Commit: e1b3157f9710622bad6c7747d3b08ed3d2394cf6
+Merge: False
+Message:
+svc: Change sk_inuse to a kref
+
+Change the atomic_t reference count to a kref and move it to the
+transport indepenent svc_xprt structure. Change the reference count
+wrapper names to be generic.
+
+Signed-off-by: Tom Tucker <tom@opengridcomputing.com>
+Acked-by: Neil Brown <neilb@suse.de>
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Greg Banks <gnb@sgi.com>
+Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
+Comment:
+Good, reorganization.
+
+G: 41, B: 6
+
+Commit: d7b2b2ecd88d06ae212d069a4e187ab690b1636f
+Merge: False
+Message:
+drivers/block/floppy.c: hoist assigns from if()s, neatening
+
+Move assigns above if()s
+Remove unnecessary parentheses from returns
+Use a temporary for a duplicated test
+
+Signed-off-by: Joe Perches <joe@perches.com>
+Cc: Stephen Hemminger <shemminger@vyatta.com>
+Cc: Jens Axboe <jens.axboe@oracle.com>
+Cc: Marcin Slusarz <marcin.slusarz@gmail.com>
+Cc: Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good, clean-up.
+
+G: 42, B: 6
+
+Commit: 3d5b191fff144634a04800e610b7ad0c1aefa6ed
+Merge: False
+Message:
+[PATCH] nvidiafb: Remove NULL check #2
+
+Remove unnecessary NULL check.
+
+Signed-off-by: Antonino Daplas <adaplas@pol.net>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 43, B: 6
+
+Commit: 724ee626f38feaea215a11790e1a0cb5d83b0628
+Merge: False
+Message:
+drivers/block/floppy.c: remove unnecessary casting in fd_ioctl
+
+Convert outparam to const void *.
+Cast outparam to const char * for strlen().
+
+Signed-off-by: Joe Perches <joe@perches.com>
+Cc: Stephen Hemminger <shemminger@vyatta.com>
+Cc: Jens Axboe <jens.axboe@oracle.com>
+Cc: Marcin Slusarz <marcin.slusarz@gmail.com>
+Cc: Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 47, B: 6
+
+False-negatives: 6/50

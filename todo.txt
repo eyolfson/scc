@@ -1,12 +1,13 @@
-- finish pg, done
-- false pos / false neg, done
-- fix the classification, done
-- more metrics for buginess like density
-- time of day and author experience influence buginess
-- the author bins
-- varaince
-- add categories for commits
-- commit vs author (or merge information)
-- number of other projects for each author
-- lit search for number of commits which are comments (Lin)
-- timezone corrections for postgres (Patrick)
+- More metrics like severity, etc, and results [in progress]
+- Literature search for number of commits which are comments (Lin)
+- Classify commits?
+- Per author information, outside of their normal times [in progress]
+- Find if time of day and author classification influence buginess [done graphs]
+- Committer vs author (who is reviewing the changes)
+- Author experience based on number of other projects
+- Variance
+
+- Postgres [done]
+- False positive/negative rates [done]
+- Make a cutoff number of commits for classification [done]
+- Timezone corrections for postgresql (Patrick) [done]
