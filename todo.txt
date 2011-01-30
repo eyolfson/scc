@@ -1,12 +1,13 @@
-- Postgres [done]
-- False positive/negative rates [done]
-- Make a cutoff number of commits for classification [done]
 - More metrics like severity, etc, and results [in progress]
 - Literature search for number of commits which are comments (Lin)
-- Timezone corrections for postgresql (Patrick) [done]
 - Classify commits?
 - Per author information, outside of their normal times [in progress]
 - Find if time of day and author classification influence buginess [done graphs]
 - Committer vs author (who is reviewing the changes)
 - Author experience based on number of other projects
 - Variance
+
+- Postgres [done]
+- False positive/negative rates [done]
+- Make a cutoff number of commits for classification [done]
+- Timezone corrections for postgresql (Patrick) [done]
