@@ -1,3 +1,1166 @@
+=== Fix Commits ===
+Commit: 9564e138b1f6eb137f7149772438d3f3fb3277dd
+Message:
+virtio: Add memory statistics reporting to the balloon driver (V4)
+
+Changes since V3:
+ - Do not do endian conversions as they will be done in the host
+ - Report stats that reference a quantity of memory in bytes
+ - Minor coding style updates
+
+Changes since V2:
+ - Increase stat field size to 64 bits
+ - Report all sizes in kb (not pages)
+ - Drop anon_pages stat and fix endianness conversion
+
+Changes since V1:
+ - Use a virtqueue instead of the device config space
+
+When using ballooning to manage overcommitted memory on a host, a system for
+guests to communicate their memory usage to the host can provide information
+that will minimize the impact of ballooning on the guests.  The current method
+employs a daemon running in each guest that communicates memory statistics to a
+host daemon at a specified time interval.  The host daemon aggregates this
+information and inflates and/or deflates balloons according to the level of
+host memory pressure.  This approach is effective but overly complex since a
+daemon must be installed inside each guest and coordinated to communicate with
+the host.  A simpler approach is to collect memory statistics in the virtio
+balloon driver and communicate them directly to the hypervisor.
+
+This patch enables the guest-side support by adding stats collection and
+reporting to the virtio balloon driver.
+
+Signed-off-by: Adam Litke <agl@us.ibm.com>
+Cc: Anthony Liguori <anthony@codemonkey.ws>
+Cc: virtualization@lists.linux-foundation.org
+Signed-off-by: Rusty Russell <rusty@rustcorp.com.au> (minor fixes)
+Comment: Bad, way too much was added.
+
+G: 0, B: 1
+
+Commit: 1b523fb54977c9bb81b16c4badce581a2b455994
+Message:
+[PATCH] i386: VDSO_PRELINK warning fix
+
+The lguest patches somehow managed to trigger this:
+
+In file included from arch/i386/lguest/lguest.c:38:
+include/asm/asm-offsets.h:67:1: warning: "VDSO_PRELINK" redefined
+In file included from include/linux/elf.h:7,
+                 from include/linux/module.h:15,
+                 from include/linux/device.h:21,
+                 from include/linux/interrupt.h:15,
+                 from arch/i386/lguest/lguest.c:27:
+include/asm/elf.h:140:1: warning: this is the location of the previous definition
+
+I assume that using the same identifier twice was a bad idea..
+
+Cc: Rusty Russell <rusty@rustcorp.com.au>
+Cc: Andi Kleen <ak@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Andi Kleen <ak@suse.de>
+Comment:
+Good.
+
+G: 1, B: 1
+
+Commit: fbcffcc6a0536544fa53cd5bd5c4913efe1a5982
+Message:
+RDMA/nes: Fix slab corruption
+
+Referencing cm_node after it is freed via rem_ref_cm_node() causes a
+slab corruption.  There is no need to set cm_node->cm_id to NULL in
+mini_cm_close().
+
+Signed-off-by: Chien Tung <ctung@neteffect.com>
+Signed-off-by: Roland Dreier <rolandd@cisco.com>
+Comment:
+Good.
+
+G: 2, B: 1
+
+Commit: 9c3254ad42e7925c3a3907a072185273705bd7b2
+Message:
+x86: fix compile error with corruption checking disabled
+
+Fix compile error:
+
+ arch/x86/mm/init_32.c: In function 'mem_init':
+ arch/x86/mm/init_32.c:908: error: implicit declaration of function 'start_periodic_check_for_corruption'
+
+Signed-off-by: Jeremy Fitzhardinge <jeremy.fitzhardinge@citrix.com>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Good.
+
+G: 3, B: 1
+
+Commit: 29508eb66bfacdef324d2199eeaea31e0cdfaa29
+Message:
+drm/radeon/kms: drop taking lock around crtc lookup.
+
+We only add/remove crtcs at driver load, you cannot remove when
+the GPU is running a CS packet since the fd is open, when
+GPU hotplugging on radeons actually is needed all this locking
+needs a review and I've started re-working kms core locking to deal
+with this better. But for now avoid long delays in CS processing when
+hotplug detect is happening in a different thread.
+
+this fixes a regression introduced with hotplug detection.
+
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Comment:
+Good.
+
+G: 4, B: 1
+
+Commit: 801690caf1894d4f8b1277ca9f5dcf0bcf9b3f58
+Message:
+kconfig: fix savedefconfig for tristate choices
+
+savedefconfig failed to save choice symbols equal to 'y'
+for tristate choices.
+This resulted in this value being lost.
+
+In particular is fixes an issue where
+
+	make ARCH=avr32 atngw100_defconfig
+	make ARCH=avr32 savedefconfig
+	cp defconfig arch/avr32/configs/atngw100_defconfig
+	make ARCH=avr32 atngw100_defconfig
+	diff -u .config .config.old
+
+failed to produce an identical .config.
+
+Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+Signed-off-by: Michal Marek <mmarek@suse.cz>
+Comment:
+Good.
+
+G: 5, B: 1
+
+Commit: 02ca6c407e0d43e6de5d646d26d87fc2eaa7a98b
+Message:
+Add include to i2c-xii.c to fix build error
+
+drivers/i2c/busses/i2c-xiic.c:493: error: implicit declaration of function 'mdelay'
+
+Signed-off-by: Randy Dunlap <randy.dunlap@oracle.com>
+Cc: "Richard Röjfors" <richard.rojfors@pelagicore.com>
+Cc: "Ben Dooks (embedded platforms)" <ben-linux@fluff.org>
+Cc: linux-i2c@vger.kernel.org
+Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 6, B: 1
+
+Commit: cb1ffb6204712b04396ae0a9f3d1bf93cd8df8fb
+Message:
+powerpc/85xx: Fix issue found by lockdep trace in smp_85xx_kick_cpu
+
+lockdep trace found the following:
+
+------------[ cut here ]------------
+Badness at c007baf0 [verbose debug info unavailable]
+NIP: c007baf0 LR: c007bad8 CTR: 00000000
+REGS: ef855e00 TRAP: 0700   Tainted: G        W
+(2.6.30-06736-g12a31df-dirty)
+MSR: 00021000 <ME,CE>  CR: 24044022  XER: 20000000
+TASK = ef858000[1] 'swapper' THREAD: ef854000 CPU: 0
+GPR00: 00000000 ef855eb0 ef858000 00000001 000000d0 f1000000 ffbc8000 ffffffff
+GPR08: 000000d0 c0760000 c0710000 00000007 2fffffff 1004a388 7ffd9400 00000000
+GPR16: 00000000 7ffcd100 7ffcd100 7ffcd100 c059cd78 c075c498 c057da7c ffffffff
+GPR24: ffbc8000 f1000000 00000001 c00bf8b0 c07595d4 000000d0 00021000 000000d0
+NIP [c007baf0] lockdep_trace_alloc+0xc0/0xf0
+LR [c007bad8] lockdep_trace_alloc+0xa8/0xf0
+Call Trace:
+[ef855eb0] [c007ba60] lockdep_trace_alloc+0x30/0xf0 (unreliable)
+[ef855ec0] [c00cb3ac] kmem_cache_alloc+0x2c/0xf0
+[ef855ee0] [c00bf8b0] __get_vm_area_node+0x80/0x1c0
+[ef855f10] [c0017580] __ioremap_caller+0x1d0/0x1e0
+[ef855f40] [c057da7c] smp_85xx_kick_cpu+0x64/0x124
+[ef855f60] [c0599180] __cpu_up+0xd0/0x1a4
+[ef855f80] [c05997c4] cpu_up+0x14c/0x1e0
+[ef855fc0] [c05732a0] kernel_init+0x100/0x1c4
+[ef855ff0] [c0011524] kernel_thread+0x4c/0x68
+Instruction dump:
+8009c174 2f800000 409e0048 73c08000 40820040 4818980d 2f830000 419effa0
+3d20c076 8009c388 2f800000 409eff90 <0fe00000> 4bffff88 60000000 60000000
+
+We were calling ioremap after we local_irq_restore(flags).  A simple
+reorder fixes the problem.
+
+Signed-off-by: Kumar Gala <galak@kernel.crashing.org>
+Comment:
+Good.
+
+G: 7, B: 1
+
+Commit: 07fb75a50600c0c480b40c6d11dbc993f21bc2bc
+Message:
+[SCSI] fix (unlikely) memory leak in DAC960 driver
+
+The Coverity checker found a memory leak (bug nr. 1245) in
+ drivers/block/DAC960.c::DAC960_V2_ProcessCompletedCommand()
+
+The leak is pretty unlikely since it requires that the first of two
+successive kmalloc() calls fail while the second one succeeds. But it can
+still happen even if it's unlikely.
+
+If the first call that allocates 'PhysicalDeviceInfo' fails but the one
+that allocates 'InquiryUnitSerialNumber' succeeds, then we will leak the
+memory allocated to 'InquiryUnitSerialNumber' when the variable goes out
+of scope.
+
+A simple fix for this is to change the existing code that frees
+'PhysicalDeviceInfo' if that one was allocated but
+'InquiryUnitSerialNumber' was not, into a check for either pointer
+being NULL and if so just free both. This is safe since kfree() can
+deal with being passed a NULL pointer and it avoids the leak.
+
+While I was there I also removed the casts of the kmalloc() return
+value since it's pointless.
+I also updated the driver version since this patch changes the workings of
+the code (however slightly).
+
+This issue could probably be fixed a lot more elegantly, but the code
+is a big mess IMHO and I just took the least intrusive route to a fix
+that I could find instead of starting on a cleanup as well (that can
+come later).
+
+Please consider for inclusion.
+
+Signed-off-by: Jesper Juhl <jesper.juhl@gmail.com>
+Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
+Comment:
+Good.
+
+G: 8, B: 1
+
+Commit: 9a5df92374d65e2886b92e98dd7d873c533a83ff
+Message:
+Bluetooth: Fix RFCOMM release oops when device is still in use
+
+It turns out that the following sequence of actions will reproduce the
+oops:
+
+  1. Create a new RFCOMM device (using RFCOMMCREATEDEV ioctl)
+  2. (Try to) open the device
+  3. Release the RFCOMM device (using RFCOMMRELEASEDEV ioctl)
+
+At this point, the "/dev/rfcomm*" device is still in use, but it is gone
+from the internal list, so the device id can be reused.
+
+  4. Create a new RFCOMM device with the same device id as before
+
+And now kobject will complain that the TTY already exists.
+
+(See http://lkml.org/lkml/2008/7/13/89 for a reproducible test-case.)
+
+This patch attempts to correct this by only removing the device from the
+internal list of devices at the final unregister stage, so that the id
+won't get reused until the device has been completely destructed.
+
+This should be safe as the RFCOMM_TTY_RELEASED bit will be set for the
+device and prevent the device from being reopened after it has been
+released.
+
+Based on a report from Vegard Nossum <vegard.nossum@gmail.com>
+
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Comment:
+Good.
+
+G: 9, B: 1
+
+Commit: 08acb672624ece2d9234817570a0b3332cc8dae3
+Message:
+x86: fix section mismatch warning in setup_64.c:nearby_node
+
+nearby_node() were only used by __cpuinit amd_detect_cmp()
+So annotating nearby_node() __cpuinit was the trivial fix.
+
+Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Comment:
+Good.
+
+G: 10, B: 1
+
+Commit: 63d6fd32889c46fa40cd1631fb2a0162187311ab
+Message:
+drm/nv10-nv20: Fix instability after MPLL changes.
+
+Signed-off-by: Francisco Jerez <currojerez@riseup.net>
+Signed-off-by: Ben Skeggs <bskeggs@redhat.com>
+Comment:
+Good.
+
+G: 11, B: 1
+
+Commit: 75f5c47da386445ba0c5a8b7e3ca0c906e763369
+Message:
+ftrace: fix boot trace sched startup
+
+Impact: boot tracer startup modified
+
+The boot tracer calls into some of the schedule tracing private functions
+that should not be exported. This patch cleans it up, and makes
+way for further changes in the ftrace infrastructure.
+
+This patch adds a api to assign a tracer array to the schedule
+context switch tracer.
+
+Signed-off-by: Steven Rostedt <srostedt@redhat.com>
+Acked-by: Frederic Weisbecker <fweisbec@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Good.
+
+G: 12, B: 1
+
+Commit: b97b196c9d351a501ed89fc836e4e2fe71ff93c9
+Message:
+USB: unusual_devs entry for Lacie DVD+-RW
+
+This patch (as781) adds an entry to unusual_devs.h for the Lacie DVD+-RW
+drive.  Apparently its USB interface has requirements similar to the
+Genesys Logic interface; it doesn't like data to be sent too soon after
+a command.
+
+This fixes Bugzilla #6817.
+
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Phil Dibowitz <phil@ipom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+
+Comment:
+Good.
+
+G: 13, B: 1
+
+Commit: b0b3a8e1939d18c9bd4caca0b4b859b118a4167e
+Message:
+IB/mthca: Fix indentation
+
+Fix some whitespace damage (indenting with spaces) that snuck in.
+
+Signed-off-by: Roland Dreier <rolandd@cisco.com>
+Comment:
+Good.
+
+G: 14, B: 1
+
+Commit: e14ac67026b46e94478134df9521682fc6501ac0
+Message:
+cciss: Fix race between disk-adding code and interrupt handler
+
+Fix race condition between cciss_init_one(), cciss_update_drive_info(),
+and cciss_check_queues().
+
+Signed-off-by: Stephen M. Cameron <scameron@beardog.cca.cpqcorp.net>
+Signed-off-by: Jens Axboe <jens.axboe@oracle.com>
+Comment:
+Good.
+
+G: 15, B: 1
+
+Commit: 1fefd086dfd9b9f6d1657b7800a35a50e6a4d9ad
+Message:
+udf: Fix compilation with UDFFS_DEBUG enabled
+
+Signed-off-by: Jan Kara <jack@suse.cz>
+Comment:
+Good, another compilation fix.
+
+G: 16, B: 1
+
+Commit: a5797a686f4c7cbced782959509d735cfa1344b1
+Message:
+USB: r8a66597: Fix failure in change of status
+
+In the change by 749da5f82fe33ff68dd4aa1a5e35cd9aa6246dab,
+The change in the status when the USB device is connected is wrong.
+Therefore, the device is not recognized.
+
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+CC: Yoshihiro Shimoda <shimoda.yoshihiro@renesas.com>
+CC: Paul Mundt" <lethal@linux-sh.org>
+Signed-off-by: Nobuhiro Iwamatsu <nobuhiro.iwamatsu.yj@renesas.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+
+Comment:
+Good.
+
+G: 17, B: 1
+
+Commit: 967440e3be1af06ad4dc7bb18d2e3c16130fe067
+Message:
+ACPI: ACPICA 20060623
+
+Implemented a new acpi_spinlock type for the OSL lock
+interfaces.  This allows the type to be customized to
+the host OS for improved efficiency (since a spinlock is
+usually a very small object.)
+
+Implemented support for "ignored" bits in the ACPI
+registers.  According to the ACPI specification, these
+bits should be preserved when writing the registers via
+a read/modify/write cycle. There are 3 bits preserved
+in this manner: PM1_CONTROL[0] (SCI_EN), PM1_CONTROL[9],
+and PM1_STATUS[11].
+http://bugzilla.kernel.org/show_bug.cgi?id=3691
+
+Implemented the initial deployment of new OSL mutex
+interfaces.  Since some host operating systems have
+separate mutex and semaphore objects, this feature was
+requested. The base code now uses mutexes (and the new
+mutex interfaces) wherever a binary semaphore was used
+previously. However, for the current release, the mutex
+interfaces are defined as macros to map them to the
+existing semaphore interfaces.
+
+Fixed several problems with the support for the control
+method SyncLevel parameter. The SyncLevel now works
+according to the ACPI specification and in concert with the
+Mutex SyncLevel parameter, since the current SyncLevel is
+a property of the executing thread. Mutual exclusion for
+control methods is now implemented with a mutex instead
+of a semaphore.
+
+Fixed three instances of the use of the C shift operator
+in the bitfield support code (exfldio.c) to avoid the use
+of a shift value larger than the target data width. The
+behavior of C compilers is undefined in this case and can
+cause unpredictable results, and therefore the case must
+be detected and avoided.  (Fiodor Suietov)
+
+Added an info message whenever an SSDT or OEM table
+is loaded dynamically via the Load() or LoadTable()
+ASL operators. This should improve debugging capability
+since it will show exactly what tables have been loaded
+(beyond the tables present in the RSDT/XSDT.)
+
+Signed-off-by: Bob Moore <robert.moore@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
+Comment:
+Bad, there's a lot of noise here.
+
+G: 17, B: 2
+
+Commit: 55d646feee9c0ced63f4189aca4ba7c9508b75f9
+Message:
+sparc64: prepare signal_64 for unification
+
+o add a sparc32 only definition
+o fix a few style issues (white space errors etc).
+o include compiler.h (for __user)
+
+Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Bad, some other stuff and whitespace
+
+G: 18, B: 2
+
+Commit: 2024c39dbba4d036f0b16daf530ad5f4416fb344
+Message:
+[ARM] 3965/1: ixp2000: fix handling of pci master aborts
+
+The master abort check in ixp2000_pci_read_config() recently started
+failing due to the compiler optimising out the read access following
+the clearing of pci_master_aborts.  Mark pci_master_aborts volatile to
+force the compiler to reload it on every use.
+
+Signed-off-by: Lennert Buytenhek <buytenh@wantstofly.org>
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 19, B: 2
+
+Commit: 92fc707208bb2e601c24b5ab65db37bcb361b658
+Message:
+[PATCH] FRV: Fix fls() to handle bit 31 being set correctly
+
+Fix FRV fls() to handle bit 31 being set correctly (it should return 32 not 0).
+
+Signed-off-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 20, B: 2
+
+Commit: a28d3af2a26c89aaa6470ca36edb212e05143d67
+Message:
+[PATCH] 2/5 powerpc: Rework PowerMac i2c part 2
+
+This is the continuation of the previous patch. This one removes the old
+PowerMac i2c drivers (i2c-keywest and i2c-pmac-smu) and replaces them
+both with a single stub driver that uses the new PowerMac low i2c layer.
+
+Now that i2c-keywest is gone, the low-i2c code is extended to support
+interrupt driver transfers. All i2c busses now appear as platform
+devices. Compatibility with existing drivers should be maintained as the
+i2c bus names have been kept identical, except for the SMU bus but in
+that later case, all users has been fixed.
+
+With that patch added, matching a device node to an i2c_adapter becomes
+trivial.
+
+Signed-off-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Signed-off-by: Paul Mackerras <paulus@samba.org>
+Comment:
+Bad.
+
+G: 20, B: 3
+
+Commit: 3cc2c17700c98b0af778566b0af6292b23b01430
+Message:
+drivers/video/ps3fb: fix memset size error
+
+The size passed to memset is wrong.
+
+Signed-off-by Li Zefan <lizf@cn.fujitsu.com>
+Acked-by: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+Cc: <stable@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 21, B: 3
+
+Commit: 1b8e69662e1a086878bf930a6042daf7f8a076cc
+Message:
+pnp: add PNP resource range checking function
+
+Add a PNP resource range check function, indicating whether a resource
+has been assigned to any device.
+
+Signed-off-by: Bjorn Helgaas <bjorn.helgaas@hp.com>
+[apw@canonical.com: fixed up exports et al]
+Signed-off-by: Andy Whitcroft <apw@canonical.com>
+Signed-off-by: Eric Anholt <eric@anholt.net>
+Comment:
+Bad, fix is in the sign-off lines.
+
+G: 21, B: 4
+
+Commit: cf1308ff7829017dab0dbcc817c63dc9c212923e
+Message:
+NFS: Fix missing page_unlock() in nfs_readpage
+
+Signed-off-by: Trond Myklebust <Trond.Myklebust@netapp.com>
+Comment:
+Good.
+
+G: 22, B: 4
+
+Commit: 3eec0047d9bdd68fddef6539e77fee99ba2531f2
+Message:
+[TCP]: Fix mark_head_lost to ignore R-bit when trying to mark L
+
+This condition (plain R) can arise at least in recovery that
+is triggered after tcp_undo_loss. There isn't any reason why
+they should not be marked as lost, not marking makes in_flight
+estimator to return too large values.
+
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@helsinki.fi>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 23, B: 4
+
+Commit: 5b368e61c2bcb2666bb66e2acf1d6d85ba6f474d
+Message:
+IPsec: correct semantics for SELinux policy matching
+
+Currently when an IPSec policy rule doesn't specify a security
+context, it is assumed to be "unlabeled" by SELinux, and so
+the IPSec policy rule fails to match to a flow that it would
+otherwise match to, unless one has explicitly added an SELinux
+policy rule allowing the flow to "polmatch" to the "unlabeled"
+IPSec policy rules. In the absence of such an explicitly added
+SELinux policy rule, the IPSec policy rule fails to match and
+so the packet(s) flow in clear text without the otherwise applicable
+xfrm(s) applied.
+
+The above SELinux behavior violates the SELinux security notion of
+"deny by default" which should actually translate to "encrypt by
+default" in the above case.
+
+This was first reported by Evgeniy Polyakov and the way James Morris
+was seeing the problem was when connecting via IPsec to a
+confined service on an SELinux box (vsftpd), which did not have the
+appropriate SELinux policy permissions to send packets via IPsec.
+
+With this patch applied, SELinux "polmatching" of flows Vs. IPSec
+policy rules will only come into play when there's a explicit context
+specified for the IPSec policy rule (which also means there's corresponding
+SELinux policy allowing appropriate domains/flows to polmatch to this context).
+
+Secondly, when a security module is loaded (in this case, SELinux), the
+security_xfrm_policy_lookup() hook can return errors other than access denied,
+such as -EINVAL.  We were not handling that correctly, and in fact
+inverting the return logic and propagating a false "ok" back up to
+xfrm_lookup(), which then allowed packets to pass as if they were not
+associated with an xfrm policy.
+
+The solution for this is to first ensure that errno values are
+correctly propagated all the way back up through the various call chains
+from security_xfrm_policy_lookup(), and handled correctly.
+
+Then, flow_cache_lookup() is modified, so that if the policy resolver
+fails (typically a permission denied via the security module), the flow
+cache entry is killed rather than having a null policy assigned (which
+indicates that the packet can pass freely).  This also forces any future
+lookups for the same flow to consult the security module (e.g. SELinux)
+for current security policy (rather than, say, caching the error on the
+flow cache entry).
+
+This patch: Fix the selinux side of things.
+
+This makes sure SELinux polmatching of flow contexts to IPSec policy
+rules comes into play only when an explicit context is associated
+with the IPSec policy rule.
+
+Also, this no longer defaults the context of a socket policy to
+the context of the socket since the "no explicit context" case
+is now handled properly.
+
+Signed-off-by: Venkat Yekkirala <vyekkirala@TrustedCS.com>
+Signed-off-by: James Morris <jmorris@namei.org>
+Comment:
+Good.
+
+G: 24, B: 4
+
+Commit: fdf3e95d3916f18bf8703fb065499fdbc4dfe34c
+Message:
+sched: Avoid side-effect of tickless idle on update_cpu_load
+
+tickless idle has a negative side effect on update_cpu_load(), which
+in turn can affect load balancing behavior.
+
+update_cpu_load() is supposed to be called every tick, to keep track
+of various load indicies. With tickless idle, there are no scheduler
+ticks called on the idle CPUs. Idle CPUs may still do load balancing
+(with idle_load_balance CPU) using the stale cpu_load. It will also
+cause problems when all CPUs go idle for a while and become active
+again. In this case loads would not degrade as expected.
+
+This is how rq->nr_load_updates change looks like under different
+conditions:
+
+<cpu_num> <nr_load_updates change>
+All CPUS idle for 10 seconds (HZ=1000)
+0 1621
+10 496
+11 139
+12 875
+13 1672
+14 12
+15 21
+1 1472
+2 2426
+3 1161
+4 2108
+5 1525
+6 701
+7 249
+8 766
+9 1967
+
+One CPU busy rest idle for 10 seconds
+0 10003
+10 601
+11 95
+12 966
+13 1597
+14 114
+15 98
+1 3457
+2 93
+3 6679
+4 1425
+5 1479
+6 595
+7 193
+8 633
+9 1687
+
+All CPUs busy for 10 seconds
+0 10026
+10 10026
+11 10026
+12 10026
+13 10025
+14 10025
+15 10025
+1 10026
+2 10026
+3 10026
+4 10026
+5 10026
+6 10026
+7 10026
+8 10026
+9 10026
+
+That is update_cpu_load works properly only when all CPUs are busy.
+If all are idle, all the CPUs get way lower updates.  And when few
+CPUs are busy and rest are idle, only busy and ilb CPU does proper
+updates and rest of the idle CPUs will do lower updates.
+
+The patch keeps track of when a last update was done and fixes up
+the load avg based on current time.
+
+On one of my test system SPECjbb with warehouse 1..numcpus, patch
+improves throughput numbers by ~1% (average of 6 runs).  On another
+test system (with different domain hierarchy) there is no noticable
+change in perf.
+
+Signed-off-by: Venkatesh Pallipadi <venki@google.com>
+Signed-off-by: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+LKML-Reference: <AANLkTilLtDWQsAUrIxJ6s04WTgmw9GuOODc5AOrYsaR5@mail.gmail.com>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Bad.
+
+G: 24, B: 5
+
+Commit: 9d7fa40098253a6768cfc3ffbbd5988ba852d364
+Message:
+[PATCH] v9fs: fix fid check in v9fs_create
+
+Fix an incorrect check whether a fid was allocated in v9fs_create and if it
+should be freed on error.
+
+Signed-off-by: Latchesar Ionkov <lucho@ionkov.net>
+Cc: Eric Van Hensbergen <ericvh@ericvh.myip.org>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 25, B: 5
+
+Commit: 265126ba9e1f8e217e61d1017c6609f76828aa7a
+Message:
+[PATCH] fuse: fix spurious BUG
+
+Fix a spurious BUG in an unlikely race, where at least three parallel lookups
+return the same inode, but with different file type.  This has not yet been
+observed in real life.
+
+Allowing unlimited retries could delay fuse_iget() indefinitely, but this is
+really for the broken userspace filesystem to worry about.
+
+Signed-off-by: Miklos Szeredi <miklos@szeredi.hu>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 26, B: 5
+
+Commit: ba7c1927aa69c4dfe1ecf646f03b306e49dc8e37
+Message:
+hwmon: (coretemp) fix section mismatch warning
+
+Fix following warning:
+WARNING: vmlinux.o(.text+0xebfd04): Section mismatch in reference from the function coretemp_cpu_callback() to the function .cpuinit.text:coretemp_device_add()
+
+coretemp_cpu_callback() are only used inside a
+HOTPLUG_CPU block so annotate it __cpuinit.
+The notifier referencing the function are annotated
+__refdata to silence warning from the exit function.
+The unregister function do not use the embedded pointer
+but clears the variable so the annotation is OK.
+
+Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+Signed-off-by: Mark M. Hoffman <mhoffman@lightlink.com>
+Comment:
+Good.
+
+G: 27, B: 5
+
+Commit: cd57e594adc624dd9ee4c0ded3949da21ec24b2f
+Message:
+[XFS] 971064 Various fixups for xfs_bulkstat().
+
+- sanity check for NULL user buffer in xfs_ioc_bulkstat[_compat]()
+- remove the special case for XFS_IOC_FSBULKSTAT with count == 1. This
+  special case causes bulkstat to fail because the special case uses
+  xfs_bulkstat_single() instead of xfs_bulkstat() and the two functions
+  have different semantics.  xfs_bulkstat() will return the next inode
+  after the one supplied while skipping internal inodes (ie quota inodes).
+  xfs_bulkstate_single() will only lookup the inode supplied and return
+  an error if it is an internal inode.
+- in xfs_bulkstat(), need to initialise 'lastino' to the inode supplied
+  so in cases were we return without examining any inodes the scan wont
+  restart back at zero.
+- sanity check for valid *ubcountp values. Cannot sanity check for valid
+  ubuffer here because some users of xfs_bulkstat() don't supply a buffer.
+- checks against 'ubleft' (the space left in the user's buffer) should be
+  against 'statstruct_size' which is the supplied minimum object size.
+  The mixture of checks against statstruct_size and 0 was one of the
+  reasons we were skipping inodes.
+- if the formatter function returns BULKSTAT_RV_NOTHING and an error and
+  the error is not ENOENT or EINVAL then we need to abort the scan. ENOENT
+  is for inodes that are no longer valid and we just skip them. EINVAL is
+  returned if we try to lookup an internal inode so we skip them too. For
+  a DMF scan if the inode and DMF attribute cannot fit into the space left
+  in the user's buffer it would return ERANGE. We didn't handle this error
+  and skipped the inode. We would continue to skip inodes until one fitted
+  into the user's buffer or we completed the scan.
+- put back the recalculation of agino (that got removed with the last fix)
+  at the end of the while loop. This is because the code at the start of
+  the loop expects agino to be the last inode examined if it is non-zero.
+- if we found some inodes but then encountered an error, return success
+  this time and the error next time. If the formatter aborted with ENOMEM
+  we will now return this error but only if we couldn't read any inodes.
+  Previously if we encountered ENOMEM without reading any inodes we
+  returned a zero count and no error which falsely indicated the scan was
+  complete.
+
+SGI-PV: 973431
+SGI-Modid: xfs-linux-melb:xfs-kern:30089a
+
+Signed-off-by: Lachlan McIlroy <lachlan@sgi.com>
+Signed-off-by: David Chinner <dgc@sgi.com>
+Comment:
+Bad.
+
+G: 27, B: 6
+
+Commit: e61a639a794063d78fd248a37ce2c21d5c81fc19
+Message:
+perf/trace/scripting: syscall-counts script cleanup
+
+A small fix for the syscall counts script:
+
+ - silence the match output in the shell script
+
+Cc: Frédéric Weisbecker <fweisbec@gmail.com>
+Cc: Ingo Molnar <mingo@elte.hu>
+LKML-Reference: <1273466820-9330-10-git-send-email-tzanussi@gmail.com>
+Signed-off-by: Tom Zanussi <tzanussi@gmail.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Comment:
+Good.
+
+G: 28, B: 6
+
+Commit: 0edc7d0f3709e8c3bb7e69c4df614218a753361e
+Message:
+[XFS] Fix a bad pointer dereference in the quota statvfs handling.
+
+SGI-PV: 955993
+SGI-Modid: xfs-linux-melb:xfs-kern:26934a
+
+Signed-off-by: Nathan Scott <nathans@sgi.com>
+Signed-off-by: David Chatterton <chatz@sgi.com>
+Comment:
+Good.
+
+G: 29, B: 6
+
+Commit: 6bac953fa424519f784ba2589fefd8f040ce54f0
+Message:
+powerpc: Fix compile error when CONFIG_PROC_VMCORE is not defined
+
+We were getting elfcorehdr_addr undefined in this case.
+
+Signed-off-by: Paul Mackerras <paulus@samba.org>
+Comment:
+Good.
+
+G: 30, B: 6
+
+Commit: 035eb0cff0671ada49ba9f3e5c9e7b0cb950efea
+Message:
+ALSA: hda - Fix missing capsrc_nids for ALC88x
+
+Some model quirks missed the corresponding capsrc_nids.  This resulted in
+non-working capture source selection.
+
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: <stable@kernel.org>
+Comment:
+Good.
+
+G: 31, B: 6
+
+Commit: c1ff85d97708550e634fb6fa099c463db90fc40d
+Message:
+drm: fix leak of device mappings since multi-master changes.
+
+Device maps now contain a link to the master that created them, so
+when cleaning up the master, remove any maps that are connected to it.
+Also delete any remaining maps at driver unload time.
+
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Comment:
+Good.
+
+G: 32, B: 6
+
+Commit: ebccb84810729f0e86a83a65681ba2de45ff84d8
+Message:
+ACPI: asus_acpi: support L5D
+
+This patch adds support for Asus L5D and thus fixes
+http://bugme.osdl.org/show_bug.cgi?id=4695
+
+Signed-off-by: Karol Kozimor <sziwan@hell.org.pl>
+Signed-off-by: Len Brown <len.brown@intel.com>
+Comment:
+Bad, bug in url.
+
+G: 32, B: 7
+
+Commit: 5415907af1f5ef80c95147bacbd321b0d4236dd5
+Message:
+[SCSI] scsi_transport_fc: fix missing kernel-doc
+
+Add missing kernel-doc notation in scsi_transport_fc.c:
+
+Warning(drivers/scsi/scsi_transport_fc.c:3593): No description found for parameter 'q'
+Warning(drivers/scsi/scsi_transport_fc.c:3700): No description found for parameter 'q'
+
+Signed-off-by: Randy Dunlap <randy.dunlap@oracle.com>
+Signed-off-by: James Bottomley <James.Bottomley@suse.de>
+Comment:
+Good.
+
+G: 33, B: 7
+
+Commit: 36c5ed23b9f535d1c79986efb45f9c1f115e0997
+Message:
+[PATCH] ARM SMP: Fix PXA/SA11x0 suspend resume crash
+
+We need to re-initialise the stack pointers for undefined, IRQ
+and abort mode handlers whenever we resume.
+
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 34, B: 7
+
+Commit: 77d8e1efea0e313edc710160c232a6fd2dc9f907
+Message:
+IB/ipoib: Fix thinko in packet length checks
+
+The packet length checks in ipoib are broken: we add 4 bytes (IPoIB
+encapsulation header) when sending a packet, not 20 bytes (hardware
+address length) to each packet.  Therefore, if connected mode is
+enabled so that the interface MTU is larger than the multicast MTU,
+IPoIB may end up trying to send too-long multicast packets.  For
+example, multicast is broken if a message of size 2048 bytes is sent
+on an interface with UD MTU 2048, because 2048 is bigger than the real
+limit of 2044 but the code tests against the wrong limit of 2060.
+
+This patch fixes <https://bugs.openfabrics.org/show_bug.cgi?id=418>,
+submitted by Scott Weitzenkamp <sweitzen@cisco.com>.
+
+Signed-off-by: Michael S. Tsirkin <mst@dev.mellanox.co.il>
+Signed-off-by: Roland Dreier <rolandd@cisco.com>
+
+Comment:
+Good.
+
+G: 35, B: 7
+
+Commit: 06ed6ba5ecb771cc3a967838a4bb1d9cbd8786b9
+Message:
+x86: Fix group attribute decoding bug
+
+Fix a typo in inat_get_group_attribute() which should refer
+inat_group_tables, not inat_escape_tables.
+
+Signed-off-by: Masami Hiramatsu <mhiramat@redhat.com>
+Cc: systemtap<systemtap@sources.redhat.com>
+Cc: DLE <dle-develop@lists.sourceforge.net>
+Cc: Jim Keniston <jkenisto@us.ibm.com>
+Cc: Frederic Weisbecker <fweisbec@gmail.com>
+LKML-Reference: <20091020165524.4145.97333.stgit@dhcp-100-2-132.bos.redhat.com>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Good.
+
+G: 36, B: 7
+
+Commit: 64976a0387835a7ac61bbe2a99b27ccae34eac5d
+Message:
+[SCSI] aha152x: Fix oops on module removal
+
+Reported-by: Frank de Jong <frapex@xs4all.nl>
+> after trying to unload the module:
+> BUG: unable to handle kernel paging request at 00100100
+> IP: [<fb9ff667>] :aha152x:aha152x_exit+0x47/0x6a
+> *pde = 00000000
+> Oops: 0000 [#1] PREEMPT SMP
+> Modules linked in: aha152x(-) w83781d hwmon_vid tun ne 8390 bonding
+> usb_storage snd_usb_audio snd_usb_lib snd_rawmidi pwc snd_seq_device
+> compat_ioctl32 snd_hwdep videodev v4l1_compat 3c59x mii intel_agp
+> agpgart snd_pcm_oss snd_pcm snd_timer snd_page_alloc snd_mixer_oss snd
+>
+> Pid: 2837, comm: rmmod Not tainted (2.6.25.3 #1)
+> EIP: 0060:[<fb9ff667>] EFLAGS: 00210212 CPU: 0
+> EIP is at aha152x_exit+0x47/0x6a [aha152x]
+> EAX: 00000001 EBX: 000ffdc4 ECX: f7c517a8 EDX: 00000001
+> ESI: 00000000 EDI: 00000003 EBP: e7880000 ESP: e7881f58
+>   DS: 007b ES: 007b FS: 00d8 GS: 0033 SS: 0068
+> Process rmmod (pid: 2837, ti=e7880000 task=f27eb580 task.ti=e7880000)
+> Stack: fba03700 c01419d2 31616861 00783235 e795ee70 c0157709 b7f24000 e79ae000
+>         c0158271 ffffffff b7f25000 e79ae004 e795e370 b7f25000 e795e37c e795e370
+>         009ae000 fba03700 00000880 e7881fa8 00000000 bf93ec20 bf93ec20 c0102faa
+> Call Trace:
+>   [<c01419d2>] sys_delete_module+0x112/0x1a0
+>   [<c0157709>] remove_vma+0x39/0x50
+>   [<c0158271>] do_munmap+0x181/0x1f0
+>   [<c0102faa>] sysenter_past_esp+0x5f/0x85
+>   [<c0490000>] rsc_parse+0x0/0x3c0
+
+The problem is that the driver calls aha152x_release() under a
+list_for_each_entry().  Unfortunately, aha152x_release() deletes from
+the list in question.  Fix this by using list_for_each_entry_safe().
+
+Cc: Stable Tree <stable@kernel.org>
+Signed-off-by: James Bottomley <James.Bottomley@HansenPartnership.com>
+Comment:
+Good.
+
+G: 37, B: 7
+
+Commit: 52cb0148ef2401dbffa4daf60588cad27e4f329d
+Message:
+mtd/maps: Fix accidental removal in Makefile
+
+The commit d79c326 ("gpio-addr-flash: new driver for GPIO assisted
+flash addressing") removed two lines from the Makefile by accident.
+Though I'm not sure how this accident happened, this patch reverts the
+removal.
+
+Signed-off-by: Atsushi Nemoto <anemo@mba.ocn.ne.jp>
+Signed-off-by: David Woodhouse <David.Woodhouse@intel.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 38, B: 7
+
+Commit: 7bfe24611671ec76b44281e582b38535e21f01a9
+Message:
+[NETFILTER]: ip6_tables: fix explanation of valid upper protocol number
+
+This explains the allowed upper protocol numbers. IP6T_F_NOPROTO was
+introduced to use 0 as Hop-by-Hop option header, not wildcard. But that
+seemed to be forgotten. 0 has been used as wildcard since 2002-08-23.
+
+Signed-off-by: Yasuyuki Kozakai <yasuyuki@netfilter.org>
+Signed-off-by: Patrick McHardy <kaber@trash.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 39, B: 7
+
+Commit: c097b04520a3ab69a94f63f3f1d6716864c07300
+Message:
+V4L/DVB (3696): Previous change for cx2341X boards broke the remote support
+
+Partially revert previous change to fix IR support.
+
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@infradead.org>
+Comment:
+Good.
+
+G: 40, B: 7
+
+Commit: 7040dea4d2a0609241c7a98a944b7c432c69db2e
+Message:
+arch/tile: fix formatting bug in register dumps
+
+This cut-and-paste bug was caused by rewriting the register dump
+code to use only a single printk per line of output.
+
+Signed-off-by: Chris Metcalf <cmetcalf@tilera.com>
+Comment:
+Good, nice bug.
+
+G: 41, B: 7
+
+Commit: 6f8372b69c3198e06cecb1df2cb9682d0c55e657
+Message:
+RDMA/cm: fix loopback address support
+
+The RDMA CM is intended to support the use of a loopback address
+when establishing a connection; however, the behavior of the CM
+when loopback addresses are used is confusing and does not always
+work, depending on whether loopback was specified by the server,
+the client, or both.
+
+The defined behavior of rdma_bind_addr is to associate an RDMA
+device with an rdma_cm_id, as long as the user specified a non-
+zero address.  (ie they weren't just trying to reserve a port)
+Currently, if the loopback address is passed to rdam_bind_addr,
+no device is associated with the rdma_cm_id.  Fix this.
+
+If a loopback address is specified by the client as the destination
+address for a connection, it will fail to establish a connection.
+This is true even if the server is listing across all addresses or
+on the loopback address itself.  The issue is that the server tries
+to translate the IP address carried in the REQ message to a local
+net_device address, which fails.  The translation is not needed in
+this case, since the REQ carries the actual HW address that should
+be used.
+
+Finally, cleanup loopback support to be more transport neutral.
+Replace separate calls to get/set the sgid and dgid from the
+device address to a single call that behaves correctly depending
+on the format of the device address.  And support both IPv4 and
+IPv6 address formats.
+
+Signed-off-by: Sean Hefty <sean.hefty@intel.com>
+
+[ Fixed RDS build by s/ib_addr_get/rdma_addr_get/  - Roland ]
+
+Signed-off-by: Roland Dreier <rolandd@cisco.com>
+Comment:
+Good.
+
+G: 42, B: 7
+
+Commit: 597fe76ec36e782aa45b8dac5e12e4dbb0588967
+Message:
+sh: Use ioremap_fixed() to implement SH-5 ioremap()
+
+Use the fixmap-based memory mapping implementation for SH-5's ioremap()
+functions and delete the old static allocator that was borrowed from
+sparc.
+
+Signed-off-by: Matt Fleming <matt@console-pimps.org>
+Comment:
+Bad.
+
+G: 43, B: 7
+
 === Non-Fix Commits ===
 Commit: b131e04eae22e653efc3b9b6a861faa10e4894b8
 Merge: False
@@ -940,4 +2103,5 @@ Good.
 
 G: 47, B: 6
 
+False-positive: 7/50
 False-negatives: 6/50

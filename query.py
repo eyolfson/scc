@@ -57,15 +57,18 @@ class DataCollector():
 
         self._data[i][j] += amount
         self._data[len(self._row_map)][j] += amount
-        
-        if category is not DataCollector.OVERALL_CATEGORY:
-            j = len(self._variable_map)*self._category_map[DataCollector.OVERALL_CATEGORY]+self._variable_map[variable]
+
+        if category is not self._category_map[DataCollector.OVERALL_CATEGORY]:
+            j = len(self._variable_map)*category+self._variable_map[variable]
             self._data[i][j] += amount
             self._data[len(self._row_map)][j] += amount
 
     def write_csv(self, filename):
         # Open the file and write the header
         import csv
+        writer = csv.writer(open('data.csv', 'wb'))
+        writer.writerows(self._data)
+        
         writer = csv.writer(open('%s.csv' % filename, 'wb'))
         header = ['' for i in xrange(len(self._category_map)+1)]
         for item in self._category_map.iteritems():
@@ -149,33 +152,33 @@ class DataCollector():
 #     introductions_day_dc.update('total_commits', i, j)
 # introductions_day_dc.write_csv('introductions-day')
 
-# Severity per Day
-severity_day_dc = DataCollector(['introduction_count', 'lines_changed'],
-                                 'div(introduction_count, lines_changed)',
-                                 days,
-                                 classes)
-for ci in ci_set:
-    i = ci.commit.local_time.weekday()
-    classification = ci.commit.author.authorinformation.classification
-    day_job = ci.commit.author.authorinformation.day_job
-    if day_job:
-        j = 0
-    elif classification == 'D':
-        j = 1
-    elif classification == 'W':
-        j = 2
-    elif classification == 'M':
-        j = 3
-    elif classification == 'O':
-        j = 4
-    elif classification == 'S':
-        j = 5
-    else:
-        raise ValueError
-    if ci.introduction_count > 0:
-        severity_day_dc.update('introduction_count', i, j, ci.introduction_count)
-    severity_day_dc.update('lines_changed', i, j, ci.lines_changed)
-severity_day_dc.write_csv('severity-day')
+# # Severity per Day
+# severity_day_dc = DataCollector(['introduction_count', 'lines_changed'],
+#                                  'div(introduction_count, lines_changed)',
+#                                  days,
+#                                  classes)
+# for ci in ci_set:
+#     i = ci.commit.local_time.weekday()
+#     classification = ci.commit.author.authorinformation.classification
+#     day_job = ci.commit.author.authorinformation.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     if ci.introduction_count > 0:
+#         severity_day_dc.update('introduction_count', i, j, ci.introduction_count)
+#     severity_day_dc.update('lines_changed', i, j, ci.lines_changed)
+# severity_day_dc.write_csv('severity-day')
 
 # # Bugginess per Hour
 # bugginess_hour_dc = DataCollector(['buggy_commits', 'total_commits'],
@@ -204,3 +207,112 @@ severity_day_dc.write_csv('severity-day')
 #         bugginess_hour_dc.update('buggy_commits', i, j)
 #     bugginess_hour_dc.update('total_commits', i, j)
 # bugginess_hour_dc.write_csv('bugginess-hour')
+
+# # Introductions per Hour
+# introductions_hour_dc = DataCollector(['introduction_commits', 'total_commits'],
+#                                  'div(introduction_commits, total_commits)',
+#                                  hours,
+#                                  classes)
+# for ci in ci_set:
+#     i = ci.commit.local_time.hour
+#     classification = ci.commit.author.authorinformation.classification
+#     day_job = ci.commit.author.authorinformation.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     if ci.introduction_count > 0:
+#         introductions_hour_dc.update('introduction_commits', i, j, ci.introduction_count)
+#     introductions_hour_dc.update('total_commits', i, j)
+# introductions_hour_dc.write_csv('introductions-hour')
+
+# # Severity per Hour
+# severity_hour_dc = DataCollector(['introduction_count', 'lines_changed'],
+#                                  'div(introduction_count, lines_changed)',
+#                                  hours,
+#                                  classes)
+# for ci in ci_set:
+#     i = ci.commit.local_time.hour
+#     classification = ci.commit.author.authorinformation.classification
+#     day_job = ci.commit.author.authorinformation.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     if not ci.merge:
+#         if ci.introduction_count > 0:
+#             severity_hour_dc.update('introduction_count', i, j, ci.introduction_count)
+#         severity_hour_dc.update('lines_changed', i, j, ci.lines_changed)
+# severity_hour_dc.write_csv('severity-hour')
+
+# # Commits per Author
+# authors = ["%s <%s>" % (a.name, a.email) for a in Author.objects.filter(repository=r)]
+# commits_author_dc = DataCollector(['total_commits'],
+#                                   'total_commits',
+#                                   authors,
+#                                   hours)
+# for ci in ci_set:
+#     i = "%s <%s>" % (ci.commit.author.name, ci.commit.author.email)
+#     j = ci.commit.local_time.hour
+#     commits_author_dc.update('total_commits', i, j)
+# commits_author_dc.write_csv('commits-author')
+
+# # Bugginess per Author
+# authors = ["%s <%s>" % (a.name, a.email) for a in Author.objects.filter(repository=r)]
+# bugginess_author_dc = DataCollector(['buggy_commits', 'total_commits'],
+#                                   '100*div(buggy_commits, total_commits)',
+#                                   authors,
+#                                   hours)
+# for ci in ci_set:
+#     i = "%s <%s>" % (ci.commit.author.name, ci.commit.author.email)
+#     j = ci.commit.local_time.hour
+#     if ci.introduction_count > 0:
+#         bugginess_author_dc.update('buggy_commits', i, j)
+#     bugginess_author_dc.update('total_commits', i, j)
+# bugginess_author_dc.write_csv('bugginess-author')
+
+# # Fix-Commit Changes
+# changes = ['none', 'add', 'mod', 'rm', 'add/mod', 'add/rm', 'mod/rm', 'all']
+# changes_dc = DataCollector(['total_commits'],
+#                            'total_commits',
+#                            changes)
+# for bug in Bug.objects.filter(fix_commits__author__repository=r):
+#     ci = bug.fix_commits.all()[0].commitinformation
+#     if not ci.merge:
+#         if ci.lines_modified == 0 and ci.lines_removed == 0 and ci.lines_added == 0:
+#             changes_dc.update('total_commits', 'none', amount=1)
+#         elif ci.lines_modified > 0 and ci.lines_removed == 0 and ci.lines_added == 0:
+#             changes_dc.update('total_commits', 'mod')
+#         elif ci.lines_modified == 0 and ci.lines_removed > 0 and ci.lines_added == 0:
+#             changes_dc.update('total_commits', 'rm')
+#         elif ci.lines_modified == 0 and ci.lines_removed == 0 and ci.lines_added > 0:
+#             changes_dc.update('total_commits', 'add')
+#         elif ci.lines_modified == 0 and ci.lines_removed > 0 and ci.lines_added > 0:
+#             changes_dc.update('total_commits', 'add/rm')
+#         elif ci.lines_modified > 0 and ci.lines_removed == 0 and ci.lines_added > 0:
+#             changes_dc.update('total_commits', 'add/mod')
+#         elif ci.lines_modified > 0 and ci.lines_removed > 0 and ci.lines_added == 0:
+#             changes_dc.update('total_commits', 'mod/rm')
+#         else:
+#             changes_dc.update('total_commits', 'all')
+# changes_dc.write_csv('changes')
