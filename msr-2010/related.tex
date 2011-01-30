@@ -2,20 +2,23 @@
 \label{sec-related}
 
 \paragraph{Day of Week of Commits}
-The most related work~\cite{sliwerski-msr-2005} studied the day of week of commits and
-showed that the commits on Fridays are buggier. 
-This paper differs mainly in the following three aspects.
+The most closely related work studied the day of week of commits and
+showed that the commits on Fridays are buggier~\cite{sliwerski-msr-2005}. 
+This paper differs from it mainly in the following three aspects.
 Firstly, we investigated how the commits' time of day correlates with the bugginess of commits, 
 which has not been studied before to the best of our knowledge.
-Secondly, we studied the correlation between commit bugginess and developers' activities and 
-experience, which the previous works did not study.
-Lastly, we used different data collection techniques. Specifically, we do not reply on the link 
-between a commit and a bug report, which allow us to study software for which such links are 
-not maintained or not well maintained by the developers. For example, we manually examined a random sample 
-of our bug-fixing commits in the Linux kernel, and found that only 2.3\% of the bug-fixing commits
-are linked to a bug report. 
-While using CVS may increase the precision of the analysis, our results show high precision (\postP-\linuxP) 
-for both the Linux kernel and PostgreSQL.
+Secondly, we studied the correlation between commit bugginess and developers' activity levels as well as 
+developer experience, which the previous work did not study.
+Lastly, we used different data collection techniques. Specifically, we did not reply on the link 
+between a commit and a bug report to extract bug-fixing commits, which enabled us to study 
+software for which such links are not maintained or not well maintained by the developers. For example, we 
+found that only 2.3\% of the bug-fixing commits are linked to a bug report, 
+through manually examining a random sample of our bug-fixing commits in the Linux kernel.
+While using links between bug reports and bug commits may increase the precision of extracting 
+bug-fixing commits, our results demonstrate that 
+high precision can be obtained without using such links: 
+the precision of our bug-fixing commit extraction techniques are 
+\linuxP for the Linux kernel and \postP for PostgreSQL.
 %(1/43= 2.3\%)
 
 \paragraph{Empirical Studies on Commits}
