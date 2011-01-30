@@ -5,7 +5,7 @@
 - Literature search for number of commits which are comments (Lin) [in progrss]
 - Classify commits?
 - Per author information, outside of their normal times [in progress]
-- Find if time of day and author classification influence buginess [done graphs]
+- Find if time of day and author classification influence bugginess [done graphs]
 - Committer vs author (who is reviewing the changes)
 - Author experience based on number of other projects
 - Variance

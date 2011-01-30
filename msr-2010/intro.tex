@@ -36,7 +36,7 @@ There are several challenges in studying the correlation of commit correctness a
 First, it is challenging to know if a commit is buggy or not,
 as bugs in the commit are often not 
 discovered or reported until days, months, or even years after the commit. 
-We use a reverse chronological method~\cite{2005-changes} to address this challenge. 
+We use a reverse chronological method~\cite{sliwerski-msr-2005} to address this challenge. 
 Specifically, we start from {\em bug-fixing commits}, commits that fix software bugs, 
 and then leverage the version control system to understand when the corresponding bugs were introducted. 
 %In other words, we extract the bug-introducing time for bug fixes 
@@ -45,7 +45,7 @@ Then we can know collectively when bugs are more likely to be introduced.
 %In particular, we leverage the ``git blame'' functionality to identify the last modification time of each buggy line.
 
 It is difficult to find bug-fixing commits in the sea of software commits.
-The prior work~\cite{2005-changes} considers a commit whose commit message contains a bug 
+The prior work~\cite{sliwerski-msr-2005} considers a commit whose commit message contains a bug 
 ID that links to a bug report in a bug database to be a bug-fixing commit. While this
 approach works for some software such as Mozilla, it does not work for software that 
 rarely contain links from commit messages to bug reports, e.g., the Linux kernel.
@@ -92,7 +92,7 @@ before they commit between these hours. It may also to beneficial for the versio
 system to warn the developers of late night commits to improve software reliability. 
 
 \item {\bf Finding 2 ($\S$\ref{sec:finding2}):} 
-In contrary to the prior finding that Friday commits are buggier~\cite{2005-changes}, 
+In contrast to the prior finding that Friday commits are buggier~\cite{sliwerski-msr-2005}, 
 our results on the Linux kernel and PostgreSQL show that 
 the bugginess differences of commits that are checked in on different days of week 
 are not statistically significant. This result shows that the day of week of commits

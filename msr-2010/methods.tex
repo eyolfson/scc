@@ -1,29 +1,52 @@
 \section{Experimental Methods}
 \label{sec:method}
-Our goal is to find commits which report fixing a bug, as well as the commits
-which introduced that bug. First, we detect a bug-fixing commit $c$ by
-searching the commit messages for common keywords such as ``fix'' and
-``bug''. Next, we work backwards to locate the commits that introduced
-the bug fixed in $c$. Using commit $c$ as a starting point, we compute
-a diff for each file between the version after $c$ and the previous
-version of that file, and record the line numbers changed in
-$c$. Finally, we use the repository metadata to find the commit(s)
-$c'$ which were responsible for the previous versions of the files
-which were fixed, and we conclude that the commits $c'$ introduced the
-bug.
+Our overall goal is to investigate the properties of ``buggy'', or
+bug-introducing, commits. We define a \emph{bug-introducing} commit to be any
+commit for which there exists a later \emph{bug-fixing} commit that purports to
+fix the bug. A single bug-fixing commit may fix bugs introduced in
+multiple bug-introducing commits. Note that, despite our terminology,
+a bug-introducing commit is not necessarily bad code; it is possible 
+that the later fix simply reflects a change in requirements or updates
+the code to work with changes in third-party code.
 
-Consider the commit in Listing \ref{lst-fix} (presented as a diff),
-which we find using ``fix'' as a keyword, the line which caused the
-bug is line 100 (in this case the original author used less than or
-equal to instead of strictly less than). We found most developers
-indicate that their change is a fix by including the keyword ``fix''
-in the commit message. We perform a blame on this commit, which is
-shown in Listing \ref{lst-blame}, and determine that its source is the
-commit starting with f4ce718c (which is shown in Listing
-\ref{lst-introduction}. We add this commit as a bug-introduction
-commit for this bug-fix and store it in the database.
+Our methodology has three steps: 1) enumerating bug-fixing commits; 2)
+identifying the lines changed in each bug-fixing commit; and 3)
+finding the commits which were responsible for the previous (buggy)
+version of each of the changed lines. We describe each of these steps
+in more detail. First, to detect bug-fixing commits $c$, we searched
+the commit messages for the keyword ``fix''. In our experience, most
+developers indicate that a change is a fix by including the keyword
+``fix'' in the commit message; Section~\ref{sec-results} explains how
+we verified this intuition.  Next, we computed diffs for each file
+changed in $c$ and recorded the line numbers $L_c$ which $c$
+changed. Finally, we used the repository metadata (as implemented in
+the ``git blame'' command) to identify the bug-introducing commits
+$c'$ which changed the lines $L_c$.
 
-    \begin{lstlisting}[caption=An example bug-fix,label=lst-fix,frame=single]
+\paragraph{Example} Listing~\ref{lst-fix} presents an example of a
+bug-fixing commit. A commit consists of a commit id, which is a hash
+of the commit's contents, represented as a hexadecimal number\footnote{Following common practice, because we can uniquely identify the commit by the first 8 digits of its commit id, we omit the other digits.}; an
+author, identified by a name/email address pair; a commit message,
+which contains the keyword ``fix''; and a diff, illustrating the lines
+that the commit modified. 
+
+First, we would find the commit in Listing~\ref{lst-fix} by searching
+the commit logs for the keyword ``fix'', which is indeed a substring
+of the commit message, ``I fixed a bug!''.  Next, we would observe
+that the commit modifies line 100 of an (unidentified) file---in this
+case, the original author used less-than-or-equal (\verb+<=+) instead
+of strictly-less-than (\verb+<+), and the commit changes the
+comparison operator to the presumably-correct one.  Finally, we
+perform a ``git blame'' on this commit, which shows the commit
+responsible for the previous version of line 100. Listing
+\ref{lst-blame} presents plausible ``git blame'' output, which shows
+that the source of the bug fixed in Listing~\ref{lst-fix} is the
+commit whose id begins with f4ce718c, as shown in
+Listing~\ref{lst-introduction}. We flag this commit as a
+bug-introducing commit and store both the bug-introducing
+commit f4ce718c and its bug-fixing commit 2cdc03fe in the database.
+
+\begin{lstlisting}[caption=An example bug-fix,label=lst-fix,frame=single]
 Commit: 2cdc03fe...
 Author: Alice <alice@project.com>
 Message: I fixed a bug!
@@ -54,17 +77,21 @@ affected line of code existed in $c'$. However, a change in $c$ which
 adds a new line of code has no corresponding change in any previous
 revision, since this line did not previously exist. In that case, we
 attribute responsibility to the commit which introduced the line just
-before the new line.
+before the new line. This heuristic does not work for bug-introducing
+changes in newly-introduced files. Fortunately, such changes are
+extremely rare, so we can ignore them entirely.
 
 \paragraph{Data collected}
 Executing the above algorithm gives us data about a number of commits
-in the repository, as well as about the authors of these commits.  We
+in each repository, as well as about the authors of these commits.  We
 record the following data for each commit: author (as a name/email
-pair), time, number of lines changed, and number of times the commit
-introduced a bug later corrected. For each author, we record the name,
-email(s), experience and classification. We define a bug lifetime's to
-be the time from the earliest commit which introduced a bug to the
-bug-fixing commit.
+pair), adjusted time, number of lines changed, and number of times the
+commit introduced a bug later corrected (which is derived data; we
+record it to simplify later database queries). We also record a
+relation connecting bug-introducing commits and bug-fixing
+commits. For each author, we record the name, email(s), experience and
+classification. We define a bug lifetime's to be the time from the
+earliest commit which introduced the bug to the bug-fixing commit.
 
 We compute an author's experience and classification based on the
 frequency and duration of that author's commits to a particular
@@ -75,8 +102,9 @@ commits: daily, weekly, monthly, and single. Note that, for author
 classification purposes, we ignore consecutive commits within 30
 minutes of each other. As a sub-class of the daily commiter
 classification, we also use a heuristic to identify commiters who
-worked on the repository as part of their day job, namely those for
-which 85\% of commits are between 8 AM and 4 PM Monday to Friday.
+appear to work on the repository as part of their day job, namely
+those for which 85\% of commits are between 8 AM and 4 PM Monday to
+Friday.
 
 \paragraph{Threats to Validity}
 We discuss a number of threats to validity and how we address them,
@@ -102,8 +130,28 @@ considered together with our evaluation methodology.
 We expect our methodology to properly account for developers in
 different time zones. Git records each developer's local time (and
 time zone) with a commit, thereby avoiding potential imprecisions in
-our time-of-day results. We present all of our results in the local
+our time-of-day results. This works well for the Linux repository,
+which is a native Git repository. The accuracy of the commit times for
+the Postgres repository depends on the accuracy of our time adjustment
+algorithm for the part of the history that was originally a CVS
+history. We believe that committers don't often change time zones and
+usually work from their home time zone, but the validity of our
+adjustment does depend on the validity our assumptions about home time
+zones. We present all of our results in the local
 time of the committer.
+
+Because the Postgres repository was converted from CVS to git, the
+accuracy of the conversion is another potential threat to validity.  In
+particular, CVS does not have a notion of atomic multi-file commits,
+while Git does, and our methodology relies on the existence of such
+commits. The Postgres conversion used the standard {\tt cvs2git} tool,
+with customizations for their particular
+repository~\cite{haas09:_so_why_postg_using_git}. We have reason to
+believe that the conversion was performed with care, therefore
+mitigating threats to validity from repository corruption. Also, note
+that the conversion to git obviates the need to identify transactions
+from CVS histories, as in~\cite{zimmermann-msr-2004}.
+
 % if developers ssh to a remote computer in a different time zone, the version control system 
 % would have recorded the wrong time.
 % but for PostgresSQL, we manually check where the authors are
