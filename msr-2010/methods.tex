@@ -100,6 +100,11 @@ different time zones. Git records each developer's local time (and
 time zone) with a commit, thereby avoiding potential imprecisions in
 our time-of-day results. We present all of our results in the local
 time of the committer.
+% if developers ssh to a remote computer in a different time zone, the version control system 
+% would have recorded the wrong time.
+% but for PostgresSQL, we manually check where the authors are
+% and for Linux, there are 8xxx developers, so we expected the incorrectly recorded time for a few developeres do not 
+% affect the representativeness of all the developers 
 
 Because our methodology only identifies bugs which have later been
 corrected, it will definitely omit recently-introduced bugs, as well
