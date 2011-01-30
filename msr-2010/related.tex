@@ -1,8 +1,10 @@
 \section{Related Work}
 \label{sec-related}
 
-Difference between this paper and the MSR'05 paper:
-
+\paragraph{Day of Week of Commits}
+The most related work~\cite{2005-changes} studied the day of week of commits and
+showed that the commits on Fridays are buggier. 
+This study differs mainly in the following three aspects:
 - time of day
 
 - developer experience 
@@ -11,25 +13,23 @@ Difference between this paper and the MSR'05 paper:
 
 Need some literature search regarding studies on developer experience
 
-\note{The following is a good starting point, but they need to be grouped and shortened.  - Lin}
+\paragraph{Empirical Studies on Commits}
+Previous study~\cite{largeCommits} classifies commits into different categories, one of which 
+is non-functional commits (e.g., modification of comments, documentations, etc.).
+Our study is different because we focused on
+comment-fixing commits. For example, a refactoring commit 
+%that modifies the source code but not comments 
+would be considered as a non-functional commit by previous study, but not considered as a comment-fixing commits in this paper, 
+thus being excluded from our study. 
+iComment~\cite{iComment} only showed that FreeBSD contains many comment-fixing commits, and it is 
+not a comprehensive study on comment-fixing commits.  
+Our results show that XXX of commits in the Linux kernel and PostgreSQL only fix comments, and do not modify the code, showing
+that developers spent time maintaining the correctness of comments. 
 
+% cite ahmed hassan's work
 
-No single solution has been found for solving the problem of bug
-introduction, but a lot of work has been done to try and minimize the
-problem, because it is un-likely that it could be completely
-resolved. Some of the things that could have been done is spend more
-time on software design to minimize the introduction of design related
-bugs by taking into account all the accumulated experiences to avoid
-repeating any mistakes that lead to bugs. Finally, companies have made
-strides in improving testing methodologies and automating the testing
-process as much as possible, which lead to savings of approximately
-\$22.5 billion \cite{2004-industry}. The works presented below are
-mostly geared towards data collection for analysis, and trying to find
-potential sources that could be contributing to bug-introducing
-changes to see what can be done to minimize bug-introduction.
-
+\comment{ 
 \paragraph{When do changed induce fixes?}
-
 
 One of the relevant academic works is this paper, which analyzes CVS
 achieves for fix-inducing changes. In other words, they examine code
@@ -122,4 +122,4 @@ findings made by the authors include: the majority of the commits are
 not related to the development activities, corrective actions generate
 more tiny commits, and development activities are spread among all
 sizes of commits.
-
+}
