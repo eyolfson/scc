@@ -137,8 +137,8 @@ algorithm for the part of the history that was originally a CVS
 history. We believe that committers don't often change time zones and
 usually work from their home time zone, but the validity of our
 adjustment does depend on the validity our assumptions about home time
-zones. All of our results are expressed in the adjusted local time of
-the committer.
+zones. We present all of our results in the local
+time of the committer.
 
 Because the Postgres repository was converted from CVS to git, the
 accuracy of the conversion is another potential threat to validity.  In
@@ -151,6 +151,12 @@ believe that the conversion was performed with care, therefore
 mitigating threats to validity from repository corruption. Also, note
 that the conversion to git obviates the need to identify transactions
 from CVS histories, as in~\cite{zimmermann-msr-2004}.
+
+% if developers ssh to a remote computer in a different time zone, the version control system 
+% would have recorded the wrong time.
+% but for PostgresSQL, we manually check where the authors are
+% and for Linux, there are 8xxx developers, so we expected the incorrectly recorded time for a few developeres do not 
+% affect the representativeness of all the developers 
 
 Because our methodology only identifies bugs which have later been
 corrected, it will definitely omit recently-introduced bugs, as well
