@@ -1,7 +1,36 @@
 \section{Conclusions and Future Work}
 \label{sec-conclusion}
 
+This paper analyzes \linuxBFC and \postBFC bug-fixing commits in two large and widely-used open-source software projects, 
+the Linux kernel and PostgreSQL respectively, to study the correlation between commit correctness with 
+several commit social characteristics, such as the time of day of commits,
+the day of week of commits, developer experience, and developers' activity
+frequency. We found several interesting findings which include: (1)  
+late night commits (between 0:00-4:00 AM) are buggier than average, 
+while morning commits (7:00 AM-noon) are less buggy, suggesting 
+that developers may want to double check the late-night commits before committing, 
+and it may be beneficial for the version control
+system to warn the developers of late night commits to improve software reliability; 
+(2) in contrast to prior findings, 
+our results show that the bugginess differences of commits that are checked in on different days of week 
+are not statistically significant, 
+%indicating that the day of week of commits
+%vary for different software projects, 
+implying that the bugginess prediction based on this 
+metric may need to be on a project-by-project basis;
+and (3) developers who commit to the repository on a daily basis
+write less buggy commits, while day-job developers are more likely to produce
+bugs.
+%
+We believe such results are valuable to the software engineering community and 
+software developers. 
 
+In the future, 
+
+%we 
+%Since there
+%may be correlations between a patch’s evolution and its code quality,
+%we intend to investigate these issues in future work.
 %We plan to extend the work to software projects that have longer history with
 %time information precise to the hours. 
 
