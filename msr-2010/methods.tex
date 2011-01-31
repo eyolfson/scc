@@ -160,10 +160,10 @@ considered together with our evaluation methodology.
 We expect our methodology to properly account for developers in
 different time zones. Git records each developer's local time (and
 time zone) with a commit, thereby avoiding potential imprecisions in
-our time-of-day results. This works well for the Linux repository,
+our time-of-day results. This works well for the Linux kernel repository,
 which is a native Git repository as of 2005. In that repository, the
 local time might be inaccurate if a developer commits from a server in
-a different time zone; however, we expect that most of the 8000 Linux
+a different time zone; however, we expect that most of the 8000 Linux kernel
 contributors will commit locally on a machine with accurate local
 time.  The accuracy of the commit times for the Postgres repository
 depends on the accuracy of our time adjustment algorithm for the part
@@ -192,7 +192,7 @@ from CVS histories, as in~\cite{zimmermann-msr-2004}.
 Because our methodology only identifies bugs which have later been
 corrected, it will definitely omit recently-introduced bugs, as well
 as longer-running bugs which have not yet been corrected. Furthermore,
-our recall of \postR for Postgres and \linuxR for Linux means
+our recall of \postR for Postgres and \linuxR for the Linux kernel means
 that our methodology does not manage to identify some of the bug fixes
 in the repository histories.
 
@@ -207,7 +207,7 @@ bug-fixing commits for these software projects.
 \paragraph{Threats to commit characteristics}
 The next set of related threats concerns commit characteristics,
 including the attributed time and author information for a patch.
-These threats do not apply to the Linux repository, as the Linux
+These threats do not apply to the Linux kernel repository, as the Linux
 kernel community uses the merge functionality of Git to preserve
 commit metadata from external contributors. (Postgres committers, by
 contrast, manually merge diffs contributed by external contributors).
@@ -233,13 +233,13 @@ that interval.  The bug database may contain more information about
 the starting point of the interval (e.g. it records when a bug is
 assigned to a developer), but still does not capture any information
 about the work patterns of the developer within the interval. Some Git
-repositories, including some Linux sub-repositories, do contain more
+repositories, including some Linux kernel sub-repositories, do contain more
 information about intermediate local commits by developers, which can
 help understand the evolution of a commit. Since there may be
 correlations between a patch's evolution and its code quality, we
 intend to investigate these issues in future work.
 
-Finally, we discuss threats to our author classification. Some Linux
+Finally, we discuss threats to our author classification. Some Linux kernel 
 authors commit patches from several email addresses; we treat each
 email address as a separate author, which may cause some authors to be
 appear twice, in two separate classifications. If an author has the
@@ -253,7 +253,7 @@ Our day-job classification for authors is based on the fixed hours of
 have flexible hours; however, we expect that developers who are
 directed to work on a project as their day job would still have the
 bulk of their commits between those hours.  The day-job classification
-applies only to the Linux committers; no Postgres committers satisfy
+applies only to the Linux kernel committers; no Postgres committers satisfy
 the day-job criteria. Even though most of the core Postgres team have
 Postgres-related employment, we believe that they are not directed to
 work on Postgres, which would account for the observation that most of

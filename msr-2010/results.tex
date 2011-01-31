@@ -22,18 +22,18 @@ September 2010. We discussed some of the quirks of the PostgreSQL repository
 in Section~\ref{sec:method}.
 
 \begin{table}
-\begin{tabular}{lrr}
-& {\bf Linux} & {\bf PostgreSQL} \\
+\begin{tabular}{l|r|r}
+& {\bf Linux} & {\bf PostgreSQL} \\ \hline
 First commit & April 16, 2005 & July 9, 1996 \\
+Cloned & November 21, 2010 & January 24, 2011 \\
 Lines of code at tip & over 5 million & over 750,000 \\
 %Source & \url{git.kernel.org} & \url{git.postgresql.org} \\
-Cloned & November 21, 2010 & January 24, 2011 \\
 Number of authors & 8,594 & 34 \\
 Number of commits & 222,332 & 31,098 \\
 \# bug-introducing & 56,681 (25\%) & 7,366 (23.7\%) \\
 \# bug-fixing & 57,028 & 4,399
 \end{tabular}
-\caption{\label{tab:characteristics}Characteristics of Linux kernel and PostgreSQL repositories.}
+\caption{\label{tab:characteristics}Characteristics of the Linux kernel and PostgreSQL repositories.}
 \end{table}
 
 %% The Linux repository
@@ -55,7 +55,7 @@ Number of commits & 222,332 & 31,098 \\
 \subsection{Time-of-day Results} 
 We first present our results correlating the time-of-day of a commit
 with its bugginess.  Figures~\ref{fig-linux-bugginess-hour}
-and~\ref{fig-postgresql-bugginess-hour} present results from Linux and
+and~\ref{fig-postgresql-bugginess-hour} present results from the Linux kernel and
 Postgres, respectively. These graphs compare the time-of-day of each
 commit, in the committer's local time on a 24-hour clock, to the
 percentage of commits which were found to be bug-introducing. The
@@ -68,18 +68,18 @@ raw number of commits at each hour, as indicated by the red dots.
 Both figures show a noticeable increase in the amount of commits which
 introduce a bug between 00:00 (midnight) and 04:00 (4AM). After 04:00,
 commits tend to be less buggy than average, gradually increasing until
-noon.  In Linux, commits between noon and midnight fluctuate around
+noon.  In the Linux kernel, commits between noon and midnight fluctuate around
 the average bugginess level, while the Postgres commits are generally
 above the average bugginess level between 16:00 (4PM) and 20:00 (8PM),
 and then below the average bugginess level between 20:00 (8PM) and
 00:00 (midnight). Note that even the smallest total number of commits,
 for any hour, is 139 for Postgres (and an order of magnitude higher
-for Linux), so that all of the depicted bug introduction rates are
+for the Linux kernel), so that all of the depicted bug introduction rates are
 meaningful.
 
 Our results suggest that tired developers (midnight-4AM) are more
 likely to miss corner cases in a pre-commit review (for Postgres) or
-while finalizing the patch (for Linux). Furthermore, we can observe
+while finalizing the patch (for the Linux kernel). Furthermore, we can observe
 that commits before noon are least likely to be bug-introducing;
 perhaps committers are most careful in those hours.
 
@@ -87,7 +87,7 @@ perhaps committers are most careful in those hours.
 \begin{center}
 \includegraphics[width=\columnwidth]{linux-bugginess-hour.pdf}
 \end{center}
-\caption{Linux percentage of buggy commits (bars) and total number of commits (circles) versus time of day}
+\caption{The Linux kernel percentage of buggy commits (bars) and total number of commits (circles) versus time of day}
 \label{fig-linux-bugginess-hour}
 \end{figure}
 
@@ -125,15 +125,15 @@ tracks how long a developer has contributed to a particular project.
 As we described in Section~\ref{sec:data}, one of the ways that we
 classify developers is according to frequency, i.e. most-common
 interval between consecutive commits---daily, weekly, monthly, other,
-or single.  This information is only interesting for Linux, as the
+or single.  This information is only interesting for the Linux kernel, as the
 almost all (28/34) of Postgres's committers are daily. We computed the
 bugginess rates for each of these classes of developers and plot
 author classification versus bug-introduction percentage in
 Figure~\ref{fig-linux-bugginess-author-class}. The graph also presents
-the number of authors in each class; Linux has 49 day job authors,
+the number of authors in each class; the Linux kernel has 49 day job authors,
 and 238 weekly and 288 monthly authors.
 
-Our results show that Linux developers who commit changes daily, but
+Our results show that the Linux kernel developers who commit changes daily, but
 not as their day job, produce the smallest number of bug-introducing
 commits, followed by the single-commit authors (whose patches would
 presumably be simple or closely-reviewed). The day job, weekly, and
@@ -175,9 +175,9 @@ particular schedule.
 \paragraph{Developer Experience Classification}
 The final head-to-head comparison we performed is based on the amount
 of experience per author. We divided them up into 6-month intervals. 
-Our results from Linux and Firefox are shown in Figure
+Our results from the Linux kernel and Firefox are shown in Figure
 \ref{fig-linux-experience} and Figure \ref{fig-firefox-experience}
-respectfully. For Linux authors with less than 2 years of experience
+respectfully. For the Linux kernel authors with less than 2 years of experience
 are more likely to commit a bug while after 2 years the likelihood
 decreases. However the authors which committed throughout the history
 of the project are more likely to commit a bug which may be because
@@ -206,11 +206,11 @@ actual experience with the project.
 
 Finally we determined the bug lifetimes for both projects to contrast
 them to previous work. We plotted the number of bugs for each lifetime
-divided into 4 month intervals. The results for Linux are shown in
+divided into 4 month intervals. The results for the Linux kernel are shown in
 Figure \ref{fig-linux-buglife}, the average bug lifetime is 1.39
 years. The results for Firefox are shown in Figure
 \ref{fig-firefox-buglife}, with an average bug lifetime of 0.97
-years. This shows a reduction in the average bug lifetime for Linux (in
+years. This shows a reduction in the average bug lifetime for the Linux kernel (in
 2002 the average lifetime was 1.8 years). This indicates that
 developers are improving as their development process becomes more
 refined. We also see the average lifetime is lower for Firefox, this
@@ -230,7 +230,7 @@ revealed).
 \begin{center}
 \includegraphics[width=\columnwidth]{linux-bugginess-experience.pdf}
 \end{center}
-\caption{Linux percentage of buggy commits per author experience}
+\caption{The Linux kernel percentage of buggy commits per author experience}
 \label{fig-linux-bugginess-experience}
 \end{figure}
 
@@ -247,7 +247,7 @@ revealed).
 \begin{center}
 \includegraphics[width=\columnwidth]{linux-introductions-day.pdf}
 \end{center}
-\caption{Linux introductions per commit per day}
+\caption{The Linux kernel introductions per commit per day}
 \label{fig-linux-introductions-day}
 \end{figure}
 
@@ -263,7 +263,7 @@ revealed).
 \begin{center}
 \includegraphics[width=\columnwidth]{linux-severity-day.pdf}
 \end{center}
-\caption{Linux severity of changes per day}
+\caption{The Linux kernel severity of changes per day}
 \label{fig-linux-severity-day}
 \end{figure}
 
@@ -279,7 +279,7 @@ revealed).
 \begin{center}
 \includegraphics[width=\columnwidth]{linux-introductions-hour.pdf}
 \end{center}
-\caption{Linux introductions per commit per hour}
+\caption{The Linux kernel introductions per commit per hour}
 \label{fig-linux-introductions-hour}
 \end{figure}
 
@@ -295,7 +295,7 @@ revealed).
 \begin{center}
 \includegraphics[width=\columnwidth]{linux-severity-hour.pdf}
 \end{center}
-\caption{Linux severity of changes per hour}
+\caption{The Linux kernel severity of changes per hour}
 \label{fig-linux-severity-hour}
 \end{figure}
 
@@ -311,7 +311,7 @@ revealed).
 \begin{center}
 \includegraphics[width=\columnwidth]{linux-bugginess-day.pdf}
 \end{center}
-\caption{Linux percentage of buggy commits per day}
+\caption{The Linux kernel percentage of buggy commits per day}
 \label{fig-linux-bugginess-day}
 \end{figure}
 
@@ -330,7 +330,7 @@ producing bugs. For the following graphs, the percentage of
 introduction commits indicates the amount of commits which are bug
 introductions, as a propostion of the total number of
 commits. Figure~\ref{fig-linux-bugginess-day} presents our results for
-Linux. We see that Saturday is the worst day, followed by Thursday,
+the Linux kernel. We see that Saturday is the worst day, followed by Thursday,
 while Monday has the fewest percentage of bug introductions. The
 results for Firefox are shown in Figure~\ref{fig-postgresql-bugginess-day} and
 agree with Thursday being one of the worst days, while Monday is the
@@ -367,7 +367,7 @@ recall findings.
 
 We evaluated the precision---that is, the proportion of identified
 bug-fixing commits which do indeed fix bugs---and found that, for
-Linux, 43 of the 50 bugs that we automatically identified as
+the Linux kernel, 43 of the 50 bugs that we automatically identified as
 bug-fixing commits did indeed fix bugs, while 7 did not; for Postgres,
 42 of 50 identified fixes were indeed fixes.  Some of the
 cases included: 1) a commit message which fixed a merge commit was
@@ -381,7 +381,7 @@ functions---these could arguably be considered to be fixes to a buggy
 initial design.
 
 To evaluate the recall of our technique, we sampled 50
-non-bug-introducing commits from both Linux and
+non-bug-introducing commits from both the Linux kernel and
 Postgres. Table~\ref{tab:pr-raw} presents the raw data. However, the
 raw data must be adjusted before it will indicate the recall, because
 the recall must be calculated as a proportion of commits over the
