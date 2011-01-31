@@ -204,8 +204,30 @@ we believe that our sample is representative of bug-introducing and
 bug-fixing commits for these software projects.
 
 \paragraph{Threats to commit characteristics}
+The next set of related threats concerns commit characteristics,
+including the attributed time and author information for a patch.
+These threats do not apply to the Linux repository, as the Linux
+kernel community uses the merge functionality of Git to preserve
+commit metadata from external contributors. (Postgres committers, by
+contrast, manually merge diffs contributed by external contributors).
+The implications of Linux's Git merges on our data are that 1) the commit
+time reflects the initial author's commit decision, and 2) the
+attributed author of a patch actually wrote the patch.
+
+Most Postgres patches are committed by someone other than the author
+of the patch: the set of Postgres committers is quite small, so
+external Postgres commits will always be attributed to a member of the
+Postgres team. Although Git can record both the author and committer
+of a patch, the Postgres community is currently requiring that the
+``author'' field of a patch always equal its ``committer'' field.
+Third-party commits add more uncertainty about when a patch was
+originally written, and confound our data about patch authors.  We
+believe, however, that even for Postgres, it is reasonable to ascribe
+responsibility for the patch to its commiter, who would presumably
+review a patch before committing it. 
+
 Developers work on a patch~\footnote{We use ``patch" and ``commit" interchangeably in this paper.} over a possibly-discontiguous time
-interval. However, the code repository only records the endpoint of
+interval. However, the final commit only indicates the endpoint of
 that interval.  The bug database may contain more information about
 the starting point of the interval (e.g. it records when a bug is
 assigned to a developer), but still does not capture any information
@@ -215,14 +237,6 @@ information about intermediate local commits by developers, which can
 help understand the evolution of a commit. Since there may be
 correlations between a patch's evolution and its code quality, we
 intend to investigate these issues in future work.
-
-Some patches are committed by someone other than the author
-of the patch. This occurs especially often for external
-contributors. Third-party commits add more uncertainty about when a
-patch was originally written, and confound our data about patch
-authors.  We believe, however, that it is reasonable to ascribe
-responsibility for the patch to its commiter, who would presumably
-review a patch before committing it.
 
 Finally, we discuss threats to our author classification. Some Linux
 authors commit patches from several email addresses; we treat each
