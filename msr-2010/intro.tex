@@ -4,7 +4,7 @@ Software demands high reliability. However, as its complexity increases,
 modern software inevitably contain bugs, which hurt software reliability.
 The modern software development paradigm further complicates the situation: 
 Many modern software, e.g., the Linux kernel, PostgreSQL, Apache, and Eclipse, 
-are developed by tens to thousands of developers over decades~\cite{ccomment} 
+are developed by tens to thousands of developers over decades %~\cite{ccomment} 
 in a distributed manner. The software often receives tens of housands or hundreds of thousands 
 of commits (Section~\ref{sec-results}). 
 Developers with different programming experiences, 
@@ -25,9 +25,9 @@ the commit time (e.g., time of day, day of week, etc.) has implications on the q
 Are commits submitted after midnight buggier than other commits? 
 Such correlation results may be useful to predict what commits are more likely
 to be buggy so that we can budget more testing effort on these commits, just
-like prior studies~\cite{graves00predicting, guo04robust, ostrand05predicting},
+like prior studies~\cite{graves00predicting, guo04robust, ostrand05predicting, zimmermann-promise-2007},
 which predict buggy locations based on code complexity, 
-code locations, amount of in-house testing, etc. 
+code locations, amount of in-house testing, historical data, etc. 
 Another interesting question is, whether more experienced developers are more or less
 likely to write buggy commits. 
 
