@@ -1,13 +1,14 @@
 \section{Experimental Methods}
 \label{sec:method}
 Our overall goal is to investigate the properties of ``buggy'', or
-bug-introducing, commits. We define a \emph{bug-introducing} commit to be any
-commit for which there exists a later \emph{bug-fixing} commit that purports to
-fix the bug. A single bug-fixing commit may fix bugs introduced in
-multiple bug-introducing commits. Despite our terminology,
-a bug-introducing commit is not necessarily bad code; it is possible 
-that the later fix simply reflects a change in requirements or updates
-the code to work with changes in third-party code.
+bug-introducing, commits. We define a \emph{bug-introducing} commit to
+be any commit for which there exists a later \emph{bug-fixing} commit
+that purports to fix the bug. A single bug-fixing commit may fix bugs
+introduced in multiple bug-introducing commits. Despite our
+terminology, a bug-introducing commit is not necessarily bad code; it
+is possible that the later fix is adaptive or perfective, updating the
+code to work with changes in third-party code, or reflecting a change
+in requirements.
 
 \subsection{Core methodology}
 Following~\cite{sliwerski-msr-2005}, our methodology has three steps: 1) enumerating bug-fixing commits; 2)
