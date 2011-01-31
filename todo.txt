@@ -5,7 +5,7 @@
    break them into each month/6 months, etc. calculate standard deviatios for each bar  (anova, t-test), may take too much time to interpret.
 - better title
 - use one consistent name for author activity level/author classification/author frequency
-- Check the accuracy of references, particularly the citeseer ones
+- Check the accuracy of references, particularly the citeseer ones [citeeseer ones are gone]
 - sample another 50 commits that we think are not bug-fixing commits for each project to increase recall [lower priority] 
 - More metrics like severity, etc, and results [in progress]
 - Classify commits?
