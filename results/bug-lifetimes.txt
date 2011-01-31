@@ -3,7 +3,15 @@ Linux
 Average: 504.645208552
 Std: 491.911698096
 
+Short
+Average: 386.758775331
+Std: 406.77884139
+
 PostgreSQL
 
 Average: 1123.05196332
 Std: 1165.23406992
+
+Short
+Average: 1061.25054731
+Std: 1093.08755696
