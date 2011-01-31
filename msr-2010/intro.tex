@@ -78,24 +78,28 @@ the experience and activity frequency of the commit authors.
 %In addition to the above social characteristics, we also 
 %In addition, we study several other commit characteristics, such as
 %the commit sizes, XXX, XXX, etc. 
-
-Our major findings 
-are summarized below ($\S$ denotes in which
-section the finding and its {\em implications} are discussed). To the best of our
+%
+To the best of our
 knowledge, we are the {\em first} to study the correlation between the commit time of day and
 the commit correctness. 
+
+Our major findings are summarized below (Detailed discussions of these findings and their implications are 
+presented in Section~\ref{sec-results}): 
+%($\S$ denotes in which section the finding and its {\em implications} are discussed). 
 
 \begin{list}{\labelitemi}{\topsep=0pt\parsep=0pt\leftmargin=9pt\itemindent=0pt}
 
 \vspace{0.05in}
-\item {\bf Finding 1 ($\S$\ref{sec:finding1}):} 
+\item {\bf Finding 1:}
+%($\S$\ref{sec:finding1}):} 
 Commits that are checked into the software repository around midnight (between XXX-XXX AM) 
 are XXX\% more likely to be incorrect, while commits around XXX-XXX AM are more likely to be correct.
 The result indicate that developers may want to double check the code they write  
 before they commit between these hours. It may also to beneficial for the version control
 system to warn the developers of late night commits to improve software reliability. 
 
-\item {\bf Finding 2 ($\S$\ref{sec:finding2}):} 
+\item {\bf Finding 2:}
+% ($\S$\ref{sec:finding2}):} 
 In contrast to the prior finding that Friday commits are buggier~\cite{sliwerski-msr-2005}, 
 our results on the Linux kernel and PostgreSQL show that 
 the bugginess differences of commits that are checked in on different days of week 
@@ -103,10 +107,11 @@ are not statistically significant. This result shows that the day of week of com
 vary for different software projects, implying that the bugginess prediction based on this 
 metric may need to be on a project-by-project basis.
 
-\item {\bf Finding 3 ($\S$\ref{sec:finding3}):} 
+\item {\bf Finding 3:}
+% ($\S$\ref{sec:finding3}):} 
 Developers who commit to the repository on a daily basis
-write less buggy commits, indicating that we may want to have daily
-committing developers code-review other developers' commits.
+write less buggy commits, indicating ...
+%that we may want to have daily committing developers code-review other developers' commits.
 
 \end{list}
 
