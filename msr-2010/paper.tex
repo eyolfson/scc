@@ -29,6 +29,7 @@
 %\brokenpenalty=1000 %10000
 
 \usepackage{times}
+\usepackage{url}
 
 %------------------------------------------------------------------------- 
 % take the % away on next line to produce the final camera-ready version 
@@ -57,9 +58,15 @@
 \newcommand{\code}{\tt \small}
 
 \newcommand{\comment}[1]{{}}
-%\newcommand{\bfc}[1]{bug-fixing commits}
-%\newcommand{\bic}[1]{bug-introduction commits}
 \newcommand{\note}[1]{{\bf *** NOTE: {#1} ***}}
+%\newcommand{\bfc}{bug-fixing commits}
+%\newcommand{\bic}{bug-introduction commits}
+\newcommand{\linuxP}{86\%\xspace} %precision for linux
+\newcommand{\linuxR}{65\%\xspace} % recall for linux
+\newcommand{\postP}{84\%\xspace} % precision ofr postgreSQL
+\newcommand{\postR}{67\%\xspace} % recall for postgreSQL
+\newcommand{\linuxBFC}{57,028\xspace} %total number of bug-fixing commits for linux
+\newcommand{\postBFC}{4,399\xspace} % total number of bug-fixing comits for postgreSQL 
 
 
 \begin{document}
@@ -70,7 +77,7 @@
 %\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
 % --- End of Author Metadata ---
 
-\title{When And Why A Bug Is Introduced}
+\title{Do time of day and developer experience affect commit bugginess?}
 %% \subtitle{Subtitle Text, if any}
 
 
@@ -129,7 +136,7 @@ Jon Eyolfson, Lin Tan, Patrick Lam\\
        \affaddr{University of Waterloo} \\
        \affaddr{200 University Avenue West}\\
        \affaddr{Waterloo, ON N2L3G1, Canada} \\ 
-       \affaddr{\em \{jeyolfso, lintan, patrick.lam\}@uwaterloo.ca}
+       \affaddr{\em jon@eyolfson.com, lintan@uwaterloo.ca, p.lam@ece.uwaterloo.ca}
 }
 
 
@@ -222,10 +229,10 @@ Jon Eyolfson, Lin Tan, Patrick Lam\\
 
 
 
-{\small 
+%{\small 
 \bibliographystyle{abbrv}
 \bibliography{paper}
-}
+%}
 
 
 %\theendnotes
