@@ -1,103 +1,87 @@
 \section{Results}
 \label{sec-results}
 In this section, we present the results obtained from carrying out our
-methodology, and discuss some of their implications. First, we validated
-our results by random sampling, which allowed us to estimate our
-false-positives rate. Next, we report on our results and interpret
-our time-of-day, day-of-week, and author classification findings.
+methodology, and discuss some of the implications of our results.
+Most of our results investigate the effect of an independent variable
+(time-of-day and developer experience/frequency classifications) on
+the likelihood of a commit to be a bug-introducing commit, or
+\emph{bugginess}. We also
+describe our findings with respect to the day of the week, which
+allows us to compare our results to those
+in~\cite{sliwerski-msr-2005}.  Finally, we explain the precision and
+recall of our methodology and how we computed these figures.
 
-\paragraph{Validation} 
-To validate our results, we first observed the types of commits from both Linux
-and Firefox and classified changes related to these bugs.
-% more detail!
-Table~\ref{tbl-changes} presents our results. A major difference
-between Linux and Firefox is in the ``none'' row, where Linux has
-7.7\% of changes while Firefox has 43\% of changes. We believe that
-this is because our analysis does not consider changes to JavaScript,
-which is an important part of Firefox; these changes also appear to
-actually be ``modify'' changes, which differs by a similar amount
-in the other direction.
+\paragraph{Project characteristics}
+We chose two large open-source software repositories for our
+investigations: Linus Torvalds's mainline Linux kernel, from
+\url{git.kernel.org} and PostgreSQL, from the project's repository at
+\url{git.postgresql.org}.  Table~\ref{tab:characteristics} summarizes
+the characteristics of each of our repositories. Note that the
+PostgreSQL repository was converted from CVS using {\code cvs2git} in
+September 2010.
 
-% maybe move this to the results section
-We only considered patches and bugs that are introduced after April 16th, 2005, when
-the Linux kernel started to use Git, because the patches before this date do not have 
-time information that is accurate to the hour.
+\begin{table}
+\begin{tabular}{lrr}
+& {\bf Linux} & {\bf PostgreSQL} \\
+First commit & April 16, 2005 & July 9, 1996 \\
+Lines of code at tip & over 5 million & over 750,000 \\
+%Source & \url{git.kernel.org} & \url{git.postgresql.org} \\
+Cloned & November 21, 2010 & January 24, 2011 \\
+Number of authors & 8,594 & 34 \\
+Number of commits & 222,332 & 31,098 \\
+\# bug-introducing & 56,681 (25\%) & 7,366 (23.7\%) \\
+\# bug-fixing & 57,028 & 4,399
+\end{tabular}
+\caption{\label{tab:characteristics}Characteristics of Linux kernel and PostgreSQL repositories.}
+\end{table}
 
-% we need to have a more detailed story above. The other numbers
-% aren't actually similar either. -PL
+%% The Linux repository
+%% was cloned on November 21, 2010, from Linus Torvalds's mainline
+%% kernel, hosted at \url{git.kernel.org}; this repository contains
+%% history back to April 16, 2005.  This repository contains 222,332
+%% commits contributed by 8,594 authors. Of these commits, we identified
+%% 56,681 bug-introducing commits and 57,028 bug-fixing commits.
+%% The tip of the repository contains
+%% over 5 million lines of code. 
 
+%% The PostgreSQL repository was cloned on January 24, 2011, from the
+%% project's repository at \url{git.postgresql.org}; it contains history
+%% to July 9, 1996, translated from CVS using \code{cvs2git}.  This
+%% repository contains 31,098 commits contributed by 34 authors. We
+%% identified 7,366 bug-introducing commits and 4,399 bug-fixing commits. The tip
+%% of the repository contains over 750,000 lines of code.
 
-%% We also noted that approximately 7.7\% of the bug fixes for Linux were
-%% purely for comments, indicating that developers spend a non-trivial
-%% amount of time on comments. For Linux, approximately 51\% of the
-%% changes do not include additions. We therefore manually checked (a
-%% subsample of) the 49\% more difficult cases to evaluate the
-%% effectiveness of our heuristic for additions.
+\subsection{Time-of-day Results} 
+We first present our results correlating the time-of-day of a commit
+with its bugginess.  Figures~\ref{fig-linux-bugginess-hour}
+and~\ref{fig-postgresql-bugginess-hour} present results from Linux and
+Postgres, respectively. These graphs compare the time-of-day of each
+commit, in the committer's local time on a 24-hour clock, to the
+percentage of commits which were found to be bug-introducing. The
+solid line indicates the mean number of buggy commits in each project;
+bars shorter than the line indicate that commits at that hour were
+less likely to be buggy, while bars taller than the line indicate
+more-buggy commits.
 
-For Linux, we manually checked a random sample of 50 bugs: 11
-additions, 16 additions and modifications, 6 additions and removals,
-and 17 with all types of changes. We found 10 of the 50 bugs to be
-false positives. Similarly, for Firefox, we randomly sampled 50 bugs:
-9 additions, 3 additions and modifications, 18 additions and removals,
-and 20 with all types of changes. We found 13 of the 50 to be false
-positives. 
+Both figures show a noticeable increase in the amount of commits which
+introduce a bug between 00:00 (midnight) and 04:00 (4AM). After 04:00,
+commits tend to be less buggy than average, gradually increasing until
+noon.  In Linux, commits between noon and midnight fluctuate around
+the average bugginess level, while the Postgres commits are generally
+above the average bugginess level between 16:00 (4PM) and 20:00 (8PM),
+and then below the average bugginess level between 20:00 (8PM) and
+00:00 (midnight).
 
-We next describe our false positives, which included three rare cases
-and two common cases. The rare cases included: 1) our analysis
-classified a commit message for fixing a merge commit as describing a
-fix. 2) We found an author incorrectly blamed for a bug: the bug arose
-from a check which was only required, and inadvertently omitted, from
-a later revision. 3) The removal of dead code triggered an (invalid)
-bug report. More commonly, we found that sometimes 4) a change was
-reverted but re-added in a later version; and 5) refactoring changes,
-which moved or renamed functions. One might argue that such changes
-could actually be bug fixes.
-
-% we didn't say what blame means.
- 
-Our false positive rate has an upper bound between 20\%-26\%. We
-believe this is an upper bound since we manually checked the more
-difficult bug-fixing cases. Therefore our data is representative.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.45\textwidth]{linux-bugginess-day.pdf}
-\end{center}
-\caption{Linux percentage of buggy commits per day}
-\label{fig-linux-bugginess-day}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.45\textwidth]{postgresql-bugginess-day.pdf}
-\end{center}
-\caption{PostgreSQL percentage of buggy commits per day}
-\label{fig-postgresql-bugginess-day}
-\end{figure}
-
-\paragraph{Day-of-week Results} Having determined our false positive rate, 
-we continue by presenting the results of our analysis.  First, we
-determine if the day of the week has any impact on the likelihood of
-producing bugs. For the following graphs, the percentage of
-introduction commits indicates the amount of commits which are bug
-introductions, as a propostion of the total number of
-commits. Figure~\ref{fig-linux-bugginess-day} presents our results for
-Linux. We see that Saturday is the worst day, followed by Thursday,
-while Monday has the fewest percentage of bug introductions. The
-results for Firefox are shown in Figure~\ref{fig-postgresql-bugginess-day} and
-agree with Thursday being one of the worst days, while Monday is the
-best day for committing changes which do not introduce bugs. A
-possible explanation is that developers rest over the weekend and have
-ample time to think about the problem before coding a solution on
-Monday, when they know exactly what to do. Per-day bugginess may also
-be correlated with the size of the change, which we plan to investigate
-later, as an addition to our technique.
+Our results suggest that tired developers (midnight-4AM) are more
+likely to miss corner cases in a pre-commit review. Furthermore, we
+can observe that commits before noon are least likely to be
+bug-introducing; perhaps committers are most careful in those hours.
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.45\textwidth]{linux-bugginess-hour.pdf}
 \end{center}
-\caption{Linux percentage of buggy commits per hour}
+\caption{Linux: time of day versus percentage of buggy commits}
 \label{fig-linux-bugginess-hour}
 \end{figure}
 
@@ -105,21 +89,9 @@ later, as an addition to our technique.
 \begin{center}
 \includegraphics[width=0.45\textwidth]{postgresql-bugginess-hour.pdf}
 \end{center}
-\caption{PostgreSQL percentage of buggy commits per hour}
+\caption{PostgreSQL: time of day versus percentage of buggy commits}
 \label{fig-postgresql-bugginess-hour}
 \end{figure}
-
-\paragraph{Time-of-day Results} We next investigated whether the hour of a commit has any impact on
-its bugginess. Figures~\ref{fig-postgresql-bugginess-hour} and~\ref{fig-postgresql-bugginess-hour}
-present results from Linux and Firefox, respectively. Both figures
-show a significant increase in the amount of commits which introduce a
-bug between midnight and 9AM. After 9AM, there is a significant
-reduction in the amount of bug introductions between 11AM and 3PM.
-However, after 3PM, the likelihood of bug introductions fluctuates
-from hour to hour. This result is not very surprising, since tired
-programmers are more likely to produce mistakes. It does, however,
-indicate the hours that programmers are at the peak of their
-productiveness, in terms of not creating additional bugs.
 
 %% \begin{figure}
 %% \begin{center}
@@ -136,6 +108,13 @@ productiveness, in terms of not creating additional bugs.
 %% \caption{Firefox percentage of bug introductions and percentage of total commits per author classification}
 %% \label{fig-firefox-class}
 %% \end{figure}
+
+\subsection{Developer Characteristics}
+We next present our findings with respect to developer activity and
+experience.  Developer activity investigates the frequency of a developer's
+contributions to a project, while developer experience tracks how long
+a developer has contributed to a particular project.
+
 
 \paragraph{Developer Activity Classification} 
 We then investigated how each classification of developers fare in
@@ -301,3 +280,92 @@ revealed).
 \caption{PostgreSQL severity of changes per hour}
 \label{fig-postgresql-severity-hour}
 \end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{linux-bugginess-day.pdf}
+\end{center}
+\caption{Linux percentage of buggy commits per day}
+\label{fig-linux-bugginess-day}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{postgresql-bugginess-day.pdf}
+\end{center}
+\caption{PostgreSQL percentage of buggy commits per day}
+\label{fig-postgresql-bugginess-day}
+\end{figure}
+
+\subsection{Day-of-week Results} Having determined our false positive rate, 
+we continue by presenting the results of our analysis.  First, we
+determine if the day of the week has any impact on the likelihood of
+producing bugs. For the following graphs, the percentage of
+introduction commits indicates the amount of commits which are bug
+introductions, as a propostion of the total number of
+commits. Figure~\ref{fig-linux-bugginess-day} presents our results for
+Linux. We see that Saturday is the worst day, followed by Thursday,
+while Monday has the fewest percentage of bug introductions. The
+results for Firefox are shown in Figure~\ref{fig-postgresql-bugginess-day} and
+agree with Thursday being one of the worst days, while Monday is the
+best day for committing changes which do not introduce bugs. A
+possible explanation is that developers rest over the weekend and have
+ample time to think about the problem before coding a solution on
+Monday, when they know exactly what to do. Per-day bugginess may also
+be correlated with the size of the change, which we plan to investigate
+later, as an addition to our technique.
+
+
+\subsection{Validation} 
+To validate our results, we first observed the types of commits from both Linux
+and Firefox and classified changes related to these bugs.
+% more detail!
+Table~\ref{tbl-changes} presents our results. A major difference
+between Linux and Firefox is in the ``none'' row, where Linux has
+7.7\% of changes while Firefox has 43\% of changes. We believe that
+this is because our analysis does not consider changes to JavaScript,
+which is an important part of Firefox; these changes also appear to
+actually be ``modify'' changes, which differs by a similar amount
+in the other direction.
+
+% maybe move this to the results section
+We only considered patches and bugs that are introduced after April 16th, 2005, when
+the Linux kernel started to use Git, because the patches before this date do not have 
+time information that is accurate to the hour.
+
+% we need to have a more detailed story above. The other numbers
+% aren't actually similar either. -PL
+
+
+%% We also noted that approximately 7.7\% of the bug fixes for Linux were
+%% purely for comments, indicating that developers spend a non-trivial
+%% amount of time on comments. For Linux, approximately 51\% of the
+%% changes do not include additions. We therefore manually checked (a
+%% subsample of) the 49\% more difficult cases to evaluate the
+%% effectiveness of our heuristic for additions.
+
+For Linux, we manually checked a random sample of 50 bugs: 11
+additions, 16 additions and modifications, 6 additions and removals,
+and 17 with all types of changes. We found 10 of the 50 bugs to be
+false positives. Similarly, for Firefox, we randomly sampled 50 bugs:
+9 additions, 3 additions and modifications, 18 additions and removals,
+and 20 with all types of changes. We found 13 of the 50 to be false
+positives. 
+
+We next describe our false positives, which included three rare cases
+and two common cases. The rare cases included: 1) our analysis
+classified a commit message for fixing a merge commit as describing a
+fix. 2) We found an author incorrectly blamed for a bug: the bug arose
+from a check which was only required, and inadvertently omitted, from
+a later revision. 3) The removal of dead code triggered an (invalid)
+bug report. More commonly, we found that sometimes 4) a change was
+reverted but re-added in a later version; and 5) refactoring changes,
+which moved or renamed functions. One might argue that such changes
+could actually be bug fixes.
+
+% we didn't say what blame means.
+ 
+Our false positive rate has an upper bound between 20\%-26\%. We
+believe this is an upper bound since we manually checked the more
+difficult bug-fixing cases. Therefore our data is representative.
+
