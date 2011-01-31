@@ -3,13 +3,15 @@ from datetime import datetime
 os.environ['DJANGO_SETTINGS_MODULE']='scc_website.settings'
 from scc_website.apps.repositories.models import *
 
-r = Repository.objects.get(pk=1)
-exclude_pk = 222332
-xp_cutoff = 2000
+# r = Repository.objects.get(pk=1)
+# exclude_pk = 222332
+# xp_cutoff = 2000
+# file_prefix = 'linux-'
 
-# r = Repository.objects.get(pk=4)
-# exclude_pk = 532279
-# xp_cutoff = 5300
+r = Repository.objects.get(pk=4)
+exclude_pk = 532279
+xp_cutoff = 5300
+file_prefix = 'postgresql-'
 
 ci_set = CommitInformation.objects.filter(commit__author__repository=r).exclude(commit__pk=exclude_pk)
 
@@ -98,6 +100,32 @@ class DataCollector():
                 except ZeroDivisionError:
                     rows[i][j+1] = 0
         writer.writerows(rows)
+
+# Commits per Day
+commits_day_dc = DataCollector(['total_commits'],
+                                 'total_commits',
+                                 days,
+                                 classes)
+for ci in ci_set:
+    i = ci.commit.local_time.weekday()
+    classification = ci.commit.author.authorinformation.classification
+    day_job = ci.commit.author.authorinformation.day_job
+    if day_job:
+        j = 0
+    elif classification == 'D':
+        j = 1
+    elif classification == 'W':
+        j = 2
+    elif classification == 'M':
+        j = 3
+    elif classification == 'O':
+        j = 4
+    elif classification == 'S':
+        j = 5
+    else:
+        raise ValueError
+    commits_day_dc.update('total_commits', i, j)
+commits_day_dc.write_csv('%scommits-day' % file_prefix)
 
 # # Bugginess per Day
 # bugginess_day_dc = DataCollector(['buggy_commits', 'total_commits'],
@@ -294,44 +322,122 @@ class DataCollector():
 #     bugginess_author_dc.update('total_commits', i, j)
 # bugginess_author_dc.write_csv('bugginess-author')
 
-# Bugginess per Experience
-authors = {}
-for ci in ci_set:
-    email = ci.commit.author.email
-    if not email in authors:
-        authors[email] = ci.commit.utc_time
-    else:
-        if ci.commit.utc_time < authors[email]:
-            authors[email] = ci.commit.utc_time
-bugginess_experience_dc = DataCollector(['buggy_commits', 'total_commits'],
-                                 '100*div(buggy_commits, total_commits)',
-                                 experiences,
-                                 classes)
-for ci in ci_set:
-    experience = (ci.commit.utc_time - authors[ci.commit.author.email]).days
-    if experience < 0 or experience > xp_cutoff:
-        continue
-    i = experience/120
-    classification = ci.commit.author.authorinformation.classification
-    day_job = ci.commit.author.authorinformation.day_job
-    if day_job:
-        j = 0
-    elif classification == 'D':
-        j = 1
-    elif classification == 'W':
-        j = 2
-    elif classification == 'M':
-        j = 3
-    elif classification == 'O':
-        j = 4
-    elif classification == 'S':
-        j = 5
-    else:
-        raise ValueError
-    if ci.introduction_count > 0:
-        bugginess_experience_dc.update('buggy_commits', i, j)
-    bugginess_experience_dc.update('total_commits', i, j)
-bugginess_experience_dc.write_csv('bugginess-experience')
+# # Bugginess per Experience
+# authors = {}
+# for ci in ci_set:
+#     email = ci.commit.author.email
+#     if not email in authors:
+#         authors[email] = ci.commit.utc_time
+#     else:
+#         if ci.commit.utc_time < authors[email]:
+#             authors[email] = ci.commit.utc_time
+# bugginess_experience_dc = DataCollector(['buggy_commits', 'total_commits'],
+#                                  '100*div(buggy_commits, total_commits)',
+#                                  experiences,
+#                                  classes)
+# for ci in ci_set:
+#     experience = (ci.commit.utc_time - authors[ci.commit.author.email]).days
+#     if experience < 0 or experience > xp_cutoff:
+#         continue
+#     i = experience/120
+#     classification = ci.commit.author.authorinformation.classification
+#     day_job = ci.commit.author.authorinformation.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     if ci.introduction_count > 0:
+#         bugginess_experience_dc.update('buggy_commits', i, j)
+#     bugginess_experience_dc.update('total_commits', i, j)
+# bugginess_experience_dc.write_csv('bugginess-experience')
+
+# # Introductions per Experience
+# authors = {}
+# for ci in ci_set:
+#     email = ci.commit.author.email
+#     if not email in authors:
+#         authors[email] = ci.commit.utc_time
+#     else:
+#         if ci.commit.utc_time < authors[email]:
+#             authors[email] = ci.commit.utc_time
+# introductions_experience_dc = DataCollector(['introduction_commits', 'total_commits'],
+#                                             'div(introduction_commits, total_commits)',
+#                                             experiences,
+#                                             classes)
+# for ci in ci_set:
+#     experience = (ci.commit.utc_time - authors[ci.commit.author.email]).days
+#     if experience < 0 or experience > xp_cutoff:
+#         continue
+#     i = experience/120
+#     classification = ci.commit.author.authorinformation.classification
+#     day_job = ci.commit.author.authorinformation.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     if ci.introduction_count > 0:
+#         introductions_experience_dc.update('introduction_commits', i, j, ci.introduction_count)
+#     introductions_experience_dc.update('total_commits', i, j)
+# introductions_experience_dc.write_csv('introductions-experience')
+
+# # Severity per Experience
+# authors = {}
+# for ci in ci_set:
+#     email = ci.commit.author.email
+#     if not email in authors:
+#         authors[email] = ci.commit.utc_time
+#     else:
+#         if ci.commit.utc_time < authors[email]:
+#             authors[email] = ci.commit.utc_time
+# severity_experience_dc = DataCollector(['introduction_count', 'lines_changed'],
+#                                        'div(introduction_count, lines_changed)',
+#                                        experiences,
+#                                        classes)
+# for ci in ci_set:
+#     experience = (ci.commit.utc_time - authors[ci.commit.author.email]).days
+#     if experience < 0 or experience > xp_cutoff:
+#         continue
+#     i = experience/120
+#     classification = ci.commit.author.authorinformation.classification
+#     day_job = ci.commit.author.authorinformation.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     if ci.introduction_count > 0:
+#         severity_experience_dc.update('introduction_count', i, j, ci.introduction_count)
+#     severity_experience_dc.update('lines_changed', i, j, ci.lines_changed)
+# severity_experience_dc.write_csv('severity-experience')
 
 # # Fix-Commit Changes
 # changes = ['none', 'add', 'mod', 'rm', 'add/mod', 'add/rm', 'mod/rm', 'all']
