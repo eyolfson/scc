@@ -9,7 +9,8 @@ a bug-introducing commit is not necessarily bad code; it is possible
 that the later fix simply reflects a change in requirements or updates
 the code to work with changes in third-party code.
 
-Our methodology has three steps: 1) enumerating bug-fixing commits; 2)
+\subsection{Core methodology}
+Following~\cite{sliwerski-msr-2005}, our methodology has three steps: 1) enumerating bug-fixing commits; 2)
 identifying the lines changed in each bug-fixing commit; and 3)
 finding the commits which were responsible for the previous (buggy)
 version of each of the changed lines. We describe each of these steps
@@ -19,12 +20,14 @@ developers indicate that a change is a fix by including the keyword
 ``fix'' in the commit message; Section~\ref{sec-results} explains how
 we verified this intuition.  Next, we computed diffs for each file
 changed in $c$ and recorded the line numbers $L_c$ which $c$
-changed. Finally, we used the repository metadata (as implemented in
+changed. Finally, we searched the repository metadata (as implemented by
 the ``git blame'' command) to identify the bug-introducing commits
-$c'$ which changed the lines $L_c$.
+$c'$ which changed the lines $L_c$. In this step, we used git 
+blame's {\tt -w} option, which ignores whitespace in attributing 
+responsibility for a code change.
 
 \paragraph{Example} Listing~\ref{lst-fix} presents an example of a
-bug-fixing commit. A commit consists of a commit id, which is a hash
+bug-fixing commit. Commits consist of a commit id, which is a hash
 of the commit's contents, represented as a hexadecimal number\footnote{Following common practice, because we can uniquely identify the commit by the first 8 digits of its commit id, we omit the other digits.}; an
 author, identified by a name/email address pair; a commit message,
 which contains the keyword ``fix''; and a diff, illustrating the lines
@@ -35,7 +38,7 @@ the commit logs for the keyword ``fix'', which is indeed a substring
 of the commit message, ``I fixed a bug!''.  Next, we would observe
 that the commit modifies line 100 of an (unidentified) file---in this
 case, the original author used less-than-or-equal (\verb+<=+) instead
-of strictly-less-than (\verb+<+), and the commit changes the
+of strictly-less-than (\verb+<+), and the bug-fixing commit changes the
 comparison operator to the presumably-correct one.  Finally, we
 perform a ``git blame'' on this commit, which shows the commit
 responsible for the previous version of line 100. Listing
@@ -44,9 +47,10 @@ that the source of the bug fixed in Listing~\ref{lst-fix} is the
 commit whose id begins with f4ce718c, as shown in
 Listing~\ref{lst-introduction}. We flag this commit as a
 bug-introducing commit and store both the bug-introducing
-commit f4ce718c and its bug-fixing commit 2cdc03fe in the database.
+commit f4ce718c and its bug-fixing commit 2cdc03fe in the database,
+along with an association between these two commits.
 
-\begin{lstlisting}[caption=An example bug-fix,label=lst-fix,frame=single]
+\begin{lstlisting}[caption=An example bug-fixing commit,label=lst-fix,frame=single]
 Commit: 2cdc03fe...
 Author: Alice <alice@project.com>
 Message: I fixed a bug!
@@ -55,11 +59,11 @@ Message: I fixed a bug!
 +    if (i < 128) {
     \end{lstlisting}
 
-    \begin{lstlisting}[caption=Blame of the bug-fix,label=lst-blame,frame=single]
+    \begin{lstlisting}[caption={\tt git blame} output for the bug-fixing commit,label=lst-blame,frame=single]
 f4ce718c...  100    if (i <= 128) {
     \end{lstlisting}
 
-    \begin{lstlisting}[caption=An example bug-introduction,label=lst-introduction, frame=single]
+    \begin{lstlisting}[caption=Associated bug-introducing commit for the example,label=lst-introduction, frame=single]
 Commit: f4ce718c...
 Author: Bob <bob@project.com>
 Message: I hope this works.
@@ -75,22 +79,24 @@ Note that any change in $c$ which removes or modifies an existing line
 of code is easy to attribute to a previous commit $c'$, since the
 affected line of code existed in $c'$. However, a change in $c$ which
 adds a new line of code has no corresponding change in any previous
-revision, since this line did not previously exist. In that case, we
+revision, since that line did not previously exist. In that case, we
 attribute responsibility to the commit which introduced the line just
 before the new line. This heuristic does not work for bug-introducing
-changes in newly-introduced files. Fortunately, such changes are
-extremely rare, so we can ignore them entirely.
+changes in newly-introduced files. Fortunately, our data show that 
+such changes are extremely rare, so we can ignore them entirely.
 
-\paragraph{Data collected}
-Executing the above algorithm gives us data about a number of commits
+\subsection{Data collected}
+Executing the above algorithm gives us data about the bug-fixing
+and bug-introducing commits
 in each repository, as well as about the authors of these commits.  We
 record the following data for each commit: author (as a name/email
-pair), adjusted time, number of lines changed, and number of times the
+pair); adjusted time (as described below); number of lines changed; 
+and number of times the
 commit introduced a bug later corrected (which is derived data; we
 record it to simplify later database queries). We also record a
 relation connecting bug-introducing commits and bug-fixing
 commits. For each author, we record the name, email(s), experience and
-classification. We define a bug lifetime's to be the time from the
+frequency classification. We define a bug lifetime's to be the time from the
 earliest commit which introduced the bug to the bug-fixing commit.
 
 We compute an author's experience and classification based on the
@@ -112,21 +118,23 @@ switched to the Git version control system) contain timestamps in UTC
 (Coordinated Universal Time). To enable us to reason about time-of-day
 effects for committers, who work in local time zones, we used
 publicly-available information (such as the Postgres
-contributor-information page, which lists locations for core team
-members, and time zones included in mailing list messages) to deduce
+contributor-information page, which lists locations for frequent
+contributors, as well as time zones included in mailing list messages) to deduce
 time zones for all 34 Postgres committers. We then used the Python
 time zone utilities to convert the time for each commit (which was in
 UTC for CVS commits, and in local times for git commits) into a local
-time for the committer. We assume that the committer is indeed in
-our estimated; we discuss this threat to validity in greater detail below.
+time for the committer. We assume that each committer is indeed in
+the time zone we have estimated for that committer; 
+we discuss this threat to validity in greater detail below.
 
-\paragraph{Threats to Validity}
+\subsection{Threats to Validity}
 We discuss a number of threats to validity and how we address them,
 including general threats to construct validity and external validity,
-and specific threats to our particular methodology, including the
-effects of time zones, missing recently-introduced bugs, and
-identifying the entire bug-fix processes with the commit times.
+and specific threats to our particular methodology, including 
+repository threats, recall and precision threats, 
+and author identification threats.
 
+\paragraph{General threats}
 A first threat to (construct) validity is that we must properly
 identify bug-fixing and bug-introducing commits. To assess this
 threat, we estimate the false positive rate by randomly sampling
@@ -134,6 +142,8 @@ commits that our analysis identified to be bug fixes and manually
 verifying whether or not they are indeed fixes.  We also estimate the
 false negative rate by randomly sampling commits identified not to be
 bug fixes and manually verifying that these commits are not fixes.
+Section~\ref{sec:sec-results} presents our evaluation of precision and recall 
+in greater detail.
 
 While we believe that the commits from the software that we examined
 well represent commits in open source software, we do not intend to
@@ -141,6 +151,7 @@ claim external validity and draw any general conclusions about all
 software.  Like any other characteristic study, our findings should be
 considered together with our evaluation methodology.
 
+\paragraph{Repository data threats}
 We expect our methodology to properly account for developers in
 different time zones. Git records each developer's local time (and
 time zone) with a commit, thereby avoiding potential imprecisions in
@@ -152,7 +163,10 @@ contributors will commit locally on a machine with accurate local
 time.  The accuracy of the commit times for the Postgres repository
 depends on the accuracy of our time adjustment algorithm for the part
 of the history that was originally a CVS history. We believe that
-committers don't often change time zones and usually work from their
+committers don't often change time zones\footnote{We were able to identify
+one move of a committer from Ontario to California, and incorporated that
+move into our adjustments, but did not find evidence of many such moves
+in our set of Postgres contributors.} and that they usually work from their
 home time zone, but the validity of our adjustment does depend on the
 validity our assumptions about home time zones. We present all of our
 results in the local time of the committer.
@@ -166,24 +180,33 @@ with customizations for their particular
 repository~\cite{haas09:_so_why_postg_using_git}. We have reason to
 believe that the conversion was performed with care, therefore
 mitigating threats to validity from repository corruption. Also, note
-that the conversion to git obviates the need to identify transactions
+that the conversion to git obviates the need to mine transactions
 from CVS histories, as in~\cite{zimmermann-msr-2004}.
 
+\paragraph{Threats due to imperfect recall}
 Because our methodology only identifies bugs which have later been
 corrected, it will definitely omit recently-introduced bugs, as well
-as longer-running bugs which have not yet been corrected. While this
-implies that our results will omit some bugs, we do not believe that
-this omission affects our validity, because there is no reason to
-believe that there are important differences in the characteristics we
-measure for fixed and unfixed bugs.
+as longer-running bugs which have not yet been corrected. Furthermore,
+our recall rates of \postR for Postgres and \linuxR for Linux means
+that our methodology does not manage to identify some of the bug fixes
+in the repository histories.
 
-Also, developers work on a patch over a possibly-discontiguous time
+While these threats imply that our results will omit some bugs, we do
+not believe that this omission affects our validity. There is no
+reason to believe that there are important differences in the
+characteristics we measure for fixed and unfixed bugs, nor between
+fixes labelled ``fix'' and fixes without that label. In other words,
+we believe that our sample is representative of bug-introducing and
+bug-fixing commits for these software projects.
+
+\paragraph{Threats to commit characteristics}
+Developers work on a patch over a possibly-discontiguous time
 interval. However, the code repository only records the endpoint of
 that interval.  The bug database may contain more information about
 the starting point of the interval (e.g. it records when a bug is
 assigned to a developer), but still does not capture any information
 about the work patterns of the developer within the interval. There
-may be correlations between the coding time (the width of the
+may be correlations between the coding time (the length of the
 interval) and code quality. We intend to investigate these issues in
 future work.
 
@@ -191,21 +214,31 @@ Some patches are committed by someone other than the author
 of the patch. This occurs especially often for external
 contributors. Third-party commits add more uncertainty about when a
 patch was originally written, and confound our data about patch
-authors.  We believe, however, that it is still reasonable to ascribe
+authors.  We believe, however, that it is reasonable to ascribe
 responsibility for the patch to its commiter, who would presumably
-have reviewed a patch before committing it.
+review a patch before committing it.
 
-Finally, we discuss threats to our author classification. Our day-job
-classification is based on the somewhat-arbitrary hours of 8AM-4PM.
-Although many software companies have flexible hours, we expect that
-developers who work on a project as their day job would still have the
-bulk of their commits between those hours.  Also, our author
-experience information only counts the participation of an author to a
-particular project; a highly-experienced developer may be classified
-as a newbie developer for one of our projects due to a short history
-of contributions to that project. We expect, however, that there is
-some value to characterizing authors by their participation in a
-single project when analyzing their contributions to that project. It
-would be possible to survey developers' participation across multiple
-projects by studying the public record, but such a study is beyond the
-scope of this paper.
+Finally, we discuss threats to our author classification. Some Linux
+authors commit patches from several email addresses; we treat each
+email address as a separate author, which may cause some authors to be
+appear twice, in two separate classifications. If an author has the
+same email but two different names, we merge the author information
+for the two sets of commits. This is not an issue for Postgres: when
+they converted their repository to git, they also normalized all author
+email addresses, so that each author has a single email address.
+
+Our day-job classification for authors is based on the
+somewhat-arbitrary hours of 8AM-4PM.  Although many software companies
+have flexible hours, we expect that developers who work on a project
+as their day job would still have the bulk of their commits between
+those hours.
+
+Our author experience information only counts the participation of an
+author to a particular project; a highly-experienced developer may be
+classified as an inexperienced developer for one of our projects due
+to a short history of contributions to that project. We expect,
+however, that there is some value to characterizing authors by their
+participation in a single project when analyzing the quality of their
+contributions to that project. It would be possible to survey
+developers' participation across multiple projects by studying the
+public record, but such a study is beyond the scope of this paper.
