@@ -40,7 +40,7 @@ Lines of code at tip & over 5 million & over 750,000 \\
 Number of authors & 8,594 & 34 \\
 Number of commits & 222,332 & 31,098 \\
 \# bug-introducing & 56,681 (25.5\%) & 7,366 (23.7\%) \\
-\# bug-fixing & 57,028 & 4,399
+\# bug-fixing & \linuxBFC & \postBFC
 \end{tabular}
 \caption{\label{tab:characteristics}Characteristics of the Linux kernel and PostgreSQL repositories.}
 \end{table}
@@ -92,6 +92,7 @@ while finalizing the patch (for the Linux kernel). Furthermore, we can observe
 that commits before noon are least likely to be bug-introducing;
 perhaps committers are most careful in those hours.
 
+
 \begin{figure}
 \begin{center}
 \includegraphics[width=\columnwidth]{linux-bugginess-hour.pdf}
@@ -125,12 +126,13 @@ perhaps committers are most careful in those hours.
 %% \end{figure}
 
 \subsection{Developer Characteristics}
-We next present our findings with respect to developer classification
-and experience.  Developer classification summarizes the frequency of
+We next present our findings with respect to developers' commiting 
+frequency and experience classification. Developers'
+commiting frequency summarizes the frequency of
 a developer's contributions to a project, while developer experience
 tracks how long a developer has contributed to a particular project.
 
-\paragraph{Developer Frequency Classification} 
+\paragraph{Developers' Committing Frequency Classification} 
 As we described in Section~\ref{sec:data}, one of the ways that we
 classify developers is according to frequency, i.e. most-common
 interval between consecutive commits---daily, weekly, monthly, other,
@@ -366,12 +368,15 @@ be correlated with the size of the change, which we plan to investigate
 later, as an addition to our technique.
 
 \subsection{Bug lifetimes}
-We 
-2.15~$\pm$~0.10\% 
 
 \subsection{Comment-only Commits}
-We noticed that a surprisingly large number of bug-fixing commits only 
-changed comments in the source code.
+We noticed a large number of bug-fixing commits in the database
+reported 0 lines changed. We performed a random sample on 50 of these
+commits for each project and found most only changed comments in the
+source code. For the Linux kernel 2.15~$\pm$~0.10\% of the bug-fixing
+commits were on comments. We followed the same procedure for
+PostgreSQL and found 2.97~$\pm$~0.45\% of bug-fixing commits were on
+comments.
 
 %% We also noted that approximately 7.7\% of the bug fixes for Linux were
 %% purely for comments, indicating that developers spend a non-trivial
