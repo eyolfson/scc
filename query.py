@@ -3,15 +3,15 @@ from datetime import datetime
 os.environ['DJANGO_SETTINGS_MODULE']='scc_website.settings'
 from scc_website.apps.repositories.models import *
 
-# r = Repository.objects.get(pk=1)
-# exclude_pk = 222332
-# xp_cutoff = 2000
-# file_prefix = 'linux-'
+r = Repository.objects.get(pk=1)
+exclude_pk = 222332
+xp_cutoff = 2000
+file_prefix = 'linux-'
 
-r = Repository.objects.get(pk=4)
-exclude_pk = 532279
-xp_cutoff = 5300
-file_prefix = 'postgresql-'
+# r = Repository.objects.get(pk=4)
+# exclude_pk = 532279
+# xp_cutoff = 5300
+# file_prefix = 'postgresql-'
 
 ci_set = CommitInformation.objects.filter(commit__author__repository=r).exclude(commit__pk=exclude_pk)
 
@@ -101,31 +101,31 @@ class DataCollector():
                     rows[i][j+1] = 0
         writer.writerows(rows)
 
-# Commits per Day
-commits_day_dc = DataCollector(['total_commits'],
-                                 'total_commits',
-                                 days,
-                                 classes)
-for ci in ci_set:
-    i = ci.commit.local_time.weekday()
-    classification = ci.commit.author.authorinformation.classification
-    day_job = ci.commit.author.authorinformation.day_job
-    if day_job:
-        j = 0
-    elif classification == 'D':
-        j = 1
-    elif classification == 'W':
-        j = 2
-    elif classification == 'M':
-        j = 3
-    elif classification == 'O':
-        j = 4
-    elif classification == 'S':
-        j = 5
-    else:
-        raise ValueError
-    commits_day_dc.update('total_commits', i, j)
-commits_day_dc.write_csv('%scommits-day' % file_prefix)
+# # Commits per Day
+# commits_day_dc = DataCollector(['total_commits'],
+#                                  'total_commits',
+#                                  days,
+#                                  classes)
+# for ci in ci_set:
+#     i = ci.commit.local_time.weekday()
+#     classification = ci.commit.author.authorinformation.classification
+#     day_job = ci.commit.author.authorinformation.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     commits_day_dc.update('total_commits', i, j)
+# commits_day_dc.write_csv('%scommits-day' % file_prefix)
 
 # # Bugginess per Day
 # bugginess_day_dc = DataCollector(['buggy_commits', 'total_commits'],
@@ -210,6 +210,32 @@ commits_day_dc.write_csv('%scommits-day' % file_prefix)
 #         severity_day_dc.update('introduction_count', i, j, ci.introduction_count)
 #     severity_day_dc.update('lines_changed', i, j, ci.lines_changed)
 # severity_day_dc.write_csv('severity-day')
+
+# Commits per Hour
+commits_day_dc = DataCollector(['total_commits'],
+                                 'total_commits',
+                                 hours,
+                                 classes)
+for ci in ci_set:
+    i = ci.commit.local_time.hour
+    classification = ci.commit.author.authorinformation.classification
+    day_job = ci.commit.author.authorinformation.day_job
+    if day_job:
+        j = 0
+    elif classification == 'D':
+        j = 1
+    elif classification == 'W':
+        j = 2
+    elif classification == 'M':
+        j = 3
+    elif classification == 'O':
+        j = 4
+    elif classification == 'S':
+        j = 5
+    else:
+        raise ValueError
+    commits_day_dc.update('total_commits', i, j)
+commits_day_dc.write_csv('%scommits-hour' % file_prefix)
 
 # # Bugginess per Hour
 # bugginess_hour_dc = DataCollector(['buggy_commits', 'total_commits'],
