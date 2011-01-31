@@ -390,7 +390,7 @@ commits looked correct.) For both projects, we randomly sampled 50 bugs
 from each of the population of commits that we identified to be
 bug-introducing commits BI (to evaluate precision) and commits that we
 identified to be non-bug-introducing commits $\neg$ BI (to evaluate recall).
-Tables~\ref{tab:pr-raw} and~\ref{tab:pr-adj} summarize our precision and
+Table~\ref{tab:pr-raw} summarizes our precision and
 recall findings.
 
 We evaluated the precision---that is, the proportion of identified
@@ -408,13 +408,15 @@ of the commit; and 5) refactoring changes, which moved or renamed
 functions---these could arguably be considered to be fixes to a buggy
 initial design.
 
-To evaluate the recall of our technique, we sampled 50
-non-bug-introducing commits from both the Linux kernel and
-Postgres. Table~\ref{tab:pr-raw} presents the raw data. However, the
-raw data must be adjusted before it will indicate the recall, because
-the recall must be calculated as a proportion of commits over the
-entire population of commits. We therefore adjusted our data to the
-numbers shown in Table~\ref{tab:pr-adj}.
+To evaluate the recall of our technique---the proportion of bug-fixing
+commits in the entire sample that we manage to identify---we sampled
+50 non-bug-introducing commits from both the Linux kernel and
+Postgres. Table~\ref{tab:pr-raw} presents the raw recall data. To compute
+the recall, we evaluate
+\[ \mbox{Recall} = \frac{\mbox{identified BI} \cap \mbox{actual BI}}{\mbox{identified BI}}; \]
+however, to do so, we must normalize the number of identified bug-introducing
+commits. Table~\ref{tab:pr-raw} therefore also shows our adjusted data in 
+brackets.
 
 % WRITE MORE TEXT HERE.
 % make this more clear
@@ -422,26 +424,30 @@ numbers shown in Table~\ref{tab:pr-adj}.
 \begin{table}
 \begin{center}
 \begin{tabular}{rrr}
-Linux & T & F \\
-BI & 43 & 7 \\
-$\neg$ BI & 6 & 44 \\
-\end{tabular} \begin{tabular}{rrr} Postgres & T & F \\
-BI & 42 & 8 \\
-$\neg$ BI & 3 & 47
+Linux & actual BI & actual $\neg$ BI \\
+identified BI & 43 & 7 \\
+identified $\neg$ BI & 6 (23) & 44 (172) \\
+\end{tabular} 
+
+\begin{tabular}{rrr} Postgres & actual BI & actual $\neg$ BI \\
+identified BI & 42 & 8 \\
+identified $\neg$ BI & 3 (21) & 47 (332)
 \end{tabular}
 \end{center}
-\caption{\label{tab:pr-raw}Raw results for precision and recall.}
-\begin{center}
-\begin{tabular}{rrr}
-Linux & T & F \\
-BI & 43 & 7 \\
-$\neg$ BI & 23 & 172 \\
-\end{tabular} \begin{tabular}{rrr} Postgres & T & F \\
-BI & 42 & 8 \\
-$\neg$ BI & 21 & 332
-\end{tabular}
-\end{center}
-\caption{\label{tab:pr-adj}Adjusted results for precision and recall.}
+\caption{\label{tab:pr-raw}Raw and (adjusted) results for precision and recall.}
+%% \begin{center}
+%% \begin{tabular}{rrr}
+%% Linux & actual BI & actual $\neg$ BI \\
+%% identified BI & 43 & 7 \\
+%% identified $\neg$ BI & 23 & 172 \\
+%% \end{tabular} 
+
+%% \begin{tabular}{rrr} Postgres & actual BI & actual $\neg$ BI \\
+%% identified BI & 42 & 8 \\
+%% identified $\neg$ BI & 21 & 332
+%% \end{tabular}
+%% \end{center}
+%% \caption{\label{tab:pr-adj}Adjusted results for precision and recall.}
 \end{table}
 
 
