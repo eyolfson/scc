@@ -1,4 +1,5 @@
-- Check references
+- use one consistent name for author activity level/author classification/author frequency
+- Check the accuracy of references, particularly the citeseer ones
 - Need some literature search regarding studies on developer experience
 - sample another 50 commits that we think are not bug-fixing commits for each project to increase recall [lower priority] 
 - More metrics like severity, etc, and results [in progress]
