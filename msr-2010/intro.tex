@@ -24,16 +24,17 @@ understand the software and software bugs. Just to name one example, it would be
 the commit time (e.g., time of day, day of week, etc.) has implications on the qualify of the commit. 
 Are commits submitted after midnight buggier than other commits? 
 Such correlation results may be useful to predict what commits are more likely
-to be buggy so that we can budget more testing effort on these commits, just
-like prior studies~\cite{graves00predicting, guo04robust, ostrand05predicting, zimmermann-promise-2007},
+to be buggy so that we can budget more testing effort on these commits, just like prior 
+studies~\cite{graves00predicting, guo04robust, Hassan09, devNetwork08, predictionMenzies10, effort03, ostrand05predicting, 
+depGraph08, zimmermann-promise-2007},
 which predict buggy locations based on code complexity, 
-code locations, amount of in-house testing, historical data, etc. 
+code locations, the amount of in-house testing, historical data, socio-technical networks, etc. 
 Another interesting question is, whether more experienced developers are more or less
 likely to write buggy commits. 
 
 
 \subsection{Challenges}
-There are several challenges in studying the correlation of commit correctness/bugginess and software social characteristics.
+There are two main challenges in studying the correlation of commit correctness/bugginess and software social characteristics.
 First, it is challenging to know if a commit is buggy or not,
 as bugs in the commit are often not 
 discovered or reported until days, months, or even years after the commit. 
@@ -55,11 +56,12 @@ We address this problem by applying heuristics
 to scan commit messages and do not reply on the links between bug commits and bug reports at all to extract bug-fixing commits.
 Our heuristics have a precision of \postP-\linuxP in identifying bug-fixing commits (Section~\ref{sec-results}).
 
-Additionally, it is difficult to know how experienced the developers are in an open source development
-environment as such information is often not documented and subjective. 
-We make our best-effort approximation by calculating the length and frequency of a developer
-contributing to an open source project, which allows us to discover important findings 
-and implications regarding developers' experience level and code correctness. 
+%Additionally, it is difficult to know how experienced the developers are in an open source development
+%environment as such information is often not documented and subjective. 
+%We make our best-effort approximation by calculating the duration of a developer
+%contributing to an open source project (i.e., the time between a developer's
+%earliest and latest commits to the project), which allows us to discover important findings 
+%and implications regarding developers' experience level and code correctness. 
 
 \subsection{Contributions}
 In this paper, we study the social characteristics of modern software to understand 
@@ -112,6 +114,6 @@ committing developers code-review other developers' commits.
 %Developers spend a large amount of time
 %diagnosing bugs and fixing bugs by applying patches over the buggy software versions. 
 %As modern software are often very complex and developed by thousands of developers 
-%distributedly over many years, many of the patches are not correct, e.g., not fixing
+%in a distributed fashion over many years, many of the patches are not correct, e.g., not fixing
 %the bug, or introducing new bugs, etc~\cite{}. A recent study shows that XXX\% of patches
 %are buggy. 

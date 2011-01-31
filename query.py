@@ -3,17 +3,20 @@ from datetime import datetime
 os.environ['DJANGO_SETTINGS_MODULE']='scc_website.settings'
 from scc_website.apps.repositories.models import *
 
-# r = Repository.objects.get(pk=1)
-# exclude_pk = 222332
+r = Repository.objects.get(pk=1)
+exclude_pk = 222332
+xp_cutoff = 2000
 
-r = Repository.objects.get(pk=4)
-exclude_pk = 532279
+# r = Repository.objects.get(pk=4)
+# exclude_pk = 532279
+# xp_cutoff = 5300
 
 ci_set = CommitInformation.objects.filter(commit__author__repository=r).exclude(commit__pk=exclude_pk)
 
 days = ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
 classes = ['Job', 'Daily', 'Weekly', 'Monthly', 'Other', 'Single']
 hours = range(24)
+experiences = ["<%d" % i for i in range(120, xp_cutoff+120, 120)]
 
 def div(x, y):
     return float(x)/float(y)
@@ -59,7 +62,7 @@ class DataCollector():
         self._data[len(self._row_map)][j] += amount
 
         if category is not self._category_map[DataCollector.OVERALL_CATEGORY]:
-            j = len(self._variable_map)*category+self._variable_map[variable]
+            j = len(self._variable_map)*self._category_map[DataCollector.OVERALL_CATEGORY]+self._variable_map[variable]
             self._data[i][j] += amount
             self._data[len(self._row_map)][j] += amount
 
@@ -290,6 +293,45 @@ class DataCollector():
 #         bugginess_author_dc.update('buggy_commits', i, j)
 #     bugginess_author_dc.update('total_commits', i, j)
 # bugginess_author_dc.write_csv('bugginess-author')
+
+# Bugginess per Experience
+authors = {}
+for ci in ci_set:
+    email = ci.commit.author.email
+    if not email in authors:
+        authors[email] = ci.commit.utc_time
+    else:
+        if ci.commit.utc_time < authors[email]:
+            authors[email] = ci.commit.utc_time
+bugginess_experience_dc = DataCollector(['buggy_commits', 'total_commits'],
+                                 '100*div(buggy_commits, total_commits)',
+                                 experiences,
+                                 classes)
+for ci in ci_set:
+    experience = (ci.commit.utc_time - authors[ci.commit.author.email]).days
+    if experience < 0 or experience > xp_cutoff:
+        continue
+    i = experience/120
+    classification = ci.commit.author.authorinformation.classification
+    day_job = ci.commit.author.authorinformation.day_job
+    if day_job:
+        j = 0
+    elif classification == 'D':
+        j = 1
+    elif classification == 'W':
+        j = 2
+    elif classification == 'M':
+        j = 3
+    elif classification == 'O':
+        j = 4
+    elif classification == 'S':
+        j = 5
+    else:
+        raise ValueError
+    if ci.introduction_count > 0:
+        bugginess_experience_dc.update('buggy_commits', i, j)
+    bugginess_experience_dc.update('total_commits', i, j)
+bugginess_experience_dc.write_csv('bugginess-experience')
 
 # # Fix-Commit Changes
 # changes = ['none', 'add', 'mod', 'rm', 'add/mod', 'add/rm', 'mod/rm', 'all']

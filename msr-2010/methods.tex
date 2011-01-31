@@ -4,7 +4,7 @@ Our overall goal is to investigate the properties of ``buggy'', or
 bug-introducing, commits. We define a \emph{bug-introducing} commit to be any
 commit for which there exists a later \emph{bug-fixing} commit that purports to
 fix the bug. A single bug-fixing commit may fix bugs introduced in
-multiple bug-introducing commits. Note that, despite our terminology,
+multiple bug-introducing commits. Despite our terminology,
 a bug-introducing commit is not necessarily bad code; it is possible 
 that the later fix simply reflects a change in requirements or updates
 the code to work with changes in third-party code.
@@ -18,13 +18,17 @@ in more detail. First, to detect bug-fixing commits $c$, we searched
 the commit messages for the keyword ``fix''. In our experience, most
 developers indicate that a change is a fix by including the keyword
 ``fix'' in the commit message; Section~\ref{sec-results} explains how
-we verified this intuition.  Next, we computed diffs for each file
+we verified this intuition, and the results show that the precision
+of this heuristic for identifying bug-fixing commits is \postP-\linuxP. 
+Next, we computed diffs for each file
 changed in $c$ and recorded the line numbers $L_c$ which $c$
 changed. Finally, we searched the repository metadata (as implemented by
 the ``git blame'' command) to identify the bug-introducing commits
 $c'$ which changed the lines $L_c$. In this step, we used git 
 blame's {\tt -w} option, which ignores whitespace in attributing 
-responsibility for a code change.
+responsibility for a code change, which addresses some 
+inaccuracies that exist in other version control systems such as CVS and Subersion as 
+discussed by Kim et. al~\cite{2006-automatic}.
 
 \paragraph{Example} Listing~\ref{lst-fix} presents an example of a
 bug-fixing commit. Commits consist of a commit id, which is a hash
@@ -75,7 +79,7 @@ Message: I hope this works.
 +    }
     \end{lstlisting}
 
-Note that any change in $c$ which removes or modifies an existing line
+Any change in $c$ which removes or modifies an existing line
 of code is easy to attribute to a previous commit $c'$, since the
 affected line of code existed in $c'$. However, a change in $c$ which
 adds a new line of code has no corresponding change in any previous
@@ -104,9 +108,9 @@ frequency and duration of that author's commits to a particular
 project. Author experience counts the time between an author's
 earliest and latest commits to the project. Author classification
 describes the author's most-common frequency between consecutive
-commits: daily, weekly, monthly, and single. Note that, for author
-classification purposes, we ignore consecutive commits within 30
-minutes of each other. As a sub-class of the daily commiter
+commits: daily, weekly, monthly, and single. For author activity
+classification, we count consecutive commits within 30
+minutes of each other as one commit. As a sub-class of the daily commiter
 classification, we also use a heuristic to identify commiters who
 appear to work on the repository as part of their day job, namely
 those for which 85\% of commits are between 8 AM and 4 PM Monday to
@@ -177,10 +181,10 @@ particular, CVS does not have a notion of atomic multi-file commits,
 while Git does, and our methodology relies on the existence of such
 commits. The Postgres conversion used the standard {\tt cvs2git} tool,
 with customizations for their particular
-repository~\cite{haas09:_so_why_postg_using_git}. We have reason to
+repository~\cite{haas09:_so_why_postg_using_git}. We have reasons to
 believe that the conversion was performed with care, therefore
-mitigating threats to validity from repository corruption. Also, note
-that the conversion to git obviates the need to mine transactions
+mitigating threats to validity from repository corruption. 
+Also, note that the conversion to git obviates the need to mine transactions
 from CVS histories, as in~\cite{zimmermann-msr-2004}.
 
 \paragraph{Threats due to imperfect recall}
