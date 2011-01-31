@@ -386,18 +386,21 @@ technique for identifying bug-fixing commits on both projects.  As our
 algorithm for identifying the associated bug-introducing commits was a
 straightforward application of git blame, we did not systematically
 verify its performance. (A brief manual inspection of bug-introducing
-commits looked correct.) For both projects, we randomly sampled 50 bugs
+commits did not reveal any anomalies.) 
+For both projects, we randomly sampled 50 bugs
 from each of the population of commits that we identified to be
-bug-introducing commits BI (to evaluate precision) and commits that we
-identified to be non-bug-introducing commits $\neg$ BI (to evaluate recall).
-Table~\ref{tab:pr-raw} summarizes our precision and
-recall findings.
+bug-fixing commits, BI (to evaluate precision).
+%, and commits that we
+%identified to be non-bug-fixing commits, $\neg$ BI (to evaluate recall).
+Table~\ref{tab:pr-raw} summarizes our precision findings.
+%and
+%recall findings.
 
 We evaluated the precision---that is, the proportion of identified
 bug-fixing commits which do indeed fix bugs---and found that, for
-the Linux kernel, 43 of the 50 bugs that we automatically identified as
+the Linux kernel, 43 of the 50 bugs (in BI) that we automatically identified as
 bug-fixing commits did indeed fix bugs, while 7 did not; for Postgres,
-42 of 50 identified fixes were indeed fixes.  Some of the
+42 of 50 identified fixes (BI) were indeed fixes.  Some of the
 cases included: 1) a commit message which fixed a merge commit was
 classified as a fix; 2) apparently garbled commit messages which
 included the keyword ``fix'' for no good reason; 3) changes which were
@@ -408,33 +411,39 @@ of the commit; and 5) refactoring changes, which moved or renamed
 functions---these could arguably be considered to be fixes to a buggy
 initial design.
 
-To evaluate the recall of our technique---the proportion of bug-fixing
-commits in the entire sample that we manage to identify---we sampled
-50 non-bug-introducing commits from both the Linux kernel and
-Postgres. Table~\ref{tab:pr-raw} presents the raw recall data. To compute
-the recall, we evaluate
-\[ \mbox{Recall} = \frac{\mbox{identified BI} \cap \mbox{actual BI}}{\mbox{identified BI}}; \]
-however, to do so, we must normalize the number of identified bug-introducing
-commits. Table~\ref{tab:pr-raw} therefore also shows our adjusted data in 
-brackets.
+We have estimated our recall---the proportion of bug-fixing commits in
+the entire sample that our technique identifies---to be at least \linuxR for
+Linux and \postR for Postgres, and we are certain that our sampling
+technique underestimates the recall. We intend to re-evaluate the
+recall of our technique in the near future.
 
-% WRITE MORE TEXT HERE.
-% make this more clear
+%% To evaluate the recall of our technique---the proportion of bug-fixing
+%% commits in the entire sample that we manage to identify---we sampled
+%% 50 non-bug-introducing commits from both the Linux kernel and
+%% Postgres. Table~\ref{tab:pr-raw} presents the raw recall data. To compute
+%% the recall, we evaluate
+%% \[ \mbox{Recall} = \frac{\mbox{identified BI} \cap \mbox{actual BI}}{\mbox{identified BI}}; \]
+%% however, to do so, we must normalize the number of identified bug-introducing
+%% commits. Based on the precision results, we know that there are at least
+%% 48745 bug-introducing commits, so we should have sampled 
+%% Table~\ref{tab:pr-raw} therefore also shows our adjusted data in 
+%% brackets.
 
 \begin{table}
 \begin{center}
 \begin{tabular}{rrr}
 Linux & actual BI & actual $\neg$ BI \\
 identified BI & 43 & 7 \\
-identified $\neg$ BI & 6 (23) & 44 (172) \\
+%identified $\neg$ BI & 6 (23) & 44 (172) \\
 \end{tabular} 
 
 \begin{tabular}{rrr} Postgres & actual BI & actual $\neg$ BI \\
 identified BI & 42 & 8 \\
-identified $\neg$ BI & 3 (21) & 47 (332)
+%identified $\neg$ BI & 3 (21) & 47 (332)
 \end{tabular}
 \end{center}
-\caption{\label{tab:pr-raw}Raw and (adjusted) results for precision and recall.}
+\caption{\label{tab:pr-raw}Raw results for precision.}
+
 %% \begin{center}
 %% \begin{tabular}{rrr}
 %% Linux & actual BI & actual $\neg$ BI \\
