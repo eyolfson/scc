@@ -8,6 +8,7 @@ paper: *.tex
 	pdflatex paper
 	bibtex paper
 	pdflatex paper
+	pdflatex paper
 #	pdf2ps paper.pdf paper.ps
 
 

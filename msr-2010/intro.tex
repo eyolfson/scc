@@ -3,9 +3,10 @@
 Software demands high reliability. However, as its complexity increases, 
 modern software inevitably contain bugs, which hurt software reliability.
 The modern software development paradigm further complicates the situation: 
-Many modern software, e.g., Firefox, the Linux kernel, Apache, and Eclipse, 
-are developed by hundreds of or thousands of developers over decades~\cite{ccomment} 
-in a distributed manner. The software often receives hundreds of commits per day (Section~\ref{sec-results}). 
+Many modern software, e.g., the Linux kernel, PostgreSQL, Apache, and Eclipse, 
+are developed by tens to thousands of developers over decades %~\cite{ccomment} 
+in a distributed manner. The software often receives tens of housands or hundreds of thousands 
+of commits (Section~\ref{sec-results}). 
 Developers with different programming experiences, 
 different time commitments, different programming styles, from all over the world,
 work on the same software project at different times. They join and leave a project 
@@ -13,26 +14,26 @@ from time to time over decades.
 
 Therefore, code developed in the modern paradigm has different social characteristics 
 that are beyond the code itself. For example, different code segments in the same
-software project may written by developers with  
+software project may be written by developers with  
 varies level of expertise, different time 
 commitment, different working hours, diverse culture, etc.
 The code may be checked in at different times in different time zones. 
 
 Such social characteristics provide a rich and unique source of information for us to 
 understand the software and software bugs. Just to name one example, it would be beneficial to know if  
-commit time (time of day, day of week, etc.) have implications on the qualify of the commit. 
-Are commits submitted after midnight more buggy than other commits? 
+the commit time (e.g., time of day, day of week, etc.) has implications on the qualify of the commit. 
+Are commits submitted after midnight buggier than other commits? 
 Such correlation results may be useful to predict what commits are more likely
 to be buggy so that we can budget more testing effort on these commits, just
-like prior studies~\cite{graves00predicting, guo04robust, ostrand05predicting},
-which predict bugs based on code complexity, 
-code locations, amount of in-house testing, etc. 
+like prior studies~\cite{graves00predicting, guo04robust, ostrand05predicting, zimmermann-promise-2007},
+which predict buggy locations based on code complexity, 
+code locations, amount of in-house testing, historical data, etc. 
 Another interesting question is, whether more experienced developers are more or less
-likely to introduce buggy commits. 
+likely to write buggy commits. 
 
 
 \subsection{Challenges}
-There are several challenges in studying the correlation of commit correctness and software social characteristics.
+There are several challenges in studying the correlation of commit correctness/bugginess and software social characteristics.
 First, it is challenging to know if a commit is buggy or not,
 as bugs in the commit are often not 
 discovered or reported until days, months, or even years after the commit. 
@@ -44,28 +45,29 @@ and then leverage the version control system to understand when the correspondin
 Then we can know collectively when bugs are more likely to be introduced. 
 %In particular, we leverage the ``git blame'' functionality to identify the last modification time of each buggy line.
 
-It is difficult to find bug-fixing commits in the sea of software commits.
+However, it is difficult to find bug-fixing commits in the sea of software commits.
 The prior work~\cite{sliwerski-msr-2005} considers a commit whose commit message contains a bug 
 ID that links to a bug report in a bug database to be a bug-fixing commit. While this
-approach works for some software such as Mozilla, it does not work for software that 
-rarely contain links from commit messages to bug reports, e.g., the Linux kernel.
-We address this problem by applying heuristics to extract bug-fixing commits by examining
-the commits themselves without analyzing bug reports at all. As shown later in Section~\ref{sec-results}, 
-our heuristics have an accuracy of XXX\% in identifying bug-fixing commits.
+approach works for some software such as Mozilla, it does not work for software whose commit messages
+rarely contain links to bug reports, e.g., the Linux kernel.
+As shown later, only 2.3\% of the bug-fixing commits in the Linux kernel are linked to a bug report.
+We address this problem by applying heuristics 
+to scan commit messages and do not reply on the links between bug commits and bug reports at all to extract bug-fixing commits.
+Our heuristics have a precision of \postP-\linuxP in identifying bug-fixing commits (Section~\ref{sec-results}).
 
 Additionally, it is difficult to know how experienced the developers are in an open source development
-environment as such information is not documented and subjective. 
+environment as such information is often not documented and subjective. 
 We make our best-effort approximation by calculating the length and frequency of a developer
 contributing to an open source project, which allows us to discover important findings 
 and implications regarding developers' experience level and code correctness. 
 
 \subsection{Contributions}
 In this paper, we study the social characteristics of modern software to understand 
-the correlation between these social characteristics with the correctness of the software.  
-Specifically, we study the latest version of the Linux kernel and PostgreSQL with 222,332 and 31,098 commits respectively.
+the correlation between these social characteristics and the correctness of software.  
+Specifically, we study the latest versions of the Linux kernel and PostgreSQL with 222,332 and 31,098 commits respectively.
 %XXX-XXX millions lines of code.
 %, developed over XXX-XXX years. 
-we study the correlation between a commit's bugginess
+We study the correlation between a commit's bugginess
 and the time of day of the commit, the day of week of the commit, and
 the experience and activity frequency of the commit authors.
 %We study the correlation between the commit correctness and the time of day of the commit, the day of week of the commit, 
