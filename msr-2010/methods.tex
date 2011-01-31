@@ -142,7 +142,7 @@ commits that our analysis identified to be bug fixes and manually
 verifying whether or not they are indeed fixes.  We also estimate the
 false negative rate by randomly sampling commits identified not to be
 bug fixes and manually verifying that these commits are not fixes.
-Section~\ref{sec:sec-results} presents our evaluation of precision and recall 
+Section~\ref{sec-results} presents our evaluation of precision and recall 
 in greater detail.
 
 While we believe that the commits from the software that we examined
@@ -205,10 +205,12 @@ interval. However, the code repository only records the endpoint of
 that interval.  The bug database may contain more information about
 the starting point of the interval (e.g. it records when a bug is
 assigned to a developer), but still does not capture any information
-about the work patterns of the developer within the interval. There
-may be correlations between the coding time (the length of the
-interval) and code quality. We intend to investigate these issues in
-future work.
+about the work patterns of the developer within the interval. Some Git
+repositories, including some Linux sub-repositories, do contain more
+information about intermediate local commits by developers, which can
+help understand the evolution of a commit. Since there may be
+correlations between a patch's evolution and its code quality, we
+intend to investigate these issues in future work.
 
 Some patches are committed by someone other than the author
 of the patch. This occurs especially often for external
@@ -227,11 +229,16 @@ for the two sets of commits. This is not an issue for Postgres: when
 they converted their repository to git, they also normalized all author
 email addresses, so that each author has a single email address.
 
-Our day-job classification for authors is based on the
-somewhat-arbitrary hours of 8AM-4PM.  Although many software companies
-have flexible hours, we expect that developers who work on a project
-as their day job would still have the bulk of their commits between
-those hours.
+Our day-job classification for authors is based on the fixed hours of
+8AM-4PM and Monday-Friday days of the week.  Many software companies
+have flexible hours; however, we expect that developers who are
+directed to work on a project as their day job would still have the
+bulk of their commits between those hours.  The day-job classification
+applies only to the Linux committers; no Postgres committers satisfy
+the day-job criteria. Even though most of the core Postgres team have
+Postgres-related employment, we believe that they are not directed to
+work on Postgres, which would account for the observation that most of
+their commits to Postgres occur outside normal working hours.
 
 Our author experience information only counts the participation of an
 author to a particular project; a highly-experienced developer may be
