@@ -1,10 +1,8 @@
 - better title
 - use one consistent name for author activity level/author classification/author frequency
 - Check the accuracy of references, particularly the citeseer ones
-- Need some literature search regarding studies on developer experience
 - sample another 50 commits that we think are not bug-fixing commits for each project to increase recall [lower priority] 
 - More metrics like severity, etc, and results [in progress]
-- Literature search for number of commits which are comments (Lin) [in progrss]
 - Classify commits?
 - Per author information, outside of their normal times [in progress]
 - Find if time of day and author classification influence bugginess [done graphs]
@@ -12,6 +10,8 @@
 - Author experience based on number of other projects
 - Variance
 
+- Literature search for number of commits which are comments (Lin) [done]
+- Need some literature search regarding studies on developer experience [done]
 - Postgres [done]
 - False positive/negative rates [done]
 - Make a cutoff number of commits for classification [done]
