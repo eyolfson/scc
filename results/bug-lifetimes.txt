@@ -1,0 +1,9 @@
+Linux
+
+Average: 504.645208552
+Std: 491.911698096
+
+PostgreSQL
+
+Average: 1123.05196332
+Std: 1165.23406992
