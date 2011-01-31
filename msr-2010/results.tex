@@ -184,18 +184,17 @@ particular schedule.
 \paragraph{Developer Experience Classification}
 The final head-to-head comparison we performed is based on the amount
 of experience per author. We divided them up into 6-month intervals. 
-Our results from the Linux kernel and Firefox are shown in Figure
-\ref{fig-linux-experience} and Figure \ref{fig-firefox-experience}
+Our results from the Linux kernel and PostgreSQL are shown in Figure~\ref{fig-linux-bugginess-experience} and Figure~\ref{fig-postgresql-bugginess-experience}
 respectfully. For the Linux kernel authors with less than 2 years of experience
 are more likely to commit a bug while after 2 years the likelihood
 decreases. However the authors which committed throughout the history
 of the project are more likely to commit a bug which may be because
-they wrote the majority of the code. For Firefox, again the
-developers with less than 6 months of experience are more likely to
-commit a bug. The is a spike between 21 and 26 months as well. We
-believe these results may not be accurate due to the possiblity of
-our experience metric being crude and not representative of the 
-actual experience with the project.
+they wrote the majority of the code. %% For Firefox, again the
+%% developers with less than 6 months of experience are more likely to
+%% commit a bug. The is a spike between 21 and 26 months as well. We
+%% believe these results may not be accurate due to the possiblity of
+%% our experience metric being crude and not representative of the 
+%% actual experience with the project.
 
 %% \begin{figure}
 %% \begin{center}
@@ -216,9 +215,8 @@ actual experience with the project.
 Finally we determined the bug lifetimes for both projects to contrast
 them to previous work. We plotted the number of bugs for each lifetime
 divided into 4 month intervals. The results for the Linux kernel are shown in
-Figure \ref{fig-linux-buglife}, the average bug lifetime is 1.39
-years. The results for Firefox are shown in Figure
-\ref{fig-firefox-buglife}, with an average bug lifetime of 0.97
+Figure~\ref{fig-linux-bug-lifetime}, the average bug lifetime is 1.39
+years. The results for Firefox are shown in Figure~\ref{fig-postgresql-bug-lifetime}, with an average bug lifetime of 0.97
 years. This shows a reduction in the average bug lifetime for the Linux kernel (in
 2002 the average lifetime was 1.8 years). This indicates that
 developers are improving as their development process becomes more
@@ -332,6 +330,23 @@ revealed).
 \label{fig-postgresql-bugginess-day}
 \end{figure}
 
+\begin{figure}
+\begin{center}
+\includegraphics[width=\columnwidth]{linux-bug-lifetime.pdf}
+\end{center}
+\caption{The Linux kernel bug lifetime}
+\label{fig-linux-bug-lifetime}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\columnwidth]{postgresql-bug-lifetime.pdf}
+\end{center}
+\caption{PostgreSQL bug lifetime}
+\label{fig-postgresql-bug-lifetime}
+\end{figure}
+
+
 \subsection{Day-of-week Results} Having determined our false positive rate, 
 we continue by presenting the results of our analysis.  First, we
 determine if the day of the week has any impact on the likelihood of
@@ -341,7 +356,7 @@ introductions, as a propostion of the total number of
 commits. Figure~\ref{fig-linux-bugginess-day} presents our results for
 the Linux kernel. We see that Saturday is the worst day, followed by Thursday,
 while Monday has the fewest percentage of bug introductions. The
-results for Firefox are shown in Figure~\ref{fig-postgresql-bugginess-day} and
+results for PostgreSQL are shown in Figure~\ref{fig-postgresql-bugginess-day} and
 agree with Thursday being one of the worst days, while Monday is the
 best day for committing changes which do not introduce bugs. A
 possible explanation is that developers rest over the weekend and have
@@ -349,6 +364,10 @@ ample time to think about the problem before coding a solution on
 Monday, when they know exactly what to do. Per-day bugginess may also
 be correlated with the size of the change, which we plan to investigate
 later, as an addition to our technique.
+
+\subsection{Bug lifetimes}
+We 
+2.15~$\pm$~0.10\% 
 
 \subsection{Comment-only Commits}
 We noticed that a surprisingly large number of bug-fixing commits only 
