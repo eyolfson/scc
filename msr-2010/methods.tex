@@ -90,6 +90,7 @@ changes in newly-introduced files. Fortunately, our data show that
 such changes are extremely rare, so we can ignore them entirely.
 
 \subsection{Data collected}
+\label{sec:data}
 Executing the above algorithm gives us data about the bug-fixing
 and bug-introducing commits
 in each repository, as well as about the authors of these commits.  We
@@ -108,13 +109,13 @@ frequency and duration of that author's commits to a particular
 project. Author experience counts the time between an author's
 earliest and latest commits to the project. Author classification
 describes the author's most-common frequency between consecutive
-commits: daily, weekly, monthly, and single. For author activity
-classification, we count consecutive commits within 30
-minutes of each other as one commit. As a sub-class of the daily commiter
-classification, we also use a heuristic to identify commiters who
-appear to work on the repository as part of their day job, namely
-those for which 85\% of commits are between 8 AM and 4 PM Monday to
-Friday.
+commits: daily, weekly, monthly, other (less than 20 commits), and
+single. For author activity classification, we count consecutive
+commits within 30 minutes of each other as one commit. As a sub-class
+of the daily commiter classification, we also use a heuristic to
+identify commiters who appear to work on the repository as part of
+their day job, namely those for which 85\% of commits are between 8 AM
+and 4 PM Monday to Friday.
 
 \paragraph{Time zone adjustments}
 All Postgres commits prior to September 18, 2010 (when the project
