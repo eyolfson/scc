@@ -1,3 +1,4 @@
+- better title
 - use one consistent name for author activity level/author classification/author frequency
 - Check the accuracy of references, particularly the citeseer ones
 - Need some literature search regarding studies on developer experience

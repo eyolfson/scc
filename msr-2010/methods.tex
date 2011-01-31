@@ -108,9 +108,9 @@ frequency and duration of that author's commits to a particular
 project. Author experience counts the time between an author's
 earliest and latest commits to the project. Author classification
 describes the author's most-common frequency between consecutive
-commits: daily, weekly, monthly, and single. For author
-classification purposes, we ignore consecutive commits within 30
-minutes of each other. As a sub-class of the daily commiter
+commits: daily, weekly, monthly, and single. For author activity
+classification, we count consecutive commits within 30
+minutes of each other as one commit. As a sub-class of the daily commiter
 classification, we also use a heuristic to identify commiters who
 appear to work on the repository as part of their day job, namely
 those for which 85\% of commits are between 8 AM and 4 PM Monday to
