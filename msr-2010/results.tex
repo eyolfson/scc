@@ -15,11 +15,20 @@ recall of our methodology and how we computed these figures.
 We chose two large open-source software repositories for our
 investigations: Linus Torvalds's mainline Linux kernel, from
 \url{git.kernel.org} and PostgreSQL, from the project's repository at
-\url{git.postgresql.org}.  Table~\ref{tab:characteristics} summarizes
-the characteristics of each of our repositories. Note that the
+\url{git.postgresql.org}. 
+
+
+Table~\ref{tab:characteristics} summarizes
+the characteristics of each of our repositories. 
+Row ``bug-introducing'' shows that 23.7-25.5\% of the commits are buggy, which 
+is slightly lower than the previously reported nearly 40\% for a commerical switching system~\cite{smallCommits05}. 
+%of the samll commits are buggy, this number is on all commits
+%in the previous work by Purushothaman and Perry~\cite{smallCommits05}.
+Note that the
 PostgreSQL repository was carefully converted from CVS using {\code cvs2git} in
 September 2010. We discussed some of the quirks of the PostgreSQL repository
 in Section~\ref{sec:method}.
+
 
 \begin{table}
 \begin{tabular}{l|r|r}
@@ -30,7 +39,7 @@ Lines of code at tip & over 5 million & over 750,000 \\
 %Source & \url{git.kernel.org} & \url{git.postgresql.org} \\
 Number of authors & 8,594 & 34 \\
 Number of commits & 222,332 & 31,098 \\
-\# bug-introducing & 56,681 (25\%) & 7,366 (23.7\%) \\
+\# bug-introducing & 56,681 (25.5\%) & 7,366 (23.7\%) \\
 \# bug-fixing & 57,028 & 4,399
 \end{tabular}
 \caption{\label{tab:characteristics}Characteristics of the Linux kernel and PostgreSQL repositories.}
