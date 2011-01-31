@@ -211,31 +211,31 @@ class DataCollector():
 #     severity_day_dc.update('lines_changed', i, j, ci.lines_changed)
 # severity_day_dc.write_csv('severity-day')
 
-# Commits per Hour
-commits_day_dc = DataCollector(['total_commits'],
-                                 'total_commits',
-                                 hours,
-                                 classes)
-for ci in ci_set:
-    i = ci.commit.local_time.hour
-    classification = ci.commit.author.authorinformation.classification
-    day_job = ci.commit.author.authorinformation.day_job
-    if day_job:
-        j = 0
-    elif classification == 'D':
-        j = 1
-    elif classification == 'W':
-        j = 2
-    elif classification == 'M':
-        j = 3
-    elif classification == 'O':
-        j = 4
-    elif classification == 'S':
-        j = 5
-    else:
-        raise ValueError
-    commits_day_dc.update('total_commits', i, j)
-commits_day_dc.write_csv('%scommits-hour' % file_prefix)
+# # Commits per Hour
+# commits_day_dc = DataCollector(['total_commits'],
+#                                  'total_commits',
+#                                  hours,
+#                                  classes)
+# for ci in ci_set:
+#     i = ci.commit.local_time.hour
+#     classification = ci.commit.author.authorinformation.classification
+#     day_job = ci.commit.author.authorinformation.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     commits_day_dc.update('total_commits', i, j)
+# commits_day_dc.write_csv('%scommits-hour' % file_prefix)
 
 # # Bugginess per Hour
 # bugginess_hour_dc = DataCollector(['buggy_commits', 'total_commits'],

@@ -1,0 +1,15 @@
+Linux
+Number of authors: 8594
+    Job 49
+    Daily 801
+    Weekly 230
+    Monthly 288
+    Other 3562
+    Single 3664
+
+Postgres
+Number of authors: 34
+    Daily 28
+    Weekly 1
+    Other 4
+    Single 1

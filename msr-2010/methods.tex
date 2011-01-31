@@ -10,7 +10,7 @@ is possible that the later fix is adaptive or perfective, updating the
 code to work with changes in third-party code, or reflecting a change
 in requirements.
 
-\subsection{Core methodology}
+\subsection{Core Methods}
 Following~\cite{sliwerski-msr-2005}, our methodology has three steps: 1) enumerating bug-fixing commits; 2)
 identifying the lines changed in each bug-fixing commit; and 3)
 finding the commits which were responsible for the previous (buggy)
@@ -90,7 +90,7 @@ before the new line. This heuristic does not work for bug-introducing
 changes in newly-introduced files. Fortunately, our data show that 
 such changes are extremely rare, so we can ignore them entirely.
 
-\subsection{Data collected}
+\subsection{Data Collected}
 \label{sec:data}
 Executing the above algorithm gives us data about the bug-fixing
 and bug-introducing commits
