@@ -17,7 +17,7 @@ investigations: Linus Torvalds's mainline Linux kernel, from
 \url{git.kernel.org} and PostgreSQL, from the project's repository at
 \url{git.postgresql.org}.  Table~\ref{tab:characteristics} summarizes
 the characteristics of each of our repositories. Note that the
-PostgreSQL repository was converted from CVS using {\code cvs2git} in
+PostgreSQL repository was carefully converted from CVS using {\code cvs2git} in
 September 2010.
 
 \begin{table}
@@ -58,10 +58,10 @@ and~\ref{fig-postgresql-bugginess-hour} present results from Linux and
 Postgres, respectively. These graphs compare the time-of-day of each
 commit, in the committer's local time on a 24-hour clock, to the
 percentage of commits which were found to be bug-introducing. The
-solid line indicates the mean number of buggy commits in each project;
-bars shorter than the line indicate that commits at that hour were
-less likely to be buggy, while bars taller than the line indicate
-more-buggy commits.
+solid horizontal line indicates the mean number of buggy commits in
+each project; bars shorter than the line indicate that commits at that
+hour were less likely to be buggy, while bars taller than the line
+indicate hours with more-buggy commits.
 
 Both figures show a noticeable increase in the amount of commits which
 introduce a bug between 00:00 (midnight) and 04:00 (4AM). After 04:00,
@@ -73,15 +73,16 @@ and then below the average bugginess level between 20:00 (8PM) and
 00:00 (midnight).
 
 Our results suggest that tired developers (midnight-4AM) are more
-likely to miss corner cases in a pre-commit review. Furthermore, we
-can observe that commits before noon are least likely to be
-bug-introducing; perhaps committers are most careful in those hours.
+likely to miss corner cases in a pre-commit review (for Postgres) or
+while finalizing the patch (for Linux). Furthermore, we can observe
+that commits before noon are least likely to be bug-introducing;
+perhaps committers are most careful in those hours.
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.45\textwidth]{linux-bugginess-hour.pdf}
 \end{center}
-\caption{Linux: time of day versus percentage of buggy commits}
+\caption{Linux time of day versus percentage of buggy commits}
 \label{fig-linux-bugginess-hour}
 \end{figure}
 
@@ -89,7 +90,7 @@ bug-introducing; perhaps committers are most careful in those hours.
 \begin{center}
 \includegraphics[width=0.45\textwidth]{postgresql-bugginess-hour.pdf}
 \end{center}
-\caption{PostgreSQL: time of day versus percentage of buggy commits}
+\caption{PostgreSQL time of day versus percentage of buggy commits}
 \label{fig-postgresql-bugginess-hour}
 \end{figure}
 
