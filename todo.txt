@@ -1,4 +1,4 @@
-- results: average 25% , absolution numbers
+- Postgres vs PostgreSQL
 - are there overlapping authors for the Linux kernel and PostgreSQL
 - define committer and author, and use them consistently
 - standard deviation: http://en.wikipedia.org/wiki/Standard_deviation, if a bar is an outlier (<5%), then it is significant enough, check standard deviation interval lookup table
