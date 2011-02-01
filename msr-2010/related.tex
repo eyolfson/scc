@@ -1,8 +1,9 @@
 \section{Related Work}
 \label{sec-related}
 We survey work related to our study of factors affecting bugginess
-(namely, time-of-week); prior work on empirical studies; and studies
-of bugginess in distributed software development.
+(namely, time-of-week); prior work on commit empirical studies; studies
+of bugginess in distributed software development; and empirical studies 
+on bug lifetime.
 
 \paragraph{Day of Week of Commits}
 The most closely related work, due to \'Sliwerski et al, studied the day of week of commits for two totally different projects, Eclipse and Mozilla, and
@@ -39,7 +40,7 @@ would be considered as a non-functional commit by previous study, but not consid
 thus being excluded from our study. 
 iComment~\cite{iComment} only showed that FreeBSD contains many comment-fixing commits, and it is 
 not a comprehensive study on comment-fixing commits.  
-Our results show that 1,223 and 131 commits (estimated from a random sample) 
+Our results show that 1,223 and 131 commits (Section~\ref{sec-comment-only}) %estimated from a random sample) 
 in the Linux kernel and PostgreSQL only fix comments, and do not modify the code, showing
 that developers spent time maintaining the correctness of comments. 
 
@@ -51,6 +52,14 @@ software. While the two pieces of software we studied are open-source and develo
 the goal of this paper is different from these prior studies as we aim to understand the correlation
 between code bugginess and social characteristics of commits, e.g., commits' time of day, commits' day 
 of week, developers' experience, and developers' activity frequencies, etc. 
+
+\paragraph{Bug Lifetime}
+Engler et. al~\cite{deviant} examined the bug lifetime of the Linux kernel in 2001. 
+Our study on the bug lifetime complements theirs by analyzing the recent commits to the Linux kernel from 2005-2010.
+Kim and Whitehead~\cite{2006-long} examined the bug lifetime of PostgreSQL.
+Neither of the two studied the social characteristics such as commit time and author
+experience. 
+
 
 %\paragraph{Predicing code defects}
 
