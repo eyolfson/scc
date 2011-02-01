@@ -400,10 +400,12 @@ and the overall lifetime decreases exponentially.
 
 \subsection{Comment-only Commits}
 \label{sec-comment-only}
-We noticed a large number of bug-fixing commits in the database
-reported 0 lines changed. We performed a random sample on 50 of these
-commits for each project and found most only changed comments in the
-source code. For the Linux kernel 2.15~$\pm$~0.10\% of the bug-fixing
+A large number of bug-fixing commits in the database
+reported 0 changed lines of code. We performed a random sample on 50 of these
+commits for each project and found that almost all of them only changed comments in the
+source code, which we did not count as changed lines of code. For the Linux kernel 
+2.15~$\pm$~0.10\%~\footnote{We report
+the margin of error with 95\% confidence level.} of the bug-fixing
 commits were on comments. We followed the same procedure for
 PostgreSQL and found 2.97~$\pm$~0.45\% of bug-fixing commits were on
 comments.
