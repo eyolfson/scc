@@ -76,17 +76,39 @@ hour were less likely to be buggy, while bars taller than the line
 indicate hours with more-buggy commits. The graphs also contain the
 raw number of commits at each hour, as indicated by the red dots.
 
-Both figures show a noticeable increase in the amount of commits which
+While our principal metrics are the absolute count and percentage of
+bug-introducing commits, we also present results of a third metric,
+\emph{bug severity}. This metric attributes less weight to a large
+commit which introduces a small number of bugs relative to its size,
+and more weight to small commits which introduce relatively large
+numbers of bugs. We define bug severity to be the number of bug
+introductions per changed non-comment lines of
+code. Figure~\ref{fig-severity-hour} presents our data correlating
+severity of changes, along with average commit size, with time-of-day.
+
+Figures~\ref{fig-linux-bugginess-hour}
+and~\ref{fig-postgresql-bugginess-hour}, summarizing bugginess
+percentages, show a noticeable increase in the amount of commits which
 introduce a bug between 00:00 (midnight) and 04:00 (4AM). After 04:00,
 commits tend to be less buggy than average, gradually increasing until
-noon.  In the Linux kernel, commits between noon and midnight fluctuate around
-the average bugginess level, while the Postgres commits are generally
-above the average bugginess level between 16:00 (4PM) and 20:00 (8PM),
-and then below the average bugginess level between 20:00 (8PM) and
-00:00 (midnight). Note that even the smallest total number of commits,
-for any hour, is 139 for Postgres (and an order of magnitude higher
-for the Linux kernel), so that all of the depicted bug introduction rates are
-meaningful.
+noon.  In the Linux kernel, commits between noon and midnight
+fluctuate around the average bugginess level, while the Postgres
+commits are generally above the average bugginess level between 16:00
+(4PM) and 20:00 (8PM), and then below the average bugginess level
+between 20:00 (8PM) and 00:00
+(midnight). Figures~\ref{fig-linux-introduction-hour}
+and~\ref{fig-postgresql-introduction-hour} track the trends in
+Figures~\ref{fig-linux-bugginess-hour}
+and~\ref{fig-postgresql-bugginess-hour}. Note that even the smallest
+total number of commits, for any hour, is 139 for Postgres (and an
+order of magnitude higher for the Linux kernel), so that all of the
+depicted bug introduction rates are meaningful.
+
+Figures~\ref{fig-linux-severity-hour}
+and~\ref{fig-postgresql-severity-hour} show that the severity of
+late-night/early-morning changes (before 9AM) is surprisingly high,
+while developers tend to commit small, non-buggy changes between 9AM
+and noon.
 
 These results indicate that developers may want to double check the code they write for these 
 late-night commits (0:00-4:00 AM).
@@ -102,7 +124,8 @@ perhaps committers are most careful in those hours.
 %
 
 We also investigated correlations between the time-of-day and the
-number of bug-fixing commits. We found that the proportion of total
+number of bug-fixing commits, rather than the bug-introducing commits
+that we showed above. We found that the proportion of total
 commits that are bug-fixing commits stayed almost constant independent
 of the hour; the graphs (not shown) have exactly the same shape as
 that of the circles in Figures~\ref{fig-bugginess-hour}.
