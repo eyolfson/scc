@@ -145,7 +145,7 @@ percentages, shows a noticeable increase in the amount of commits which
 introduce a bug between 00:00 (midnight) and 04:00 (4AM). After 04:00,
 commits tend to be less buggy than average, gradually increasing until
 noon.  In the Linux kernel, commits between noon and midnight
-fluctuate around the average bugginess level, while the Postgres
+fluctuate around the average bugginess level, while the PostgreSQL
 commits are generally above the average bugginess level between 16:00
 (4PM) and 20:00 (8PM), and then below the average bugginess level
 between 20:00 (8PM) and 00:00
@@ -155,7 +155,7 @@ bug-introducing commit (that is,
 how buggy is each commit?), 
 follows the trends from
 Figure~\ref{fig-bugginess-hour}. Note that even the smallest
-total number of commits, for any hour, is 139 for Postgres (and an
+total number of commits, for any hour, is 139 for PostgreSQL (and an
 order of magnitude higher for the Linux kernel), so that all of the
 depicted bug introduction rates are meaningful.
 
@@ -164,7 +164,7 @@ and~\ref{fig-postgresql-severity-hour} show that the severity of
 late-night/early-morning changes (before 9AM) is surprisingly high,
 while there is no general trend in the average commit size.
 The average size of Linux commits fluctuates quite a lot; the sizes of
-Postgres commits are more stable.  For Postgres, developers tend to
+PostgreSQL commits are more stable.  For PostgreSQL, developers tend to
 commit slightly smaller changes between 5AM and noon, with a spike at 8AM.
 
 We also investigated correlations between the time-of-day and the
@@ -184,7 +184,7 @@ It may also be beneficial for version control
 system to warn the developers of late-night commits to improve software reliability. 
 
 Our results may suggest that tired developers (midnight-4AM) are more
-likely to miss corner cases in a pre-commit review (for Postgres) or
+likely to miss corner cases in a pre-commit review (for PostgreSQL) or
 while finalizing their patch (for the Linux kernel). Furthermore, we can observe
 that commits before noon are least likely to be bug-introducing;
 perhaps committers are most careful in those hours.
@@ -227,7 +227,7 @@ As we described in Section~\ref{sec:data}, one of the ways that we
 classify developers is according to frequency, i.e. most-common
 interval between consecutive commits---daily, weekly, monthly, other,
 or single.  This information is only interesting for the Linux kernel,
-as almost all (28/34) of Postgres's committers are daily. We computed
+as almost all (28/34) of PostgreSQL's committers are daily. We computed
 the bugginess rates for each of these classes of developers and plot
 author classification versus bug-introduction percentage in
 Figure~\ref{fig-linux-bugginess-author-class}. The graph also presents
@@ -291,11 +291,11 @@ Figure~\ref{fig-bugginess-experience} compares author experience at
 time of commit to the bugginess of the commit. It also presents the
 total number of commits by author experience. Note that a plurality of
 Linux commits are by authors with fewer than 120 days of experience.
-Both the Linux and Postgres data show that bugginess decreases with
+Both the Linux and PostgreSQL data show that bugginess decreases with
 increased author experience. For Linux, authors with at least 960 days
 of experience tend to produce commits that are less buggy than
-average, while the similar point for Postgres occurs at 3000 days.
-The Postgres data also shows a spike at the right, which implies
+average, while the similar point for PostgreSQL occurs at 3000 days.
+The PostgreSQL data also shows a spike at the right, which implies
 surprisingly high bugginess in code recently committed by the original
 authors.
 
@@ -309,9 +309,9 @@ Nonetheless, our results show that given the fact that a commit is from a more e
 one can be more confident about the correctness of the commit. Such a correlation could be exploited 
 to help predict buggy code locations.
 
-We do not understand the spike to the right of the Postgres graph.
+We do not understand the spike to the right of the PostgreSQL graph.
 Possible reasons include the shift to Git, which is a known historical
-event, or, more speculatively, perhaps Postgres recently undertook
+event, or, more speculatively, perhaps PostgreSQL recently undertook
 major ongoing architectural revisions.
 
 %% \begin{figure}
@@ -398,16 +398,16 @@ Our results, which use a disjoint set of repositories from those
 in~\cite{sliwerski-msr-2005}, found about the same bugginess and 
 number of introductions for each
 day in the Linux repository, with the lowest bugginess on Sunday and
-highest on Monday and Thursday; for the Postgres repository, we
+highest on Monday and Thursday; for the PostgreSQL repository, we
 observe a slight decrease in bugginess on Saturday and Monday, a small
 increase on Tuesday and Wednesday, and a noticeable increase on
 Sunday.  Note that, for Linux, Saturday and Sunday each have about
 half as many commits as the other days of the week (commits peak on
-Tuesday and steadily decrease through Friday). For Postgres, commits
+Tuesday and steadily decrease through Friday). For PostgreSQL, commits
 fluctuate through the days of the week and decrease to about 70\% of
 the weekday volume on the weekend. The severity results do not show
 any particular trends, but we found that the average number of lines
-per commit on Sunday was surprisingly large for both Linux and Postgres.
+per commit on Sunday was surprisingly large for both Linux and PostgreSQL.
 
 \paragraph{Discussion}
 We found that commits on different days of week have the same level of bugginess, which
@@ -440,16 +440,16 @@ the day of week of commits may need to be on a project-by-project basis.
 Recall that the bug lifetime is the amount of time elapsed between the
 bug-introducing commit and its bug-fixing commit.
 Figure~\ref{fig-bug-lifetime} shows the bug lifetimes for the Linux
-kernel and Postgres, with bug lifetimes grouped in 120 day
+kernel and PostgreSQL, with bug lifetimes grouped in 120 day
 intervals. We found the average bug lifetime for the Linux kernel is
 1.38 years with a standard deviation of 1.35 years. The average bug
-lifetime for Postgres is 3.07 years with a standard deviation of 3.19
+lifetime for PostgreSQL is 3.07 years with a standard deviation of 3.19
 years. Note that the distribution of bug lifetimes is similar for both
 projects; many bugs are fixed within a 120 day period and the overall
 lifetime appears to decrease exponentially.
 
 \paragraph{Discussion}
-Postgres may have a longer average bug lifetime due to being a
+PostgreSQL may have a longer average bug lifetime due to being a
 smaller, less complex project with a smaller user base. We found the
 sources of the long-time bugs include race conditions, incorrect
 calculations and rare corner cases; such cases are intuitively more
@@ -516,7 +516,7 @@ Table~\ref{tab:pr-raw} summarizes our precision findings.
 We evaluated the precision---that is, the proportion of identified
 bug-fixing commits which do indeed fix bugs---and found that, for
 the Linux kernel, 43 of the 50 bugs (in BI) that we automatically identified as
-bug-fixing commits did indeed fix bugs, while 7 did not; for Postgres,
+bug-fixing commits did indeed fix bugs, while 7 did not; for PostgreSQL,
 42 of 50 identified fixes (BI) were indeed fixes.  Some of the
 cases included: 1) a commit message which fixed a merge commit was
 classified as a fix; 2) apparently garbled commit messages which
@@ -530,14 +530,14 @@ initial design.
 
 We have estimated our recall---the proportion of bug-fixing commits in
 the entire sample that our technique identifies---to be at least \linuxR for
-Linux and \postR for Postgres, and we are certain that our sampling
+Linux and \postR for PostgreSQL, and we are certain that our sampling
 technique underestimates the recall. We intend to re-evaluate the
 recall of our technique in the near future.
 
 %% To evaluate the recall of our technique---the proportion of bug-fixing
 %% commits in the entire sample that we manage to identify---we sampled
 %% 50 non-bug-introducing commits from both the Linux kernel and
-%% Postgres. Table~\ref{tab:pr-raw} presents the raw recall data. To compute
+%% PostgreSQL. Table~\ref{tab:pr-raw} presents the raw recall data. To compute
 %% the recall, we evaluate
 %% \[ \mbox{Recall} = \frac{\mbox{identified BI} \cap \mbox{actual BI}}{\mbox{identified BI}}; \]
 %% however, to do so, we must normalize the number of identified bug-introducing
@@ -554,8 +554,8 @@ identified BI for Linux & 43 & 7 \\
 %identified $\neg$ BI & 6 (23) & 44 (172) \\
 %\end{tabular} 
 
-%\begin{tabular}{r|r|r} Postgres & actual BI & actual $\neg$ BI \\ \hline
-identified BI for Postgres & 42 & 8 \\
+%\begin{tabular}{r|r|r} PostgreSQL & actual BI & actual $\neg$ BI \\ \hline
+identified BI for PostgreSQL & 42 & 8 \\
 %identified $\neg$ BI & 3 (21) & 47 (332)
 \end{tabular}
 \end{center}
@@ -568,7 +568,7 @@ identified BI for Postgres & 42 & 8 \\
 %% identified $\neg$ BI & 23 & 172 \\
 %% \end{tabular} 
 
-%% \begin{tabular}{rrr} Postgres & actual BI & actual $\neg$ BI \\
+%% \begin{tabular}{rrr} PostgreSQL & actual BI & actual $\neg$ BI \\
 %% identified BI & 42 & 8 \\
 %% identified $\neg$ BI & 21 & 332
 %% \end{tabular}

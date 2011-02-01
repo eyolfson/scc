@@ -135,15 +135,15 @@ experience. We bin the commits by author experience and present the
 percentage of buggy commits for each author experience bin.
  
 \paragraph{Time zone adjustments}
-All Postgres commits prior to September 18, 2010 (when the project
+All PostgreSQL commits prior to September 18, 2010 (when the project
 switched to the Git version control system) contain timestamps only in UTC
 (Coordinated Universal Time), meaning that no local time zone information
 was recorded. To enable us to reason about time-of-day
 effects for committers, who work in local time zones, we used
-publicly-available information (such as the Postgres
+publicly-available information (such as the PostgreSQL
 contributor-information page, which lists locations for frequent
 contributors, as well as time zones included in mailing list messages) to deduce
-time zones for all 34 Postgres committers. We then used the Python
+time zones for all 34 PostgreSQL committers. We then used the Python
 time zone utilities to convert the time for each commit (which was in
 UTC for CVS commits, and in local times for git commits) into a local
 time for the committer. We assume that each committer is indeed in
@@ -190,27 +190,27 @@ a different time zone; however, because Git was designed to work best
 when developers commit to local workstations, 
 we expect that most of the 8000 Linux kernel
 contributors will commit locally on a machine with accurate local
-time.  The accuracy of the commit times for the Postgres repository
+time.  The accuracy of the commit times for the PostgreSQL repository
 depends on the accuracy of our time adjustment algorithm for the part
 of the history that was originally a CVS history. We believe that
 committers don't often change time zones\footnote{We were able to identify
 one move of a committer from Ontario to California, and incorporated that
 move into our adjustments, but did not find evidence of many such moves
-in our set of Postgres contributors.} and that they usually work from their
+in our set of PostgreSQL contributors.} and that they usually work from their
 home time zone, but the validity of our adjustment does depend on the
 validity our assumptions about home time zones. We present all of our
 results in the local time of the committer, when relevant.
 
 We ignore git merge commits, which record metadata about 
-integration between different maintainers' trees. Postgres does not
+integration between different maintainers' trees. PostgreSQL does not
 use merge commits. Merge commit will never introduce or fix bugs; that
 will be attributed to one of the specific commits being merged.
 
-Because the Postgres repository was converted from CVS to git, the
+Because the PostgreSQL repository was converted from CVS to git, the
 accuracy of the conversion is another potential threat to validity.  In
 particular, CVS does not have a notion of atomic multi-file commits,
 while Git does, and our methodology relies on the existence of such
-commits. The Postgres conversion used the standard {\tt cvs2git} tool,
+commits. The PostgreSQL conversion used the standard {\tt cvs2git} tool,
 with customizations for their particular
 repository~\cite{haas09:_so_why_postg_using_git}. We have reasons to
 believe that the conversion was performed with care, therefore
@@ -228,7 +228,7 @@ therefore, excluding them should not affect the representativeness of our result
 Because our methodology only identifies bugs which have later been
 corrected, it will definitely omit recently-introduced bugs, as well
 as longer-running bugs which have not yet been corrected. Furthermore,
-our recall of \postR for Postgres and \linuxR for the Linux kernel means
+our recall of \postR for PostgreSQL and \linuxR for the Linux kernel means
 that our methodology does not manage to identify some of the bug fixes
 in the repository histories.
 
@@ -245,21 +245,21 @@ The next family of threats concerns commit characteristics,
 including the attributed time and author information for a commit.
 These threats do not apply to the Linux kernel repository, as the Linux
 kernel community uses the merge functionality of Git to preserve
-commit metadata from external contributors. (Postgres committers, by
+commit metadata from external contributors. (PostgreSQL committers, by
 contrast, manually merge diffs contributed by external contributors).
 The implications of Linux's Git merges on our data are that 1) the commit
 time reflects the initial author's commit decision, and 2) the
 attributed author of a commit actually wrote the commit.
 
-Most Postgres patches are committed by someone other than the author
-of the patch: the set of Postgres committers is quite small, so
-external Postgres commits will always be attributed to a member of the
-Postgres team. Although Git can record both the author and committer
-of a patch, the Postgres community is currently requiring that the
+Most PostgreSQL patches are committed by someone other than the author
+of the patch: the set of PostgreSQL committers is quite small, so
+external PostgreSQL commits will always be attributed to a member of the
+PostgreSQL team. Although Git can record both the author and committer
+of a patch, the PostgreSQL community is currently requiring that the
 ``author'' field of a patch always equal its ``committer'' field.
 Third-party commits add more uncertainty about when a patch was
 originally written, and confound our data about patch authors.  We
-believe, however, that even for Postgres, it is reasonable to ascribe
+believe, however, that even for PostgreSQL, it is reasonable to ascribe
 responsibility for the patch to its commiter, who would presumably
 review a patch before committing it. 
 
@@ -280,7 +280,7 @@ authors commit from several email addresses; we treat each
 email address as a separate author, which may cause some authors to be
 appear twice, in two separate classifications. If an author has the
 same email but two different names, we merge the author information
-for the two sets of commits. This is not an issue for Postgres: when
+for the two sets of commits. This is not an issue for PostgreSQL: when
 they converted their repository to git, they also normalized all author
 email addresses, so that each author has a single email address.
 
@@ -289,11 +289,11 @@ Our day-job classification for authors is based on the fixed hours of
 have flexible hours; however, we expect that developers who are
 directed to work on a project as their day job would still have the
 bulk of their commits between those hours.  The day-job classification
-applies only to the Linux kernel committers; no Postgres committers satisfy
-the day-job criteria. Even though most of the core Postgres team have
-Postgres-related employment, we believe that they are not directed to
-work on Postgres, which would account for the observation that most of
-their commits to Postgres occur outside normal working hours.
+applies only to the Linux kernel committers; no PostgreSQL committers satisfy
+the day-job criteria. Even though most of the core PostgreSQL team have
+PostgreSQL-related employment, we believe that they are not directed to
+work on PostgreSQL, which would account for the observation that most of
+their commits to PostgreSQL occur outside normal working hours.
 
 Our author experience information only counts the participation of an
 author to a particular project; a highly-experienced developer may be
