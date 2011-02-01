@@ -23,13 +23,13 @@ we verified this intuition, and the results show that the precision
 of this heuristic for identifying bug-fixing commits is \postP-\linuxP. 
 Next, we computed diffs for each file
 changed in $c$ and recorded the line numbers $L_c$ which $c$
-changed. Finally, we searched the repository metadata (as implemented by
-the ``git blame'' command) to identify the bug-introducing commits
-$c'$ which changed the lines $L_c$. In this step, we used git 
-blame's {\tt -w} option, which ignores whitespace in attributing 
-responsibility for a code change, which addresses some 
-inaccuracies that exist in other version control systems such as CVS and Subversion as 
-discussed by Kim et. al~\cite{2006-automatic}.
+changed that are not comments. Finally, we searched the repository %% Jon: specified that we ignore comments here
+metadata (as implemented by the ``git blame'' command) to identify the
+bug-introducing commits $c'$ which changed the lines $L_c$. In this
+step, we used git blame's {\tt -w} option, which ignores whitespace in
+attributing responsibility for a code change, which addresses some
+inaccuracies that exist in other version control systems such as CVS
+and Subversion as discussed by Kim et. al~\cite{2006-automatic}.
 
 \paragraph{Example} Listing~\ref{lst-fix} presents an example of a
 bug-fixing commit. Commits consist of a commit id, which is a hash
@@ -94,8 +94,9 @@ such changes are extremely rare, so we can ignore them entirely.
 \label{sec:data}
 Executing the above algorithm gives us data about the bug-fixing
 and bug-introducing commits
-in each repository, as well as about the authors of these commits.  We
-record the following data for each commit: author (as a name/email
+in each repository, as well as about the authors of these commits.  
+%\paragraph{Basic Meta-Information}
+We record the following data for each commit: author (as a name/email
 pair); adjusted time (as described below); number of lines changed; 
 and number of times the
 commit introduced a bug later corrected (which is derived data; we
@@ -105,10 +106,13 @@ commits. For each author, we record the name, email(s), experience and
 frequency classification. We define a bug lifetime's to be the time from the
 earliest commit which introduced the bug to the bug-fixing commit.
 
-We compute an author's experience and classification based on the
+
+%\paragraph{Author Experience and Activity Frequency}
+We compute an author's activity frequency and experience classification based on the
 frequency and duration of that author's commits to a particular
-project. Author experience counts the time between an author's
-earliest and latest commits to the project. Author classification
+project. 
+
+{\em Author activity} classification
 describes the author's most-common frequency between consecutive
 commits: daily, weekly, monthly, other (less than 20 commits), and
 single. For author activity classification, we count consecutive
@@ -117,6 +121,14 @@ of the daily commiter classification, we also use a heuristic to
 identify commiters who appear to work on the repository as part of
 their day job, namely those for which 85\% of commits are between 8 AM
 and 4 PM Monday to Friday.
+
+{\em Author experience} counts the time between an author's
+earliest and latest commits to the project. 
+To study the correlation between the commit bugginess and 
+the author experience, we calculate the author's experience at the time of the commit, 
+and group commits based on their author experience. 
+Then for each group of commits, we calculate the percentage of buggy commits. 
+ 
 
 \paragraph{Time zone adjustments}
 All Postgres commits prior to September 18, 2010 (when the project
