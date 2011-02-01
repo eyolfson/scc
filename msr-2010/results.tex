@@ -150,7 +150,10 @@ commits are generally above the average bugginess level between 16:00
 (4PM) and 20:00 (8PM), and then below the average bugginess level
 between 20:00 (8PM) and 00:00
 (midnight). Figure~\ref{fig-introduction-hour},
-bug introductions, tracks the trends in
+which shows the number of subsequent bug-fixing commits for each 
+bug-introducing commit (that is,
+how buggy is each commit?), 
+follows the trends from
 Figure~\ref{fig-bugginess-hour}. Note that even the smallest
 total number of commits, for any hour, is 139 for Postgres (and an
 order of magnitude higher for the Linux kernel), so that all of the
@@ -386,7 +389,7 @@ with the bugginess of the commits on that day (bars) and also displays
 the total number of commits per day (dots). Here, the solid
 horizontal line presents the overall bugginess of all commits to
 each project. 
-Figure~\ref{fig-introduction-day} presents the number of bug introductions per day-of-week, while
+Figure~\ref{fig-introduction-day} presents the number of subsequent bug-fixing commits for each bug-introducing commit per day-of-week, while
 Figure~\ref{fig-severity-day} 
 presents the severity of bugs per day-of-week, and also presents the average
 sizes of commits.
@@ -478,9 +481,9 @@ source code, which we did not count as changed lines of code. For the Linux kern
 2.15~$\pm$~0.10\%~\footnote{We report
 the margin of error with 95\% confidence level.} 
 of the bug-fixing
-commits (1,223 commits\footnote{Estimated based on the percentage of comment-only
+commits (1,220 commits\footnote{Estimated based on the percentage of comment-only
 commits and the total number of commits.}) were on comments only. We followed the same procedure for
-PostgreSQL and found 2.97~$\pm$~0.45\% (estimated to be 131 commits) of bug-fixing commits were on
+PostgreSQL and found 2.97~$\pm$~0.45\% (about 131 commits) of bug-fixing commits were on
 comments only.
 These hundreds and thousands of comment-only commits show that developers spend a nontrivial amount of time purely maintaining
 the correctness of comments; these numbers don't even consider the amount of
