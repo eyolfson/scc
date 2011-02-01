@@ -29,7 +29,7 @@ bug-introducing commits $c'$ which changed the lines $L_c$. In this
 step, we used git blame's {\tt -w} option, which ignores whitespace in
 attributing responsibility for a code change, which addresses some
 inaccuracies that exist in other version control systems such as CVS
-and Subversion as discussed by Kim et. al~\cite{2006-automatic}.
+and Subversion as discussed by Kim et al~\cite{2006-automatic}.
 
 \paragraph{Example} Listing~\ref{lst-fix} presents an example of a
 bug-fixing commit. Commits consist of a commit id, which is a hash
@@ -119,7 +119,7 @@ most-common frequency between consecutive commits: daily, weekly,
 monthly, other (less than 20 commits), and single. For the author
 activity classification, we count consecutive commits within 30
 minutes of each other as one commit. As a sub-class of the daily
-commiter classification, we also use a heuristic to identify commiters
+committer classification, we also use a heuristic to identify committers
 who appear to work on the repository as part of their day job, namely
 those for which 85\% of commits are between 8 AM and 4 PM Monday to
 Friday.
@@ -261,7 +261,7 @@ of a patch, the PostgreSQL community is currently requiring that the
 Third-party commits add more uncertainty about when a patch was
 originally written, and confound our data about patch authors.  We
 believe, however, that even for PostgreSQL, it is reasonable to ascribe
-responsibility for the patch to its commiter, who would presumably
+responsibility for the patch to its committer, who would presumably
 review a patch before committing it. 
 
 Developers work on a patch over a possibly-discontiguous time
