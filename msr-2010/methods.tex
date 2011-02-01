@@ -23,13 +23,13 @@ we verified this intuition, and the results show that the precision
 of this heuristic for identifying bug-fixing commits is \postP-\linuxP. 
 Next, we computed diffs for each file
 changed in $c$ and recorded the line numbers $L_c$ which $c$
-changed. Finally, we searched the repository metadata (as implemented by
-the ``git blame'' command) to identify the bug-introducing commits
-$c'$ which changed the lines $L_c$. In this step, we used git 
-blame's {\tt -w} option, which ignores whitespace in attributing 
-responsibility for a code change, which addresses some 
-inaccuracies that exist in other version control systems such as CVS and Subversion as 
-discussed by Kim et. al~\cite{2006-automatic}.
+changed that are not comments. Finally, we searched the repository %% Jon: specified that we ignore comments here
+metadata (as implemented by the ``git blame'' command) to identify the
+bug-introducing commits $c'$ which changed the lines $L_c$. In this
+step, we used git blame's {\tt -w} option, which ignores whitespace in
+attributing responsibility for a code change, which addresses some
+inaccuracies that exist in other version control systems such as CVS
+and Subversion as discussed by Kim et. al~\cite{2006-automatic}.
 
 \paragraph{Example} Listing~\ref{lst-fix} presents an example of a
 bug-fixing commit. Commits consist of a commit id, which is a hash
