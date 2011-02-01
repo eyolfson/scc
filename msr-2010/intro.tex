@@ -60,8 +60,8 @@ and then leverage the version control system to discover when the
 corresponding bugs were introduced~\cite{sliwerski-msr-2005}.  Our
 methodology enables us to observe when bugs are more likely to be
 introduced.  Note that we simply use ``bug'' to denote code
-that is later changed, even though such code may not objectively be
-incorrect; we amplify this discussion later.
+that is later changed, even though such code may objectively be
+correct; we amplify this discussion later in Section~\ref{sec:method}.
 
 It is difficult to find bug-fixing commits in the sea of software commits.
 Prior work~\cite{sliwerski-msr-2005} considers a commit whose commit message contains a bug 
@@ -87,7 +87,7 @@ and require further developer activities to fix them.
 Commits that are checked into the software repository around midnight (between 0:00-4:00 AM) 
 are more likely to be incorrect than average, while commits in the morning 7:00 AM-noon 
 are more likely to be correct.
-The result indicate that developers may want to double-check the code they write for these 
+The result indicate that developers may want to double check the code they write for these 
 late-night commits (0:00-4:00 AM).
 %before they commit between these hours. 
 It may also be beneficial for the version control
