@@ -98,25 +98,27 @@ We also investigated correlations between the time-of-day and the
 number of bug-fixing commits. We found that the proportion of total
 commits that are bug-fixing commits stayed almost constant independent
 of the hour; the graphs (not shown) have exactly the same shape as
-that of the circles in Figures~\ref{fig-linux-bugginess-hour}
-and~\ref{fig-postgresql-bugginess-hour}. This suggests that the fact
+that of the circles in Figures~\ref{fig-bugginess-hour}.
+%and~\ref{fig-postgresql-bugginess-hour}. 
+This suggests that the fact
 that a commit is bug-fixing does not affect its other characteristics.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=\columnwidth]{linux-bugginess-hour.pdf}
-\end{center}
-\caption{The Linux kernel percentage of buggy commits (bars) and total number of commits (circles) versus time of day}
-\label{fig-linux-bugginess-hour}
-\end{figure}
-
-\begin{figure}
-\begin{center}
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {The Linux kernel} ]  
+{
+    \label{fig-linux-bugginess-hour}
+     \includegraphics[width=\columnwidth]{linux-bugginess-hour.pdf}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-bugginess-hour}
 \includegraphics[width=\columnwidth]{postgresql-bugginess-hour.pdf}
-\end{center}
-\caption{PostgreSQL percentage of buggy commits (bars) and total number of commits (circles) versus time of day}
-\label{fig-postgresql-bugginess-hour}
-\end{figure}
+}
+\caption{The percentage of buggy commits (bars) and total number of commits (circles) versus time of day}
+\label{fig-bugginess-hour} % caption for the whole figure
+\end{figure*}
+
 
 %% \begin{figure}
 %% \begin{center}
@@ -195,8 +197,8 @@ particular schedule.
 
 \paragraph{Developer Experience Classification}
 
-Figure~\ref{fig-linux-bugginess-experience} and Figure~\ref{fig-postgresql-bugginess-experience} 
-show that by and large, the more experienced the developers are, the less likely their commits are buggy.
+Figure~\ref{fig-bugginess-experience} %and Figure~\ref{fig-postgresql-bugginess-experience} 
+shows that by and large, the more experienced the developers are, the less likely their commits are buggy.
 Without further data, this correlation results do not necessarily prove that the developer experience caused more 
 experienced programmers' commits to be less buggy. 
 While we believe the above causation is true, other interpretations are possible, e.g., more experienced developers wrote 
@@ -214,118 +216,125 @@ to help predict buggy code locations.
 %% \label{fig-postgresql-bugginess-author-class}
 %% \end{figure}
 
-\begin{figure}
-\begin{center}
+
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {The Linux kernel} ]  
+{
+    \label{fig-linux-bugginess-experience}
 \includegraphics[width=\columnwidth]{linux-bugginess-experience.pdf}
-\end{center}
-\caption{The Linux kernel percentage of buggy commits per author experience}
-\label{fig-linux-bugginess-experience}
-\end{figure}
-
-\begin{figure}
-\begin{center}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-bugginess-experience}
 \includegraphics[width=\columnwidth]{postgresql-bugginess-experience.pdf}
-\end{center}
-\caption{PostgreSQL percentage of buggy commits per author experience}
-\label{fig-postgresql-bugginess-experience}
-\end{figure}
+}
+\caption{The percentage of buggy commits per author experience}
+\label{fig-bugginess-experience} % caption for the whole figure
+\end{figure*}
 
 
-\begin{figure}
-\begin{center}
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {The Linux kernel} ]  
+{
+    \label{fig-linux-introduction-day}
 \includegraphics[width=\columnwidth]{linux-introductions-day.pdf}
-\end{center}
-\caption{The Linux kernel introductions per commit per day}
-\label{fig-linux-introductions-day}
-\end{figure}
-
-\begin{figure}
-\begin{center}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-introduction-day}
 \includegraphics[width=\columnwidth]{postgresql-introductions-day.pdf}
-\end{center}
-\caption{PostgreSQL introductions per commit per day}
-\label{fig-postgresql-introductions-day}
-\end{figure}
+}
+\caption{The introductions per commit per day}
+\label{fig-introduction-day} % caption for the whole figure
+\end{figure*}
 
-\begin{figure}
-\begin{center}
+%------ severity day
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {The Linux kernel} ]  
+{
+    \label{fig-linux-severity-day}
 \includegraphics[width=\columnwidth]{linux-severity-day.pdf}
-\end{center}
-\caption{The Linux kernel severity of changes per day}
-\label{fig-linux-severity-day}
-\end{figure}
-
-\begin{figure}
-\begin{center}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-severity-day}
 \includegraphics[width=\columnwidth]{postgresql-severity-day.pdf}
-\end{center}
-\caption{PostgreSQL severity of changes per day}
-\label{fig-postgresql-severity-day}
-\end{figure}
+}
+\caption{The severity of changes per day}
+\label{fig-severity-day} % caption for the whole figure
+\end{figure*}
 
-\begin{figure}
-\begin{center}
+%----- introduction hour
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {The Linux kernel} ]  
+{
+    \label{fig-linux-introduction-hour}
 \includegraphics[width=\columnwidth]{linux-introductions-hour.pdf}
-\end{center}
-\caption{The Linux kernel introductions per commit per hour}
-\label{fig-linux-introductions-hour}
-\end{figure}
-
-\begin{figure}
-\begin{center}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-introduction-hour}
 \includegraphics[width=\columnwidth]{postgresql-introductions-hour.pdf}
-\end{center}
-\caption{PostgreSQL introductions per commit per hour}
-\label{fig-postgresql-introductions-hour}
-\end{figure}
+}
+\caption{The introductions per commit per day}
+\label{fig-introduction-hour} % caption for the whole figure
+\end{figure*}
 
-\begin{figure}
-\begin{center}
+%------ severity hour 
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {The Linux kernel} ]  
+{
+    \label{fig-linux-severity-hour}
 \includegraphics[width=\columnwidth]{linux-severity-hour.pdf}
-\end{center}
-\caption{The Linux kernel severity of changes per hour}
-\label{fig-linux-severity-hour}
-\end{figure}
-
-\begin{figure}
-\begin{center}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-severity-hour}
 \includegraphics[width=\columnwidth]{postgresql-severity-hour.pdf}
-\end{center}
-\caption{PostgreSQL severity of changes per hour}
-\label{fig-postgresql-severity-hour}
-\end{figure}
+}
+\caption{The severity of changes per hour}
+\label{fig-severity-hour} % caption for the whole figure
+\end{figure*}
 
-\begin{figure}
-\begin{center}
+%---- bugginess day
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {The Linux kernel} ]  
+{
+    \label{fig-linux-bugginess-day}
 \includegraphics[width=\columnwidth]{linux-bugginess-day.pdf}
-\end{center}
-\caption{The Linux kernel percentage of buggy commits per day}
-\label{fig-linux-bugginess-day}
-\end{figure}
-
-\begin{figure}
-\begin{center}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-bugginess-day}
 \includegraphics[width=\columnwidth]{postgresql-bugginess-day.pdf}
-\end{center}
-\caption{PostgreSQL percentage of buggy commits per day}
-\label{fig-postgresql-bugginess-day}
-\end{figure}
+}
+\caption{The percentage of buggy commits per day}
+\label{fig-bugginess-day} % caption for the whole figure
+\end{figure*}
 
-\begin{figure}
-\begin{center}
+
+%---- lifetime 
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {The Linux kernel} ]  
+{
+    \label{fig-linux-bug-lifetime}
 \includegraphics[width=\columnwidth]{linux-bug-lifetime.pdf}
-\end{center}
-\caption{The Linux kernel bug lifetime}
-\label{fig-linux-bug-lifetime}
-\end{figure}
-
-\begin{figure}
-\begin{center}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-bug-lifetime}
 \includegraphics[width=\columnwidth]{postgresql-bug-lifetime.pdf}
-\end{center}
-\caption{PostgreSQL bug lifetime}
-\label{fig-postgresql-bug-lifetime}
-\end{figure}
+}
+\caption{The bug lifetime}
+\label{fig-bug-lifetime} % caption for the whole figure
+\end{figure*}
 
 
 \subsection{Day-of-week Results}
