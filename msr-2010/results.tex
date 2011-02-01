@@ -65,6 +65,56 @@ Number of commits & 222,332 & 31,098 \\
 %% repository contains 31,098 commits contributed by 34 authors. We
 %% identified 7,366 bug-introducing commits and 4,399 bug-fixing commits. The tip
 %% of the repository contains over 750,000 lines of code.
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {Linux kernel} ]  
+{
+    \label{fig-linux-bugginess-hour}
+     \includegraphics[width=\columnwidth]{linux-bugginess-hour.pdf}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-bugginess-hour}
+\includegraphics[width=\columnwidth]{postgresql-bugginess-hour.pdf}
+}
+\caption{\label{fig-bugginess-hour}The percentage of buggy commits (bars) and total number of commits (circles) versus time-of-day}
+ % caption for the whole figure
+\end{figure*}
+
+%----- introduction hour
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {Linux kernel} ]  
+{
+    \label{fig-linux-introduction-hour}
+\includegraphics[width=\columnwidth]{linux-introductions-hour.pdf}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-introduction-hour}
+\includegraphics[width=\columnwidth]{postgresql-introductions-hour.pdf}
+}
+\caption{\label{fig-introduction-hour}Bug introductions per commit (bars) and total commits (circles) versus time-of-day}
+ % caption for the whole figure
+\end{figure*}
+
+%------ severity hour 
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {Linux kernel} ]  
+{
+    \label{fig-linux-severity-hour}
+\includegraphics[width=\columnwidth]{linux-severity-hour.pdf}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-severity-hour}
+\includegraphics[width=\columnwidth]{postgresql-severity-hour.pdf}
+}
+\caption{\label{fig-severity-hour}Severity of changes (bars) and average number of lines per commit (circles) versus time-of-day}
+ % caption for the whole figure
+\end{figure*}
+
 
 \subsection{Time-of-day Results} 
 \label{sec-time-of-day}
@@ -138,56 +188,6 @@ perhaps committers are most careful in those hours.
 %While we believe the above observations are true, we do not draw  
 %
 
-\begin{figure*}[tbh]
-\centering
-\subfigure [ {Linux kernel} ]  
-{
-    \label{fig-linux-bugginess-hour}
-     \includegraphics[width=\columnwidth]{linux-bugginess-hour.pdf}
-}
-\subfigure[ PostgreSQL ] 
-{
-    \label{fig-postgresql-bugginess-hour}
-\includegraphics[width=\columnwidth]{postgresql-bugginess-hour.pdf}
-}
-\caption{\label{fig-bugginess-hour}The percentage of buggy commits (bars) and total number of commits (circles) versus time-of-day}
- % caption for the whole figure
-\end{figure*}
-
-%----- introduction hour
-\begin{figure*}[tbh]
-\centering
-\subfigure [ {Linux kernel} ]  
-{
-    \label{fig-linux-introduction-hour}
-\includegraphics[width=\columnwidth]{linux-introductions-hour.pdf}
-}
-\subfigure[ PostgreSQL ] 
-{
-    \label{fig-postgresql-introduction-hour}
-\includegraphics[width=\columnwidth]{postgresql-introductions-hour.pdf}
-}
-\caption{\label{fig-introduction-hour}Bug introductions per commit (bars) and total commits (circles) versus time-of-day}
- % caption for the whole figure
-\end{figure*}
-
-%------ severity hour 
-\begin{figure*}[tbh]
-\centering
-\subfigure [ {Linux kernel} ]  
-{
-    \label{fig-linux-severity-hour}
-\includegraphics[width=\columnwidth]{linux-severity-hour.pdf}
-}
-\subfigure[ PostgreSQL ] 
-{
-    \label{fig-postgresql-severity-hour}
-\includegraphics[width=\columnwidth]{postgresql-severity-hour.pdf}
-}
-\caption{\label{fig-severity-hour}Severity of changes (bars) and average number of lines per commit (circles) versus time-of-day}
- % caption for the whole figure
-\end{figure*}
-
 %% \begin{figure}
 %% \begin{center}
 %% \includegraphics[width=0.45\textwidth]{linux_per_class.png}
@@ -203,6 +203,13 @@ perhaps committers are most careful in those hours.
 %% \caption{Firefox percentage of bug introductions and percentage of total commits per author classification}
 %% \label{fig-firefox-class}
 %% \end{figure}
+\begin{figure}[thb!]
+\begin{center}
+\includegraphics[width=\columnwidth]{linux-bugginess-author-class.pdf}
+\end{center}
+\caption{\label{fig-linux-bugginess-author-class}Linux percentage of buggy commits (bars) and number of commits (circles) versus author classification}
+\end{figure}
+
 
 \subsection{Developer Characteristics}
 \label{sec-dev-char}
@@ -241,12 +248,21 @@ changes by their employers, while the daily developers are motivated
 purely by interest, and unlikely to be pressured to fix bugs on any
 particular schedule.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=\columnwidth]{linux-bugginess-author-class.pdf}
-\end{center}
-\caption{\label{fig-linux-bugginess-author-class}Linux percentage of buggy commits (bars) and number of commits (circles) versus author classification}
-\end{figure}
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {Linux kernel} ]  
+{
+    \label{fig-linux-bugginess-experience}
+\includegraphics[width=\columnwidth]{linux-bugginess-experience.pdf}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-bugginess-experience}
+\includegraphics[width=\columnwidth]{postgresql-bugginess-experience.pdf}
+}
+\caption{\label{fig-bugginess-experience}Percentage of buggy commits (bars) and total number of commits (circles) versus author experience}
+ % caption for the whole figure
+\end{figure*}
 
 % we need to say what the two bars mean in the figure.
 
@@ -303,65 +319,6 @@ major ongoing architectural revisions.
 %% \label{fig-postgresql-bugginess-author-class}
 %% \end{figure}
 
-
-\begin{figure*}[tbh]
-\centering
-\subfigure [ {Linux kernel} ]  
-{
-    \label{fig-linux-bugginess-experience}
-\includegraphics[width=\columnwidth]{linux-bugginess-experience.pdf}
-}
-\subfigure[ PostgreSQL ] 
-{
-    \label{fig-postgresql-bugginess-experience}
-\includegraphics[width=\columnwidth]{postgresql-bugginess-experience.pdf}
-}
-\caption{\label{fig-bugginess-experience}Percentage of buggy commits (bars) and total number of commits (circles) versus author experience}
- % caption for the whole figure
-\end{figure*}
-
-
-
-
-
-\subsection{Day-of-week Results}
-\label{sec-day-of-week}
-Our next experiment attempted to replicate the results
-in~\cite{sliwerski-msr-2005} and correlates the day of the week
-of a commit with its bugginess. Figure~\ref{fig-bugginess-day} 
-compares the day of the week
-with the bugginess of the commits on that day (bars) and also displays
-the total number of commits per day (dots). Here, the solid
-horizontal line presents the overall bugginess of all commits to
-each project. 
-Figure~\ref{fig-introduction-day} presents the number of bug introductions per day-of-week, while
-Figure~\ref{fig-severity-day} 
-presents the severity of bugs per day-of-week, and also presents the average
-sizes of commits.
-
-Our results, which use a disjoint set of repositories from those
-in~\cite{sliwerski-msr-2005}, found about the same bugginess and 
-number of introductions for each
-day in the Linux repository, with the lowest bugginess on Sunday and
-highest on Monday and Thursday; for the Postgres repository, we
-observe a slight decrease in bugginess on Saturday and Monday, a small
-increase on Tuesday and Wednesday, and a noticeable increase on
-Sunday.  Note that, for Linux, Saturday and Sunday each have about
-half as many commits as the other days of the week (commits peak on
-Tuesday and steadily decrease through Friday). For Postgres, commits
-fluctuate through the days of the week and decrease to about 70\% of
-the weekday volume on the weekend. The severity results do not show
-any particular trends, but we found that the average number of lines
-per commit on Sunday was surprisingly large for both Linux and Postgres.
-
-\paragraph{Discussion}
-We found that commits on different days of week have the same level of bugginess, which
-does not agree with results from the prior study on two different open source projects~\cite{sliwerski-msr-2005}.  
-Our result shows that the day of week of commits
-vary for different software projects, implying that the bugginess prediction based on 
-the day of week of commits may need to be on a project-by-project basis.
-
-
 %---- bugginess day
 \begin{figure*}[tbh]
 \centering
@@ -412,6 +369,50 @@ the day of week of commits may need to be on a project-by-project basis.
 \caption{\label{fig-severity-day}Severity of changes (bars) and average number of lines per commit (circles) versus day-of-week}
  % caption for the whole figure
 \end{figure*}
+
+
+
+
+
+
+
+\subsection{Day-of-week Results}
+\label{sec-day-of-week}
+Our next experiment attempted to replicate the results
+in~\cite{sliwerski-msr-2005} and correlates the day of the week
+of a commit with its bugginess. Figure~\ref{fig-bugginess-day} 
+compares the day of the week
+with the bugginess of the commits on that day (bars) and also displays
+the total number of commits per day (dots). Here, the solid
+horizontal line presents the overall bugginess of all commits to
+each project. 
+Figure~\ref{fig-introduction-day} presents the number of bug introductions per day-of-week, while
+Figure~\ref{fig-severity-day} 
+presents the severity of bugs per day-of-week, and also presents the average
+sizes of commits.
+
+Our results, which use a disjoint set of repositories from those
+in~\cite{sliwerski-msr-2005}, found about the same bugginess and 
+number of introductions for each
+day in the Linux repository, with the lowest bugginess on Sunday and
+highest on Monday and Thursday; for the Postgres repository, we
+observe a slight decrease in bugginess on Saturday and Monday, a small
+increase on Tuesday and Wednesday, and a noticeable increase on
+Sunday.  Note that, for Linux, Saturday and Sunday each have about
+half as many commits as the other days of the week (commits peak on
+Tuesday and steadily decrease through Friday). For Postgres, commits
+fluctuate through the days of the week and decrease to about 70\% of
+the weekday volume on the weekend. The severity results do not show
+any particular trends, but we found that the average number of lines
+per commit on Sunday was surprisingly large for both Linux and Postgres.
+
+\paragraph{Discussion}
+We found that commits on different days of week have the same level of bugginess, which
+does not agree with results from the prior study on two different open source projects~\cite{sliwerski-msr-2005}.  
+Our result shows that the day of week of commits
+vary for different software projects, implying that the bugginess prediction based on 
+the day of week of commits may need to be on a project-by-project basis.
+
 
 
 
