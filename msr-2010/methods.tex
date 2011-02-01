@@ -124,7 +124,7 @@ those for which 85\% of commits are between 8 AM and 4 PM Monday to
 Friday.
 
 {\em Author experience} reports the amount of time since an author's
-first commit to a project.  Note that, to study the correlation
+first commit to a project. To study the correlation
 between commit bugginess and author experience, we calculate the
 author's experience at the time of the commit.  For example, author
 X's first commit to the Linux kernel was on March 28, 2009, so that
@@ -135,8 +135,9 @@ percentage of buggy commits for each author experience bin.
  
 \paragraph{Time zone adjustments}
 All Postgres commits prior to September 18, 2010 (when the project
-switched to the Git version control system) contain timestamps in UTC
-(Coordinated Universal Time). To enable us to reason about time-of-day
+switched to the Git version control system) contain timestamps only in UTC
+(Coordinated Universal Time), meaning that no local time zone information
+was recorded. To enable us to reason about time-of-day
 effects for committers, who work in local time zones, we used
 publicly-available information (such as the Postgres
 contributor-information page, which lists locations for frequent
@@ -149,7 +150,7 @@ the time zone we have estimated for that committer;
 we discuss this threat to validity in greater detail below.
 
 \subsection{Threats to Validity}
-We discuss a number of threats to validity and how we address them,
+We discuss several threats to validity and how we address them,
 including general threats to construct validity and external validity,
 and specific threats to our particular methodology, including 
 repository threats, recall and precision threats, 
@@ -192,7 +193,7 @@ move into our adjustments, but did not find evidence of many such moves
 in our set of Postgres contributors.} and that they usually work from their
 home time zone, but the validity of our adjustment does depend on the
 validity our assumptions about home time zones. We present all of our
-results in the local time of the committer.
+results in the local time of the committer, when relevant.
 
 Because the Postgres repository was converted from CVS to git, the
 accuracy of the conversion is another potential threat to validity.  In
