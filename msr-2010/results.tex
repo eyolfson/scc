@@ -63,7 +63,8 @@ Number of commits & 222,332 & 31,098 \\
 
 \subsection{Time-of-day Results} 
 We first present our results correlating the time-of-day of a commit
-with its bugginess.  Figures~\ref{fig-linux-bugginess-hour}
+with its bugginess.  
+Figures~\ref{fig-linux-bugginess-hour}
 and~\ref{fig-postgresql-bugginess-hour} present results from the Linux kernel and
 Postgres, respectively. These graphs compare the time-of-day of each
 commit, in the committer's local time on a 24-hour clock, to the
@@ -86,12 +87,12 @@ for any hour, is 139 for Postgres (and an order of magnitude higher
 for the Linux kernel), so that all of the depicted bug introduction rates are
 meaningful.
 
-Our results suggest that tired developers (midnight-4AM) are more
+Our results may suggest that tired developers (midnight-4AM) are more
 likely to miss corner cases in a pre-commit review (for Postgres) or
 while finalizing the patch (for the Linux kernel). Furthermore, we can observe
 that commits before noon are least likely to be bug-introducing;
 perhaps committers are most careful in those hours.
-
+%While we believe the above observations are true, we do not draw  
 
 \begin{figure}
 \begin{center}
@@ -184,48 +185,17 @@ particular schedule.
 %% \end{figure}
 
 \paragraph{Developer Experience Classification}
-The final head-to-head comparison we performed is based on the amount
-of experience per author. We divided them up into 6-month intervals. 
-Our results from the Linux kernel and PostgreSQL are shown in Figure~\ref{fig-linux-bugginess-experience} and Figure~\ref{fig-postgresql-bugginess-experience}
-respectfully. For the Linux kernel authors with less than 2 years of experience
-are more likely to commit a bug while after 2 years the likelihood
-decreases. However the authors which committed throughout the history
-of the project are more likely to commit a bug which may be because
-they wrote the majority of the code. %% For Firefox, again the
-%% developers with less than 6 months of experience are more likely to
-%% commit a bug. The is a spike between 21 and 26 months as well. We
-%% believe these results may not be accurate due to the possiblity of
-%% our experience metric being crude and not representative of the 
-%% actual experience with the project.
 
-%% \begin{figure}
-%% \begin{center}
-%% \includegraphics[width=0.45\textwidth]{linux_bug_life.png}
-%% \end{center}
-%% \caption{Linux number of bugs against bug lifetimes in months}
-%% \label{fig-linux-buglife}
-%% \end{figure}
+Figure~\ref{fig-linux-bugginess-experience} and Figure~\ref{fig-postgresql-bugginess-experience} 
+show that the more experienced the developers are, the less likely their commits are buggy.
+Without further data, this correlation results do not necessarly prove that the developer experience caused more 
+experienced programmers' commits to be less buggy. 
+While we believe the above causation is true, it is possible that more experienced developers wrote 
+more complex code, whose bugs are harder to be discovered and reported. 
+Nonetheless, our results show that knowing that a commit is from a more experience developer, we can 
+be more confident about the correctness of the commit. Such a correlation may be exploited 
+to help predict buggy code locations.
 
-%% \begin{figure}
-%% \begin{center}
-%% \includegraphics[width=0.45\textwidth]{firefox_bug_life.png}
-%% \end{center}
-%% \caption{Firefox number of bugs against bug lifetimes in months}
-%% \label{fig-firefox-buglife}
-%% \end{figure}
-
-Finally we determined the bug lifetimes for both projects to contrast
-them to previous work. We plotted the number of bugs for each lifetime
-divided into 4 month intervals. The results for the Linux kernel are shown in
-Figure~\ref{fig-linux-bug-lifetime}, the average bug lifetime is 1.39
-years. The results for Firefox are shown in Figure~\ref{fig-postgresql-bug-lifetime}, with an average bug lifetime of 0.97
-years. This shows a reduction in the average bug lifetime for the Linux kernel (in
-2002 the average lifetime was 1.8 years). This indicates that
-developers are improving as their development process becomes more
-refined. We also see the average lifetime is lower for Firefox, this
-may be due to the complexity of the software, size of the software or
-the amount of users (the more users and complex, the more likely bugs will be
-revealed).
 
 %% \begin{figure}
 %% \begin{center}
