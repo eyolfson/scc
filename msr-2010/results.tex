@@ -106,7 +106,7 @@ that a commit is bug-fixing does not affect its other characteristics.
 
 \begin{figure*}[tbh]
 \centering
-\subfigure [ {The Linux kernel} ]  
+\subfigure [ {Linux kernel} ]  
 {
     \label{fig-linux-bugginess-hour}
      \includegraphics[width=\columnwidth]{linux-bugginess-hour.pdf}
@@ -116,14 +116,14 @@ that a commit is bug-fixing does not affect its other characteristics.
     \label{fig-postgresql-bugginess-hour}
 \includegraphics[width=\columnwidth]{postgresql-bugginess-hour.pdf}
 }
-\caption{The percentage of buggy commits (bars) and total number of commits (circles) versus time of day}
+\caption{The percentage of buggy commits (bars) and total number of commits (circles) versus time-of-day}
 \label{fig-bugginess-hour} % caption for the whole figure
 \end{figure*}
 
 %----- introduction hour
 \begin{figure*}[tbh]
 \centering
-\subfigure [ {The Linux kernel} ]  
+\subfigure [ {Linux kernel} ]  
 {
     \label{fig-linux-introduction-hour}
 \includegraphics[width=\columnwidth]{linux-introductions-hour.pdf}
@@ -133,14 +133,14 @@ that a commit is bug-fixing does not affect its other characteristics.
     \label{fig-postgresql-introduction-hour}
 \includegraphics[width=\columnwidth]{postgresql-introductions-hour.pdf}
 }
-\caption{The introductions per commit per day}
+\caption{Bug introductions per commit (bars) and total commits (circles) versus time-of-day}
 \label{fig-introduction-hour} % caption for the whole figure
 \end{figure*}
 
 %------ severity hour 
 \begin{figure*}[tbh]
 \centering
-\subfigure [ {The Linux kernel} ]  
+\subfigure [ {Linux kernel} ]  
 {
     \label{fig-linux-severity-hour}
 \includegraphics[width=\columnwidth]{linux-severity-hour.pdf}
@@ -150,7 +150,7 @@ that a commit is bug-fixing does not affect its other characteristics.
     \label{fig-postgresql-severity-hour}
 \includegraphics[width=\columnwidth]{postgresql-severity-hour.pdf}
 }
-\caption{The severity of changes per hour}
+\caption{Severity of changes (bars) and total commits (circles) versus time-of-day}
 \label{fig-severity-hour} % caption for the whole figure
 \end{figure*}
 
@@ -178,7 +178,7 @@ commiting frequency summarizes the frequency of
 a developer's contributions to a project, while developer experience
 tracks how long a developer has contributed to a particular project.
 
-\paragraph{Developers' Committing Frequency Classification} 
+\paragraph{Commit Frequency Classification} 
 As we described in Section~\ref{sec:data}, one of the ways that we
 classify developers is according to frequency, i.e. most-common
 interval between consecutive commits---daily, weekly, monthly, other,
@@ -233,13 +233,13 @@ particular schedule.
 \paragraph{Developer Experience Classification}
 
 Figure~\ref{fig-bugginess-experience} %and Figure~\ref{fig-postgresql-bugginess-experience} 
-shows that by and large, the more experienced the developers are, the less likely their commits are buggy.
-Without further data, this correlation results do not necessarily prove that the developer experience caused more 
+shows that, in general, the more experienced the developers are, the less likely that their commits are buggy.
+Without further data, this correlation does not prove that the developer experience caused more 
 experienced programmers' commits to be less buggy. 
-While we believe the above causation is true, other interpretations are possible, e.g., more experienced developers wrote 
-more complex code, whose bugs are harder to be discovered and reported. 
-Nonetheless, our results show that knowing that a commit is from a more experience developer, we can 
-be more confident about the correctness of the commit. Such a correlation may be exploited 
+While we believe the above causation to hold, other interpretations are possible; perhaps more experienced developers wrote 
+more complex code, whose bugs are harder to discover and less likely to be reported. 
+Nonetheless, our results show that given the fact that a commit is from a more experience developer, 
+one can be more confident about the correctness of the commit. Such a correlation could be exploited 
 to help predict buggy code locations.
 
 
@@ -254,7 +254,7 @@ to help predict buggy code locations.
 
 \begin{figure*}[tbh]
 \centering
-\subfigure [ {The Linux kernel} ]  
+\subfigure [ {Linux kernel} ]  
 {
     \label{fig-linux-bugginess-experience}
 \includegraphics[width=\columnwidth]{linux-bugginess-experience.pdf}
@@ -264,7 +264,7 @@ to help predict buggy code locations.
     \label{fig-postgresql-bugginess-experience}
 \includegraphics[width=\columnwidth]{postgresql-bugginess-experience.pdf}
 }
-\caption{The percentage of buggy commits per author experience}
+\caption{Percentage of buggy commits (bars) and total number of commits (circles) versus author experience}
 \label{fig-bugginess-experience} % caption for the whole figure
 \end{figure*}
 
@@ -299,7 +299,7 @@ the weekday volume on the weekend.
 %---- bugginess day
 \begin{figure*}[tbh]
 \centering
-\subfigure [ {The Linux kernel} ]  
+\subfigure [ {Linux kernel} ]  
 {
     \label{fig-linux-bugginess-day}
 \includegraphics[width=\columnwidth]{linux-bugginess-day.pdf}
@@ -309,14 +309,14 @@ the weekday volume on the weekend.
     \label{fig-postgresql-bugginess-day}
 \includegraphics[width=\columnwidth]{postgresql-bugginess-day.pdf}
 }
-\caption{The percentage of buggy commits per day}
+\caption{Percentage of buggy commits (bars) and total commits (circles) versus day-of-week}
 \label{fig-bugginess-day} % caption for the whole figure
 \end{figure*}
 
 %--- introduction day
 \begin{figure*}[tbh]
 \centering
-\subfigure [ {The Linux kernel} ]  
+\subfigure [ {Linux kernel} ]  
 {
     \label{fig-linux-introduction-day}
 \includegraphics[width=\columnwidth]{linux-introductions-day.pdf}
@@ -326,14 +326,14 @@ the weekday volume on the weekend.
     \label{fig-postgresql-introduction-day}
 \includegraphics[width=\columnwidth]{postgresql-introductions-day.pdf}
 }
-\caption{The introductions per commit per day}
+\caption{Number of bug-introducing commits (bars) and total commits (circles) versus day-of-week}
 \label{fig-introduction-day} % caption for the whole figure
 \end{figure*}
 
 %------ severity day
 \begin{figure*}[tbh]
 \centering
-\subfigure [ {The Linux kernel} ]  
+\subfigure [ {Linux kernel} ]  
 {
     \label{fig-linux-severity-day}
 \includegraphics[width=\columnwidth]{linux-severity-day.pdf}
@@ -343,7 +343,7 @@ the weekday volume on the weekend.
     \label{fig-postgresql-severity-day}
 \includegraphics[width=\columnwidth]{postgresql-severity-day.pdf}
 }
-\caption{The severity of changes per day}
+\caption{Severity of changes (bars) and total commits (circles) versus day-of-week}
 \label{fig-severity-day} % caption for the whole figure
 \end{figure*}
 
@@ -375,16 +375,17 @@ intervals. We found the average bug lifetime for the Linux kernel is
 lifetime for Postgres is 3.07 years with a standard deviation of 3.19
 years. Postgres may have a longer average bug lifetime due to being a
 smaller, less complex project with a smaller user base. We found the
-sources of the long-time bugs include: race conditions, incorrect
-calculations and rare corner cases, which intuitively are more likely
-to be found with a larger user base.  Note, the distribution is
-similar for both projects; many bugs are fixed within a 120 day period
-and the overall lifetime decreases exponentially.
+sources of the long-time bugs include race conditions, incorrect
+calculations and rare corner cases; such cases are intuitively more
+likely to be found with a larger user base.  Note that the
+distribution of bug lifetimes is similar for both projects; many bugs
+are fixed within a 120 day period and the overall lifetime decreases
+exponentially.
 
 %---- lifetime 
 \begin{figure*}[tbh]
 \centering
-\subfigure [ {The Linux kernel} ]  
+\subfigure [ {Linux kernel} ]  
 {
     \label{fig-linux-bug-lifetime}
 \includegraphics[width=\columnwidth]{linux-bug-lifetime.pdf}
@@ -394,7 +395,7 @@ and the overall lifetime decreases exponentially.
     \label{fig-postgresql-bug-lifetime}
 \includegraphics[width=\columnwidth]{postgresql-bug-lifetime.pdf}
 }
-\caption{The bug lifetime}
+\caption{Histogram of bug lifetime counts}
 \label{fig-bug-lifetime} % caption for the whole figure
 \end{figure*}
 

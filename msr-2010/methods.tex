@@ -108,28 +108,32 @@ earliest commit which introduced the bug to the bug-fixing commit.
 
 
 %\paragraph{Author Experience and Activity Frequency}
-We compute an author's activity frequency and experience classification based on the
-frequency and duration of that author's commits to a particular
-project. 
+We compute an author's activity classification, based on the frequency
+of an author's commits to a particular project, and author experience
+at a particular time, based on the elapsed time between that author's
+first commit to the project and the relevant time.
 
-{\em Author activity} classification
-describes the author's most-common frequency between consecutive
-commits: daily, weekly, monthly, other (less than 20 commits), and
-single. For author activity classification, we count consecutive
-commits within 30 minutes of each other as one commit. As a sub-class
-of the daily commiter classification, we also use a heuristic to
-identify commiters who appear to work on the repository as part of
-their day job, namely those for which 85\% of commits are between 8 AM
-and 4 PM Monday to Friday.
+The {\em author activity} classification describes the author's
+most-common frequency between consecutive commits: daily, weekly,
+monthly, other (less than 20 commits), and single. For the author
+activity classification, we count consecutive commits within 30
+minutes of each other as one commit. As a sub-class of the daily
+commiter classification, we also use a heuristic to identify commiters
+who appear to work on the repository as part of their day job, namely
+those for which 85\% of commits are between 8 AM and 4 PM Monday to
+Friday.
 
-{\em Author experience} counts the time between an author's
-earliest and latest commits to the project. 
-To study the correlation between the commit bugginess and 
-the author experience, we calculate the author's experience at the time of the commit, 
-and group commits based on their author experience. 
-Then for each group of commits, we calculate the percentage of buggy commits. 
+{\em Author experience} reports the amount of time since an author's
+first commit to a project.  Note that, to study the correlation
+between commit bugginess and author experience, we calculate the
+author's experience at the time of the commit, and group commits based
+on their author experience.  For example, author X's first commit to
+the Linux kernel was on March 28, 2009, so that commit is by an author
+with 0 days of experience. Then, the second commit was on April 13,
+2009, so it is by an author with 16 days of experience. We bin the
+commits by author experience and display the percentage of buggy
+commits for each author experience bin.
  
-
 \paragraph{Time zone adjustments}
 All Postgres commits prior to September 18, 2010 (when the project
 switched to the Git version control system) contain timestamps in UTC
