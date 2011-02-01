@@ -16,7 +16,7 @@ identifying the lines changed in each bug-fixing commit; and 3)
 finding the commits which were responsible for the previous (buggy)
 version of each of the changed lines. We describe each of these steps
 in more detail. First, to detect bug-fixing commits $c$, we searched
-the commit messages for the keyword ``fix'' (similar to~\cite{smallCommits}). 
+the commit messages for the keyword ``fix'' (as do~\cite{smallCommits05}). 
 In our experience, most developers indicate that a change is a fix by including the keyword
 ``fix'' in the commit message; Section~\ref{sec-results} explains how
 we verified this intuition, and the results show that the precision
@@ -174,7 +174,9 @@ We expect our methodology to properly account for developers in
 different time zones. Git records each developer's local time (and
 time zone) with a commit, thereby avoiding potential imprecisions in
 our time-of-day results. This works well for the Linux kernel repository,
-which is a native Git repository as of 2005. In that repository, the
+which is a native Git repository as of 2005. (Older Linux repository
+information does not accurately record time-of-day information for
+commits.) In that repository, the
 local time might be inaccurate if a developer commits from a server in
 a different time zone; however, we expect that most of the 8000 Linux kernel
 contributors will commit locally on a machine with accurate local
