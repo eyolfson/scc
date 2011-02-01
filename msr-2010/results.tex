@@ -367,6 +367,19 @@ the weekday volume on the weekend.
 %% Monday, when they know exactly what to do. 
 
 \subsection{Bug lifetimes}
+Figures~\ref{fig-linux-bug-lifetime} and
+\ref{fig-postgresql-bug-lifetime} show the bug lifetimes for the Linux
+kernel and Postgres, with bug lifetimes grouped in 120 day
+intervals. We found the average bug lifetime for the Linux kernel is
+1.38 years with a standard deviation of 1.35 years. The average bug
+lifetime for Postgres is 3.07 years with a standard deviation of 3.19
+years. Postgres may have a longer average bug lifetime due to being a
+smaller, less complex project with a smaller user base. We found the
+sources of the long-time bugs include: race conditions, incorrect
+calculations and rare corner cases, which intuitively are more likely
+to be found with a larger user base.  Note, the distribution is
+similar for both projects; many bugs are fixed within a 120 day period
+and the overall lifetime decreases exponentially.
 
 \subsection{Comment-only Commits}
 We noticed a large number of bug-fixing commits in the database
