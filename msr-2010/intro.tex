@@ -72,15 +72,17 @@ We address this problem by applying heuristics
 to scan commit messages and do not reply on the links between bug commits and bug reports at all to extract bug-fixing commits.
 Our heuristics have a precision of \postP-\linuxP in identifying bug-fixing commits (Section~\ref{sec-results}).
 
-Our major findings are summarized below (Detailed discussions of these findings and their implications are 
-presented in Section~\ref{sec-results}): 
-%($\S$ denotes in which section the finding and its {\em implications} are discussed). 
+Our major findings are summarized below ($\S$ denotes in which section the finding and its {\em implications} are discussed):
+%(Detailed discussions of these findings and their implications are 
+%presented in Section~\ref{sec-results}): 
 
 \begin{list}{\labelitemi}{\topsep=0pt\parsep=0pt\leftmargin=9pt\itemindent=0pt}
 
-\vspace{0.05in}
-\item {\bf Finding 1:}
-%($\S$\ref{sec:finding1}):} 
+\item {\bf Finding 1 ($\S$\ref{sec-results}):} 
+About a quarter (23.7-25.5\%) of all the commits in the Linux kernel and PostgreSQL are buggy, 
+and cause further developer activities to fix them.
+
+\item {\bf Finding 2 ($\S$\ref{sec-time-of-day}):} 
 Commits that are checked into the software repository around midnight (between 0:00-4:00 AM) 
 are more likely to be incorrect than average, while commits in the morning 7:00 AM-noon 
 are more likely to be correct.
@@ -90,22 +92,21 @@ late-night commits (0:00-4:00 AM).
 It may also be beneficial for the version control
 system to warn the developers of late-night commits to improve software reliability. 
 
-\item {\bf Finding 2:}
-% ($\S$\ref{sec:finding2}):} 
+
+\item {\bf Finding 3 ($\S$\ref{sec-dev-char}):} 
+Developers who commit to the repository on a daily basis
+write less buggy commits, while day-job developers are more likely to produce
+bugs.
+%indicating ...
+%that we may want to have daily committing developers code-review other developers' commits.
+
+\item {\bf Finding 4 ($\S$\ref{sec-day-of-week}):} 
 In contrast to the prior finding that Friday commits are buggier~\cite{sliwerski-msr-2005}, 
 our results on the Linux kernel and PostgreSQL show that 
 the bugginess differences of commits that are checked in on different days of week 
 are not statistically significant. This result shows that the day of week of commits
 vary for different software projects, implying that the bugginess prediction based on this 
 metric may need to be on a project-by-project basis.
-
-\item {\bf Finding 3:}
-% ($\S$\ref{sec:finding3}):} 
-Developers who commit to the repository on a daily basis
-write less buggy commits, while day-job developers are more likely to produce
-bugs.
-%indicating ...
-%that we may want to have daily committing developers code-review other developers' commits.
 
 \end{list}
 

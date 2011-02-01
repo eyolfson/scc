@@ -62,6 +62,7 @@ Number of commits & 222,332 & 31,098 \\
 %% of the repository contains over 750,000 lines of code.
 
 \subsection{Time-of-day Results} 
+\label{sec-time-of-day}
 We first present our results correlating the time-of-day of a commit
 with its bugginess.  
 Figures~\ref{fig-linux-bugginess-hour}
@@ -170,6 +171,7 @@ that a commit is bug-fixing does not affect its other characteristics.
 %% \end{figure}
 
 \subsection{Developer Characteristics}
+\label{sec-dev-char}
 We next present our findings with respect to developers' commiting 
 frequency and experience classification. Developers'
 commiting frequency summarizes the frequency of
@@ -271,6 +273,7 @@ to help predict buggy code locations.
 
 
 \subsection{Day-of-week Results}
+\label{sec-day-of-week}
 Our next experiment attempted to replicate the results
 in~\cite{sliwerski-msr-2005} and correlates the day of the week
 of a commit with its bugginess. Figures~\ref{fig-linux-bugginess-day} 
@@ -363,6 +366,7 @@ the weekday volume on the weekend.
 %% Monday, when they know exactly what to do. 
 
 \subsection{Bug Lifetimes}
+\label{sec-bug-lifetime}
 Figures~\ref{fig-linux-bug-lifetime} and
 \ref{fig-postgresql-bug-lifetime} show the bug lifetimes for the Linux
 kernel and Postgres, with bug lifetimes grouped in 120 day
@@ -395,6 +399,7 @@ and the overall lifetime decreases exponentially.
 \end{figure*}
 
 \subsection{Comment-only Commits}
+\label{sec-comment-only}
 We noticed a large number of bug-fixing commits in the database
 reported 0 lines changed. We performed a random sample on 50 of these
 commits for each project and found most only changed comments in the
@@ -411,6 +416,7 @@ comments.
 %% effectiveness of our heuristic for additions.
 
 \subsection{Validation} 
+\label{sec-validation}
 To validate our results, we estimated the precision and recall of our
 technique for identifying bug-fixing commits on both projects.  As our
 algorithm for identifying the associated bug-introducing commits was a
