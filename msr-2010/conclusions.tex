@@ -6,27 +6,26 @@ the Linux kernel and PostgreSQL respectively, to study the correlation between c
 several commit social characteristics, such as the time of day of commits,
 the day of week of commits, developer experience, and developers' activity
 frequency. We found several interesting findings which include: (1)  
-late-night commits (between 0:00-4:00 AM) are buggier than average, 
+late-night commits (between midnight and 4:00 AM) are buggier than average, 
 while morning commits (7:00 AM-noon) are less buggy, suggesting 
 that developers may want to double check the late-night commits before committing, 
 and it may be beneficial for the version control
 system to warn the developers of late-night commits to improve software reliability; 
-(2) in contrast to prior findings, 
-our results show that the bugginess differences of commits that are checked in on different days of week 
-are not statistically significant, 
-%indicating that the day of week of commits
-%vary for different software projects, 
-implying that the bugginess prediction based on this 
-metric may need to be on a project-by-project basis;
+(2) 
+our results show that the day of week of commits
+vary for different software projects, 
+implying that the bugginess prediction based on the data of week of commit metric 
+may need to be on a project-by-project basis;
 and (3) developers who commit to the repository on a daily basis
 write less buggy commits, while day-job developers are more likely to produce
-bugs.
-%
+bugs, indicating that we may
+want to promote the action of daily committing developers code-reviewing other
+developers' commits.
 We believe such results are valuable to the software engineering community and 
 software developers. 
 
 In the future, we would like to study the relative time of commits with respect to individual developers to 
-understand, for example whether a deveper's commits outside of his/her normal committing hours are buggier.
+understand, for example whether a developer's commits outside of his/her normal committing hours are buggier.
 To extend our developer experience study, we can add developers contributions to other open-source software projects
 %by crawling these projects version control systems 
 to better understand a developer's overall programming experience. 
