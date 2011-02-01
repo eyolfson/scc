@@ -13,13 +13,22 @@ In this paper, we study the correlation between a commit's bugginess
 and the time of day of the commit, the day of week of the commit, and
 the experience and activity frequency of the commit authors.  We
 survey two widely-used open source projects: the Linux kernel and
-PostgreSQL.  We have discovered several interesting findings, and we
-present our findings and their implications in this paper.
+PostgreSQL.  
 
-%% Our main findings include: (1) commits submitted between midnight and
-%% 4 AM are significantly buggier and commits submitted between 7AM - noon
-%% are less buggier, implying that developers may want to double check
-%% their own midnight commits; and (2) daily commiting developers produce
-%% less buggy commits, indicating that we may want to have daily
-%% commiting developers code-review other developers' commits.
+Our main findings include: (1) commits submitted between midnight and
+4 AM (referred to as late-night commits) are significantly buggier 
+and commits between 7AM - noon are less buggier, implying that developers 
+may want to double check their own late-night commits; 
+(2) daily committing developers produce less buggy commits, indicating that we may 
+want to promote the action of daily committing developers code-reviewing other 
+developers' commits; and (3) 
+%commits on different days of week have the same level of bugginess, which
+%do not agree with results from the prior study on two different open source projects~\cite{sliwerski-msr-2005}.  
+the day of week of commits
+vary for different software projects, implying that the bugginess prediction based on 
+the day of week of commits may need to be on a project-by-project basis.
+
+%We have discovered several interesting findings, and we
+%present our findings and their implications in this paper.
+
 
