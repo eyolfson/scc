@@ -119,6 +119,39 @@ that a commit is bug-fixing does not affect its other characteristics.
 \label{fig-bugginess-hour} % caption for the whole figure
 \end{figure*}
 
+%----- introduction hour
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {The Linux kernel} ]  
+{
+    \label{fig-linux-introduction-hour}
+\includegraphics[width=\columnwidth]{linux-introductions-hour.pdf}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-introduction-hour}
+\includegraphics[width=\columnwidth]{postgresql-introductions-hour.pdf}
+}
+\caption{The introductions per commit per day}
+\label{fig-introduction-hour} % caption for the whole figure
+\end{figure*}
+
+%------ severity hour 
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {The Linux kernel} ]  
+{
+    \label{fig-linux-severity-hour}
+\includegraphics[width=\columnwidth]{linux-severity-hour.pdf}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-severity-hour}
+\includegraphics[width=\columnwidth]{postgresql-severity-hour.pdf}
+}
+\caption{The severity of changes per hour}
+\label{fig-severity-hour} % caption for the whole figure
+\end{figure*}
 
 %% \begin{figure}
 %% \begin{center}
@@ -234,6 +267,50 @@ to help predict buggy code locations.
 \end{figure*}
 
 
+
+
+
+\subsection{Day-of-week Results}
+Our next experiment attempted to replicate the results
+in~\cite{sliwerski-msr-2005} and correlates the day of the week
+of a commit with its bugginess. Figures~\ref{fig-linux-bugginess-day} 
+and~\ref{fig-postgresql-bugginess-day} compare the day of the week
+with the bugginess of the commits on that day (bars) and also display
+the total number of commits per day (dots). Once again, the solid
+horizontal line presents the average bugginess of all commits to
+each project.
+
+Our results, which use a disjoint set of repositories from those
+in~\cite{sliwerski-msr-2005}, found about the same bugginess for each
+day in the Linux repository, with the lowest bugginess on Sunday and
+highest on Monday and Thursday; for the Postgres repository, we
+observe a slight decrease in bugginess on Saturday and Monday, a small
+increase on Tuesday and Wednesday, and a noticeable increase on
+Sunday.  Note that, for Linux, Saturday and Sunday each have about
+half as many commits as the other days of the week (commits peak on
+Tuesday and steadily decrease through Friday). For Postgres, commits
+fluctuate through the days of the week and decrease to about 70\% of
+the weekday volume on the weekend.
+
+
+%---- bugginess day
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {The Linux kernel} ]  
+{
+    \label{fig-linux-bugginess-day}
+\includegraphics[width=\columnwidth]{linux-bugginess-day.pdf}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-bugginess-day}
+\includegraphics[width=\columnwidth]{postgresql-bugginess-day.pdf}
+}
+\caption{The percentage of buggy commits per day}
+\label{fig-bugginess-day} % caption for the whole figure
+\end{figure*}
+
+%--- introduction day
 \begin{figure*}[tbh]
 \centering
 \subfigure [ {The Linux kernel} ]  
@@ -267,97 +344,7 @@ to help predict buggy code locations.
 \label{fig-severity-day} % caption for the whole figure
 \end{figure*}
 
-%----- introduction hour
-\begin{figure*}[tbh]
-\centering
-\subfigure [ {The Linux kernel} ]  
-{
-    \label{fig-linux-introduction-hour}
-\includegraphics[width=\columnwidth]{linux-introductions-hour.pdf}
-}
-\subfigure[ PostgreSQL ] 
-{
-    \label{fig-postgresql-introduction-hour}
-\includegraphics[width=\columnwidth]{postgresql-introductions-hour.pdf}
-}
-\caption{The introductions per commit per day}
-\label{fig-introduction-hour} % caption for the whole figure
-\end{figure*}
 
-%------ severity hour 
-\begin{figure*}[tbh]
-\centering
-\subfigure [ {The Linux kernel} ]  
-{
-    \label{fig-linux-severity-hour}
-\includegraphics[width=\columnwidth]{linux-severity-hour.pdf}
-}
-\subfigure[ PostgreSQL ] 
-{
-    \label{fig-postgresql-severity-hour}
-\includegraphics[width=\columnwidth]{postgresql-severity-hour.pdf}
-}
-\caption{The severity of changes per hour}
-\label{fig-severity-hour} % caption for the whole figure
-\end{figure*}
-
-%---- bugginess day
-\begin{figure*}[tbh]
-\centering
-\subfigure [ {The Linux kernel} ]  
-{
-    \label{fig-linux-bugginess-day}
-\includegraphics[width=\columnwidth]{linux-bugginess-day.pdf}
-}
-\subfigure[ PostgreSQL ] 
-{
-    \label{fig-postgresql-bugginess-day}
-\includegraphics[width=\columnwidth]{postgresql-bugginess-day.pdf}
-}
-\caption{The percentage of buggy commits per day}
-\label{fig-bugginess-day} % caption for the whole figure
-\end{figure*}
-
-
-%---- lifetime 
-\begin{figure*}[tbh]
-\centering
-\subfigure [ {The Linux kernel} ]  
-{
-    \label{fig-linux-bug-lifetime}
-\includegraphics[width=\columnwidth]{linux-bug-lifetime.pdf}
-}
-\subfigure[ PostgreSQL ] 
-{
-    \label{fig-postgresql-bug-lifetime}
-\includegraphics[width=\columnwidth]{postgresql-bug-lifetime.pdf}
-}
-\caption{The bug lifetime}
-\label{fig-bug-lifetime} % caption for the whole figure
-\end{figure*}
-
-
-\subsection{Day-of-week Results}
-Our next experiment attempted to replicate the results
-in~\cite{sliwerski-msr-2005} and correlates the day of the week
-of a commit with its bugginess. Figures~\ref{fig-linux-bugginess-day} 
-and~\ref{fig-postgresql-bugginess-day} compare the day of the week
-with the bugginess of the commits on that day (bars) and also display
-the total number of commits per day (dots). Once again, the solid
-horizontal line presents the average bugginess of all commits to
-each project.
-
-Our results, which use a disjoint set of repositories from those
-in~\cite{sliwerski-msr-2005}, found about the same bugginess for each
-day in the Linux repository, with the lowest bugginess on Sunday and
-highest on Monday and Thursday; for the Postgres repository, we
-observe a slight decrease in bugginess on Saturday and Monday, a small
-increase on Tuesday and Wednesday, and a noticeable increase on
-Sunday.  Note that, for Linux, Saturday and Sunday each have about
-half as many commits as the other days of the week (commits peak on
-Tuesday and steadily decrease through Friday). For Postgres, commits
-fluctuate through the days of the week and decrease to about 70\% of
-the weekday volume on the weekend.
 
 %%  we
 %% determine if the day of the week has any impact on the likelihood of
@@ -389,6 +376,23 @@ calculations and rare corner cases, which intuitively are more likely
 to be found with a larger user base.  Note, the distribution is
 similar for both projects; many bugs are fixed within a 120 day period
 and the overall lifetime decreases exponentially.
+
+%---- lifetime 
+\begin{figure*}[tbh]
+\centering
+\subfigure [ {The Linux kernel} ]  
+{
+    \label{fig-linux-bug-lifetime}
+\includegraphics[width=\columnwidth]{linux-bug-lifetime.pdf}
+}
+\subfigure[ PostgreSQL ] 
+{
+    \label{fig-postgresql-bug-lifetime}
+\includegraphics[width=\columnwidth]{postgresql-bug-lifetime.pdf}
+}
+\caption{The bug lifetime}
+\label{fig-bug-lifetime} % caption for the whole figure
+\end{figure*}
 
 \subsection{Comment-only Commits}
 We noticed a large number of bug-fixing commits in the database
