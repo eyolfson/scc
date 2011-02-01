@@ -40,7 +40,7 @@ Lines of code at tip & over 5 million & over 750,000 \\
 Number of authors & 8,594 & 34 \\
 Number of commits & 222,332 & 31,098 \\
 \# bug-introducing & 56,681 (25.5\%) & 7,366 (23.7\%) \\
-\# bug-fixing & 57,028 & 4,399
+\# bug-fixing & \linuxBFC & \postBFC
 \end{tabular}
 \caption{\label{tab:characteristics}Characteristics of the Linux kernel and PostgreSQL repositories.}
 \end{table}
@@ -92,6 +92,14 @@ while finalizing the patch (for the Linux kernel). Furthermore, we can observe
 that commits before noon are least likely to be bug-introducing;
 perhaps committers are most careful in those hours.
 
+We also investigated correlations between the time-of-day and the
+number of bug-fixing commits. We found that the proportion of total
+commits that are bug-fixing commits stayed almost constant independent
+of the hour; the graphs (not shown) have exactly the same shape as
+that of the circles in Figures~\ref{fig-linux-bugginess-hour}
+and~\ref{fig-postgresql-bugginess-hour}. This suggests that the fact
+that a commit is bug-fixing does not affect its other characteristics.
+
 \begin{figure}
 \begin{center}
 \includegraphics[width=\columnwidth]{linux-bugginess-hour.pdf}
@@ -125,22 +133,24 @@ perhaps committers are most careful in those hours.
 %% \end{figure}
 
 \subsection{Developer Characteristics}
-We next present our findings with respect to developer classification
-and experience.  Developer classification summarizes the frequency of
+We next present our findings with respect to developers' commiting 
+frequency and experience classification. Developers'
+commiting frequency summarizes the frequency of
 a developer's contributions to a project, while developer experience
 tracks how long a developer has contributed to a particular project.
 
-\paragraph{Developer Frequency Classification} 
+\paragraph{Developers' Committing Frequency Classification} 
 As we described in Section~\ref{sec:data}, one of the ways that we
 classify developers is according to frequency, i.e. most-common
 interval between consecutive commits---daily, weekly, monthly, other,
-or single.  This information is only interesting for the Linux kernel, as the
-almost all (28/34) of Postgres's committers are daily. We computed the
-bugginess rates for each of these classes of developers and plot
+or single.  This information is only interesting for the Linux kernel,
+as almost all (28/34) of Postgres's committers are daily. We computed
+the bugginess rates for each of these classes of developers and plot
 author classification versus bug-introduction percentage in
 Figure~\ref{fig-linux-bugginess-author-class}. The graph also presents
-the number of authors in each class; the Linux kernel has 49 day job authors,
-and 238 weekly and 288 monthly authors.
+the number of commits by each class. Note that the Linux kernel has 49
+day job authors, who provide quite a few of the total commits, and 238
+weekly and 288 monthly authors.
 
 Our results show that the Linux kernel developers who commit changes daily, but
 not as their day job, produce the smallest number of bug-introducing
@@ -347,23 +357,43 @@ revealed).
 \end{figure}
 
 
-\subsection{Day-of-week Results} Having determined our false positive rate, 
-we continue by presenting the results of our analysis.  First, we
-determine if the day of the week has any impact on the likelihood of
-producing bugs. For the following graphs, the percentage of
-introduction commits indicates the amount of commits which are bug
-introductions, as a propostion of the total number of
-commits. Figure~\ref{fig-linux-bugginess-day} presents our results for
-the Linux kernel. We see that Saturday is the worst day, followed by Thursday,
-while Monday has the fewest percentage of bug introductions. The
-results for PostgreSQL are shown in Figure~\ref{fig-postgresql-bugginess-day} and
-agree with Thursday being one of the worst days, while Monday is the
-best day for committing changes which do not introduce bugs. A
-possible explanation is that developers rest over the weekend and have
-ample time to think about the problem before coding a solution on
-Monday, when they know exactly what to do. Per-day bugginess may also
-be correlated with the size of the change, which we plan to investigate
-later, as an addition to our technique.
+\subsection{Day-of-week Results}
+Our next experiment attempted to replicate the results
+in~\cite{sliwerski-msr-2005} and correlates the day of the week
+of a commit with its bugginess. Figures~\ref{fig-linux-bugginess-day} 
+and~\ref{fig-postgresql-bugginess-day} compare the day of the week
+with the bugginess of the commits on that day (bars) and also display
+the total number of commits per day (dots). Once again, the solid
+horizontal line presents the average bugginess of all commits to
+each project.
+
+Our results, which use a disjoint set of repositories from those
+in~\cite{sliwerski-msr-2005}, found about the same bugginess for each
+day in the Linux repository, with the lowest bugginess on Sunday and
+highest on Monday and Thursday; for the Postgres repository, we
+observe a slight decrease in bugginess on Saturday and Monday, a small
+increase on Tuesday and Wednesday, and a noticeable increase on
+Sunday.  Note that, for Linux, Saturday and Sunday each have about
+half as many commits as the other days of the week (commits peak on
+Tuesday and steadily decrease through Friday). For Postgres, commits
+fluctuate through the days of the week and decrease to about 70\% of
+the weekday volume on the weekend.
+
+%%  we
+%% determine if the day of the week has any impact on the likelihood of
+%% producing bugs. For the following graphs, the percentage of
+%% introduction commits indicates the amount of commits which are bug
+%% introductions, as a propostion of the total number of
+%% commits. Figure~\ref{fig-linux-bugginess-day} presents our results for
+%% the Linux kernel. We see that Saturday is the worst day, followed by Thursday,
+%% while Monday has the fewest percentage of bug introductions. The
+%% results for PostgreSQL are shown in Figure~\ref{fig-postgresql-bugginess-day} and
+%% agree with Thursday being one of the worst days, while Monday is the
+%% best day for committing changes which do not introduce bugs. 
+
+%% A possible explanation is that developers rest over the weekend and have
+%% ample time to think about the problem before coding a solution on
+%% Monday, when they know exactly what to do. 
 
 \subsection{Bug lifetimes}
 
@@ -389,18 +419,21 @@ technique for identifying bug-fixing commits on both projects.  As our
 algorithm for identifying the associated bug-introducing commits was a
 straightforward application of git blame, we did not systematically
 verify its performance. (A brief manual inspection of bug-introducing
-commits looked correct.) For both projects, we randomly sampled 50 bugs
+commits did not reveal any anomalies.) 
+For both projects, we randomly sampled 50 bugs
 from each of the population of commits that we identified to be
-bug-introducing commits BI (to evaluate precision) and commits that we
-identified to be non-bug-introducing commits $\neg$ BI (to evaluate recall).
-Table~\ref{tab:pr-raw} summarizes our precision and
-recall findings.
+bug-fixing commits, BI (to evaluate precision).
+%, and commits that we
+%identified to be non-bug-fixing commits, $\neg$ BI (to evaluate recall).
+Table~\ref{tab:pr-raw} summarizes our precision findings.
+%and
+%recall findings.
 
 We evaluated the precision---that is, the proportion of identified
 bug-fixing commits which do indeed fix bugs---and found that, for
-the Linux kernel, 43 of the 50 bugs that we automatically identified as
+the Linux kernel, 43 of the 50 bugs (in BI) that we automatically identified as
 bug-fixing commits did indeed fix bugs, while 7 did not; for Postgres,
-42 of 50 identified fixes were indeed fixes.  Some of the
+42 of 50 identified fixes (BI) were indeed fixes.  Some of the
 cases included: 1) a commit message which fixed a merge commit was
 classified as a fix; 2) apparently garbled commit messages which
 included the keyword ``fix'' for no good reason; 3) changes which were
@@ -411,33 +444,39 @@ of the commit; and 5) refactoring changes, which moved or renamed
 functions---these could arguably be considered to be fixes to a buggy
 initial design.
 
-To evaluate the recall of our technique---the proportion of bug-fixing
-commits in the entire sample that we manage to identify---we sampled
-50 non-bug-introducing commits from both the Linux kernel and
-Postgres. Table~\ref{tab:pr-raw} presents the raw recall data. To compute
-the recall, we evaluate
-\[ \mbox{Recall} = \frac{\mbox{identified BI} \cap \mbox{actual BI}}{\mbox{identified BI}}; \]
-however, to do so, we must normalize the number of identified bug-introducing
-commits. Table~\ref{tab:pr-raw} therefore also shows our adjusted data in 
-brackets.
+We have estimated our recall---the proportion of bug-fixing commits in
+the entire sample that our technique identifies---to be at least \linuxR for
+Linux and \postR for Postgres, and we are certain that our sampling
+technique underestimates the recall. We intend to re-evaluate the
+recall of our technique in the near future.
 
-% WRITE MORE TEXT HERE.
-% make this more clear
+%% To evaluate the recall of our technique---the proportion of bug-fixing
+%% commits in the entire sample that we manage to identify---we sampled
+%% 50 non-bug-introducing commits from both the Linux kernel and
+%% Postgres. Table~\ref{tab:pr-raw} presents the raw recall data. To compute
+%% the recall, we evaluate
+%% \[ \mbox{Recall} = \frac{\mbox{identified BI} \cap \mbox{actual BI}}{\mbox{identified BI}}; \]
+%% however, to do so, we must normalize the number of identified bug-introducing
+%% commits. Based on the precision results, we know that there are at least
+%% 48745 bug-introducing commits, so we should have sampled 
+%% Table~\ref{tab:pr-raw} therefore also shows our adjusted data in 
+%% brackets.
 
 \begin{table}
 \begin{center}
 \begin{tabular}{rrr}
 Linux & actual BI & actual $\neg$ BI \\
 identified BI & 43 & 7 \\
-identified $\neg$ BI & 6 (23) & 44 (172) \\
+%identified $\neg$ BI & 6 (23) & 44 (172) \\
 \end{tabular} 
 
 \begin{tabular}{rrr} Postgres & actual BI & actual $\neg$ BI \\
 identified BI & 42 & 8 \\
-identified $\neg$ BI & 3 (21) & 47 (332)
+%identified $\neg$ BI & 3 (21) & 47 (332)
 \end{tabular}
 \end{center}
-\caption{\label{tab:pr-raw}Raw and (adjusted) results for precision and recall.}
+\caption{\label{tab:pr-raw}Raw results for precision.}
+
 %% \begin{center}
 %% \begin{tabular}{rrr}
 %% Linux & actual BI & actual $\neg$ BI \\

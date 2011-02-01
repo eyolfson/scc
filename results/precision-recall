@@ -11,6 +11,7 @@ F	          6  44
 
 ratio of classfied as T/F: R= 57,028/222,332 = 25.65%
 
+
 Converted to (Row F divides R):  
 Classified\Actual  T  F
 T		  43  7 
@@ -22,7 +23,19 @@ Recall = 43/(43+23.39) = 64.8%
 
 Recall = 43/(43+23) = 65% 
 
+----------------------------------
 
+lower bound of actual T: 57,028 *86% = 49,044.08  
+
+ratio of classfied as T/F: R'= 49,044.08/222,332 = 
+
+
+Converted to (Row F divides R'):  
+Classified\Actual  T  F
+T		  43  7 
+F	          27  X
+
+Lower Bound Recall: 43/(43+27) = 61%
 ---------------------------------------
 
 PostgreSQL:
@@ -43,3 +56,14 @@ Recall = 42/(42+21.21) = 66.4%
 
 Recall = 42/(42+21) = 67% 
 
+--------------------------------
+lower bound of actutal T: 4,399*84% =  3695.16
+
+ratio of classfied as T/F: R= 3695.16/31,098 
+
+Converted to (Row F divides R):  
+Classified\Actual  T  F
+T		  42  8 
+F	          25 X  
+
+Lower bound of recall: 42/(42+25) = 63% 
