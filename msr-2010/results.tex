@@ -13,7 +13,8 @@ bug-fixing commits only changed comments.
 Finally, we explain the precision and
 recall of our methodology and how we computed these figures.
 
-\paragraph{Project characteristics}
+\subsection{Project Characteristics}
+\label{sec-proj-char}
 We chose two large open-source software repositories for our
 investigations: Linus Torvalds's mainline Linux kernel, from
 \url{git.kernel.org} and PostgreSQL, from the project's repository at
@@ -39,7 +40,7 @@ in Section~\ref{sec:method}.
 & {\bf Linux} & {\bf PostgreSQL} \\ \hline
 First commit & April 16, 2005 & July 9, 1996 \\
 Cloned & November 21, 2010 & January 24, 2011 \\
-Lines of code at tip & over 5 million & over 750,000 \\
+Lines of code & over 5 million & over 750,000 \\
 %Source & \url{git.kernel.org} & \url{git.postgresql.org} \\
 Number of authors & 8,594 & 34 \\
 Number of commits & 222,332 & 31,098 \\
@@ -115,9 +116,9 @@ commit slightly smaller changes between 5AM and noon, with a spike at 8AM.
 
 \paragraph{Discussion}
 These results indicate that developers may want to double check the code they write for these 
-late-night commits (0:00-4:00 AM).
+late-night commits (midnight-4:00 AM).
 It may also be beneficial for version control
-systems to warn the developers of late-night commits to improve software reliability. 
+system to warn the developers of late-night commits to improve software reliability. 
 
 Our results may suggest that tired developers (midnight-4AM) are more
 likely to miss corner cases in a pre-commit review (for Postgres) or

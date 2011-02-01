@@ -206,6 +206,12 @@ mitigating threats to validity from repository corruption.
 Also, note that the conversion to git obviates the need to mine transactions
 from CVS histories, as in~\cite{zimmermann-msr-2004}.
 
+We excluded commits that merge different branches from our study, because
+including these merging commits would double-count a commit, once
+for the original commit and once for the merging commit. 
+Additionally, these merging commits take up only 6.25\% of all the commits,
+therefore, excluding them should not affect the representativeness of our results. 
+
 \paragraph{Threats due to imperfect recall}
 Because our methodology only identifies bugs which have later been
 corrected, it will definitely omit recently-introduced bugs, as well
