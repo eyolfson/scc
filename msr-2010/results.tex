@@ -8,7 +8,9 @@ the likelihood of a commit to be a bug-introducing commit, or
 \emph{bugginess}. We also
 describe our findings with respect to the day of the week, which
 allows us to compare our results to those
-in~\cite{sliwerski-msr-2005}.  Finally, we explain the precision and
+in~\cite{sliwerski-msr-2005}. We also discuss our finding that some
+bug-fixing commits only changed comments. 
+Finally, we explain the precision and
 recall of our methodology and how we computed these figures.
 
 \paragraph{Project characteristics}
@@ -20,8 +22,10 @@ investigations: Linus Torvalds's mainline Linux kernel, from
 
 Table~\ref{tab:characteristics} summarizes
 the characteristics of each of our repositories. 
-Row ``bug-introducing'' shows that 23.7-25.5\% of the commits are buggy, which 
-is slightly lower than the previously reported nearly 40\% for a commercial switching system~\cite{smallCommits05}. 
+The row ``lines of code at tip'' refers to the current size of the
+code in the repository.
+The row ``\# bug-introducing'' shows that 23.7-25.5\% of the commits are buggy, which 
+is slightly lower than the previously reported figure of nearly 40\% for a commercial switching system~\cite{smallCommits05}. 
 %of the samll commits are buggy, this number is on all commits
 %in the previous work by Purushothaman and Perry~\cite{smallCommits05}.
 Note that the
@@ -63,11 +67,10 @@ Number of commits & 222,332 & 31,098 \\
 
 \subsection{Time-of-day Results} 
 \label{sec-time-of-day}
-We first present our results correlating the time-of-day of a commit
+Figure~\ref{fig-bugginess-hour} 
+presents our results correlating the time-of-day of a commit
 with its bugginess.  
-Figures~\ref{fig-linux-bugginess-hour}
-and~\ref{fig-postgresql-bugginess-hour} present results from the Linux kernel and
-Postgres, respectively. These graphs compare the time-of-day of each
+The graphs compare the time-of-day of each
 commit, in the committer's local time on a 24-hour clock, to the
 percentage of commits which were found to be bug-introducing. The
 solid horizontal line indicates the overall percentage number of buggy commits in
@@ -86,9 +89,8 @@ introductions per changed non-comment lines of
 code. Figure~\ref{fig-severity-hour} presents our data correlating
 severity of changes, along with average commit size, with time-of-day.
 
-Figures~\ref{fig-linux-bugginess-hour}
-and~\ref{fig-postgresql-bugginess-hour}, summarizing bugginess
-percentages, show a noticeable increase in the amount of commits which
+Figure~\ref{fig-bugginess-hour}, which summarizes bugginess
+percentages, shows a noticeable increase in the amount of commits which
 introduce a bug between 00:00 (midnight) and 04:00 (4AM). After 04:00,
 commits tend to be less buggy than average, gradually increasing until
 noon.  In the Linux kernel, commits between noon and midnight
@@ -96,10 +98,9 @@ fluctuate around the average bugginess level, while the Postgres
 commits are generally above the average bugginess level between 16:00
 (4PM) and 20:00 (8PM), and then below the average bugginess level
 between 20:00 (8PM) and 00:00
-(midnight). Figures~\ref{fig-linux-introduction-hour}
-and~\ref{fig-postgresql-introduction-hour} track the trends in
-Figures~\ref{fig-linux-bugginess-hour}
-and~\ref{fig-postgresql-bugginess-hour}. Note that even the smallest
+(midnight). Figure~\ref{fig-introduction-hour},
+bug introductions, tracks the trends in
+Figure~\ref{fig-bugginess-hour}. Note that even the smallest
 total number of commits, for any hour, is 139 for Postgres (and an
 order of magnitude higher for the Linux kernel), so that all of the
 depicted bug introduction rates are meaningful.
@@ -112,10 +113,11 @@ The average size of Linux commits fluctuates quite a lot; the sizes of
 Postgres commits are more stable.  For Postgres, developers tend to
 commit slightly smaller changes between 5AM and noon, with a spike at 8AM.
 
+\paragraph{Discussion}
 These results indicate that developers may want to double check the code they write for these 
 late-night commits (0:00-4:00 AM).
-It may also be beneficial for the version control
-system to warn the developers of late-night commits to improve software reliability. 
+It may also be beneficial for version control
+systems to warn the developers of late-night commits to improve software reliability. 
 
 Our results may suggest that tired developers (midnight-4AM) are more
 likely to miss corner cases in a pre-commit review (for Postgres) or
@@ -130,10 +132,10 @@ number of bug-fixing commits, rather than the bug-introducing commits
 that we showed above. We found that the proportion of total
 commits that are bug-fixing commits stayed almost constant independent
 of the hour; the graphs (not shown) have exactly the same shape as
-that of the circles in Figures~\ref{fig-bugginess-hour}.
+that of the circles in Figure~\ref{fig-bugginess-hour}.
 %and~\ref{fig-postgresql-bugginess-hour}. 
 This suggests that the fact
-that a commit is bug-fixing does not affect its other characteristics.
+that a commit is bug-fixing is independent of its other characteristics.
 
 \begin{figure*}[tbh]
 \centering
@@ -147,8 +149,8 @@ that a commit is bug-fixing does not affect its other characteristics.
     \label{fig-postgresql-bugginess-hour}
 \includegraphics[width=\columnwidth]{postgresql-bugginess-hour.pdf}
 }
-\caption{The percentage of buggy commits (bars) and total number of commits (circles) versus time-of-day}
-\label{fig-bugginess-hour} % caption for the whole figure
+\caption{\label{fig-bugginess-hour}The percentage of buggy commits (bars) and total number of commits (circles) versus time-of-day}
+ % caption for the whole figure
 \end{figure*}
 
 %----- introduction hour
@@ -164,8 +166,8 @@ that a commit is bug-fixing does not affect its other characteristics.
     \label{fig-postgresql-introduction-hour}
 \includegraphics[width=\columnwidth]{postgresql-introductions-hour.pdf}
 }
-\caption{Bug introductions per commit (bars) and total commits (circles) versus time-of-day}
-\label{fig-introduction-hour} % caption for the whole figure
+\caption{\label{fig-introduction-hour}Bug introductions per commit (bars) and total commits (circles) versus time-of-day}
+ % caption for the whole figure
 \end{figure*}
 
 %------ severity hour 
@@ -181,8 +183,8 @@ that a commit is bug-fixing does not affect its other characteristics.
     \label{fig-postgresql-severity-hour}
 \includegraphics[width=\columnwidth]{postgresql-severity-hour.pdf}
 }
-\caption{Severity of changes (bars) and average number of lines per commit (circles) versus time-of-day}
-\label{fig-severity-hour} % caption for the whole figure
+\caption{\label{fig-severity-hour}Severity of changes (bars) and average number of lines per commit (circles) versus time-of-day}
+ % caption for the whole figure
 \end{figure*}
 
 %% \begin{figure}
@@ -203,9 +205,9 @@ that a commit is bug-fixing does not affect its other characteristics.
 
 \subsection{Developer Characteristics}
 \label{sec-dev-char}
-We next present our findings with respect to developers' commiting 
+We next present our findings with respect to developers' commit
 frequency and experience classification. Developers'
-commiting frequency summarizes the frequency of
+commit frequency summarizes the frequency of
 a developer's contributions to a project, while developer experience
 tracks how long a developer has contributed to a particular project.
 
@@ -219,16 +221,19 @@ the bugginess rates for each of these classes of developers and plot
 author classification versus bug-introduction percentage in
 Figure~\ref{fig-linux-bugginess-author-class}. The graph also presents
 the number of commits by each class. Note that the Linux kernel has 49
-day job authors, who provide quite a few of the total commits, and 238
-weekly and 288 monthly authors.
+day job authors, who provide quite a few of the total commits, 801 daily authors, who account for the overwhelming majority of commits, 238
+weekly, 288 monthly, 3562 other (less than 20 commits), 
+and 3664 single-commit authors.
 
 Our results show that the Linux kernel developers who commit changes daily, but
-not as their day job, produce the smallest number of bug-introducing
+not as their day job, produce the largest number of commits and the
+smallest number of bug-introducing
 commits, followed by the single-commit authors (whose patches would
 presumably be simple or closely-reviewed). The day job, weekly, and
 monthly committers all produce slightly more bug-introducing commits
 than average.
 
+\paragraph{Discussion}
 A possible cause for the difference between day-job and daily
 committers is that day-job developers might be required to make
 changes by their employers, while the daily developers are motivated
@@ -239,8 +244,7 @@ particular schedule.
 \begin{center}
 \includegraphics[width=\columnwidth]{linux-bugginess-author-class.pdf}
 \end{center}
-\caption{Linux percentage of buggy commits (bars) and number of authors (circles) versus author classification}
-\label{fig-linux-bugginess-author-class}
+\caption{\label{fig-linux-bugginess-author-class}Linux percentage of buggy commits (bars) and number of commits (circles) versus author classification}
 \end{figure}
 
 % we need to say what the two bars mean in the figure.
@@ -263,8 +267,20 @@ particular schedule.
 
 \paragraph{Developer Experience Classification}
 
-Figure~\ref{fig-bugginess-experience} %and Figure~\ref{fig-postgresql-bugginess-experience} 
-shows that, in general, the more experienced the developers are, the less likely that their commits are buggy.
+Figure~\ref{fig-bugginess-experience} compares author experience at
+time of commit to the bugginess of the commit. It also presents the
+total number of commits by author experience. Note that a plurality of
+Linux commits are by authors with fewer than 120 days of experience.
+Both the Linux and Postgres data show that bugginess decreases with
+increased author experience. For Linux, authors with at least 960 days
+of experience tend to produce commits that are less buggy than
+average, while the similar point for Postgres occurs at 3000 days.
+The Postgres data also shows a spike at the right, which implies
+surprisingly high bugginess in code recently committed by the original
+authors.
+
+\paragraph{Discussion}
+Our data show that, in general, the more experienced the developers are, the less likely that their commits are buggy.
 Without further data, this correlation does not prove that the developer experience caused more 
 experienced programmers' commits to be less buggy. 
 While we believe the above causation to hold, other interpretations are possible; perhaps more experienced developers wrote 
@@ -273,6 +289,10 @@ Nonetheless, our results show that given the fact that a commit is from a more e
 one can be more confident about the correctness of the commit. Such a correlation could be exploited 
 to help predict buggy code locations.
 
+We do not understand the spike to the right of the Postgres graph.
+Possible reasons include the shift to Git, which is a known historical
+event, or, more speculatively, perhaps Postgres recently undertook
+major ongoing architectural revisions.
 
 %% \begin{figure}
 %% \begin{center}
@@ -295,8 +315,8 @@ to help predict buggy code locations.
     \label{fig-postgresql-bugginess-experience}
 \includegraphics[width=\columnwidth]{postgresql-bugginess-experience.pdf}
 }
-\caption{Percentage of buggy commits (bars) and total number of commits (circles) versus author experience}
-\label{fig-bugginess-experience} % caption for the whole figure
+\caption{\label{fig-bugginess-experience}Percentage of buggy commits (bars) and total number of commits (circles) versus author experience}
+ % caption for the whole figure
 \end{figure*}
 
 
@@ -307,15 +327,15 @@ to help predict buggy code locations.
 \label{sec-day-of-week}
 Our next experiment attempted to replicate the results
 in~\cite{sliwerski-msr-2005} and correlates the day of the week
-of a commit with its bugginess. Figures~\ref{fig-linux-bugginess-day} 
-and~\ref{fig-postgresql-bugginess-day} compare the day of the week
-with the bugginess of the commits on that day (bars) and also display
-the total number of commits per day (dots). Once again, the solid
-horizontal line presents the average bugginess of all commits to
+of a commit with its bugginess. Figure~\ref{fig-bugginess-day} 
+compares the day of the week
+with the bugginess of the commits on that day (bars) and also displays
+the total number of commits per day (dots). Here, the solid
+horizontal line presents the overall bugginess of all commits to
 each project. 
-Figures~\ref{fig-linux-introduction-day} and~\ref{fig-postgresql-introduction-day} present the number of bug introductions per day-of-week, while
-Figures~\ref{fig-linux-severity-day} and~\ref{fig-postgresql-severity-day} 
-present the severity of bugs per day-of-week, and also present the average
+Figure~\ref{fig-introduction-day} presents the number of bug introductions per day-of-week, while
+Figure~\ref{fig-severity-day} 
+presents the severity of bugs per day-of-week, and also presents the average
 sizes of commits.
 
 Our results, which use a disjoint set of repositories from those
@@ -330,11 +350,11 @@ half as many commits as the other days of the week (commits peak on
 Tuesday and steadily decrease through Friday). For Postgres, commits
 fluctuate through the days of the week and decrease to about 70\% of
 the weekday volume on the weekend. The severity results do not show
-any particular trends, although we found that the average number of lines
+any particular trends, but we found that the average number of lines
 per commit on Sunday was surprisingly large for both Linux and Postgres.
 
-%{\bf Finding \fday and Implications:} 
-To summarize our results, we found that commits on different days of week have the same level of bugginess, which
+\paragraph{Discussion}
+We found that commits on different days of week have the same level of bugginess, which
 does not agree with results from the prior study on two different open source projects~\cite{sliwerski-msr-2005}.  
 Our result shows that the day of week of commits
 vary for different software projects, implying that the bugginess prediction based on 
@@ -354,8 +374,8 @@ the day of week of commits may need to be on a project-by-project basis.
     \label{fig-postgresql-bugginess-day}
 \includegraphics[width=\columnwidth]{postgresql-bugginess-day.pdf}
 }
-\caption{Percentage of buggy commits (bars) and total commits (circles) versus day-of-week}
-\label{fig-bugginess-day} % caption for the whole figure
+\caption{\label{fig-bugginess-day}Percentage of buggy commits (bars) and total commits (circles) versus day-of-week}
+ % caption for the whole figure
 \end{figure*}
 
 %--- introduction day
@@ -371,8 +391,8 @@ the day of week of commits may need to be on a project-by-project basis.
     \label{fig-postgresql-introduction-day}
 \includegraphics[width=\columnwidth]{postgresql-introductions-day.pdf}
 }
-\caption{Number of bug-introducing commits (bars) and total commits (circles) versus day-of-week}
-\label{fig-introduction-day} % caption for the whole figure
+\caption{\label{fig-introduction-day}Number of bug-introducing commits (bars) and total commits (circles) versus day-of-week}
+ % caption for the whole figure
 \end{figure*}
 
 %------ severity day
@@ -388,8 +408,8 @@ the day of week of commits may need to be on a project-by-project basis.
     \label{fig-postgresql-severity-day}
 \includegraphics[width=\columnwidth]{postgresql-severity-day.pdf}
 }
-\caption{Severity of changes (bars) and average number of lines per commit (circles) versus day-of-week}
-\label{fig-severity-day} % caption for the whole figure
+\caption{\label{fig-severity-day}Severity of changes (bars) and average number of lines per commit (circles) versus day-of-week}
+ % caption for the whole figure
 \end{figure*}
 
 
@@ -412,20 +432,23 @@ the day of week of commits may need to be on a project-by-project basis.
 
 \subsection{Bug Lifetimes}
 \label{sec-bug-lifetime}
-Figures~\ref{fig-linux-bug-lifetime} and
-\ref{fig-postgresql-bug-lifetime} show the bug lifetimes for the Linux
+Recall that the bug lifetime is the amount of time elapsed between the
+bug-introducing commit and its bug-fixing commit.
+Figure~\ref{fig-bug-lifetime} shows the bug lifetimes for the Linux
 kernel and Postgres, with bug lifetimes grouped in 120 day
 intervals. We found the average bug lifetime for the Linux kernel is
 1.38 years with a standard deviation of 1.35 years. The average bug
 lifetime for Postgres is 3.07 years with a standard deviation of 3.19
-years. Postgres may have a longer average bug lifetime due to being a
+years. Note that the distribution of bug lifetimes is similar for both
+projects; many bugs are fixed within a 120 day period and the overall
+lifetime appears to decrease exponentially.
+
+\paragraph{Discussion}
+Postgres may have a longer average bug lifetime due to being a
 smaller, less complex project with a smaller user base. We found the
 sources of the long-time bugs include race conditions, incorrect
 calculations and rare corner cases; such cases are intuitively more
-likely to be found with a larger user base.  Note that the
-distribution of bug lifetimes is similar for both projects; many bugs
-are fixed within a 120 day period and the overall lifetime decreases
-exponentially.
+likely to be found with a larger user base.  
 
 %---- lifetime 
 \begin{figure*}[tbh]
@@ -440,13 +463,13 @@ exponentially.
     \label{fig-postgresql-bug-lifetime}
 \includegraphics[width=\columnwidth]{postgresql-bug-lifetime.pdf}
 }
-\caption{Histogram of bug lifetime counts}
-\label{fig-bug-lifetime} % caption for the whole figure
+\caption{\label{fig-bug-lifetime}Histogram of bug lifetime counts}
+ % caption for the whole figure
 \end{figure*}
 
 \subsection{Comment-only Commits}
 \label{sec-comment-only}
-A large number of bug-fixing commits in the database
+A surprisingly large number of bug-fixing commits in the database
 reported 0 changed lines of code. We performed a random sample on 50 of these
 commits for each project and found that almost all of them only changed comments in the
 source code, which we did not count as changed lines of code. For the Linux kernel 
@@ -457,8 +480,9 @@ commits (1,223 commits\footnote{Estimated based on the percentage of comment-onl
 commits and the total number of commits.}) were on comments only. We followed the same procedure for
 PostgreSQL and found 2.97~$\pm$~0.45\% (estimated to be 131 commits) of bug-fixing commits were on
 comments only.
-These hundreds and thousands of comment-only commits show that developers spent time maintaining
-the correctness of comments.
+These hundreds and thousands of comment-only commits show that developers spend a nontrivial amount of time purely maintaining
+the correctness of comments; these numbers don't even consider the amount of
+time that developers incidentally update comments along with the code.
 
 %% We also noted that approximately 7.7\% of the bug fixes for Linux were
 %% purely for comments, indicating that developers spend a non-trivial
