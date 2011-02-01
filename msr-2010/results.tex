@@ -406,10 +406,14 @@ reported 0 changed lines of code. We performed a random sample on 50 of these
 commits for each project and found that almost all of them only changed comments in the
 source code, which we did not count as changed lines of code. For the Linux kernel 
 2.15~$\pm$~0.10\%~\footnote{We report
-the margin of error with 95\% confidence level.} of the bug-fixing
-commits were on comments. We followed the same procedure for
-PostgreSQL and found 2.97~$\pm$~0.45\% of bug-fixing commits were on
+the margin of error with 95\% confidence level.} 
+of the bug-fixing
+commits (1,223 commits\footnote{Estimated based on the percentage of comment-only
+commits and the total number of commits.}) were on comments. We followed the same procedure for
+PostgreSQL and found 2.97~$\pm$~0.45\% (estimated to be 131 commits) of bug-fixing commits were on
 comments.
+These hundreds and thousands of comment-only commits show that developers spent time maintaining
+the correctness of comments.
 
 %% We also noted that approximately 7.7\% of the bug fixes for Linux were
 %% purely for comments, indicating that developers spend a non-trivial
