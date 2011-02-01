@@ -107,8 +107,10 @@ depicted bug introduction rates are meaningful.
 Figures~\ref{fig-linux-severity-hour}
 and~\ref{fig-postgresql-severity-hour} show that the severity of
 late-night/early-morning changes (before 9AM) is surprisingly high,
-while developers tend to commit small, non-buggy changes between 9AM
-and noon.
+while there is no general trend in the average commit size.
+The average size of Linux commits fluctuates quite a lot; the sizes of
+Postgres commits are more stable.  For Postgres, developers tend to
+commit slightly smaller changes between 5AM and noon, with a spike at 8AM.
 
 These results indicate that developers may want to double check the code they write for these 
 late-night commits (0:00-4:00 AM).
@@ -179,7 +181,7 @@ that a commit is bug-fixing does not affect its other characteristics.
     \label{fig-postgresql-severity-hour}
 \includegraphics[width=\columnwidth]{postgresql-severity-hour.pdf}
 }
-\caption{Severity of changes (bars) and total commits (circles) versus time-of-day}
+\caption{Severity of changes (bars) and average number of lines per commit (circles) versus time-of-day}
 \label{fig-severity-hour} % caption for the whole figure
 \end{figure*}
 
@@ -328,8 +330,8 @@ the weekday volume on the weekend.
 In summary, commits on different days of week have the same level of bugginess, which
 do not agree with results from the prior study on two different open source projects~\cite{sliwerski-msr-2005}.  
 This result shows that the day of week of commits
-vary for different software projects, implying that the bugginess prediction based on this 
-metric may need to be on a project-by-project basis.
+vary for different software projects, implying that the bugginess prediction based on 
+the day of week of commits may need to be on a project-by-project basis.
 
 
 %---- bugginess day
@@ -379,7 +381,7 @@ metric may need to be on a project-by-project basis.
     \label{fig-postgresql-severity-day}
 \includegraphics[width=\columnwidth]{postgresql-severity-day.pdf}
 }
-\caption{Severity of changes (bars) and total commits (circles) versus day-of-week}
+\caption{Severity of changes (bars) and average number of lines per commit (circles) versus day-of-week}
 \label{fig-severity-day} % caption for the whole figure
 \end{figure*}
 
@@ -521,7 +523,7 @@ identified BI for Postgres & 42 & 8 \\
 %identified $\neg$ BI & 3 (21) & 47 (332)
 \end{tabular}
 \end{center}
-\caption{\label{tab:pr-raw}Raw results for precision. BI is bug-introducing commits.}
+\caption{\label{tab:pr-raw}Results for precision. BI is bug-introducing commits.}
 
 %% \begin{center}
 %% \begin{tabular}{rrr}
