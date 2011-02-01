@@ -1,5 +1,4 @@
 - Postgres vs PostgreSQL
-- are there overlapping authors for the Linux kernel and PostgreSQL
 - define committer and author, and use them consistently
 - standard deviation: http://en.wikipedia.org/wiki/Standard_deviation, if a bar is an outlier (<5%), then it is significant enough, check standard deviation interval lookup table
    break them into each month/6 months, etc. calculate standard deviatios for each bar  (anova, t-test), may take too much time to interpret.
@@ -15,6 +14,7 @@
 - Author experience based on number of other projects
 - Variance
 
+- are there overlapping authors for the Linux kernel and PostgreSQL, NO
 - Literature search for number of commits which are comments (Lin) [done]
 - Need some literature search regarding studies on developer experience [done]
 - Postgres [done]
