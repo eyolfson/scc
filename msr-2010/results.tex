@@ -233,7 +233,7 @@ particular schedule.
 \paragraph{Developer Experience Classification}
 
 Figure~\ref{fig-bugginess-experience} %and Figure~\ref{fig-postgresql-bugginess-experience} 
-shows that by and large, the more experienced the developers are, the less likely their commits are buggy.
+shows that, in general, the more experienced the developers are, the less likely their commits are buggy.
 Without further data, this correlation results do not necessarily prove that the developer experience caused more 
 experienced programmers' commits to be less buggy. 
 While we believe the above causation is true, other interpretations are possible, e.g., more experienced developers wrote 
@@ -326,7 +326,7 @@ the weekday volume on the weekend.
     \label{fig-postgresql-introduction-day}
 \includegraphics[width=\columnwidth]{postgresql-introductions-day.pdf}
 }
-\caption{The introductions per commit per day}
+\caption{Bug introductions per commit per day}
 \label{fig-introduction-day} % caption for the whole figure
 \end{figure*}
 
@@ -343,7 +343,7 @@ the weekday volume on the weekend.
     \label{fig-postgresql-severity-day}
 \includegraphics[width=\columnwidth]{postgresql-severity-day.pdf}
 }
-\caption{The severity of changes per day}
+\caption{Severity of changes per day}
 \label{fig-severity-day} % caption for the whole figure
 \end{figure*}
 
@@ -375,11 +375,12 @@ intervals. We found the average bug lifetime for the Linux kernel is
 lifetime for Postgres is 3.07 years with a standard deviation of 3.19
 years. Postgres may have a longer average bug lifetime due to being a
 smaller, less complex project with a smaller user base. We found the
-sources of the long-time bugs include: race conditions, incorrect
-calculations and rare corner cases, which intuitively are more likely
-to be found with a larger user base.  Note, the distribution is
-similar for both projects; many bugs are fixed within a 120 day period
-and the overall lifetime decreases exponentially.
+sources of the long-time bugs include race conditions, incorrect
+calculations and rare corner cases; such cases are intuitively more
+likely to be found with a larger user base.  Note that the
+distribution of bug lifetimes is similar for both projects; many bugs
+are fixed within a 120 day period and the overall lifetime decreases
+exponentially.
 
 %---- lifetime 
 \begin{figure*}[tbh]
