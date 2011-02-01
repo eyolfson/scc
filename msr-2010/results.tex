@@ -312,10 +312,15 @@ and~\ref{fig-postgresql-bugginess-day} compare the day of the week
 with the bugginess of the commits on that day (bars) and also display
 the total number of commits per day (dots). Once again, the solid
 horizontal line presents the average bugginess of all commits to
-each project.
+each project. 
+Figures~\ref{fig-linux-introductions-day} and~\ref{fig-postgresql-introductions-day} present the number of bug introductions per day-of-week, while
+Figures~\ref{fig-linux-severity-day} and~\ref{fig-postgresql-severity-day} 
+present the severity of bugs per day-of-week, and also present the average
+sizes of commits.
 
 Our results, which use a disjoint set of repositories from those
-in~\cite{sliwerski-msr-2005}, found about the same bugginess for each
+in~\cite{sliwerski-msr-2005}, found about the same bugginess and 
+number of introductions for each
 day in the Linux repository, with the lowest bugginess on Sunday and
 highest on Monday and Thursday; for the Postgres repository, we
 observe a slight decrease in bugginess on Saturday and Monday, a small
@@ -324,12 +329,14 @@ Sunday.  Note that, for Linux, Saturday and Sunday each have about
 half as many commits as the other days of the week (commits peak on
 Tuesday and steadily decrease through Friday). For Postgres, commits
 fluctuate through the days of the week and decrease to about 70\% of
-the weekday volume on the weekend.
+the weekday volume on the weekend. The severity results do not show
+any particular trends, although we found that the average number of lines
+per commit on Sunday was surprisingly large for both Linux and Postgres.
 
 %{\bf Finding \fday and Implications:} 
-In summary, commits on different days of week have the same level of bugginess, which
-do not agree with results from the prior study on two different open source projects~\cite{sliwerski-msr-2005}.  
-This result shows that the day of week of commits
+To summarize our results, we found that commits on different days of week have the same level of bugginess, which
+does not agree with results from the prior study on two different open source projects~\cite{sliwerski-msr-2005}.  
+Our result shows that the day of week of commits
 vary for different software projects, implying that the bugginess prediction based on 
 the day of week of commits may need to be on a project-by-project basis.
 
