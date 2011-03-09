@@ -1,0 +1,3549 @@
+=== Fix Commits (55) ===
+Commit: dd9ebf1421902df806c0ed6fac296badaca06161
+Message:
+usb/gadget: fix kernel-doc warning
+
+Fix kernel-doc warning, wrong parameter name listed:
+
+Warning(lin2627-g3-kdocfixes//drivers/usb/gadget/config.c:183): No description found for parameter 'match'
+
+Signed-off-by: Randy Dunlap <randy.dunlap@oracle.com>
+Acked-by: David Brownell <dbrownell@users.sourceforge.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+
+Comment:
+Good.
+
+G: 1, B: 0
+
+Commit: 40b10fc58a62a9698f4fa1916e61b0953139928a
+Message:
+parisc: ropes.h - fix <asm-parisc/*> -> <asm/*>
+Comment:
+Good.
+
+G: 2, B: 0
+
+Commit: 1303dcfd0504565aef8ef63487443ab1f814c00f
+Message:
+iwlwifi: fix ICT irq table endianness
+
+The ICT IRQ table is a set of __le32 values, not u32 values,
+so when reading it we need to take into account that it has
+to be converted to CPU endianness. This was causing a lot of
+trouble on my powerpc box where various things would simply
+not work for no apparent reason with 5xxx cards, but worked
+with 4965 -- which doesn't use the ICT table.
+
+Signed-off-by: Johannes Berg <johannes@sipsolutions.net>
+Acked-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: John W. Linville <linville@tuxdriver.com>
+Comment:
+Good.
+
+G: 3, B: 0
+
+Commit: dc86cabe4b242446ea9aa8492c727e1220817898
+Message:
+perf_counter: Fix output-sharing error path
+
+We forget to release the fd in the PERF_FLAG_FD_OUTPUT
+error path.
+
+Reorganize the error flow here to be a clean fall-through
+logic.
+
+Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Cc: Mike Galbraith <efault@gmx.de>
+Cc: Paul Mackerras <paulus@samba.org>
+Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Frederic Weisbecker <fweisbec@gmail.com>
+LKML-Reference: <new-submission>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Good.
+
+G: 4, B: 0
+
+Commit: bcb3a1676b87effbdeffe8da5c44f63433d158d9
+Message:
+rtc: v3020: fix v3020_mmio_read_bit()
+
+v3020_mmio_read_bit() always returns 0 when left_shift > 7.
+
+v3020_mmio_read_bit()'s return type is (unsigned char).  The code returns
+a value masked by (1 << left_shift) that is casted to the return type.  If
+left_shift is larger than 7, the cast will always result in a 0 return
+value.  The problem was discovered with left_shift = 16, and the included
+patch corrects the problem.
+
+The bug was introduced in the last (Apr 3 2009) commit of the file, kernel
+versions 2.6.30 and later.
+
+Cc: Alessandro Zummo <a.zummo@towertech.it>
+Cc: Paul Gortmaker <p_gortmaker@yahoo.com>
+Cc: Raphael Assenat <raph@8d.com>
+Cc: <stable@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 5, B: 0
+
+Commit: a1d4aebbfa91c55a6b0c629a9ccf6369be0c6e95
+Message:
+iget: stop PROCFS from using iget() and read_inode()
+
+Stop the PROCFS filesystem from using iget() and read_inode().  Merge
+procfs_read_inode() into procfs_get_inode(), and have that call iget_locked()
+instead of iget().
+
+[akpm@linux-foundation.org: coding-style fixes]
+Signed-off-by: David Howells <dhowells@redhat.com>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Acked-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Bad.
+
+G: 5, B: 1
+
+Commit: 29f1df6cc1c3ee3530939f0e38d80a9b50645ba5
+Message:
+[PKT_SCHED]: Fix qdisc return code.
+
+The mapping between TC_ACTION_SHOT and the qdisc return codes is better
+suited to NET_XMIT_BYPASS so as not to confuse TCP
+
+Signed-off-by: Jamal Hadi Salim <hadi@cyberus.ca>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 6, B: 1
+
+Commit: 5ea1c50662d447de344812054175d7151783ea25
+Message:
+tg3: Fix return ring size breakage
+
+Commit f6eb9b1fc1411d22c073f5264e5630a541d0f7df, "tg3: Add 5717 asic
+rev" changed how the rx return ring size operations are done.  It
+effectively inverts the sense of the previous test, but it failed to
+also invert the resulting sizes.  This patch corrects that error.
+
+Signed-off-by: Matt Carlson <mcarlson@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good!
+
+G: 7, B: 1
+
+Commit: 88b9e750e974febd9128fc622109c526a9d22c10
+Message:
+i2c-amd8111: Proposed cleanups
+
+Proposed cleanups to the i2c-amd8111 SMBus driver:
+* Fold long lines.
+* Add an explicit mask when writing the low byte of a word.
+* Use I2C_SMBUS_BLOCK_MAX instead of hardcoding 32.
+* Discard extra blank lines.
+* Use boolean not instead of bitwise not for bit tests, it's clearer.
+* Return -EBUSY rather than -1 on I/O resource conflict.
+* Fix a race on device registration, initialization should be done
+  before the bus is registered.
+
+Signed-off-by: Jean Delvare <khali@linux-fr.org>
+Comment:
+Good(?).
+
+G: 8, B: 1
+
+Commit: 7ef0d7377cb287e08f3ae94cebc919448e1f5dff
+Message:
+fs: new inode i_state corruption fix
+
+There was a report of a data corruption
+http://lkml.org/lkml/2008/11/14/121.  There is a script included to
+reproduce the problem.
+
+During testing, I encountered a number of strange things with ext3, so I
+tried ext2 to attempt to reduce complexity of the problem.  I found that
+fsstress would quickly hang in wait_on_inode, waiting for I_LOCK to be
+cleared, even though instrumentation showed that unlock_new_inode had
+already been called for that inode.  This points to memory scribble, or
+synchronisation problme.
+
+i_state of I_NEW inodes is not protected by inode_lock because other
+processes are not supposed to touch them until I_LOCK (and I_NEW) is
+cleared.  Adding WARN_ON(inode->i_state & I_NEW) to sites where we modify
+i_state revealed that generic_sync_sb_inodes is picking up new inodes from
+the inode lists and passing them to __writeback_single_inode without
+waiting for I_NEW.  Subsequently modifying i_state causes corruption.  In
+my case it would look like this:
+
+CPU0                            CPU1
+unlock_new_inode()              __sync_single_inode()
+ reg <- inode->i_state
+ reg -> reg & ~(I_LOCK|I_NEW)   reg <- inode->i_state
+ reg -> inode->i_state          reg -> reg | I_SYNC
+                                reg -> inode->i_state
+
+Non-atomic RMW on CPU1 overwrites CPU0 store and sets I_LOCK|I_NEW again.
+
+Fix for this is rather than wait for I_NEW inodes, just skip over them:
+inodes concurrently being created are not subject to data integrity
+operations, and should not significantly contribute to dirty memory
+either.
+
+After this change, I'm unable to reproduce any of the added warnings or
+hangs after ~1hour of running.  Previously, the new warnings would start
+immediately and hang would happen in under 5 minutes.
+
+I'm also testing on ext3 now, and so far no problems there either.  I
+don't know whether this fixes the problem reported above, but it fixes a
+real problem for me.
+
+Cc: "Jorge Boncompte [DTI2]" <jorge@dti2.net>
+Reported-by: Adrian Hunter <ext-adrian.hunter@nokia.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: <stable@kernel.org>
+Signed-off-by: Nick Piggin <npiggin@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 9, B: 1
+
+Commit: f9b4fb8dabf38fb456c97f01aace07cb6e7c1723
+Message:
+cpusets: update task's cpus_allowed and mems_allowed after CPU/NODE offline/online
+
+The bug is that a task may run on the cpu/node which is not in its
+cpuset.cpus/ cpuset.mems.
+
+It can be reproduced by the following commands:
+-----------------------------------
+# mkdir /dev/cpuset
+# mount -t cpuset xxx /dev/cpuset
+# mkdir /dev/cpuset/0
+# echo 0-1 > /dev/cpuset/0/cpus
+# echo 0 > /dev/cpuset/0/mems
+# echo $$ > /dev/cpuset/0/tasks
+# echo 0 > /sys/devices/system/cpu/cpu1/online
+# echo 1 > /sys/devices/system/cpu/cpu1/online
+-----------------------------------
+
+There is only CPU0 in cpuset.cpus, but the task in this cpuset runs on
+both CPU0 and CPU1.
+
+It is because the task's cpu_allowed didn't get updated after we did CPU
+offline/online manipulation.  Similar for mem_allowed.
+
+This patch fixes this bug expect for root cpuset.  Because there is a
+problem about root cpuset, in that whether it is necessary to update all
+the tasks in root cpuset or not after cpu/node offline/online.
+
+If updating, some kernel threads which is bound into a specified cpu will
+be unbound.
+
+If not updating, there is a bug in root cpuset.  This bug is also caused
+by offline/online manipulation.  For example, there is a dual-cpu machine.
+ we create a sub cpuset in root cpuset and assign 1 to its cpus.  And then
+we attach some tasks into this sub cpuset.  After this, we offline CPU1.
+Now, the tasks in this new cpuset are moved into root cpuset automatically
+because there is no cpu in sub cpuset.  Then we online CPU1, we find all
+the tasks which doesn't belong to root cpuset originally just run on CPU0.
+
+Maybe we need to add a flag in the task_struct to mark which task can't be
+unbound?
+
+Signed-off-by: Miao Xie <miaox@cn.fujitsu.com>
+Acked-by: Paul Jackson <pj@sgi.com>
+Cc: Li Zefan <lizf@cn.fujitsu.com>
+Cc: Paul Jackson <pj@sgi.com>
+Cc: Paul Menage <menage@google.com>
+Cc: David Rientjes <rientjes@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 10, B: 1
+
+Commit: 097e66c578459f79e3a2128c54e9df5194e1419a
+Message:
+[NET]: Make AF_UNIX per network namespace safe [v2]
+
+Because of the global nature of garbage collection, and because of the
+cost of per namespace hash tables unix_socket_table has been kept
+global.  With a filter added on lookups so we don't see sockets from
+the wrong namespace.
+
+Currently I don't fold the namesapce into the hash so multiple
+namespaces using the same socket name will be guaranteed a hash
+collision.
+
+Changes from v1:
+- fixed unix_seq_open
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Bad.
+
+G: 10, B: 2
+
+Commit: 541b2755c2ef7dd2242ac606c115daa11e43ef69
+Message:
+[POWERPC] Fix sparse warnings in arch/powerpc/platforms/pseries
+
+Don't return void in pseries/iommu.c
+Make mce_data_buf static in pseries/ras.c
+Make things static in pseries/rtasd.c
+Make things static in pseries/setup.c
+vtermno may as well be static in platforms/pseries/lpar.c
+
+Signed-off-by: Michael Ellerman <michael@ellerman.id.au>
+Signed-off-by: Paul Mackerras <paulus@samba.org>
+Comment:
+Good.
+
+G: 11, B: 2
+
+Commit: 95c3889cb88ca4833096553c12cde9e7eb792f4c
+Message:
+ext4: Fix fallocate error path
+
+Put the old extent details back if we fail to split the
+uninitialized extent.
+
+Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.vnet.ibm.com>
+Signed-off-by: Mingming Cao <cmm@us.ibm.com>
+Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
+
+Comment:
+Good.
+
+G: 12, B: 2
+
+Commit: 094614fc14966bc6a6259ade55f051fe17f36122
+Message:
+firewire: sbp2: fix status reception
+
+Per SBP-2 clause 5.3, a target shall store 8...32 bytes of status
+information.  Trailing zeros after the first 8 bytes don't need to be
+stored, they are implicit.  Fix the status write handler to clear all
+unwritten status data.
+
+Signed-off-by: Stefan Richter <stefanr@s5r6.in-berlin.de>
+Comment:
+Good.
+
+G: 13, B: 2
+
+Commit: 3cc25e510dfc36dc62ee0aa87344b36ed7c1742a
+Message:
+cfg80211: fix a crash in dev lookup on dump commands
+
+IS_ERR and PTR_ERR were called with the wrong pointer, leading to a
+crash when cfg80211_get_dev_from_ifindex fails.
+
+Signed-off-by: Felix Fietkau <nbd@openwrt.org>
+Acked-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: John W. Linville <linville@tuxdriver.com>
+Comment:
+Good.
+
+G: 14, B: 2
+
+Commit: 1bf7724e093cf3071d943d53bfa4de8b8e50426b
+Message:
+IB/ipath: Fix spi_pioindex value
+
+ipath_piobufbase was a single value offset, but is multiple values on
+newer chips, so use only the 32 bits for the 2K buffers (4K buffers
+are currently used only by the driver).
+
+Signed-off-by: Dave Olson <dave.olson@qlogic.com>
+Signed-off-by: Roland Dreier <rolandd@cisco.com>
+Comment:
+Bad(?).
+
+G: 15, B: 2
+
+Commit: be73a347ec7799aec0aa1008bd991f93dbfa80e8
+Message:
+[ARM] 4845/1: Orion: Ignore memory tags with invalid data
+
+The DNS-323, Kurobox-Pro / Linkstation-Pro, QNAP TS-109/TS-209 and some
+other orion-based systems have several bogus memory entries in the tag
+table, which causes the system to crash at startup. Ignore them by
+resetting the tag ID to 0 in a machine fixup function.
+
+Signed-off-by: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good(?).
+
+G: 16, B: 2
+
+Commit: 52d7e861cc071688f5fa3ee1b6e94785adeff8db
+Message:
+[SCSI] ibmvfc: Miscellaneous fixes
+
+Properly setup the size of the async event queue. This fixes a bug where async events
+were not getting processed by the driver.
+
+Setup target_id field in the driver's target struct so that target sysfs attributes
+work for multiple targets.
+
+Signed-off-by: Brian King <brking@linux.vnet.ibm.com>
+Signed-off-by: James Bottomley <James.Bottomley@HansenPartnership.com>
+Comment:
+Good.
+
+G: 17, B: 2
+
+Commit: 4223cc34365e46f5e50d5496623367c552cd8a51
+Message:
+h8300: uaccess.h update
+
+get_user const *ptr access fix.
+
+Signed-off-by: Yoshinori Sato <ysato@users.sourceforge.jp>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 18, B: 2
+
+Commit: 8697d33194faae6fdd6b2e799f6308aa00cfdf67
+Message:
+Memory controller: add switch to control what type of pages to limit
+
+Choose if we want cached pages to be accounted or not.  By default both are
+accounted for.  A new set of tunables are added.
+
+echo -n 1 > mem_control_type
+
+switches the accounting to account for only mapped pages
+
+echo -n 3 > mem_control_type
+
+switches the behaviour back
+
+[bunk@kernel.org: mm/memcontrol.c: clenups]
+[akpm@linux-foundation.org: fix sparc32 build]
+Signed-off-by: Balbir Singh <balbir@linux.vnet.ibm.com>
+Cc: Pavel Emelianov <xemul@openvz.org>
+Cc: Paul Menage <menage@google.com>
+Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Nick Piggin <nickpiggin@yahoo.com.au>
+Cc: Kirill Korotaev <dev@sw.ru>
+Cc: Herbert Poetzl <herbert@13thfloor.at>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Vaidyanathan Srinivasan <svaidy@linux.vnet.ibm.com>
+Signed-off-by: Adrian Bunk <bunk@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Bad.
+
+G: 18, B: 3
+
+Commit: 0aee77b221a68bf8ef5401712bb55c89e36b461c
+Message:
+[PATCH] m68knommu: fix clobber list in uCdimm/uCsimm helper asm
+
+Fix clobber list in uCsimm/uCdimm boot load helper asm.
+
+Signed-off-by: Greg Ungerer <gerg@uclinux.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 19, B: 3
+
+Commit: e5ea0a9fca5612808839dd4bcc41c46fc02451f9
+Message:
+ppc: fix up trivial Kconfig config selection
+
+Quoth BenH:
+  "Ok, looks like I forgot to update the Kconfig for the new i2c driver,
+   it should select I2C_POWERMAC instead.  Do you want a new patch or
+   can you just fix it there ?"
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 20, B: 3
+
+Commit: b5f3616ba73699d07deee1f244179fae49502052
+Message:
+[IA64] fix IO_SPACE_SPARSE_ENCODING macro ambiguity
+
+Parenthesize "p" to avoid ambiguity.  No callers have a problem today;
+this is just to clean up the bad form.
+
+Signed-off-by: Bjorn Helgaas <bjorn.helgaas@hp.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Comment:
+Good.
+
+G: 21, B: 3
+
+Commit: 5dab600e6a153ceb64832f608069e6c08185411a
+Message:
+kfifo: document everywhere that size has to be power of two
+
+On my first try using them I missed that the fifos need to be power of
+two, resulting in a runtime bug.  Document that requirement everywhere
+(and fix one grammar bug)
+
+Signed-off-by: Andi Kleen <ak@linux.intel.com>
+Acked-by: Stefani Seibold <stefani@seibold.net>
+Cc: Roland Dreier <rdreier@cisco.com>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Andy Walls <awalls@radix.net>
+Cc: Vikram Dhillon <dhillonv10@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good (just comments).
+
+G: 22, B: 3
+
+Commit: 442295c94bf650221af3ef20fc68fa3e93876818
+Message:
+[PATCH] mm: slab cache interleave rotor fix
+
+The alien cache rotor in mm/slab.c assumes that the first online node is
+node 0.  Eventually for some archs, especially with hotplug, this will no
+longer be true.
+
+Fix the interleave rotor to handle the general case of node numbering.
+
+Signed-off-by: Paul Jackson <pj@sgi.com>
+Acked-by: Christoph Lameter <clameter@engr.sgi.com>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 23, B: 3
+
+Commit: 480b55c26e2f6408e86f22a69fcecc29e019e819
+Message:
+V4L/DVB (5585): SN9C1xx driver updates
+
+* Default color improvements to the OV7660
+@ Fix sn9c102_write_reg()
+@ Fix sn9c102_i2c_try_raw_read()
+@ Fix MI-0343
++ Add support for pair MI0360+SN9C120
++ Add more USB ids
+
+Signed-off-by: Luca Risolia <luca.risolia@studio.unibo.it>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@infradead.org>
+Comment:
+Good.
+
+G: 24, B: 3
+
+Commit: 73069e388d0f2509e45e1a58b0facca99ef2446e
+Message:
+ARM: OMAP: Fix gpio by switching to generic gpio calls, v2
+
+Fix compile by removing remaining omap specific gpio
+calls. Based on earlier patches by Jarkko Nikula.
+
+Also remove old GPIO key code, there is already a patch
+to do this with gpio_keys.
+
+Signed-off-by: Jarkko Nikula <jarkko.nikula@nokia.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Comment:
+Good.
+
+G: 25, B: 3
+
+Commit: 94f565598827e2015dce97f4c1ac4871ab84407b
+Message:
+sched: fix SCHED_HRTICK dependency
+
+Currently, it seems SCHED_HRTICK allowed for !SMP. But, it seems to have
+no dependency of it. Fix it.
+
+Signed-off-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Good.
+
+G: 26, B: 3
+
+Commit: 05dd180709fca14fbae617c0dab1bed56be334fc
+Message:
+mtd: correct typo "MTD_DATAFLASH_VERIFY_WRITE"
+
+Fix the misspelling to match the actual config variable defined in
+drivers/mtd/devi ces/Kconfig:
+
+config MTD_DATAFLASH_WRITE_VERIFY
+        bool "Verify DataFlash page writes"
+        depends on MTD_DATAFLASH
+
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+Signed-off-by: Artem Bityutskiy <Artem.Bityutskiy@nokia.com>
+Signed-off-by: David Woodhouse <David.Woodhouse@intel.com>
+Comment:
+Good.
+
+G: 27, B: 3
+
+Commit: e423b9ecd6aa434ce9ba72a21fdc61079e620e0a
+Message:
+powerpc: Fix 64bit memcpy() regression
+
+This fixes a regression introduced by commit
+25d6e2d7c58ddc4a3b614fc5381591c0cfe66556 ("powerpc: Update 64bit memcpy()
+using CPU_FTR_UNALIGNED_LD_STD").
+
+This commit allowed CPUs that have the CPU_FTR_UNALIGNED_LD_STD CPU
+feature bit present to do the memcpy() with unaligned load doubles. But,
+along with this came a bug where our final load double would read bytes
+beyond a page boundary and into the next (unmapped) page. This was caught
+by enabling CONFIG_DEBUG_PAGEALLOC,
+
+The fix was to read only the number of bytes that we need to store rather
+than reading a full 8-byte doubleword and storing only a portion of that.
+
+In order to minimise the amount of existing code touched we use the
+original do_tail for the src_unaligned case.
+
+Below is an example of the regression, as reported by Sachin Sant:
+
+Unable to handle kernel paging request for data at address 0xc00000003f380000
+Faulting instruction address: 0xc000000000039574
+cpu 0x1: Vector: 300 (Data Access) at [c00000003baf3020]
+    pc: c000000000039574: .memcpy+0x74/0x244
+    lr: d00000000244916c: .ext3_xattr_get+0x288/0x2f4 [ext3]
+    sp: c00000003baf32a0
+   msr: 8000000000009032
+   dar: c00000003f380000
+ dsisr: 40000000
+  current = 0xc00000003e54b010
+  paca    = 0xc000000000a53680
+    pid   = 1840, comm = readahead
+enter ? for help
+[link register   ] d00000000244916c .ext3_xattr_get+0x288/0x2f4 [ext3]
+[c00000003baf32a0] d000000002449104 .ext3_xattr_get+0x220/0x2f4 [ext3]
+(unreliab
+le)
+[c00000003baf3390] d00000000244a6e8 .ext3_xattr_security_get+0x40/0x5c [ext3]
+[c00000003baf3400] c000000000148154 .generic_getxattr+0x74/0x9c
+[c00000003baf34a0] c000000000333400 .inode_doinit_with_dentry+0x1c4/0x678
+[c00000003baf3560] c00000000032c6b0 .security_d_instantiate+0x50/0x68
+[c00000003baf35e0] c00000000013c818 .d_instantiate+0x78/0x9c
+[c00000003baf3680] c00000000013ced0 .d_splice_alias+0xf0/0x120
+[c00000003baf3720] d00000000243e05c .ext3_lookup+0xec/0x134 [ext3]
+[c00000003baf37c0] c000000000131e74 .do_lookup+0x110/0x260
+[c00000003baf3880] c000000000134ed0 .__link_path_walk+0xa98/0x1010
+[c00000003baf3970] c0000000001354a0 .path_walk+0x58/0xc4
+[c00000003baf3a20] c000000000135720 .do_path_lookup+0x138/0x1e4
+[c00000003baf3ad0] c00000000013645c .path_lookup_open+0x6c/0xc8
+[c00000003baf3b70] c000000000136780 .do_filp_open+0xcc/0x874
+[c00000003baf3d10] c0000000001251e0 .do_sys_open+0x80/0x140
+[c00000003baf3dc0] c00000000016aaec .compat_sys_open+0x24/0x38
+[c00000003baf3e30] c00000000000855c syscall_exit+0x0/0x40
+
+Signed-off-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Comment:
+Good.
+
+G: 28, B: 3
+
+Commit: 58105ef1857112a186696c9b8957020090226a28
+Message:
+x86: UV: fix header struct usage
+
+Impact: Fixes warning
+
+Fix uv.h struct usage:
+
+arch/x86/include/asm/uv/uv.h:16: warning: 'struct mm_struct' declared inside parameter list
+arch/x86/include/asm/uv/uv.h:16: warning: its scope is only this definition or declaration, which is probably not what you want
+
+Signed-off-by: Randy Dunlap <randy.dunlap@oracle.com>
+Signed-off-by: H. Peter Anvin <hpa@linux.intel.com>
+Comment:
+Good.
+
+G: 29, B: 3
+
+Commit: e77e6f3be93763ef88ccbaa9e0ebda5360d92f7c
+Message:
+[CIFS] Always match oplock break (cache notification) to the right tcp
+session when multiply mounted.
+
+Fixes slow response when cifs client is mounted to shares on multiple
+servers and oplock break occurs (usually due to attempt to multiply open a
+file).  When treeids on mutiple mounted shares match and we find the wrong
+match first, we searched for the wrong cached files to send oplock break
+response for which usually meant that no matching file was found and thus
+the server would have to timeout the notification.  Oplock break timeout is
+about 20 seconds on some servers so this could cause significantly slower
+performance on file open calls in a few cases (in particular when multiple
+shares are mounted from multiple servers, tree ids match, and we have a
+cached file which is later opened multiple times).  This was the most
+important of the bugs that was found and fixed at Connectathon
+(interoperability testing event) this week.
+
+Acked-by:  Shaggy (shaggy@austin.ibm.com)
+Signed-off-by: Steve French (sfrench@us.ibm.com)
+Comment:
+Good.
+
+G: 30, B: 3
+
+Commit: 85821c906cf3563a00a3d98fa380a2581a7a5ff1
+Message:
+[SCSI] qla2xxx: Set an rport's dev_loss_tmo value in a consistent manner.
+
+As there's no point in adding a fixed-fudge value (originally 5
+seconds), honor the user settings only.  We also remove the
+driver's dead-callback get_rport_dev_loss_tmo function
+(qla2x00_get_rport_loss_tmo()).
+
+Signed-off-by: Andrew Vasquez <andrew.vasquez@qlogic.com>
+Signed-off-by: James Bottomley <James.Bottomley@HansenPartnership.com>
+Comment:
+Bad.
+
+G: 30, B: 4
+
+Commit: 2f561feb386d6adefbad63c59a1fcd298ac6a79c
+Message:
+mac80211: Add RTNL version of ieee80211_iterate_active_interfaces
+
+Since commit e38bad4766a110b61fa6038f10be16ced8c6cc38
+	mac80211: make ieee80211_iterate_active_interfaces not need rtnl
+rt2500usb and rt73usb broke down due to attempting register access
+in atomic context (which is not possible for USB hardware).
+
+This patch restores ieee80211_iterate_active_interfaces() to use RTNL lock,
+and provides the non-RTNL version under a new name:
+	ieee80211_iterate_active_interfaces_atomic()
+
+So far only rt2x00 uses ieee80211_iterate_active_interfaces(), and those
+drivers require the RTNL version of ieee80211_iterate_active_interfaces().
+Since they already call that function directly, this patch will automatically
+fix the USB rt2x00 drivers.
+
+v2: Rename ieee80211_iterate_active_interfaces_rtnl
+
+Signed-off-by: Ivo van Doorn <IvDoorn@gmail.com>
+Acked-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: John W. Linville <linville@tuxdriver.com>
+Comment:
+Good, bad change got reverted.
+
+G: 31, B: 4
+
+Commit: d3a8eab093aab9f309d2e8d06cd718a4cb20e626
+Message:
+bluetooth/hci_bcsp: fix bitrev Kconfig
+
+Fix bluetooth hci_bcsp Kconfig to avoid build errors:
+
+drivers/built-in.o: In function `bcsp_prepare_pkt':
+hci_bcsp.c:(.text+0x7e9ac): undefined reference to `bitrev16'
+drivers/built-in.o: In function `bcsp_recv':
+hci_bcsp.c:(.text+0x7f276): undefined reference to `bitrev16'
+hci_bcsp.c:(.text+0x7f293): undefined reference to `bitrev16'
+make[1]: *** [.tmp_vmlinux1] Error 1
+
+Signed-off-by: Randy Dunlap <randy.dunlap@oracle.com>
+Ackey-by: Marcel Holtmann <marcel@holtmann.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 32, B: 4
+
+Commit: 48d58459fe991e48bf7e6638a0ded0f8cbd2fa3b
+Message:
+Fix region size check in mpc5200 FEC driver
+
+Driver shouldn't complain if the register range is larger than what
+it expects.  This works around failures with some device trees.
+
+Signed-off-by: Grant Likely <grant.likely@secretlab.ca>
+Signed-off-by: Jeff Garzik <jeff@garzik.org>
+Comment:
+Good.
+
+G: 33, B: 4
+
+Commit: abb8817967cc080ee024f7d1a3d5a9830074ca1c
+Message:
+ide: fix Falcon IDE breakage
+
+[m68k] Falcon IDE: always serialize, in order to force execution of
+       ide_get_lock() and friends.
+
+Signed-off-By: Michael Schmitz <schmitz@debian.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+[bart: set flag in falconide_port_info instead of falconide_init()]
+Signed-off-by: Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>
+Comment:
+Good.
+
+G: 34, B: 4
+
+Commit: 7eb27af766e4a1db3dbc02a5b3d175885bf2ce93
+Message:
+p54/rtl8187: fix up the seqno patch
+
+Sorry about that, for some reason I didn't notice that I'd
+left some unused variables in there.
+
+Signed-off-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: John W. Linville <linville@tuxdriver.com>
+Comment:
+Good.
+
+G: 35, B: 4
+
+Commit: 9460c0ce9b29825d279081d5078815a32c268ada
+Message:
+sh: Fix up __access_ok() check for nommu.
+
+Presently this only checks to see if an address is an RAM, but this
+doesn't work with XIP, so just always return 1. Follows m68knommu.
+
+Signed-off-by: Paul Mundt <lethal@linux-sh.org>
+Comment:
+Good.
+
+G: 36, B: 4
+
+Commit: 1d8c8b209e9351a7de1307d7b9b6df4222b8d742
+Message:
+perf_counter tools: add help texts
+
+Add Documentation/perf-stat.txt and Documentation/perf-top.txt.
+
+The template that was used for it: Documentation/git-add.txt from Git.
+
+Fix up small bugs to make these help texts show up both in the 'perf'
+common-command summary output screen, and on the individual help screens.
+
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Good.
+
+G: 37, B: 4
+
+Commit: adff264fe66d78a166dc887f861e7273d0cb1654
+Message:
+[PATCH] GPIO API: S3C2410 wrapper cleanup
+
+this one adds an #include <asm/arch/regs-gpio.h>.
+Tested by Roman Moravcik on s3c2440.
+
+Based on the discussion last december
+(http://lkml.org/lkml/2006/12/20/243), this patch
+ - fixes comment and includes in gpio.h
+ - adds the gpio_to_irq definition for S3C2400
+ - includes asm/arch/regs-gpio.h for pin direction
+   definitions
+
+Signed-off-by: Philipp Zabel <philipp.zabel@gmail.com>
+Signed-off-by: David Brownell <dbrownell@users.sourceforge.net>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 38, B: 4
+
+Commit: 1f2435e532bd64742c3f766b7d5c17cc9d0b8558
+Message:
+bnx2: Update version to 1.9.0.
+
+And fix the 5716S pci_device_id entry to point to the proper string.
+
+Signed-off-by: Michael Chan <mchan@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 39, B: 4
+
+Commit: 9c81c5c95c00c35a328e1757ca45a66647105f6c
+Message:
+atmel_serial: filter out FP during baud rate detection
+
+I made a change to u-boot that used the FP (Fractional Part) field of BRGR
+to achieve more accurate baud rate generation.  Unfortunately, the
+atmel_serial driver looks at the whole BRGR register when trying to detect
+the baud rate that the port is currently running at, so setting FP to a
+nonzero value breaks the baud rate detection.
+
+I'll sit on the u-boot patch for a while longer, but this is clearly a
+bug in the atmel_serial driver which should be fixed.
+
+Signed-off-by: Haavard Skinnemoen <haavard.skinnemoen@atmel.com>
+Acked-by: Andrew Victor <linux@maxim.org.za>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Bad.
+
+G: 39, B: 5
+
+Commit: 59e4cf19ede2d2725c1b336707c1077afdd3cf85
+Message:
+headers_check fix: linux/cgroupstats.h
+
+fix the following 'make headers_check' warning:
+
+  usr/include/linux/cgroupstats.h:31: found __[us]{8,16,32,64} type without #include <linux/types.h>
+
+Signed-off-by: Jaswinder Singh Rajput <jaswinderrajput@gmail.com>
+Comment:
+Good.
+
+G: 40, B: 5
+
+Commit: 55052eeca6d71d76f7c3f156c0501814d8e5e6d3
+Message:
+powerpc: Fix ioremap_flags() with book3e pte definition
+
+We can't just clear the user read permission in book3e pte, because
+that will also clear supervisor read permission.  This surely isn't
+desired.  Fix the problem by adding the supervisor read back.
+
+BenH: Slightly simplified the ifdef and applied to ppc64 too
+
+Signed-off-by: Li Yang <leoli@freescale.com>
+Signed-off-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Comment:
+Good.
+
+G: 41, B: 5
+
+Commit: 6262d062a3fc803d1798365e745b39f4faa04b0e
+Message:
+[PATCH] ieee1394: fix premature expiry of async packets
+
+Set the initial sendtime to be 10 seconds in the future, to avoid the packet
+timing out while it's still queued to be sent.  This fixes furthur "no tlabel
+match" problems caused by premature expiry.
+
+Signed-off-by: Jody McIntyre <scjody@steamballoon.com>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 42, B: 5
+
+Commit: 5e1ad18a8d198ccb0e201cb444a58f7e277dfb4d
+Message:
+Staging: rtl8192e: fix lots of sparse warnings
+
+This removes a number of static and extern warnings that sparse
+complains about.
+
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+Comment:
+Good.
+
+G: 43, B: 5
+
+Commit: 68accd7370a90b899ea6563ba9032e5a102ec1b5
+Message:
+ARM: mach-shmobile: ap4evb: Fix hotplug for SDHI1
+
+On AP4EVB the card detect pin of the top SD/MMC slot is not directly
+connected to the tmio/mmcif controller but to a GPIO pin, so polling
+needs to be done for SDHI1 and MMCIF in order to support hotplug for
+that slot. SHDI1 and MMCIF share that slot, and the used controller
+is selected by a DIP switch.
+This patch adds a helper function to check if a card is present in that
+particular slot, registers this function with SDHI1 and MMCIF and enables
+polling for SDHI1.
+
+Signed-off-by: Arnd Hannemann <arnd@arndnet.de>
+Tested-by: Yusuke Goda <yusuke.goda.sx@renesas.com>
+Signed-off-by: Samuel Ortiz <sameo@linux.intel.com>
+Comment:
+Good.
+
+G: 44, B: 5
+
+Commit: 6200bbaa5bd8b6751931364dfa4aa1cdd5efa686
+Message:
+V4L/DVB (7024): usbvision: YUV to RGB conversion fixes
+
+All YUV to RGB conversions in usbvision were reverted
+(conversion to BGR but saying RGB to the application)
+
+Signed-off-by: Thierry MERLE <thierry.merle@free.fr>
+Acked-by: Dwaine Garden <DwaineGarden@rogers.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@infradead.org>
+Comment:
+Good.
+
+G: 45, B: 5
+
+Commit: 1c83995b6c7c6bb795bce80f75fbffb15f78db2d
+Message:
+x86, ioapic: Document another case when level irq is seen as an edge
+
+In the case when cpu goes offline, fixup_irqs() will forward any
+unhandled interrupt on the offlined cpu to the new cpu
+destination that is handling the corresponding interrupt. This
+interrupt forwarding is done via IPI's. Hence, in this case also
+level-triggered io-apic interrupt will be seen as an edge
+interrupt in the cpu's APIC IRR.
+
+Document this scenario in the code which handles this case by doing
+an explicit EOI to the io-apic to clear remote IRR of the io-apic RTE.
+
+Requested-by: Maciej W. Rozycki <macro@linux-mips.org>
+Signed-off-by: Suresh Siddha <suresh.b.siddha@intel.com>
+Cc: Maciej W. Rozycki <macro@linux-mips.org>
+Cc: ebiederm@xmission.com
+Cc: garyhade@us.ibm.com
+LKML-Reference: <20091201233335.143970505@sbs-t61.sc.intel.com>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Bad.
+
+G: 45, B: 6
+
+Commit: 135d5655dc58a24eda64e3f6c192d7d605e10050
+Message:
+proc: rename de_get() to pde_get() and inline it
+
+* de_get() is trivial -- make inline, save a few bits of code, drop
+  "refcount is 0" check -- it should be done in some generic refcount
+  code, don't recall it's was helpful
+
+* rename GET and PUT functions to pde_get(), pde_put() for cool prefix!
+
+* remove obvious and incorrent comments
+
+* in remove_proc_entry() use pde_put(), when I fixed PDE refcounting to
+  be normal one, remove_proc_entry() was supposed to do "-1" and code now
+  reflects that.
+
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Bad.
+
+G: 45, B: 7
+
+Commit: 136e83d6b8999f4ef680ff9cf2a67e1e1ccbd94e
+Message:
+[PATCH] net/mac80211/wme.c: fix sparse warning
+
+wme.c triggers a sparse warning; it wasn't noticed before because until
+recently ARRAY_SIZE triggered a sparse error.
+
+Signed-off-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: John W. Linville <linville@tuxdriver.com>
+Comment:
+Good.
+
+G: 46, B: 7
+
+Commit: e012b4c41987c40cc2dd82ab48e0569f1d7aa970
+Message:
+Staging: comedi: Fixed long line lengths in comedi.h
+
+This patches fixes some of the long line lengths that checkpatch.pl was
+complaining about in comedi.h
+
+Signed-off-by: Mark Rankilor <reodge@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+Comment:
+Good.
+
+G: 47, B: 7
+
+Commit: f6485057c5cfbc84e5eff639ddea1ce0d668607b
+Message:
+[XFS] Ensure the inode is joined in xfs_itruncate_finish
+
+On success, we still need to join the inode to the current transaction in
+xfs_itruncate_finish(). Fixes regression from error handling changes.
+
+SGI-PV: 980084
+SGI-Modid: xfs-linux-melb:xfs-kern:30845a
+
+Signed-off-by: David Chinner <dgc@sgi.com>
+Signed-off-by: Christoph Hellwig <hch@infradead.org>
+Signed-off-by: Lachlan McIlroy <lachlan@sgi.com>
+Comment:
+Good.
+
+G: 48, B: 7
+
+=== Non-Fix Commits (145) ===
+Commit: 6c3f6041172b78d5532c6bf3680d304e92ec2e66
+Merge: False
+Message:
+KVM: x86: Enable AVX for guest
+
+Enable Intel(R) Advanced Vector Extension(AVX) for guest.
+
+The detection of AVX feature includes OSXSAVE bit testing. When OSXSAVE bit is
+not set, even if AVX is supported, the AVX instruction would result in UD as
+well. So we're safe to expose AVX bits to guest directly.
+
+Signed-off-by: Sheng Yang <sheng@linux.intel.com>
+Signed-off-by: Avi Kivity <avi@redhat.com>
+Comment:
+Good.
+
+G: 1, B: 0
+
+Commit: c2aeacd48ca2418fbac985a58d2200c263444d65
+Merge: False
+Message:
+[PATCH] Prevent trident driver from grabbing pcnet32 hardware
+
+Some pcnet32 hardware erroneously has the Vendor ID for Trident.  The
+pcnet32 driver looks for the PCI ethernet class before grabbing the
+hardware, but the current trident driver does not check against the PCI
+audio class.  This allows the trident driver to claim the pcnet32 hardware.
+ This patch prevents that.
+
+This revised version of the OSS Trident patch includes PCI_DEVICE Macro
+usage.
+
+Signed-off-by: Jon Mason <jdmason@us.ibm.com>
+Signed-off-by: Muli Ben-Yehuda <mulix@mulix.org>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good(?).
+
+G: 2, B: 0
+
+Commit: 56dcbfa0d5a46f137df5047ae8f3aab30f59954e
+Merge: False
+Message:
+V4L/DVB (6696): pvrusb2: Miscellaneous tweaks for controlling tuner type and video standard
+
+Correctly mark when a tuner type is set.  Report more faithfully
+information about known supported device video standards.
+
+Signed-off-by: Mike Isely <isely@pobox.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@infradead.org>
+Comment:
+Good.
+
+G: 3, B: 0
+
+Commit: 2d1e0a02f16f84c2358843d91d6ca0131a0587ce
+Merge: False
+Message:
+ACPI: pci_root: Use acpi_device's handle instead of driver's
+
+Signed-off-by: Patrick Mochel <mochel@linux.intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
+Comment:
+Good.
+
+G: 4, B: 0
+
+Commit: d8b6b8bd8a99ee91843381d51e8e619463721aed
+Merge: False
+Message:
+[SCSI] drivers/scsi/FlashPoint.c: remove trivial wrappers
+
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
+Comment:
+Good.
+
+G: 5, B: 0
+
+Commit: a6a6022871b83ff31c34495709f53e3faef80976
+Merge: False
+Message:
+omap: mailbox: correct OMAP4 reset logic
+
+OMAP4 mailbox has a different register set. There is
+no MAILBOX_SYSSTATUS register. The reset is indicated
+with the SOFTRESET bit of the MAILBOX_SYSCONFIG register
+itself. This bit should read 0 for a successful Reset.
+Also, the SOFTRESET bit occupies bit0 and not bit1 as with
+previous generations.
+
+Signed-off-by: Suman Anna <s-anna@ti.com>
+Acked-by: Hiroshi DOYU <Hiroshi.DOYU@nokia.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Comment:
+Good.
+
+G: 6, B: 0
+
+Commit: 3a5c393e6f3e9f537e790016f3214447f2b50e51
+Merge: False
+Message:
+[PATCH] bcm43xx: Change initialization for 2050 radios
+
+This patch implements the changes in the specifications for
+2050radio_init that were recently posted.
+
+Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
+Signed-off-by: John W. Linville <linville@tuxdriver.com>
+Comment:
+Good.
+
+G: 7, B: 0
+
+Commit: add810a1c58ba9edb6076ababe5861f36c049217
+Merge: True
+Message:
+Merge git://git.kernel.org/pub/scm/linux/kernel/git/rusty/linux-2.6-for-linus
+
+* git://git.kernel.org/pub/scm/linux/kernel/git/rusty/linux-2.6-for-linus:
+  virtio: order used ring after used index read
+  virtio-pci: fix per-vq MSI-X request logic
+Comment:
+Good.
+
+G: 8, B: 0
+
+Commit: ef8500457b29eed13d03ff19af36d810308e57b7
+Merge: False
+Message:
+ixgbe: Increment version
+
+Signed-off-by: Auke Kok <auke-jan.h.kok@intel.com>
+Signed-off-by: Jeff Garzik <jeff@garzik.org>
+Comment:
+Good.
+
+G: 9, B: 0
+
+Commit: 82810b7b6cc7a74c68881a13b0eb66c7a6370fcc
+Merge: False
+Message:
+[MTD] NAND: nandsim: support subpage write
+
+As flash cannot do 0->1 bit transitions when programming, do not do this in
+the simulator too. This makes nandsim able to accept subpage writes.
+
+Signed-off-by: Artem Bityutskiy <dedekind@infradead.org>
+Signed-off-by: David Woodhouse <dwmw2@infradead.org>
+Comment:
+Good.
+
+G: 10, B: 0
+
+Commit: dc221eae08eea3b0db127d1f152fac24d10b6a52
+Merge: True
+Message:
+Merge branch 'i2c-for-linus' of git://jdelvare.pck.nerim.net/jdelvare-2.6
+
+* 'i2c-for-linus' of git://jdelvare.pck.nerim.net/jdelvare-2.6: (56 commits)
+  i2c: Add detection capability to new-style drivers
+  i2c: Call client_unregister for new-style devices too
+  i2c: Clean up old chip drivers
+  i2c-ibm_iic: Register child nodes
+  i2c: New-style EEPROM driver using device IDs
+  i2c: Export the i2c_bus_type symbol
+  i2c-au1550: Fix PM support
+  i2c-dev: Delete empty detach_client callback
+  i2c: Drop stray references to lm_sensors
+  i2c: Check for ACPI resource conflicts
+  i2c-ocores: basic PM support
+  i2c-sibyte: SWARM I2C board initialization
+  i2c-i801: Fix handling of error conditions
+  i2c-i801: Rename local variable temp to status
+  i2c-i801: Properly report bus arbitration loss
+  i2c-i801: Remove verbose debugging messages
+  i2c-algo-pcf: Drop unused struct members
+  i2c-algo-pcf: Multi-master lost-arbitration improvement
+  i2c: Deprecate the legacy gpio drivers
+  i2c-pxa: Initialize early
+  ...
+Comment:
+Good.
+
+G: 11, B: 0
+
+Commit: edc9a958fd31ef1d89f9eaee82b2a3882c8e34c9
+Merge: False
+Message:
+sh: nommu: Support building without an uncached mapping.
+
+Now that nommu selects 32BIT we run in to the situation where SH-2A
+supports an uncached identity mapping by way of the BSC, while the SH-2
+does not. This provides stubs for the PC manglers and tidies up some of
+the system*.h mess in the process.
+
+Signed-off-by: Paul Mundt <lethal@linux-sh.org>
+Comment:
+Good.
+
+G: 12, B: 0
+
+Commit: eee4146ab908188e556641f1cd7a10e894d10edb
+Merge: False
+Message:
+[PATCH] ppc32: remove orphaned ppc4xx_kgdb.c
+
+Removes ppc4xx_kgdb.c which is no longer being used.  Pointed out by Andrei
+Konovalov.
+
+Signed-off-by: Matt Porter <mporter@kernel.crashing.org>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 13, B: 0
+
+Commit: d73dee6ee4b554074f88e4ebd956ea4db8552d52
+Merge: True
+Message:
+Pull for-each-cpu into release branch
+Comment:
+Good.
+
+G: 14, B: 0
+
+Commit: cc4b7c1814c9ad375e8167ea4a9ec4a0ec1ada04
+Merge: False
+Message:
+[POWERPC] spufs: invalidate SLB translation before adding a new entry
+
+When we replace an SLB entry in the MFC after using up all the available
+entries, there is a short window in which an incorrect entry is marked
+as valid.
+
+The problem is that the 'valid' bit is stored in the ESID, which is
+always written after the VSID. Overwriting the VSID first will make the
+original ESID entry point to the new VSID, which means that any
+concurrent DMA accessing the old ESID ends up being redirected to the
+new virtual address.  A few cycles later, we write the new ESID and
+everything is fine again.
+
+That race can be closed by writing a zero entry to the ESID first, which
+makes sure that the VSID is not accessed until we write the new ESID.
+
+Note that we don't actually need to invalidate the SLB entry using the
+invalidation register, which would also flush any ERAT entries for that
+segment, because the segment translation does not become invalid but is
+only removed from the SLB cache.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Jeremy Kerr <jk@ozlabs.org>
+Comment:
+Bad.
+
+G: 14, B: 1
+
+Commit: a1b67b957ea3b9138ed8239796cb48d8b1bf66b0
+Merge: False
+Message:
+MXC: mach-mx31_3ds: Add support for on board NAND Flash.
+
+Since the using of Bad Block Table is not constantly a good behave
+I had made it configurable.
+
+Signed-off-by: Alberto Panizzo <maramaopercheseimorto@gmail.com>
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Comment:
+Good.
+
+G: 15, B: 1
+
+Commit: 873ec746158403af82c57ce26780166aafc159e1
+Merge: False
+Message:
+EFI: warn only for pre-1.00 system tables
+
+We used to warn unless the EFI system table major revision was exactly 1.
+But EFI 2.00 firmware is starting to appear, and the 2.00 changes don't
+affect anything in Linux.
+
+Signed-off-by: Bjorn Helgaas <bjorn.helgaas@hp.com>
+Cc: Andi Kleen <ak@suse.de>
+Cc: "Luck, Tony" <tony.luck@intel.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 16, B: 1
+
+Commit: a3a06cb6c207a5612fa9753e2453bbcb3f5a256d
+Merge: True
+Message:
+Merge remote branch 'korg/drm-core-next' into drm-testing
+Comment:
+Good.
+
+G: 17, B: 1
+
+Commit: 3ea9eed49346eb80f17f1c6539c47dc508be1173
+Merge: True
+Message:
+Merge branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/penberg/slab-2.6
+
+* 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/penberg/slab-2.6:
+  slub: Do not use 192 byte sized cache if minimum alignment is 128 byte
+Comment:
+Good.
+
+G: 18, B: 1
+
+Commit: 11fc9a4a440112b5afc1a99d86ba92d70205a688
+Merge: False
+Message:
+V4L/DVB (9316): s5h1411: Power down s5h1411 when not in use
+
+Power down the s5h1411 demodulator when not in use (on the Pinnacle 801e, this
+brings idle power from 123ma down to 84ma).
+
+Signed-off-by: Devin Heitmueller <devin.heitmueller@gmail.com>
+Acked-by: Steven Toth <stoth@linuxtv.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@redhat.com>
+Comment:
+Good.
+
+G: 19, B: 1
+
+Commit: 1087247b7d8f1938425906d2ac983df76c6dcc18
+Merge: False
+Message:
+kbuild: refactor code in modpost to improve maintainability
+
+There were a great deal of overlap between the two functions
+that check which sections may reference .init.text and .exit.text.
+Factor out common check to a separate function and
+sort entries in the original functions.
+
+Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+Comment:
+Good.
+
+G: 20, B: 1
+
+Commit: 1a3190254c0d1d1951e1d7e93542387c6ec82384
+Merge: False
+Message:
+tg3: Set card 57765 card reader MRRS to 1024B
+
+This patch sets the Maximum Read Request Size for the card reader
+function to 1024 bytes to prevent an SD controller lockup.
+
+Signed-off-by: Matt Carlson <mcarlson@broadcom.com>
+Reviewed-by: Michael Chan <mchan@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Bad, sounds like a fix.
+
+G: 20, B: 2
+
+Commit: 55bc3228ccef255041d697fe55dcc7fe4b37feb6
+Merge: False
+Message:
+cxgb3: Avoid flush_workqueue() deadlock.
+
+Don't call flush_workqueue() on the cxgb3 Work Queue in cxgb_down() when
+we're being called from the fatal error task ... which is executing on the
+cxgb3 Work Queue.
+
+Signed-off-by: Casey Leedom <leedom@chelsio.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Bad.
+
+G: 20, B: 3
+
+Commit: f6f3a488e56783836a0b6ca9188719a1229f505c
+Merge: True
+Message:
+Automatic merge of /spare/repo/netdev-2.6 branch amd8111
+Comment:
+Good.
+
+G: 21, B: 3
+
+Commit: ef8355c3a3c7a4d7f1d49881937337ea78ed306a
+Merge: False
+Message:
+score: include asm-generic/param.h in asm/delay.h.
+
+Signed-off-by: Cui Bixiong <bixiong@sunnorth.com.cn>
+Signed-off-by: Chen Liqin <liqin.chen@sunplusct.com>
+Comment:
+Bad.
+
+G: 21, B: 4
+
+Commit: 2cd493fc10a5ad628dce8471ae72cf0882506735
+Merge: False
+Message:
+[ARM] S3C24XX: Add default <mach/io.h> header
+
+Add a default header for <mach/io.h> for systems
+such as the S3C24A0 which do not need any of the
+complex code that the S3C2410 uses.
+
+Signed-off-by: Ben Dooks <ben-linux@fluff.org>
+Comment:
+Good.
+
+G: 22, B: 4
+
+Commit: 686b9cb994f5f74be790df4cd12873dfdc8a6984
+Merge: False
+Message:
+mac80211/ath9k: Support AMPDU with multiple VIFs.
+
+The old ieee80211_find_sta_by_hw method didn't properly
+find VIFS when there was more than one per AP.  This caused
+AMPDU logic in ath9k to get the wrong VIF when trying to
+account for transmitted SKBs.
+
+This patch changes ieee80211_find_sta_by_hw to take a
+localaddr argument to distinguish between VIFs with the
+same AP but different local addresses.  The method name
+is changed to ieee80211_find_sta_by_ifaddr.
+
+Signed-off-by: Ben Greear <greearb@candelatech.com>
+Acked-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: John W. Linville <linville@tuxdriver.com>
+Comment:
+Good.
+
+G: 23, B: 4
+
+Commit: 0e3e4a1c4dade7872fdb04a5e735ae26d8e2fbfb
+Merge: False
+Message:
+[PATCH] ppc64 iSeries: remove iSeries_proc.h
+
+include/asm-ppc64/iSeries/iSeries_proc.h just contains a declaration of a
+function that no longer exists.  Remove it.
+
+Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 24, B: 4
+
+Commit: 105b1bca4d7bed85bb296f7e7caec2fc643e9fbf
+Merge: False
+Message:
+[MIPS] PNX8550: Cleanup proc code.
+
+Here's a slightly cleaner way of creating the /proc structure for the
+pnx8850.  mostly, it creates a directory with default mode 555, since the
+one you're creating is mode 444, which is somewhat unusual for a directory
+under /proc.
+
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+Comment:
+Good.
+
+G: 25, B: 4
+
+Commit: 4aa50bc9c2b2d5ab5c63658e0fadad03a08835cc
+Merge: False
+Message:
+pcmcia/bfin_cf: don't check platform_get_irq's return value against zero
+
+platform_get_irq returns -ENXIO on failure, so !irq was probably
+always true.  Better use irq <= 0.  Note that a return value of
+zero is still handled as error even though this could mean irq0.
+
+This is a followup to 305b3228f9ff4d59f49e6d34a7034d44ee8ce2f0 that
+changed the return value of platform_get_irq from 0 to -ENXIO on error.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Cc: David Vrabel <dvrabel@arcom.com>
+Cc: Greg Kroah-Hartman <gregkh@suse.de>
+Cc: Rafael J. Wysocki <rjw@sisk.pl>
+Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+Comment:
+Bad.
+
+G: 25, B: 5
+
+Commit: 69d94f7ec5edea85da0057c48c4f2877e5bb509e
+Merge: False
+Message:
+V4L/DVB (11118): cafe_ccic: replace debugfs with g/s_register ioctls.
+
+Using VIDIOC_DBG_S/G_REGISTER is the standard way of reading/writing register
+for advanced debugging under v4l2. In addition, using this means that the
+cafe_ccic driver doesn't need to have knowledge about the used sensor: the
+debug ioctl can be passed on to the sensor if it isn't for the host.
+
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Acked-by: Jonathan Corbet <corbet@lwn.net>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@redhat.com>
+Comment:
+Good.
+
+G: 26, B: 5
+
+Commit: 86b324874f571297237c0c940bfe7e5f0f9ca5d2
+Merge: False
+Message:
+[ARM] 2965/1: defconfig for the ARM Spitz platform
+
+Patch from Vincent Sanders
+
+Add a defconfig for the ARM Spitz Zarus platform
+
+Signed-off-by: Richard Purdie <rpurdie@rpsys.net>
+Signed-off-by: Vincent Sanders <vince@arm.linux.org.uk>
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 27, B: 5
+
+Commit: c2d7543851849a6923680cdd7e1047ed1a84a1c5
+Merge: False
+Message:
+filesystem freeze: allow SysRq emergency thaw to thaw frozen filesystems
+
+Now that the filesystem freeze operation has been elevated to the VFS, and
+is just an ioctl away, some sort of safety net for unintentionally frozen
+root filesystems may be in order.
+
+The timeout thaw originally proposed did not get merged, but perhaps
+something like this would be useful in emergencies.
+
+For example, freeze /path/to/mountpoint may freeze your root filesystem if
+you forgot that you had that unmounted.
+
+I chose 'j' as the last remaining character other than 'h' which is sort
+of reserved for help (because help is generated on any unknown character).
+
+I've tested this on a non-root fs with multiple (nested) freezers, as well
+as on a system rendered unresponsive due to a frozen root fs.
+
+[randy.dunlap@oracle.com: emergency thaw only if CONFIG_BLOCK enabled]
+Signed-off-by: Eric Sandeen <sandeen@redhat.com>
+Cc: Takashi Sato <t-sato@yk.jp.nec.com>
+Signed-off-by: Randy Dunlap <randy.dunlap@oracle.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 28, B: 5
+
+Commit: 0a2b8bb24d4eb67788edd71d1ef8aa86c2e17e0f
+Merge: False
+Message:
+mac80211: driver operation debugging
+
+This makes mac80211 use the event tracing framework
+to log all operations as given to the driver. This
+will need to be extended with more information, but
+as a start it should be good.
+
+Signed-off-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: John W. Linville <linville@tuxdriver.com>
+Comment:
+Good.
+
+G: 29, B: 5
+
+Commit: 992040f54069c96a59343976950f174448f4a351
+Merge: False
+Message:
+[SCSI] cxgb3i: added missing include in cxgb3i_ddp.h
+
+Signed-off-by: Karen Xie <kxie@chelsio.com>
+Reviewed-by: Mike Christie <michaelc@cs.wisc.edu>
+Signed-off-by: James Bottomley <James.Bottomley@HansenPartnership.com>
+Comment:
+Bad.
+
+G: 29, B: 6
+
+Commit: e96978b2729171f1dbbc0eb5b19c3524ca36e2bf
+Merge: False
+Message:
+microblaze_v8: Kbuild file
+
+Reviewed-by: Ingo Molnar <mingo@elte.hu>
+Acked-by: John Linn <john.linn@xilinx.com>
+Acked-by: Stephen Neuendorffer <stephen.neuendorffer@xilinx.com>
+Acked-by: John Williams <john.williams@petalogix.com>
+Signed-off-by: Michal Simek <monstr@monstr.eu>
+Comment:
+Good.
+
+G: 30, B: 6
+
+Commit: 4de211f1a279275c6c67d6e9b6b25513e46b0bb9
+Merge: False
+Message:
+[AX25] ax25_route: make ax25_route_lock BH safe
+
+> =================================
+> [ INFO: inconsistent lock state ]
+> 2.6.24-dg8ngn-p02 #1
+> ---------------------------------
+> inconsistent {softirq-on-W} -> {in-softirq-R} usage.
+> linuxnet/3046 [HC0[0]:SC1[2]:HE1:SE0] takes:
+>  (ax25_route_lock){--.+}, at: [<f8a0cfb7>] ax25_get_route+0x18/0xb7 [ax25]
+> {softirq-on-W} state was registered at:
+...
+
+This lockdep report shows that ax25_route_lock is taken for reading in
+softirq context, and for writing in process context with BHs enabled.
+So, to make this safe, all write_locks in ax25_route.c are changed to
+_bh versions.
+
+Reported-by: Jann Traschewski <jann@gmx.de>,
+Signed-off-by: Jarek Poplawski <jarkao2@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good, feature change.
+
+G: 31, B: 6
+
+Commit: f875295c4bfb39e96d136edd8ac80567e73536b4
+Merge: False
+Message:
+sh: Kill off stray HAVE_FTRACE_SYSCALLS reference.
+
+This seems to have popped back in via some merge damage. Kill it off.
+
+Signed-off-by: Paul Mundt <lethal@linux-sh.org>
+Comment:
+Good.
+
+G: 32, B: 6
+
+Commit: f4a8773676c21a68b0666fbe48af4fe1af89dfa9
+Merge: False
+Message:
+checkpatch: make in_atomic ok in the core
+
+We say that in_atomic() is ok in the core kernel, but then always report
+it regardless of where in the kernel it is.  Keep quiet if it is used in
+kernel/*.
+
+Signed-off-by: Andy Whitcroft <apw@canonical.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 33, B: 6
+
+Commit: 335a1cc976ffbb58491a9b6dc58955349e3f0388
+Merge: False
+Message:
+[SCSI] qla2xxx: Correct ISP24xx soft-reset handling.
+
+A driver must wait 100us before attempting an MMIO operation
+to the RISC after a soft-reset has been initiated.  A
+similar delay was needed with earlier ISPs.
+
+Note: a PCI config-space read is used to flush the MMIO
+write to the ISP, since the ISP's state machines are unable
+to respond to any MMIO read during the reset process.
+
+Signed-off-by: Andrew Vasquez <andrew.vasquez@qlogic.com>
+Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
+Comment:
+Good.
+
+G: 34, B: 6
+
+Commit: e89fe42cd03c8fd3686df82d8390a235717a66de
+Merge: False
+Message:
+[VLAN]: Move device registation to seperate function
+
+Move device registration and configuration of the underlying device to a
+seperate function.
+
+Signed-off-by: Patrick McHardy <kaber@trash.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 35, B: 6
+
+Commit: 42e5386d1c363be058ea4186351bef721539b592
+Merge: False
+Message:
+Staging: brcm80211: typedefs.h: remove NULL definition
+
+No need for a driver to define NULL, the core kernel handles that.
+
+Cc: Brett Rudley <brudley@broadcom.com>
+Cc: Henry Ptasinski <henryp@broadcom.com>
+Cc: Nohee Ko <noheek@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+Comment:
+Bad.
+
+G: 36, B: 7
+
+Commit: d5af91a1faca68e9a8cc493b85aa7b194b6128aa
+Merge: False
+Message:
+xilinx_spi: Split into of driver and generic part.
+
+This patch splits the xilinx_spi driver into a generic part and a
+OF driver part.
+
+The reason for this is to later add in a platform driver as well.
+
+Tested-by: John Linn <John.Linn@xilinx.com>
+Signed-off-by: Richard Röjfors <richard.rojfors@mocean-labs.com>
+Signed-off-by: Grant Likely <grant.likely@secretlab.ca>
+Comment:
+Good.
+
+G: 37, B: 7
+
+Commit: 92c0bfea9ba61ec2d3a6d4fb1af39358d5e52b71
+Merge: False
+Message:
+[SCSI] mptfusion: bump version to 3.04.01
+
+bump version to 3.04.01
+
+Signed-off-by: Eric Moore <Eric.Moore@lsil.com>
+Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
+Comment:
+Good.
+
+G: 38, B: 7
+
+Commit: d685249a33eb729d1dbe7ee54d63cb81fdee53da
+Merge: False
+Message:
+x86_64: prepare shared crypto/aes.c
+
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Good.
+
+G: 39, B: 7
+
+Commit: 3fa04ecd72780da31ba8b329e148179bc24a9c7d
+Merge: True
+Message:
+Merge branch 'writeback-for-2.6.34' into nfs-for-2.6.34
+Comment:
+Good.
+
+G: 40, B: 7
+
+Commit: b211a955d4f48c855c5341e00d27b4b61b96c1f6
+Merge: False
+Message:
+Staging: hv: remove STRUCT_PACKED and STRUCT_ALIGNED defines
+
+Use the correct __attribute__((packed)) one if it's really needed.
+
+Cc: Hank Janssen <hjanssen@microsoft.com>
+Cc: Haiyang Zhang <haiyangz@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+Comment:
+Good.
+
+G: 41, B: 7
+
+Commit: 0e54c8992a35ab8126e8a7661007ddc1745a2597
+Merge: False
+Message:
+UBIFS: check return code of ubifs_lpt_lookup
+
+Function ubifs_lpt_lookup may return ERR_PTR(...). Check for it.
+
+[Tweaked by Artem Bityutskiy]
+
+Signed-off-by: Vasiliy Kulikov <segooon@gmail.com>
+Signed-off-by: Artem Bityutskiy <Artem.Bityutskiy@nokia.com>
+Comment:
+Bad, you should check error codes.
+
+G: 41, B: 8
+
+Commit: 4bfb8c5c87bd167640ef5789b22e058e339df804
+Merge: False
+Message:
+MIPS: do_sigaltstack() expects userland pointers
+
+o32 compat does the right thing, native and n32 compat do not...
+
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-arch@vger.kernel.org
+Cc: linux-mips@linux-mips.org
+Patchwork: http://patchwork.linux-mips.org/patch/1700/
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+Comment:
+Bad.
+
+G: 41, B: 9
+
+Commit: 32fe5e393455d87db4988af03915634304870fb4
+Merge: False
+Message:
+USB Storage Sierra: TRU-Install feature update
+
+This patch upgrades the support for the Sierra Wireless TRU-Install
+feature (i.e. zeroCD) to allow for future support of Linux enabled
+TRU-Install devices.
+
+By default all devices that do not have a Linux enabled TRU-Install
+device (i.e. the device does not have a Linux package on the virtual CD
+partition) will be switched into "modem mode." Devices that do contain a
+Linux package in the TRU-Install virtual CD will be allowed to enumerate
+as a CD-Rom so that either (a) a user can install the packaged software
+or (b) a user-space application (e.g. udev) can switch it to modem mode.
+
+This patch does allow for manual override by adding a usb-storage module
+parameter 'swi_tru_install' which can force the modem into either mode
+regardless of what packages it contains.
+
+Signed-off-by: Kevin Lloyd <klloyd@sierrawireless.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+
+Comment:
+Good.
+
+G: 42, B: 9
+
+Commit: c8fecf2242a0ab7230210665986b8ef915e1ae9e
+Merge: False
+Message:
+[IPV6]: Eliminate difference in actions of sysctl and proc handler for conf.all.forwarding
+
+The only difference in this case is that updating all.forwarding
+causes the update in default.forwarding when done via proc, but
+not via the system call.
+
+Besides, this consolidates a good portion of code.
+
+Signed-off-by: Pavel Emelyanov <xemul@openvz.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 43, B: 9
+
+Commit: 109568e110ed67d4be1b28609b9fa00fca97f8eb
+Merge: False
+Message:
+crypto: aes - Move key_length in struct crypto_aes_ctx to be the last field
+
+The Intel AES-NI AES acceleration instructions need key_enc, key_dec
+in struct crypto_aes_ctx to be 16 byte aligned, it make this easier to
+move key_length to be the last one.
+
+Signed-off-by: Huang Ying <ying.huang@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Comment:
+Good.
+
+G: 44, B: 9
+
+Commit: 507d37cf269ebbd1b32bcc435fe577e411f73151
+Merge: False
+Message:
+[CCID] Only call the HC insert_options methods when requested
+
+Signed-off-by: Arnaldo Carvalho de Melo <acme@mandriva.com>
+Comment:
+Good.
+
+G: 45, B: 9
+
+Commit: 222d394d30e74bb7a2a65029fcea68107b0d0eb6
+Merge: False
+Message:
+kbuild: enable 'make AFLAGS=...' to add additional options to AS
+
+The variable AFLAGS is a wellknown variable and the usage by
+kbuild may result in unexpected behaviour.
+On top of that several people over time has asked for a way to
+pass in additional flags to gcc.
+
+This patch replace use of AFLAGS with KBUILD_AFLAGS all over
+the tree.
+
+Patch was tested on following architectures:
+alpha, arm, i386, x86_64, mips, sparc, sparc64, ia64, m68k, s390
+
+Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+Comment:
+Good.
+
+G: 46, B: 9
+
+Commit: 826d2abe9945372c8838398bfd88a1caa5844d41
+Merge: False
+Message:
+Updated READMEs and MAINTAINERS for the ipw2100 and ipw2200 drivers.
+
+Signed-off-by: James Ketrenos <jketreno@linux.intel.com>
+Comment:
+Good.
+
+G: 47, B: 9
+
+Commit: 17bb5e2c1706c7296eec96e97be0d760e59f282c
+Merge: False
+Message:
+ARM: move __mmap_switched, C-API functions to init section
+
+Move these functions, which are only ever used during boot CPU
+initialization, to the init section.
+
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 48, B: 9
+
+Commit: a2e212dae57071d4a4a6cbbc12d70c628fd47ad2
+Merge: False
+Message:
+x86_64: Use LOCAL_DISTANCE and REMOTE_DISTANCE in x86_64 ACPI code
+
+Use LOCAL_DISTANCE and  REMOTE_DISTANCE in x86_64 ACPI code
+
+Signed-off-by: David Rientjes <rientjes@google.com>
+Signed-off-by: Andi Kleen <ak@suse.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 49, B: 9
+
+Commit: 233c08e0ff303e659a9003d49b15608f59f08a64
+Merge: False
+Message:
+[PATCH] USBATM: xusbatm rewrite
+
+The xusbatm driver is for otherwise unsupported modems.
+All it does is grab hold of a user-specified set of
+interfaces - the generic usbatm core methods (hopefully)
+do the rest.  As Aurelio Arroyo discovered when he tried
+to use xusbatm (big mistake!), the interface grabbing logic
+was completely borked.  Here is a rewrite that works.
+
+Signed-off-by:	Duncan Sands <baldrick@free.fr>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+Comment:
+Bad.
+
+G: 49, B: 10
+
+Commit: 6ba475042f0ca54bf055ce94b2a1e4656ed143f9
+Merge: False
+Message:
+V4L/DVB (4296): Remove stradis MODULE_DEVICE_INFO definition
+
+To prevent autoloading of the driver, as it then conflicts with every other
+saa7146 device in existence.
+
+Signed-off-by: Andrew de Quincey <adq_dvb@lidskialf.net>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@infradead.org>
+Comment:
+Good.
+
+G: 50, B: 10
+
+Commit: b4687da7fc5f741af7fee9b0248a2cf2ad9c4478
+Merge: False
+Message:
+SUNRPC: Refactor logic to NUL-terminate strings in pages
+
+Clean up: Introduce a helper to '\0'-terminate XDR strings
+that are placed in a page in the page cache.
+
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Trond Myklebust <Trond.Myklebust@netapp.com>
+Comment:
+Good.
+
+G: 51, B: 10
+
+Commit: e37fc6e11c79899451e394319cff18cc53d6448d
+Merge: False
+Message:
+libertas: Increase priority of 'unknown command' warnings
+
+Using the deprecated lbs_prepare_and_send_command() function for a
+command which it doesn't understand is an error; complain loudly about
+it even when we're not debugging.
+
+The mesh stats bug, where we converted MESH_ACCESS to a direct command
+but accidentally missed one user which was still trying to do it through
+lbs_prepare_and_send_command(), would have been caught a lot quicker if
+we'd done this sooner. Such bugs aren't entirely unlikely in future too,
+as we convert more code to stop using this function.
+
+Signed-off-by: David Woodhouse <dwmw2@infradead.org>
+Signed-off-by: John W. Linville <linville@tuxdriver.com>
+Comment:
+Bad.
+
+G: 51, B: 11
+
+Commit: b2d6db5878a0832659ed58476357eea2db915550
+Merge: False
+Message:
+Kobject: rename kobject_add_ng() to kobject_add()
+
+Now that the old kobject_add() function is gone, rename kobject_add_ng()
+to kobject_add() to clean up the namespace.
+
+Cc: Kay Sievers <kay.sievers@vrfy.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+
+Comment:
+Good.
+
+G: 52, B: 11
+
+Commit: a489d159229fcc07bbb7566ac4fac745b79197ad
+Merge: True
+Message:
+Merge branch 'for-linus' of git://git390.osdl.marist.edu/pub/scm/linux-2.6
+
+* 'for-linus' of git://git390.osdl.marist.edu/pub/scm/linux-2.6: (44 commits)
+  [S390] hypfs crashes with invalid mount option.
+  [S390] cio: subchannel evaluation function operates without lock
+  [S390] cio: always query all paths on path verification.
+  [S390] cio: update path groups on logical CHPID changes.
+  [S390] cio: subchannels in no-path state.
+  [S390] Replace nopav-message on VM.
+  [S390] set modalias for ccw bus uevents.
+  [S390] Get rid of DBG macro.
+  [S390] Use alternative user-copy operations for new hardware.
+  [S390] Make user-copy operations run-time configurable.
+  [S390] Cleanup in signal handling code.
+  [S390] Cleanup in page table related code.
+  [S390] Linux API for writing z/VM APPLDATA Monitor records.
+  [S390] xpram off by one error.
+  [S390] Remove kexec experimental flag.
+  [S390] cleanup appldata.
+  [S390] fix typo in vmcp.
+  [S390] Kernel stack overflow handling.
+  [S390] qdio slsb processing state.
+  [S390] Missing initialization in common i/o layer.
+  ...
+Comment:
+Good.
+
+G: 53, B: 11
+
+Commit: af6757e95efca3d5965a7d3d087190bef99ac45f
+Merge: False
+Message:
+ath9k_hw: simplify OLC temp compensation for AR9002
+
+We can do the family revision check on the top level caller.
+
+Signed-off-by: Luis R. Rodriguez <lrodriguez@atheros.com>
+Signed-off-by: John W. Linville <linville@tuxdriver.com>
+Comment:
+Good.
+
+G: 54, B: 11
+
+Commit: 0a00bc2019ea54875b7263b1b0340c556379708a
+Merge: False
+Message:
+staging: brcm80211: Remove unnecessary header files.
+
+These header files are no longer needed.
+
+Signed-off-by: Henry Ptasinski <henryp@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+Comment:
+Good.
+
+G: 55, B: 11
+
+Commit: c05988cdb06237738d361ef82fbf4df1020aa3db
+Merge: False
+Message:
+SUNRPC: Add documenting comments in net/sunrpc/timer.c
+
+Clean up: provide documenting comments for the functions in
+net/sunrpc/timer.c.
+
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Trond Myklebust <Trond.Myklebust@netapp.com>
+Comment:
+Good.
+
+G: 56, B: 11
+
+Commit: 6f16b5359ceb96780eac4178393b0e8a3c8aa1ea
+Merge: False
+Message:
+[SCSI] set error value when failing commands in prep_fn
+
+set DID_NO_CONNECT for the BLKPREP_KILL case and correct a few
+BLKPREP_DEFER cases that weren't checking for the need to plug the
+queue.
+
+Signed-Off-By: Mike Christie <michaelc@cs.wisc.edu>
+Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
+Comment:
+Bad.
+
+G: 56, B: 12
+
+Commit: 9f2a036aaac8f29bb7c68303b52a9263238b63d2
+Merge: False
+Message:
+Convert the oxsemi tornado special cases to use the quirk interface and not
+
+scribble on its own reference structures.
+
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Signed-off-by: Alan Cox <alan@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 57, B: 12
+
+Commit: 26da82058e62ea173559a26881b16d10089645ba
+Merge: False
+Message:
+[PATCH] ecryptfs: use special_file()
+
+Use the special_file() macro to check whether an inode is special instead of
+open-coding it.
+
+Acked-by: Mike Halcrow <mhalcrow@us.ibm.com>
+Cc: Phillip Hellewell <phillip@hellewell.homeip.net>
+Signed-off-by: Pekka Enberg <penberg@cs.helsinki.fi>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 58, B: 12
+
+Commit: 8a1492370b493cf680b86885286f07cb9b967716
+Merge: False
+Message:
+SAMPLES: kprobe_example: Make it print something on MIPS.
+
+This KProbes example is a little useless if it doesn't print anything.
+For MIPS print similar messages to those produced on x86 and PPC.
+
+Signed-off-by: David Daney <ddaney@caviumnetworks.com>
+To: linux-mips@linux-mips.org
+To: ananth@in.ibm.com
+To: anil.s.keshavamurthy@intel.com
+To: davem@davemloft.net
+To: masami.hiramatsu.pt@hitachi.com
+Cc: linux-kernel@vger.kernel.org
+Cc: hschauhan@nulltrace.org
+Patchwork: https://patchwork.linux-mips.org/patch/1528/
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+Comment:
+Good.
+
+G: 59, B: 12
+
+Commit: 5e614475decfcc852d2c8c50702f81ee34901fe2
+Merge: False
+Message:
+Jon needs a new shift key.
+
+Signed-off-by: Dave Jones <davej@redhat.com>
+Signed-off-by: Adrian Bunk <bunk@stusta.de>
+Comment:
+Good.
+
+G: 60, B: 12
+
+Commit: d3c7b7ccc199ee564177ee914c04771d6bc00295
+Merge: False
+Message:
+NFSv4: Add support for the RELEASE_LOCKOWNER operation
+
+This is needed by NFSv4.0 servers in order to keep the number of locking
+stateids at a manageable level.
+
+Signed-off-by: Trond Myklebust <Trond.Myklebust@netapp.com>
+Comment:
+Good.
+
+G: 61, B: 12
+
+Commit: 825c6aa2a874731fa5fbe96a9a0c8f2e27f6a0c0
+Merge: False
+Message:
+V4L/DVB (9822): cs53l32a: convert to v4l2_subdev.
+
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@redhat.com>
+Comment:
+Good.
+
+G: 62, B: 12
+
+Commit: 9dbfbd35ce16e4f5a4d0d9e3f6e012b136fe80ea
+Merge: False
+Message:
+DMAENGINE: ste_dma40: corrected is_paused behavior
+
+The handling of pause detection was slightly incorrect.
+
+Signed-off-by: Jonas Aaberg <jonas.aberg@stericsson.com>
+Signed-off-by: Linus Walleij <linus.walleij@stericsson.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Comment:
+Bad.
+
+G: 62, B: 13
+
+Commit: 6d18c9220965b437287c3a7e803725c24992ceac
+Merge: False
+Message:
+signal/timer/event: signalfd compat code
+
+This patch implements the necessary compat code for the signalfd system call.
+
+Signed-off-by: Davide Libenzi <davidel@xmailserver.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 63, B: 13
+
+Commit: c2a07c932dad49b3b80b11132183b8b2ec8ea1aa
+Merge: False
+Message:
+viafb: limit LCD code impact
+
+This patch cleans the LCD code up. It forbids overwritting global
+decissions like what IGA should be used as the source and whether to
+enable the second display channel. Additionally it removes a bit code
+duplication.
+
+Signed-off-by: Florian Tobias Schandinat <FlorianSchandinat@gmx.de>
+Cc: Joseph Chan <JosephChan@via.com.tw>
+Comment:
+Good.
+
+G: 64, B: 13
+
+Commit: f70c5253b41444fd2779e1f76bfe25811d9b8c23
+Merge: False
+Message:
+[RTC] remove references to asm/mach/time.h
+
+asm/mach/time.h is the ARM header file for setting up kernel ticker
+timekeeping (be that the old jiffy interrupt or the new clocksource.)
+RTC drivers have no business using this header file, and in fact do
+not require it.
+
+Build tested on at91sam9rl, omap and s3c2410 configurations.
+
+Acked-by: Alessandro Zummo <a.zummo@towertech.it>
+Acked-by: Andrew Victor <linux@maxim.org.za>
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 65, B: 13
+
+Commit: 72dc6794fcd7642200a87bf18e3a43e676314b63
+Merge: False
+Message:
+[PATCH] pci_module_init() conversion for pata_pdc2027x
+
+pci_module_init() conversion for pata_pdc2027x
+
+Signed-off-by: Henrik Kretzschmar <henne@nachtwindheim.de>
+Acked-by: Alan Cox <alan@redhat.com>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Jeff Garzik <jeff@garzik.org>
+Comment:
+Good.
+
+G: 66, B: 13
+
+Commit: 5242519b0296d128425368fc6ab17f541d5fa775
+Merge: False
+Message:
+perf stat: Convert to Git option parsing
+
+Remove getopt usage and use Git's much more advanced and more compact
+command option library.
+
+Extend the event parser library with the extensions that were in
+perf-stat before.
+
+Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Cc: Mike Galbraith <efault@gmx.de>
+Cc: Paul Mackerras <paulus@samba.org>
+Cc: Corey Ashford <cjashfor@linux.vnet.ibm.com>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>
+Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: John Kacur <jkacur@redhat.com>
+LKML-Reference: <new-submission>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Good.
+
+G: 67, B: 13
+
+Commit: 067173526c3bbc2eaeefcf6b7b2a9d998b9e8042
+Merge: False
+Message:
+ARM: Provide common header for hard_smp_processor_id()
+
+Provide a common header to read the SMP CPU number from the MPIDR.
+
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 68, B: 13
+
+Commit: dda128dcb4d85dfd6a2e11002d0c2f352aea7dc5
+Merge: False
+Message:
+ARM: mach-shmobile: ap4evb: Add SW43, SW3 tiny document
+
+Signed-off-by: Kuninori Morimoto <morimoto.kuninori@renesas.com>
+Signed-off-by: Paul Mundt <lethal@linux-sh.org>
+Comment:
+Good.
+
+G: 69, B: 13
+
+Commit: bd62307b20ff864c48541e46c3ee2bb9cc330f64
+Merge: False
+Message:
+V4L/DVB: ivtv: Avoid accidental video standard change
+
+For yuv video output, pass fake values to avoid firmware trying to change
+video standard.
+
+Signed-off-by: Ian Armstrong <ian@iarmst.demon.co.uk>
+Signed-off-by: Andy Walls <awalls@md.metrocast.net>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@redhat.com>
+Comment:
+Good.
+
+G: 70, B: 13
+
+Commit: 89b329ef9d7cc16ed46fc991b21b2d45e7bf452c
+Merge: False
+Message:
+V4L/DVB (7610): em28xx: Select reg wait time based on chip ID
+
+This is more conservative than just removing the msleep() from
+em28xx_write_regs_req(), since some old hardware may still need it.
+So, it will remove the sleep time only for those chips where this
+removal were tested.
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab@infradead.org>
+Comment:
+Good.
+
+G: 71, B: 13
+
+Commit: c226951b93f7cd7c3a10b17384535b617bd43fd0
+Merge: True
+Message:
+Merge branch 'master' into upstream
+Comment:
+Good.
+
+G: 72, B: 13
+
+Commit: d99a05adf8490cc171b7709554936b8f3ac9e362
+Merge: False
+Message:
+[PATCH] knfsd: nfsd4: simplify lease changing
+
+The only way the protocol gives to change the lease time on the fly is to
+simulate a reboot.  We don't have that completely right in the current code;
+among other things, we should probably put lockd in grace too while we do
+this.
+
+For now, let's just keep this simple, and wait till the next time nfsd starts
+to register any changes in lease time.  If the administrator really wants to
+change the lease time *now*, they can go ahead and bring nfsd down and then
+back up again after changing the lease time.
+
+Also remove the "if (reclaim_str_hashtbl_size == 0)" case, a shortcut which
+skips the grace period if we know of no clients in need of recovery.  This
+isn't going to work well with nlm.
+
+Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
+Signed-off-by: Neil Brown <neilb@cse.unsw.edu.au>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 73, B: 13
+
+Commit: dc6f962eb5ad728086fcfa9967976e93ed68e0a5
+Merge: True
+Message:
+Merge branch 'for-linus' of git://neil.brown.name/md
+
+* 'for-linus' of git://neil.brown.name/md:
+  md: resolve confusion of MD_CHANGE_CLEAN
+  md: don't clear MD_CHANGE_CLEAN in md_update_sb() for external arrays
+  Move .gitignore from drivers/md to lib/raid6
+Comment:
+Good.
+
+G: 74, B: 13
+
+Commit: f6d6ae965760906d79ab29bc38507608c5971549
+Merge: False
+Message:
+amd64_edac: unify MCGCTL ECC switching
+
+Unify almost identical code into one function and remove NUMA-specific
+usage (specifically cpumask_of_node()) in favor of generic topology
+methods.
+
+Remove unused defines, while at it.
+
+Signed-off-by: Borislav Petkov <borislav.petkov@amd.com>
+Comment:
+Good.
+
+G: 75, B: 13
+
+Commit: 24acc6895616b373475e92e49925efc3ef591563
+Merge: False
+Message:
+rdma: potential ERR_PTR dereference
+
+In the original code, the "goto out" calls "rdma_destroy_id(cm_id);"
+That isn't needed here and would cause problems because "cm_id" is an
+ERR_PTR.  The new code just returns directly.
+
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Acked-by: Andy Grover <andy.grover@oracle.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 76, B: 13
+
+Commit: 5c601d0c942f5aaf7f3cff7e08f61047d70a964e
+Merge: False
+Message:
+[PATCH] wireless: move zd1201 where it belongs
+
+zd1201 is wifi adapter, yet it is hiding in drivers/usb/net where
+noone can find it. This moves Kconfig/Makefile zd1201 to the right
+place.
+
+Signed-off-by: Pavel Machek <pavel@suse.cz>
+Signed-off-by: John W. Linville <linville@tuxdriver.com>
+Comment:
+Good.
+
+G: 77, B: 13
+
+Commit: 57a473f2f97cf3bca78df08aac2f438ddef03bee
+Merge: False
+Message:
+ARM: 5671/1: bcmring: add maintainer entry
+
+add maintainer entry
+
+Signed-off-by: Leo Chen <leochen@broadcom.com>
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 78, B: 13
+
+Commit: d970dbf8455eb1b8cebd3cde6e18f73dd1b3ce38
+Merge: False
+Message:
+SCTP: Convert custom hash lists to use hlist.
+
+Convert the custom hash list traversals to use hlist functions.
+
+Signed-off-by: Vlad Yasevich <vladislav.yasevich@hp.com>
+Comment:
+Good.
+
+G: 79, B: 13
+
+Commit: 3c01ec0d82885d4764d066c9a1e3a431e6fb0f04
+Merge: False
+Message:
+Staging: w35und: remove macro magic from MLME_GetNextPacket()
+
+This removes the macro magic from MLME_GetNextPacket() to de-obfuscate the
+code.
+
+Signed-off-by: Pekka Enberg <penberg@cs.helsinki.fi>
+Acked-by: Pavel Machek <pavel@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+
+Comment:
+Good.
+
+G: 80, B: 13
+
+Commit: b57b98d147ef98758886a39efb94f3254542c39b
+Merge: False
+Message:
+[PATCH] mm/msync.c cleanup
+
+This is not problem actually, but sync_page_range() is using for exported
+function to filesystems.
+
+The msync_xxx is more readable at least to me.
+
+Signed-off-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Acked-by: Hugh Dickins <hugh@veritas.com>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 81, B: 13
+
+Commit: 980533b018fda7ae4c4fb6863b75a0e282d2ffd2
+Merge: False
+Message:
+correct console log level when ERST ACPI table is not found
+
+When booting 2.6.35-rc3 on a x86 system without an ERST ACPI table with
+the 'quiet' option, we still observe an "ERST: Table is not found!"
+warning.
+
+Quiesce it to the same info log level as the other 'table not found'
+warnings.
+
+Signed-off-by: Daniel J Blueman <daniel.blueman@gmail.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Bad.
+
+G: 81, B: 14
+
+Commit: ab7a3379f5f9e760e4b7421fdf28d829bfba73aa
+Merge: False
+Message:
+ARM: S5PV210: Add OneNAND device to the Aquila board
+
+This patch is to support OneNAND device to the Aquila board.
+
+Signed-off-by: Joonyoung Shim <jy0922.shim@samsung.com>
+Signed-off-by: Kyungmin Park <kyungmin.park@samsung.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Kukjin Kim <kgene.kim@samsung.com>
+Comment:
+Good.
+
+G: 82, B: 14
+
+Commit: ab05e290265341377187bb968575d3b7c72f9644
+Merge: True
+Message:
+Merge branch 'topic/asoc' into for-linus
+Comment:
+Good.
+
+G: 83, B: 14
+
+Commit: 2f01a973729712c373ccc8acde4d218c38f3029a
+Merge: False
+Message:
+[ARM] 5103/2: CM-X270: update core platform support
+
+Convert CM-X270 pin configuration to use MFP tables.
+Make device initialization dependent on respective driver CONFIG_ value (like
+in zylonite).
+Cleanup includes
+
+Signed-off-by: Mike Rapoport <mike@compulab.co.il>
+Acked-by: Eric Miao <eric.miao@marvell.com>
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 84, B: 14
+
+Commit: f3a981ffddcc9671505b85ead976630878116434
+Merge: False
+Message:
+airo : Print of firmware version
+
+For the firmware version 5.30.17 the log file shows:
+Firmware version 5.30.11
+
+The variable softSubVer is binary.
+
+Signed-off-by: Matthieu CASTET <castet.matthieu@free.fr>
+Signed-off-by: Jose Alonso <joalonsof@gmail.com>
+Signed-off-by: John W. Linville <linville@tuxdriver.com>
+Comment:
+Good.
+
+G: 85, B: 14
+
+Commit: a05f7b15deb2903d9f0b5df33ddd4d186d5ecac1
+Merge: False
+Message:
+pid namespaces: make get_pid_ns() return the namespace itself
+
+Make get_pid_ns() return the namespace itself to look like the other getters
+and make the code using it look nicer.
+
+Signed-off-by: Pavel Emelianov <xemul@openvz.org>
+Acked-by: Cedric Le Goater <clg@fr.ibm.com>
+Cc: Kirill Korotaev <dev@openvz.org>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Herbert Poetzl <herbert@13thfloor.at>
+Cc: Sukadev Bhattiprolu <sukadev@us.ibm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 86, B: 14
+
+Commit: 7b0a26f2ca0001a13473b874d52b3d557e3d7289
+Merge: False
+Message:
+[ARM] Orion: Add Buffalo Linkstation Mini support
+
+This patch adds support for Buffalo Linkstation Mini board.
+
+Signed-off-by: Alexey Kopytko <alexey@kopytko.ru>
+Signed-off-by: Nicolas Pitre <nico@marvell.com>
+Comment:
+Good.
+
+G: 87, B: 14
+
+Commit: 22b0763a2328434ac68cca884e1b7d350ca61332
+Merge: False
+Message:
+MIPS: uasm: Add option to export uasm API.
+
+A 'select EXPORT_UASM' in Kconfig will cause the uasm to be exported
+for use in modules.  When it is exported, all the uasm data and code
+cease to be __init and __initdata.
+
+Also daddiu_bug cannot be __cpuinitdata if uasm is exported.  The
+cleanest thing is to just make it normal data.
+
+Signed-off-by: David Daney <ddaney@caviumnetworks.com>
+To: linux-mips@linux-mips.org
+To: wim@iguana.be
+Cc: linux-kernel@vger.kernel.org
+Patchwork: https://patchwork.linux-mips.org/patch/1500/
+Signed-off-by: Ralf Baechle <ralf@linux-mips.org>
+Comment:
+Good.
+
+G: 88, B: 14
+
+Commit: 9f22271898707aed2f84cc75ab3bd109173cdbbf
+Merge: False
+Message:
+[PATCH] make ACPI errata __read_mostly
+
+Signed-off-by: Andreas Mohr <andi@lisas.de>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 89, B: 14
+
+Commit: 58b5369e6eb6c889b540a99aa95562a66b25acf1
+Merge: False
+Message:
+ARM: 5674/1: Add clocksource/clockevent support for w90p910 platform
+
+Add clocksource/clockevent support for w90p910 platform.
+
+Signed-off-by: Wan ZongShun <mcuos.com@gmail.com>
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 90, B: 14
+
+Commit: 29464f281389fd7e9adf969de7bbeb20b8596f82
+Merge: False
+Message:
+[CPUFREQ] checkpatch cleanups for cpufreq core
+
+Signed-off-by: Dave Jones <davej@redhat.com>
+Comment:
+Good.
+
+G: 91, B: 14
+
+Commit: b87c9e0a880f2992dc210eb4ea8b2da6c63883ca
+Merge: False
+Message:
+drivers/block/floppy.c: remove CLEARSTRUCT macro, use memset
+
+Signed-off-by: Joe Perches <joe@perches.com>
+Cc: Stephen Hemminger <shemminger@vyatta.com>
+Cc: Jens Axboe <jens.axboe@oracle.com>
+Cc: Marcin Slusarz <marcin.slusarz@gmail.com>
+Cc: Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 92, B: 14
+
+Commit: 066286071d3542243baa68166acb779187c848b3
+Merge: False
+Message:
+[NETLINK]: Add "groups" argument to netlink_kernel_create
+
+Signed-off-by: Patrick McHardy <kaber@trash.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Good.
+
+G: 92, B: 14
+
+Commit: 69e1a33f62eff9b228a8cc2c3e4429dbee8966c9
+Merge: False
+Message:
+[PATCH] x86-64: Use ACPI PXM to parse PCI<->node assignments
+
+Since this is shared code I had to implement it for i386 too
+
+Signed-off-by: Andi Kleen <ak@suse.de>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 93, B: 14
+
+Commit: 338de9d9dac038a76fd6577cf30aa3ada07ae756
+Merge: False
+Message:
+ASoC: uda134x: correct bias level setup for codecs family
+
+For UDA1341 codec power control is managed in STATUS1 register, and
+for all other codecs in DATA011 register.
+
+Signed-off-by: Vladimir Zapolskiy <vzapolskiy@gmail.com>
+Signed-off-by: Mark Brown <broonie@opensource.wolfsonmicro.com>
+Comment:
+Good.
+
+G: 94, B: 14
+
+Commit: 126974dc8c432535f9eef36956056b88a153bfb3
+Merge: False
+Message:
+Staging: comedi: Remove me4000_cnt_context_t typedef
+
+Signed-off-by: Bill Pemberton <wfp5p@virginia.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+Comment:
+Good.
+
+G: 95, B: 14
+
+Commit: 5a15d7e85582fa84cbd01c6dcc5d927b43fddff4
+Merge: False
+Message:
+drivers/xen: use nr_irqs
+
+Signed-off-by: Yinghai Lu <yhlu.kernel@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Good.
+
+G: 96, B: 14
+
+Commit: e270051d9c6e5f0b31668ec1f0d864ab9920ffca
+Merge: True
+Message:
+Pull battery-sbs-ac into release branch
+Comment:
+Good.
+
+G: 97, B: 14
+
+Commit: 139ddfcab50e5eabcc88341c8743a990ac1be6a2
+Merge: False
+Message:
+ide: move handling of I/O resources out of ide_probe_port()
+
+Reserve/release I/O resources in ide_device_add_all() instead of
+ide_probe_port().
+
+Signed-off-by: Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>
+Comment:
+Good.
+
+G: 98, B: 14
+
+Commit: f42b293d6d5259043a8944b556eeab427c695d57
+Merge: False
+Message:
+NFS: nfs_readpage_async() needs to be accessible as a fallback for local caching
+
+nfs_readpage_async() needs to be non-static so that it can be used as a
+fallback for the local on-disk caching should an EIO crop up when reading the
+cache.
+
+Signed-off-by: David Howells <dhowells@redhat.com>
+Acked-by: Steve Dickson <steved@redhat.com>
+Acked-by: Trond Myklebust <Trond.Myklebust@netapp.com>
+Acked-by: Al Viro <viro@zeniv.linux.org.uk>
+Tested-by: Daire Byrne <Daire.Byrne@framestore.com>
+Comment:
+Bad.
+
+G: 98, B: 15
+
+Commit: 51444ea3d4f5baa0338297aba7065fd695528a36
+Merge: False
+Message:
+V4L/DVB: vpfe_capture: remove clock and platform code
+
+1) removed the platform code and clk configuration. They are now
+   part of ccdc driver (part of the ccdc patches and platform patches 2-4);
+
+2) Added proper error codes for ccdc register function.
+
+Reviewed-by: Vaibhav Hiremath <hvaibhav@ti.com>
+Reviewed-by: Kevin Hilman <khilman@deeprootsystems.com>
+Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Muralidharan Karicheri <m-karicheri2@ti.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@redhat.com>
+Comment:
+Good.
+
+G: 99, B: 15
+
+Commit: 61ce7b3ab55e6dd3a9811d0cf4f2dc5a3a5d892a
+Merge: True
+Message:
+Merge branch 'upstream' of git://ftp.linux-mips.org/pub/scm/upstream-linus
+
+* 'upstream' of git://ftp.linux-mips.org/pub/scm/upstream-linus:
+  [MIPS] Cleanup unnecessary <asm/ptrace.h> inclusions.
+  [MIPS] DEC: pt_regs fixes for buserror handlers
+  [MIPS] Fix return type of gt64120_irq.
+  [MIPS] Ocelot C: Build fix - ll_mv64340_irq takes no more regs argument.
+  [MIPS] Jazz defconfig file.
+  [MIPS] Jazz: build fix - include <linux/screen_info.h>
+  [MIPS] Jazz: Remove warning.  After 7 years probably somebody test this ;)
+  [MIPS] Jazz: Fix I/O port resources.
+  [MIPS] DEC: pt_regs fixes for dec_intr_halt.
+  handle_sysrq lost its pt_regs * argument
+
+Manual conflict resolved in arch/um/drivers/mconsole_kern.c
+Comment:
+Good.
+
+G: 100, B: 15
+
+Commit: 6e462b9f2c37101312109aaa46e196bdca6c846d
+Merge: False
+Message:
+cifs: rename name_len to list_len in CIFSSMBQAllEAs
+
+...for clarity and so we can reuse the name for the real name_len.
+
+Signed-off-by: Jeff Layton <jlayton@redhat.com>
+Signed-off-by: Steve French <sfrench@us.ibm.com>
+Comment:
+Good.
+
+G: 101, B: 15
+
+Commit: ee4eff6ff6cbfc8ce38131058a18802bf6206879
+Merge: False
+Message:
+[PATCH] x86-64: update IO-APIC dest field to 8-bit for xAPIC
+
+On the Unisys ES7000/ONE system, we encountered a problem where performing
+a kexec reboot or dump on any cell other than cell 0 causes the system
+timer to stop working, resulting in a hang during timer calibration in the
+new kernel.
+
+We traced the problem to one line of code in disable_IO_APIC(), which needs
+to restore the timer's IO-APIC configuration before rebooting.  The code is
+currently using the 4-bit physical destination field, rather than using the
+8-bit logical destination field, and it cuts off the upper 4 bits of the
+timer's APIC ID.  If we change this to use the logical destination field,
+the timer works and we can kexec on the upper cells.  This was tested on
+two different cells (0 and 2) in an ES7000/ONE system.
+
+For reference, the relevant Intel xAPIC spec is kept at
+ftp://download.intel.com/design/chipsets/e8501/datashts/30962001.pdf,
+specifically on page 334.
+
+Signed-off-by: Benjamin M Romer <benjamin.romer@unisys.com>
+Signed-off-by: Andi Kleen <ak@suse.de>
+Cc: Andi Kleen <ak@suse.de>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Vivek Goyal <vgoyal@in.ibm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Comment:
+Bad.
+
+G: 101, B: 16
+
+Commit: 08456d10a6bc208bafced4f7b4090abccfb594da
+Merge: True
+Message:
+Merge master.kernel.org:/pub/scm/linux/kernel/git/gregkh/driver-2.6
+
+* master.kernel.org:/pub/scm/linux/kernel/git/gregkh/driver-2.6:
+  [PATCH] ALSA: Fix sysfs breakage
+Comment:
+Good.
+
+G: 102, B: 16
+
+Commit: 5a780fc096397f9b62bc6dddced509f012a97e78
+Merge: False
+Message:
+drivers/char/rio/Makefile: replace the use of <module>-objs with <module>-y
+
+Changed <module>-objs to <module>-y in Makefile.
+
+Signed-off-by: Tracey Dent <tdent48227@gmail.com>
+Cc: Jiri Slaby <jirislaby@gmail.com>
+Cc: Michal Marek <mmarek@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 103, B: 16
+
+Commit: 568d422e9cf52b7b26d2e026ae1617971f62b560
+Merge: False
+Message:
+USB: usb_serial: only allow sysrq on a console port
+
+The only time a sysrq should get processed is if the attached device
+is a console.  This is intended to protect sysrq execution on a host
+connected with a terminal program.
+
+Here is the problem scenario:
+
+host A <-- rs232 link --> host B
+
+Host A is using mincom and a usb pl2303 device to connect to host b
+which is a linux system with a usb pl2303 device acting as the serial
+console.  When host B is rebooted the pl2303 emits random junk
+characters on reset.  These character sequences contain serial break
+signals most of the time and when translated to a sysrq have caused
+host A to get random processes killed, reboots or power down.
+
+It is true that in this setup with this patch host B might still have
+the same problem as host A if you reboot host A.  In most cases host A
+is a development host which seldom gets rebooted, and you could turn
+off sysrq temporarily on host B if you need to reboot host A.
+
+Signed-off-by: Jason Wessel <jason.wessel@windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+Comment:
+Good.
+
+G: 104. B: 16
+
+Commit: 2e6113908fe76a06295cb243f1f2f0eea055b0c2
+Merge: False
+Message:
+[PATCH] drivers/char/applicom.c: proper module_{init,exit}
+
+Convert the driver to use module_{init,exit}.
+
+Signed-off-by: Adrian Bunk <bunk@stusta.de>
+Acked-by: David Woodhouse <dwmw2@infradead.org>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 105, B: 16
+
+Commit: 673b864fd76a29031aa0b4b08fc80886d527b3b7
+Merge: True
+Message:
+Merge git://git.kernel.org/pub/scm/linux/kernel/git/davem/sparc-2.6
+
+* git://git.kernel.org/pub/scm/linux/kernel/git/davem/sparc-2.6:
+  arch/sparc/mm: Use GFP_KERNEL
+  MAINTAINERS: Add trailing slash to SBUS path.
+  sbus: autoconvert trivial BKL users to private mutex
+Comment:
+Good.
+
+G: 106, B: 16
+
+Commit: 3bfd49c8ab1859ae0f5fa1df2b3781c99115f442
+Merge: False
+Message:
+device create: x86: convert device_create to device_create_drvdata
+
+device_create() is race-prone, so use the race-free
+device_create_drvdata() instead as device_create() is going away.
+
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+
+Comment:
+Good.
+
+G: 107, B: 16
+
+Commit: 2ce1efc9e3af2d735e7dfca31553676229c8bfcf
+Merge: False
+Message:
+serial: bfin_sport_uart: pull in bfin_sport.h for SPORT defines
+
+Now that the SPORT MMR defines have been unified, switch over to it.
+
+Signed-off-by: Mike Frysinger <vapier@gentoo.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+
+Comment:
+Good.
+
+G: 108, B: 16
+
+Commit: 1444d2da4468f30daff47cacfd98acbd7baf43a7
+Merge: False
+Message:
+x86/pgtable: unify pagetable accessors, #3
+
+change the pte_mk inlines to the unified format. Non-NOP!
+
+based on:
+
+ Subject: x86/pgtable: unify pagetable accessors
+ From: Jeremy Fitzhardinge <jeremy@goop.org>
+
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Comment:
+Good.
+
+G: 109, B: 16
+
+Commit: 291248fd6e371bcbfb8a77689c5d741a1527488f
+Merge: False
+Message:
+uml: remove unused variables in the context switcher
+
+This patch removes a variable which was not used in two functions.  Yet
+another code cleanup, nothing really significant.
+
+Please note that I could not test this on x86_64. I don't have the
+hardware for it.
+
+[ jdike - Bits of tidying around the affected code.  Also, it's fine on
+x86_64 ]
+
+Signed-off-by: Karol Swietlicki <magotari@gmail.com>
+Signed-off-by: Jeff Dike <jdike@linux.intel.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Comment:
+Good.
+
+G: 110, B: 16
+
+Commit: 37bb30e86bc2e48d9affb25f6ce9eb3d8e65b2ac
+Merge: False
+Message:
+[ARM] Convert EBSA110 network driver to a platform driver
+
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 111, B: 16
+
+Commit: 358147403d1506ee43335c152fa3864d90f5ef6e
+Merge: False
+Message:
+[SCSI] ps3rom: convert to use the data buffer accessors
+
+This converts ps3rom driver to use the new accessors for the sg lists
+and the parameters.
+
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@lab.ntt.co.jp>
+Acked-by: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
+Comment:
+Good.
+
+G: 112, B: 16
+
+Commit: 9abf47f11b38f5ecf411b9a44437cad5016631ad
+Merge: True
+Message:
+Merge branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/ryusuke/nilfs2
+
+* 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/ryusuke/nilfs2:
+  nilfs2: fix missing initialization of i_dir_start_lookup member
+  nilfs2: fix missing zero-fill initialization of btree node cache
+Comment:
+Good.
+
+G: 113, B: 16
+
+Commit: b259b10c420a59a2fdbcf5a3498253ebcbdffa1e
+Merge: False
+Message:
+[ALSA] usb-audio - add Extigy/Audigy 2 NX remote control support
+
+ALSA Core,USB generic driver
+Add an hwdep interface that supports reading remote control data from
+Sound Blaster Extigy and Audigy 2 NX devices.
+
+Signed-off-by: Clemens Ladisch <clemens@ladisch.de>
+Comment:
+Good.
+
+G: 114, B: 16
+
+Commit: 34c8eacab670e578a2aaafdf1061efd214b2f639
+Merge: False
+Message:
+[PATCH] ARM: Remove obsolete arch/arm/kernel/arch.c
+
+This is not used anymore - RiscPC now contains the necessary
+supporting code.
+
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Comment:
+Good.
+
+G: 115, B: 16
+
+Commit: e1e10a265d28273ab8c70be19d43dcbdeead6c5a
+Merge: False
+Message:
+sched: Consolidate account_system_vtime extern declaration
+
+Just a minor cleanup patch that makes things easier to the following patches.
+No functionality change in this patch.
+
+Signed-off-by: Venkatesh Pallipadi <venki@google.com>
+Signed-off-by: Peter Zijlstra <a.p.zijlstra@chello.nl>
+LKML-Reference: <1286237003-12406-3-git-send-email-venki@google.com>
+Signed-off-by: Ingo Molnar <mingo@elte.hu>
+Comment:
+Good.
+
+G: 116, B: 16
+
+Commit: 29afd690636dab36fe437c54b3a9d5e093bdcd9b
+Merge: False
+Message:
+e1000e: set flow control thresholds properly after enabling/disabling pause
+
+When flow control (pause) parameters were changed via ethtool (i.e. enabled
+or disabled), the newly calculated thresholds were not being written to the
+device for non-fiber media.
+
+Signed-off-by: Bruce Allan <bruce.w.allan@intel.com>
+Signed-off-by: Jeff Kirsher <jeffrey.t.kirsher@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Comment:
+Bad.
+
+G: 116, B: 17
+
+Commit: 2661081f5ab9cb25359d27f88707a018cf4e68e9
+Merge: False
+Message:
+mmc_test: highmem tests
+
+Add a couple of tests to make sure the host driver handles highmem
+memory pages properly. Unfortunately there is no way to guarantee an
+allocation below 4 GB in i386, so it might give you addresses that
+are out of reach for the hardware (OTOH, so will any other highmem
+allocation in the kernel).
+
+Signed-off-by: Pierre Ossman <drzeus@drzeus.cx>
+Comment:
+Good.
+
+G: 117, B: 17
+
+Commit: a656cbf07f1106db941af337ac0051347fb778a5
+Merge: False
+Message:
+sound: Make keywest_driver static
+
+I can't see any reason for struct i2c_driver keywest_driver to not be
+static.
+
+Signed-off-by: Jean Delvare <khali@linux-fr.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Comment:
+Good.
+
+G: 118, B: 17
+
+Commit: c293621bbf678a3d85e3ed721c3921c8a670610d
+Merge: False
+Message:
+[PATCH] stale POSIX lock handling
+
+I believe that there is a problem with the handling of POSIX locks, which
+the attached patch should address.
+
+The problem appears to be a race between fcntl(2) and close(2).  A
+multithreaded application could close a file descriptor at the same time as
+it is trying to acquire a lock using the same file descriptor.  I would
+suggest that that multithreaded application is not providing the proper
+synchronization for itself, but the OS should still behave correctly.
+
+SUS3 (Single UNIX Specification Version 3, read: POSIX) indicates that when
+a file descriptor is closed, that all POSIX locks on the file, owned by the
+process which closed the file descriptor, should be released.
+
+The trick here is when those locks are released.  The current code releases
+all locks which exist when close is processing, but any locks in progress
+are handled when the last reference to the open file is released.
+
+There are three cases to consider.
+
+One is the simple case, a multithreaded (mt) process has a file open and
+races to close it and acquire a lock on it.  In this case, the close will
+release one reference to the open file and when the fcntl is done, it will
+release the other reference.  For this situation, no locks should exist on
+the file when both the close and fcntl operations are done.  The current
+system will handle this case because the last reference to the open file is
+being released.
+
+The second case is when the mt process has dup(2)'d the file descriptor.
+The close will release one reference to the file and the fcntl, when done,
+will release another, but there will still be at least one more reference
+to the open file.  One could argue that the existence of a lock on the file
+after the close has completed is okay, because it was acquired after the
+close operation and there is still a way for the application to release the
+lock on the file, using an existing file descriptor.
+
+The third case is when the mt process has forked, after opening the file
+and either before or after becoming an mt process.  In this case, each
+process would hold a reference to the open file.  For each process, this
+degenerates to first case above.  However, the lock continues to exist
+until both processes have released their references to the open file.  This
+lock could block other lock requests.
+
+The changes to release the lock when the last reference to the open file
+aren't quite right because they would allow the lock to exist as long as
+there was a reference to the open file.  This is too long.
+
+The new proposed solution is to add support in the fcntl code path to
+detect a race with close and then to release the lock which was just
+acquired when such as race is detected.  This causes locks to be released
+in a timely fashion and for the system to conform to the POSIX semantic
+specification.
+
+This was tested by instrumenting a kernel to detect the handling locks and
+then running a program which generates case #3 above.  A dangling lock
+could be reliably generated.  When the changes to detect the close/fcntl
+race were added, a dangling lock could no longer be generated.
+
+Cc: Matthew Wilcox <willy@debian.org>
+Cc: Trond Myklebust <trond.myklebust@fys.uio.no>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Bad.
+
+G: 118, B: 18
+
+Commit: f9b0080e10e0ce3b8acbe91ae6a50da4f2ed7339
+Merge: False
+Message:
+UBI: support attaching by MTD character device name
+
+This patch adds a capability to attach MTD devices by their character
+device paths. For example, one can do:
+
+$ modprobe ubi mtd=/dev/mtd0
+
+to attach /dev/mtd0.
+
+Signed-off-by: Artem Bityutskiy <Artem.Bityutskiy@nokia.com>
+Comment:
+Good.
+
+G: 119, B: 18
+
+Commit: 05f4a3ec94281347e05c81eafefcfe5ea545c94c
+Merge: False
+Message:
+[PATCH] x86: remove locally-defined ldt structure in favour of standard type
+
+arch/i386/kernel/reboot.c defines its own struct to describe an ldt entry: it
+should use struct Xgt_desc_struct (currently load_ldt is a macro, so doesn't
+complain: paravirt patches make it warn).
+
+Signed-off-by: Rusty Russell <rusty@rustcorp.com.au>
+Signed-off-by: Jeremy Fitzhardinge <jeremy@xensource.com>
+Signed-off-by: Andrew Morton <akpm@osdl.org>
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+Comment:
+Good.
+
+G: 120, B: 18
+
+Commit: a170a5317c0298538deb170028376ec1631acc2f
+Merge: False
+Message:
+ACPI: asus_acpi: misc cleanups
+
+This patch updates the version string, copyright notices and does
+whitespace cleanup (it looks weird, blame Lindent).
+
+Signed-off-by: Karol Kozimor <sziwan@hell.org.pl>
+Signed-off-by: Len Brown <len.brown@intel.com>
+Comment:
+Good.
+
+G: 121, B: 18
+
+Commit: 72f465033702ebfe20db8f50edaad59f0f38b0f5
+Merge: False
+Message:
+bio-integrity.c: remove dependency on __GFP_NOFAIL
+
+The kmalloc() in bio_integrity_prep() is failable, so remove __GFP_NOFAIL
+from its mask.
+
+Signed-off-by: David Rientjes <rientjes@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jens Axboe <jaxboe@fusionio.com>
+Comment:
+Good.
+
+G: 122, B: 18
+
+Commit: ad0d4083e65d9f223275adbfb9a7927e2120dc6c
+Merge: False
+Message:
+[BLOCK] Don't clear sg_dma_len/addr() in blk_rq_map_sg()
+
+It's not a proper lvalue on all archs.
+
+Signed-off-by: Jens Axboe <jens.axboe@oracle.com>
+Comment:
+Good.
+
+G: 123, B: 18
+
+Commit: 1cff502d8b22272addc4f5f57346d598b4755d9e
+Merge: False
+Message:
+OMAP1: camera.h: add missing include
+
+#include <media/omap1_camera.h> directive is required to
+compile the dependant boards (board-ams-delta for now).
+
+Signed-off-by: Janusz Krzysztofik <jkrzyszt@tis.icnet.pl>
+[tony@atomide.com: updated comments]
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Comment:
+Good.
+
+G: 124, B: 18
+
+Commit: 8d23adf7610f2c000c08abe3941c493952d21a61
+Merge: True
+Message:
+Merge commit 'ickle/for-anholt' into drm-intel-next
+Comment:
+Good.
+
+G: 125, B: 18
+
+Commit: 934a3595b30c986bab52bc9c08d12c8962c88c8a
+Merge: True
+Message:
+Merge master.kernel.org:/pub/scm/linux/kernel/git/davej/cpufreq
+Comment:
+Good.
+
+G: 126, B: 18
+
+Commit: dcbf77cac640af0ab944d5cbb07934bf6708b4d9
+Merge: True
+Message:
+Merge branch 'master' into for-linus
+Comment:
+Good.
+
+G: 127, B: 18
+
+                ---------------
+                |  Predicted  |
+                ---------------
+                |  Fix | !Fix |
+-------------------------------
+| Actual |  Fix |   48 |   18 |
+|        | !Fix |    7 |  127 |
+-------------------------------
