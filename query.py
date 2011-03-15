@@ -127,34 +127,33 @@ class DataCollector():
 #     commits_day_dc.update('total_commits', i, j)
 # commits_day_dc.write_csv('%scommits-day' % file_prefix)
 
-# Lines Changed per Hour
-lines_changed_day_dc = DataCollector(['lines_changed', 'total_commits'],
-                                      'div(lines_changed, total_commits)',
-                                      days,
-                                      classes)
-for ci in ci_set:
-    if not ci.merge:
-        i = ci.commit.local_time.weekday()
-        classification = ci.commit.author.authorinformation.classification
-        day_job = ci.commit.author.authorinformation.day_job
-        if day_job:
-            j = 0
-        elif classification == 'D':
-            j = 1
-        elif classification == 'W':
-            j = 2
-        elif classification == 'M':
-            j = 3
-        elif classification == 'O':
-            j = 4
-        elif classification == 'S':
-            j = 5
-        else:
-            raise ValueError
-        lines_changed_day_dc.update('lines_changed', i, j, ci.lines_changed)
-        lines_changed_day_dc.update('total_commits', i, j)
-lines_changed_day_dc.write_csv('%slines-changed-day' % file_prefix)
-
+# # Lines Changed per Hour
+# lines_changed_day_dc = DataCollector(['lines_changed', 'total_commits'],
+#                                       'div(lines_changed, total_commits)',
+#                                       days,
+#                                       classes)
+# for ci in ci_set:
+#     if not ci.merge:
+#         i = ci.commit.local_time.weekday()
+#         classification = ci.commit.author.authorinformation.classification
+#         day_job = ci.commit.author.authorinformation.day_job
+#         if day_job:
+#             j = 0
+#         elif classification == 'D':
+#             j = 1
+#         elif classification == 'W':
+#             j = 2
+#         elif classification == 'M':
+#             j = 3
+#         elif classification == 'O':
+#             j = 4
+#         elif classification == 'S':
+#             j = 5
+#         else:
+#             raise ValueError
+#         lines_changed_day_dc.update('lines_changed', i, j, ci.lines_changed)
+#         lines_changed_day_dc.update('total_commits', i, j)
+# lines_changed_day_dc.write_csv('%slines-changed-day' % file_prefix)
 
 # # Bugginess per Day
 # bugginess_day_dc = DataCollector(['buggy_commits', 'total_commits'],
@@ -266,33 +265,33 @@ lines_changed_day_dc.write_csv('%slines-changed-day' % file_prefix)
 #     commits_day_dc.update('total_commits', i, j)
 # commits_day_dc.write_csv('%scommits-hour' % file_prefix)
 
-# Lines Changed per Hour
-lines_changed_hour_dc = DataCollector(['lines_changed', 'total_commits'],
-                                      'div(lines_changed, total_commits)',
-                                      hours,
-                                      classes)
-for ci in ci_set:
-    if not ci.merge:
-        i = ci.commit.local_time.hour
-        classification = ci.commit.author.authorinformation.classification
-        day_job = ci.commit.author.authorinformation.day_job
-        if day_job:
-            j = 0
-        elif classification == 'D':
-            j = 1
-        elif classification == 'W':
-            j = 2
-        elif classification == 'M':
-            j = 3
-        elif classification == 'O':
-            j = 4
-        elif classification == 'S':
-            j = 5
-        else:
-            raise ValueError
-        lines_changed_hour_dc.update('lines_changed', i, j, ci.lines_changed)
-        lines_changed_hour_dc.update('total_commits', i, j)
-lines_changed_hour_dc.write_csv('%slines-changed-hour' % file_prefix)
+# # Lines Changed per Hour
+# lines_changed_hour_dc = DataCollector(['lines_changed', 'total_commits'],
+#                                       'div(lines_changed, total_commits)',
+#                                       hours,
+#                                       classes)
+# for ci in ci_set:
+#     if not ci.merge:
+#         i = ci.commit.local_time.hour
+#         classification = ci.commit.author.authorinformation.classification
+#         day_job = ci.commit.author.authorinformation.day_job
+#         if day_job:
+#             j = 0
+#         elif classification == 'D':
+#             j = 1
+#         elif classification == 'W':
+#             j = 2
+#         elif classification == 'M':
+#             j = 3
+#         elif classification == 'O':
+#             j = 4
+#         elif classification == 'S':
+#             j = 5
+#         else:
+#             raise ValueError
+#         lines_changed_hour_dc.update('lines_changed', i, j, ci.lines_changed)
+#         lines_changed_hour_dc.update('total_commits', i, j)
+# lines_changed_hour_dc.write_csv('%slines-changed-hour' % file_prefix)
 
 # # Fixes per Hour
 # fixes_hour_dc = DataCollector(['fix_commits'],
@@ -611,3 +610,137 @@ lines_changed_hour_dc.write_csv('%slines-changed-hour' % file_prefix)
 #         else:
 #             changes_dc.update('total_commits', 'all')
 # changes_dc.write_csv('changes')
+
+# --------------------- Linux Author -------------------------
+
+# # Commits per Day
+# commits_day_dc = DataCollector(['total_commits'],
+#                                  'total_commits',
+#                                  days,
+#                                  classes)
+# for ci in ci_set:
+#     i = ci.commit.local_time.weekday()
+#     classification = ci.commit.author.linux_authors.all()[0].lai.classification
+#     day_job = ci.commit.author.linux_authors.all()[0].lai.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     commits_day_dc.update('total_commits', i, j)
+# commits_day_dc.write_csv('%scommits-day' % file_prefix)
+
+# # Bugginess per Day
+# bugginess_day_dc = DataCollector(['buggy_commits', 'total_commits'],
+#                                  '100*div(buggy_commits, total_commits)',
+#                                  days,
+#                                  classes)
+# for ci in ci_set:
+#     i = ci.commit.local_time.weekday()
+#     classification = ci.commit.author.linux_authors.all()[0].lai.classification
+#     day_job = ci.commit.author.linux_authors.all()[0].lai.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     if ci.introduction_count > 0:
+#         bugginess_day_dc.update('buggy_commits', i, j)
+#     bugginess_day_dc.update('total_commits', i, j)
+# bugginess_day_dc.write_csv('%sbugginess-day' % file_prefix)
+
+# # Bugginess per Experience
+# authors = {}
+# for ci in ci_set:
+#     la = ci.commit.author.linux_authors.all()[0]
+#     if not la in authors:
+#         authors[la] = ci.commit.utc_time
+#     else:
+#         if ci.commit.utc_time < authors[la]:
+#             authors[la] = ci.commit.utc_time
+# bugginess_experience_dc = DataCollector(['buggy_commits', 'total_commits'],
+#                                  '100*div(buggy_commits, total_commits)',
+#                                  experiences,
+#                                  classes)
+# for ci in ci_set:
+#     la = ci.commit.author.linux_authors.all()[0]
+#     experience = (ci.commit.utc_time - authors[la]).days
+#     if experience < 0 or experience > xp_cutoff:
+#         continue
+#     i = experience/120
+#     classification = ci.commit.author.linux_authors.all()[0].lai.classification
+#     day_job = ci.commit.author.linux_authors.all()[0].lai.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     if ci.introduction_count > 0:
+#         bugginess_experience_dc.update('buggy_commits', i, j)
+#     bugginess_experience_dc.update('total_commits', i, j)
+# bugginess_experience_dc.write_csv('%sbugginess-experience' % file_prefix)
+
+# Commits per Experience
+authors = {}
+for ci in ci_set:
+    la = ci.commit.author.linux_authors.all()[0]
+    if not la in authors:
+        authors[la] = ci.commit.utc_time
+    else:
+        if ci.commit.utc_time < authors[la]:
+            authors[la] = ci.commit.utc_time
+bugginess_experience_dc = DataCollector(['total_commits'],
+                                 'total_commits',
+                                 experiences,
+                                 classes)
+for ci in ci_set:
+    la = ci.commit.author.linux_authors.all()[0]
+    experience = (ci.commit.utc_time - authors[la]).days
+    if experience < 0 or experience > xp_cutoff:
+        continue
+    i = experience/120
+    classification = ci.commit.author.linux_authors.all()[0].lai.classification
+    day_job = ci.commit.author.linux_authors.all()[0].lai.day_job
+    if day_job:
+        j = 0
+    elif classification == 'D':
+        j = 1
+    elif classification == 'W':
+        j = 2
+    elif classification == 'M':
+        j = 3
+    elif classification == 'O':
+        j = 4
+    elif classification == 'S':
+        j = 5
+    else:
+        raise ValueError
+    bugginess_experience_dc.update('total_commits', i, j)
+bugginess_experience_dc.write_csv('%scommits-experience' % file_prefix)

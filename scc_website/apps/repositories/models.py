@@ -40,3 +40,18 @@ class CommitInformation(models.Model):
     lines_modified = models.IntegerField()
     lines_changed = models.IntegerField()
     merge = models.BooleanField()
+
+class LinuxAuthor(models.Model):
+    authors = models.ManyToManyField(Author, related_name='linux_authors')
+
+class LAI(models.Model):
+    CLASSIFICATION_CHOICES = (
+        ('D', 'Daily'),
+        ('W', 'Weekly'),
+        ('M', 'Monthly'),
+        ('O', 'Other'),
+        ('S', 'Single'),
+    )
+    classification = models.CharField(max_length=1, choices=CLASSIFICATION_CHOICES)
+    day_job = models.BooleanField()
+    la = models.OneToOneField(LinuxAuthor, primary_key=True)
