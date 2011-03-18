@@ -5,7 +5,7 @@ from scc_website.apps.repositories.models import *
 
 r = Repository.objects.get(pk=1)
 exclude_pk = 222332
-xp_cutoff = 2000
+xp_cutoff = 2044
 file_prefix = 'linux-'
 
 # r = Repository.objects.get(pk=4)
@@ -707,7 +707,98 @@ class DataCollector():
 #     bugginess_experience_dc.update('total_commits', i, j)
 # bugginess_experience_dc.write_csv('%sbugginess-experience' % file_prefix)
 
-# Commits per Experience
+# # Commits per Experience
+# authors = {}
+# for ci in ci_set:
+#     la = ci.commit.author.linux_authors.all()[0]
+#     if not la in authors:
+#         authors[la] = ci.commit.utc_time
+#     else:
+#         if ci.commit.utc_time < authors[la]:
+#             authors[la] = ci.commit.utc_time
+# bugginess_experience_dc = DataCollector(['total_commits'],
+#                                  'total_commits',
+#                                  experiences,
+#                                  classes)
+# for ci in ci_set:
+#     la = ci.commit.author.linux_authors.all()[0]
+#     experience = (ci.commit.utc_time - authors[la]).days
+#     if experience < 0 or experience > xp_cutoff:
+#         continue
+#     i = experience/120
+#     classification = ci.commit.author.linux_authors.all()[0].lai.classification
+#     day_job = ci.commit.author.linux_authors.all()[0].lai.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     bugginess_experience_dc.update('total_commits', i, j)
+# bugginess_experience_dc.write_csv('%scommits-experience' % file_prefix)
+
+
+################### TEMP #########################
+
+# authors = {}
+# for ci in ci_set:
+#     la = ci.commit.author.linux_authors.all()[0]
+#     if not la in authors:
+#         authors[la] = [ci.commit.utc_time, ci.commit.utc_time]
+#     else:
+#         if ci.commit.utc_time < authors[la][0]:
+#             authors[la][0] = ci.commit.utc_time
+#         if ci.commit.utc_time > authors[la][1]:
+#             authors[la][1] = ci.commit.utc_time
+
+# my_list = []
+# most_days = 0
+# for (key,value) in authors.iteritems():
+#     my_list.append(((value[1] - value[0]).days, key.authors.all()[0].name))
+# my_list.sort()
+# print my_list
+# bugginess_experience_dc = DataCollector(['total_commits'],
+#                                  'total_commits',
+#                                  experiences,
+#                                  classes)
+# for ci in ci_set:
+#     la = ci.commit.author.linux_authors.all()[0]
+#     experience = (ci.commit.utc_time - authors[la]).days
+#     if experience < 0 or experience > xp_cutoff:
+#         continue
+#     i = experience/120
+#     classification = ci.commit.author.linux_authors.all()[0].lai.classification
+#     day_job = ci.commit.author.linux_authors.all()[0].lai.day_job
+#     if day_job:
+#         j = 0
+#     elif classification == 'D':
+#         j = 1
+#     elif classification == 'W':
+#         j = 2
+#     elif classification == 'M':
+#         j = 3
+#     elif classification == 'O':
+#         j = 4
+#     elif classification == 'S':
+#         j = 5
+#     else:
+#         raise ValueError
+#     bugginess_experience_dc.update('total_commits', i, j)
+# bugginess_experience_dc.write_csv('%scommits-experience' % file_prefix)
+################### TEMP #########################
+
+xped_cutoff = 730
+xped = ['<2 years experience', '>=2 years experience']
+
+# Commits per Hour (Experienced)
 authors = {}
 for ci in ci_set:
     la = ci.commit.author.linux_authors.all()[0]
@@ -716,31 +807,49 @@ for ci in ci_set:
     else:
         if ci.commit.utc_time < authors[la]:
             authors[la] = ci.commit.utc_time
-bugginess_experience_dc = DataCollector(['total_commits'],
-                                 'total_commits',
-                                 experiences,
-                                 classes)
+
+bugginess_hour_experienced_dc = DataCollector(['total_commits'],
+                                  'total_commits',
+                                  hours,
+                                  xped)
 for ci in ci_set:
+    i = ci.commit.local_time.hour
     la = ci.commit.author.linux_authors.all()[0]
     experience = (ci.commit.utc_time - authors[la]).days
     if experience < 0 or experience > xp_cutoff:
         continue
-    i = experience/120
-    classification = ci.commit.author.linux_authors.all()[0].lai.classification
-    day_job = ci.commit.author.linux_authors.all()[0].lai.day_job
-    if day_job:
+    if experience < xped_cutoff:
         j = 0
-    elif classification == 'D':
-        j = 1
-    elif classification == 'W':
-        j = 2
-    elif classification == 'M':
-        j = 3
-    elif classification == 'O':
-        j = 4
-    elif classification == 'S':
-        j = 5
     else:
-        raise ValueError
-    bugginess_experience_dc.update('total_commits', i, j)
-bugginess_experience_dc.write_csv('%scommits-experience' % file_prefix)
+        j = 1
+    bugginess_hour_experienced_dc.update('total_commits', i, j)
+bugginess_hour_experienced_dc.write_csv('%scommits-hour-experienced' % file_prefix)
+
+# # Bugginess per Hour (Experienced)
+# authors = {}
+# for ci in ci_set:
+#     la = ci.commit.author.linux_authors.all()[0]
+#     if not la in authors:
+#         authors[la] = ci.commit.utc_time
+#     else:
+#         if ci.commit.utc_time < authors[la]:
+#             authors[la] = ci.commit.utc_time
+
+# bugginess_hour_experienced_dc = DataCollector(['buggy_commits', 'total_commits'],
+#                                   '100*div(buggy_commits, total_commits)',
+#                                   hours,
+#                                   xped)
+# for ci in ci_set:
+#     i = ci.commit.local_time.hour
+#     la = ci.commit.author.linux_authors.all()[0]
+#     experience = (ci.commit.utc_time - authors[la]).days
+#     if experience < 0 or experience > xp_cutoff:
+#         continue
+#     if experience < xped_cutoff:
+#         j = 0
+#     else:
+#         j = 1
+#     if ci.introduction_count > 0:
+#         bugginess_hour_experienced_dc.update('buggy_commits', i, j)
+#     bugginess_hour_experienced_dc.update('total_commits', i, j)
+# bugginess_hour_experienced_dc.write_csv('%sbugginess-hour-experienced' % file_prefix)

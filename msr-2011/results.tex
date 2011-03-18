@@ -268,6 +268,7 @@ particular schedule.
  % caption for the whole figure
 \end{figure*}
 
+
 % we need to say what the two bars mean in the figure.
 
 %% \begin{figure}
@@ -286,7 +287,12 @@ particular schedule.
 %% \label{fig-firefox-experience}
 %% \end{figure}
 
+
+
+
+
 \subsubsection{Developer Experience Classification}
+\label{sec-dev-exp}
 
 Figure~\ref{fig-bugginess-experience} compares author experience at
 time of commit to the bugginess of the commit. It also presents the
@@ -314,6 +320,31 @@ We do not understand the spike to the right of the PostgreSQL graph.
 Possible reasons include the shift to Git, which is a known historical
 event, or, more speculatively, perhaps PostgreSQL recently undertook
 major ongoing architectural revisions.
+
+
+
+\begin{figure*}[tbh]
+\includegraphics[width=\textwidth]{linux-bugginess-hour-experienced.pdf}
+\caption{\label{fig-bugginess-experienced}Percentage of buggy commits (bars) and total number of commits (circles) versus time-of-day for less (blue bars, red circles, blue line) and greater (purple bars, yellow circles, green line) than 2 years experience for the Linux kernel}
+\end{figure*}
+
+\subsection{Time-of-day/Developer Experience Results}
+Figure~\ref{fig-bugginess-experienced} combines data from
+Section~\ref{sec-time-of-day} and \ref{sec-dev-exp} which correlates
+time-of-day with commit bugginess for authors with less and greater
+than 2 years experience. This bound separates the total number of
+commits for each category in 107528 and 113093 commits
+respectively. The lines respresent the overall bugginess.
+
+We can see that developers with less than 2 years experience tend to
+do more commits between midnight and 2 AM than developers with greater
+than 2 years experience, who do more commits between 8 AM and 4
+PM. However, there is a common trend for both categories; late night
+commits (especially between midnight and 2 AM) are more buggy and
+early morning commits (between 6 AM and noon) are less buggy.
+
+\paragraph{Discussion}
+TODO
 
 %% \begin{figure}
 %% \begin{center}
