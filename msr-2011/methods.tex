@@ -19,13 +19,13 @@ previous (buggy) version of each of the changed lines. We describe each of these
 steps in more detail. First, to detect bug-fixing commits, $c$, we searched the
 commit messages for the keyword ``fix'' (as do~\cite{smallCommits05}).  In our
 experience, most developers indicate that a change is a fix by including the
-keyword ``fix'' in the commit message; Section~\ref{sec-results} explains how we
+keyword ``fix'' in the commit message. Section~\ref{sec-results} explains how we
 verified this intuition, and our results show that the precision of this
 heuristic for identifying bug-fixing commits is \postP-\linuxP.  Next, we
 computed diffs for each file changed in $c$, omitting comments, and recorded the
 line numbers $L_c$ which $c$ changed. Finally, we searched the repository
 metadata (as implemented by the ``git blame'' command) to identify the
-bug-introducing commits $c'$ which changed the lines $L_c$. In this step, we
+bug-introducing commits, $c'$, which changed the lines $L_c$. In this step, we
 used git blame's {\tt -w} option, which ignores whitespace in attributing
 responsibility for a code change, which addresses some inaccuracies that exist
 in other version control systems such as CVS and Subversion as discussed by Kim
@@ -94,17 +94,17 @@ bug-introducing changes in newly-introduced files. Fortunately, our data show
 that such changes are extremely rare, so we can ignore them entirely.
 
 \subsection{Data Collected}
-
 \label{sec:data}
+
 Executing the above algorithm gives us data about the bug-fixing and
 bug-introducing commits in each repository, as well as about the authors of
 these commits.  We record the following data for each commit: author (as a
 name/email pair); adjusted time (as described below); number of lines changed;
 and number of times the commit introduced a bug later corrected (which is
 derived data; we record it to simplify later database queries). We also record a
-relation connecting bug-introducing commits and bug-fixing commits.For each
+relation connecting bug-introducing commits and bug-fixing commits. For each
 author, we record the name, email(s) and frequency classification. We define a
-bug lifetime's to be the time from the earliest commit which introduced the bug
+bug's lifetime to be the time from the earliest commit which introduced the bug
 to the bug-fixing commit.
 
 We compute each author's activity classification, based on the frequency of an
@@ -158,11 +158,11 @@ Construct validity requires that we correctly identify bug-fixing and
 bug-introducing commits. To assess threats to construct validity, we determine
 our confusion matrix by randomly sampling 200 commits from each project and
 manually verifying whether or not they are indeed fixes. False positives and
-false positives contribute to precision and recall; Section~\ref{sec-results}
+false negatives contribute to precision and recall; Section~\ref{sec-results}
 presents our evaluation of precision and recall in greater detail.
 
 While we believe that the commits from the software that we examined well
-represent commits in open source software, we do not intend to claim external
+represents commits in open source software, we do not intend to claim external
 validity and draw any general conclusions about all software.  Like any other
 characteristic study, our findings should be considered together with our
 evaluation methodology.
@@ -250,7 +250,7 @@ We believe, however, that even for PostgreSQL, it is reasonable to ascribe
 responsibility for the patch to its committer, who would presumably review a
 patch before committing it.
 
-Developers work on a patch over a possibly-discontiguous time interval. However,
+Developers work on a patch over a possibly discontiguous time interval. However,
 the final commit only indicates the endpoint of that interval.  The bug database
 may contain more information about the starting point of the interval (e.g. it
 records when a bug is assigned to a developer), but still does not capture any
@@ -265,15 +265,15 @@ Finally, we discuss threats to our author classification. Some Linux kernel
 authors commit from several email addresses and even names. In order to make our
 data representative we first merge authors with the same email addresses into a
 single author. We then merge authors which share the same full name, as it is
-likely they are the same developer.This is not an issue for PostgreSQL: when
+likely they are the same developer. This is not an issue for PostgreSQL: when
 they converted their repository to Git, they also normalized all author email
 addresses, so that each author has a single email address.
 
 Our day-job classification for authors is based on the fixed hours of 8AM-4PM
-and Monday-Friday days of the week.  Many software companies have flexible
-hours; however, we expect that developers who are directed to work on a project
-solely as their day job would still have the bulk of their commits between those
-hours.  The day-job classification applies only to the Linux kernel committers;
+and Monday-Friday days of the week. Many software companies have flexible hours;
+however, we expect that developers who are directed to work on a project solely
+as their day job would still have the bulk of their commits between those
+hours. The day-job classification applies only to the Linux kernel committers;
 no PostgreSQL committers satisfy the day-job criteria. Even though most of the
 core PostgreSQL team have PostgreSQL-related employment, we believe that they
 are not directed to work on PostgreSQL, which would account for the observation

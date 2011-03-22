@@ -189,11 +189,12 @@ bug-fixing is independent of its other characteristics.
 \paragraph{Statistical Significance}
 
 We calculated p-values in order to determine the statistical significance of
-bugginess in both the Linux kernel and PostgreSQL.  The null hypothesis was each
-hour having the same probability as the overall bugginess for each
-project. Traditionally and p-value less than 0.05 is considered to be
-statistically significant. We only calculated p-values for bugginess since it is
-discrete, an individual commit is either buggy or not.
+bugginess in both the Linux kernel and PostgreSQL. The results are shown in
+Table~\ref{tbl-pvalues}. The null hypothesis was each hour having the same
+probability as the overall bugginess for each project. Traditionally any p-value
+less than 0.05 is considered to be statistically significant. We only calculated
+p-values for bugginess since it is discrete, an individual commit is either
+buggy or not.
 
 \paragraph{Discussion}
 
@@ -283,7 +284,7 @@ surprisingly high bugginess in code recently committed by the original authors.
 
 \paragraph{Discussion}
 
-Our data show that, in general, the more experienced the developers are, the
+Our data shows that, in general, the more experienced the developers are, the
 less likely that their commits are buggy.  Without further data, this
 correlation does not prove that the developer experience caused more experienced
 programmers' commits to be less buggy.  While we believe the above causation to

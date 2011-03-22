@@ -5,21 +5,21 @@
 \section{Introduction}
 
 \hyphenation{Apa-che}
-Software demands high reliability. However, as software complexity increases,
-bug counts and rates inevitably also rise, which undermine software reliability.
-The modern software development paradigm further complicates the situation: many
-modern software projects, including the Linux kernel, PostgreSQL, Eclipse, and
-Apache, are developed by tens to thousands of developers, over decades, in a
-distributed manner. The software often receives tens of thousands or hundreds of
-thousands of commits (Section~\ref{sec-results}).  Developers with different
-programming experience, different time commitments, different working hours,
-different programming styles, and from diverse cultures from all over the world,
-work on the same software project at different times and in different time
-zones. They join and leave projects at their own pace over periods of decades.
-Code developed in the modern paradigm can therefore have different social
-characteristics from older, more homogeneously-developed projects; these
-characteristics can best be measured by going beyond the code itself and into
-code repositories.
+Software users demand high reliability. However, as software complexity
+increases, bug counts and rates inevitably also rise, which undermine software
+reliability.  The modern software development paradigm further complicates the
+situation: many modern software projects, including the Linux kernel,
+PostgreSQL, Eclipse, and Apache, are developed by tens to thousands of
+developers, over decades, in a distributed manner. The software often receives
+tens of thousands or hundreds of thousands of commits
+(Section~\ref{sec-results}).  Developers with different programming experience,
+different time commitments, different working hours, different programming
+styles, and from diverse cultures from all over the world, work on the same
+software project at different times and in different time zones. They join and
+leave projects at their own pace over periods of decades.  Code developed in the
+modern paradigm can therefore have different social characteristics from older,
+more homogeneously-developed projects; these characteristics can best be
+measured by going beyond the code itself and into code repositories.
 
 Social characteristics provide a rich and unique source of information for us to
 understand software and its bugs. As an example, it would be helpful to know if
@@ -45,15 +45,15 @@ buggy commits.
 
 \paragraph{Contributions}
 
-In this paper, we study the social characteristics of modern software to
-understand the correlation between these social characteristics and the
-bugginess of contributions to the software---the likelihood that a particular
-contribution is later fixed, as determined by the fixing author.  Specifically,
-we study the latest versions of the Linux kernel and PostgreSQL, which have
-222,332 and 31,098 commits, respectively.  We study the correlation between a
-commit's bugginess and the time of day of the commit, the day of week of the
-commit, and the experience and activity frequency of the commit authors.  In
-addition, we study several other commit characteristics, such as comment-only
+In this paper, we study the social characteristics of modern software
+development to understand the correlation between these social characteristics
+and the bugginess of contributions to the software---the likelihood that a
+particular contribution is later fixed, as determined by the fixing author.
+Specifically, we study the latest versions of the Linux kernel and PostgreSQL,
+which have 222,332 and 31,098 commits, respectively.  We study the correlation
+between a commit's bugginess and the time of day of the commit, the day of week
+of the commit, and the experience and activity frequency of the commit authors.
+In addition, we study several other commit characteristics, such as comment-only
 fixes and bug lifetimes.  To the best of our knowledge, we are the {\bf first}
 to study the correlation between the commit time of day and the commit
 correctness.

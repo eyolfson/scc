@@ -7,22 +7,22 @@ in distributed software development; and empirical studies on bug lifetime.
 
 \paragraph{Day of Week of Commits}
 
-The most closely related work to ours, due to \'Sliwerski et
-al~\cite{sliwerski-msr-2005}, studied the day of week of commits for two totally
-different projects, Eclipse and Mozilla, and found that the commits on Fridays
-are buggiest.  This paper differs from the work of \'Sliwerski et al in the
-following three key aspects.  Firstly, we investigated how the commits' time of
-day correlates with the bugginess of commits, which has not been studied before,
-to the best of our knowledge.  Secondly, we studied developer characteristics,
-including correlations between commit bugginess and developers' activity levels,
-as well as developers' experience, which the previous work did not study.
-Finally, we used different data collection techniques. Specifically, we did not
-rely on the link between a commit and a bug report to extract bug-fixing
-commits, which enabled us to study software for which such links are not
-maintained or not well maintained by the developers. For example, we found that
-only 2.3\% of the Linux kernel's bug-fixing commits are linked to a bug report,
-by manually examining a random sample of our bug-fixing commits.  While using
-links between bug reports and bug commits may increase the precision of
+The most closely related work to ours, \'Sliwerski et
+al~\cite{sliwerski-msr-2005}, studied the day of the week of commits for two
+totally different projects, Eclipse and Mozilla, and found that the commits on
+Fridays are buggiest.  This paper differs from the work of \'Sliwerski et al in
+the following three key aspects.  Firstly, we investigated how the commits' time
+of day correlates with the bugginess of commits, which has not been studied
+before, to the best of our knowledge.  Secondly, we studied developer
+characteristics, including correlations between commit bugginess and developers'
+activity levels, as well as developers' experience, which the previous work did
+not study.  Finally, we used different data collection techniques. Specifically,
+we did not rely on the link between a commit and a bug report to extract
+bug-fixing commits, which enabled us to study software for which such links are
+not maintained or not well maintained by the developers. For example, we found
+that only 2.3\% of the Linux kernel's bug-fixing commits are linked to a bug
+report, by manually examining a random sample of our bug-fixing commits.  While
+using links between bug reports and bug commits may increase the precision of
 extracting bug-fixing commits, our results demonstrate that high precision can
 be obtained without using such links: the precision of our bug-fixing commit
 extraction techniques are \linuxP for the Linux kernel and \postP for
@@ -39,6 +39,7 @@ commits~\cite{hattori2008nature,largeCommits,commitTextualClassification,
 and how commit sizes correlate with other metrics such as different development
 activities, commit classifications, etc.
 
+%% Edit: For example, ... sounds awkward.
 Hindle et al~\cite{largeCommits} classified commits into different categories,
 one of which is non-functional commits (e.g., modification of comments,
 documentation, etc.).  Our study differs from~\cite{largeCommits} in that we
@@ -92,14 +93,13 @@ investigated social characteristics such as commit time and author experience.
 %% which would remove the manual work associated with going through bug reports or
 %% commit logs to collect this type of information. They use the SZZ algorithm,
 %% which traces from the location of the fix where the bug was introduced, and as
-%% such extract the time \cite{2006-automatic}.The weakness with this algorithm is
+%% such extract the time \cite{2006-automatic}. The weakness with this algorithm is
 %% that sometimes it makes false detections because not all modifications are
 %% fixes, and a moderate improvement from using just SZZ is the use of annotation
 %% graphs. Another improvement was ignoring format changes, which reduce a large
 %% number of false positives. This paper has inspired the approach we used for
 %% automating the process of identifying bug-introducing changes, which was key for
 %% collecting a large pool of data.
-
 
 %% % Not that related
 %% \paragraph{How long did it take to fix bugs?}
