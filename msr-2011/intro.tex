@@ -1,124 +1,116 @@
-\note{cite~\cite{updateComment}}
+%% Notes:
+%% - cite~\cite{updateComment}
+%% - I removed the commented out cite~\cite{ccomment}
 
 \section{Introduction}
 
 \hyphenation{Apa-che}
-Software demands high reliability. However, as software complexity increases, 
+Software demands high reliability. However, as software complexity increases,
 bug counts and rates inevitably also rise, which undermine software reliability.
-The modern software development paradigm further complicates the situation: 
-many modern software projects, including the Linux kernel, PostgreSQL, 
-Eclipse, and Apache,
-are developed by tens to thousands of developers, over decades, %~\cite{ccomment} 
-in a distributed manner. The software often receives tens of thousands or hundreds of thousands 
-of commits (Section~\ref{sec-results}). 
-Developers with different programming experience, 
-different time commitments, different working hours, different programming styles, and from diverse cultures from all over the world,
-work on the same software project at different times and in different time zones. They join and leave projects 
-at their own pace over periods of decades. 
-Code developed in the modern paradigm can therefore have different 
-social characteristics from older, more homogeneously-developed projects;
-these characteristics can best be measured by going beyond the code itself and 
-into code repositories.
+The modern software development paradigm further complicates the situation: many
+modern software projects, including the Linux kernel, PostgreSQL, Eclipse, and
+Apache, are developed by tens to thousands of developers, over decades, in a
+distributed manner. The software often receives tens of thousands or hundreds of
+thousands of commits (Section~\ref{sec-results}).  Developers with different
+programming experience, different time commitments, different working hours,
+different programming styles, and from diverse cultures from all over the world,
+work on the same software project at different times and in different time
+zones. They join and leave projects at their own pace over periods of decades.
+Code developed in the modern paradigm can therefore have different social
+characteristics from older, more homogeneously-developed projects; these
+characteristics can best be measured by going beyond the code itself and into
+code repositories.
 
-Social characteristics provide a rich and unique source of information for us to 
-understand software and its bugs. As an example, it would be helpful to know if  
-a commit's timestamp (including features such as time of day, day of week, etc.) affects the quality of that commit---are commits submitted after midnight buggier than other commits? 
-Such correlations may be useful for predicting what commits are more likely
-to be buggy so that we can budget more testing effort on these commits, following prior 
-studies~\cite{graves00predicting, guo04robust, Hassan09, libre07, devNetwork08, predictionMenzies10, effort03, ostrand05predicting, 
-depGraph08, zimmermann-promise-2007},
-which predict buggy locations based on code complexity, 
-code locations, the amount of in-house testing, historical data, socio-technical networks, etc. 
-A second interesting question is whether more experienced developers are more or less
-likely to write buggy commits. 
+Social characteristics provide a rich and unique source of information for us to
+understand software and its bugs. As an example, it would be helpful to know if
+a commit's timestamp (including features such as time of day, day of week, etc.)
+affects the quality of that commit---are commits submitted after midnight
+buggier than other commits?  Such correlations may be useful for predicting what
+commits are more likely to be buggy so that we can budget more testing effort on
+these commits, following prior studies~\cite{graves00predicting, guo04robust,
+Hassan09, libre07, devNetwork08, predictionMenzies10, effort03,
+ostrand05predicting, depGraph08, zimmermann-promise-2007}, which predict buggy
+locations based on code complexity, code locations, the amount of in-house
+testing, historical data, socio-technical networks, etc.  A second interesting
+question is whether more experienced developers are more or less likely to write
+buggy commits.
 
-
-
-%Additionally, it is difficult to know how experienced the developers are in an open source development
-%environment as such information is often not documented and subjective. 
-%We make our best-effort approximation by calculating the duration of a developer
-%contributing to an open source project (i.e., the time between a developer's
-%earliest and latest commits to the project), which allows us to discover important findings 
-%and implications regarding developers' experience level and code correctness. 
+%% Additionally, it is difficult to know how experienced the developers are in an
+%% open source development environment as such information is often not documented
+%% and subjective.  We make our best-effort approximation by calculating the
+%% duration of a developer contributing to an open source project (i.e., the time
+%% between a developer's earliest and latest commits to the project), which allows
+%% us to discover important findings and implications regarding developers'
+%% experience level and code correctness.
 
 \paragraph{Contributions}
-In this paper, we study the social characteristics of modern software to understand 
-the correlation between these social characteristics and the bugginess of contributions to the software---the likelihood that a particular contribution is later fixed, as determined by the fixing author.  
-Specifically, we study the latest versions of the Linux kernel and PostgreSQL, which have 222,332 and 31,098 commits, respectively.
-%XXX-XXX millions lines of code, developed over XXX-XXX years. 
-We study the correlation between a commit's bugginess
-and the time of day of the commit, the day of week of the commit, and
-the experience and activity frequency of the commit authors.
-%
-In addition, we study several other commit characteristics, such as
-comment-only fixes and bug lifetimes. 
-%
-To the best of our
-knowledge, we are the {\bf first} to study the correlation between the commit time of day and
-the commit correctness. 
 
-To study the correlation between commit time and commit bugginess, we
-start from {\em bug-fixing commits}, commits that fix software bugs,
-and then leverage the version control system to discover when the
-corresponding bugs were introduced~\cite{sliwerski-msr-2005}.  Our
-methodology enables us to observe when bugs are more likely to be
-introduced.  Note that we simply use ``bug'' to denote code
-that is later changed, even though such code may objectively be
+In this paper, we study the social characteristics of modern software to
+understand the correlation between these social characteristics and the
+bugginess of contributions to the software---the likelihood that a particular
+contribution is later fixed, as determined by the fixing author.  Specifically,
+we study the latest versions of the Linux kernel and PostgreSQL, which have
+222,332 and 31,098 commits, respectively.  We study the correlation between a
+commit's bugginess and the time of day of the commit, the day of week of the
+commit, and the experience and activity frequency of the commit authors.  In
+addition, we study several other commit characteristics, such as comment-only
+fixes and bug lifetimes.  To the best of our knowledge, we are the {\bf first}
+to study the correlation between the commit time of day and the commit
+correctness.
+
+To study the correlation between commit time and commit bugginess, we start from
+{\em bug-fixing commits}, commits that fix software bugs, and then leverage the
+version control system to discover when the corresponding bugs were
+introduced~\cite{sliwerski-msr-2005}.  Our methodology enables us to observe
+when bugs are more likely to be introduced.  Note that we simply use ``bug'' to
+denote code that is later changed, even though such code may objectively be
 correct; we expand on this discussion later, in Section~\ref{sec:method}.
 
 It is difficult to find bug-fixing commits in the sea of software commits.
-Prior work~\cite{sliwerski-msr-2005} defines a bug-fixing commit to be a commit whose commit message contains a bug 
-ID that links to a bug report in a bug database. While this
-approach works for some projects, like Mozilla, it does not work for software whose commit messages
-rarely contain links to bug reports, like the Linux kernel.
-We have observed that only 2.3\% of the bug-fixing commits in the Linux kernel are linked to a bug report.
-We address this problem by applying heuristics 
-which scan commit messages; they do not rely on any links between bug commits and bug reports to extract bug-fixing commits.
-Our heuristics have a precision of \postP-\linuxP in identifying bug-fixing commits (Section~\ref{sec-results}).
+Prior work~\cite{sliwerski-msr-2005} defines a bug-fixing commit to be a commit
+whose commit message contains a bug ID that links to a bug report in a bug
+database. While this approach works for some projects, like Mozilla, it does not
+work for software whose commit messages rarely contain links to bug reports,
+like the Linux kernel.  We have observed that only 2.3\% of the bug-fixing
+commits in the Linux kernel are linked to a bug report.  We address this problem
+by applying heuristics which scan commit messages; they do not rely on any links
+between bug commits and bug reports to extract bug-fixing commits.  Our
+heuristics have a precision of \postP-\linuxP in identifying bug-fixing commits
+(Section~\ref{sec-results}).
 
-Our major findings are summarized below ($\S$ denotes the section where the finding and its {\em implications} are discussed):
-%(Detailed discussions of these findings and their implications are 
-%presented in Section~\ref{sec-results}): 
+Our major findings are summarized below ($\S$ denotes the section where the
+finding and its {\em implications} are discussed):
 
 \begin{list}{\labelitemi}{\topsep=0pt\parsep=0pt\leftmargin=9pt\itemindent=0pt}
 
 \item {\bf Finding \fbuggy ($\S$\ref{sec-proj-char}):} 
-About a quarter (23.7-25.5\%) of all the commits in the Linux kernel and PostgreSQL are labelled buggy---they require further developer activities to fix them.
+About a quarter (23.7-25.5\%) of all the commits in the Linux kernel and
+PostgreSQL are labelled buggy---they require further developer activities to fix
+them.
 
 \item {\bf Finding \fhour ($\S$\ref{sec-time-of-day}):} 
-Commits that are checked into the software repository around midnight (between 0:00-4:00 AM) 
-are more likely to be incorrect than average, while commits in the morning (7:00 AM-noon) 
-are more likely to be correct.
-The result indicate that developers may want to double check the code they write for these 
-late-night commits (0:00-4:00 AM).
-%before they commit between these hours. 
-It may also be beneficial for the version control
-system to warn the developers of late-night commits to improve software reliability. 
-
+Commits that are checked into the software repository around midnight (between
+0:00-4:00 AM) are more likely to be incorrect than average, while commits in the
+morning (7:00 AM-noon) are more likely to be correct.  The result indicate that
+developers may want to double check the code they write for these late-night
+commits (0:00-4:00 AM).  It may also be beneficial for the version control
+system to warn the developers of late-night commits to improve software
+reliability.
 
 \item {\bf Finding \fdaily ($\S$\ref{sec-dev-char}):} 
-Developers who commit to the repository on a daily basis
-write less-buggy commits, while developers who appear to work on a project
-as part of their day-job are more likely to produce
-bugs, indicating that we may 
-want to promote the practice of daily-committing developers code-reviewing other 
-developers' commits.
-
+Developers who commit to the repository on a daily basis write less-buggy
+commits, while developers who appear to work on a project as part of their
+day-job are more likely to produce bugs, indicating that we may want to promote
+the practice of daily-committing developers code-reviewing other developers'
+commits.
 
 \item {\bf Finding \fday ($\S$\ref{sec-day-of-week}):} 
-In contrast to a prior finding that Friday commits are buggier~\cite{sliwerski-msr-2005}, 
-our results on the Linux kernel and PostgreSQL show that 
-the bugginess differences of commits that are checked in on different days of week 
-are slight. Our result shows that the bugginess per day-of-week for commits
-varies for different software projects, implying that bugginess prediction based on this 
-metric may need to be on a project-by-project basis.
+In contrast to a prior finding that Friday commits are
+buggier~\cite{sliwerski-msr-2005}, our results on the Linux kernel and
+PostgreSQL show that the bugginess differences of commits that are checked in on
+different days of week are slight. Our result shows that the bugginess per
+day-of-week for commits varies for different software projects, implying that
+bugginess prediction based on this metric may need to be on a project-by-project
+basis.
 
 \end{list}
-
-
-%Developers spend a large amount of time
-%diagnosing bugs and fixing bugs by applying patches over the buggy software versions. 
-%As modern software are often very complex and developed by thousands of developers 
-%in a distributed fashion over many years, many of the patches are not correct, e.g., not fixing
-%the bug, or introducing new bugs, etc~\cite{}. A recent study shows that XXX\% of patches
-%are buggy. 

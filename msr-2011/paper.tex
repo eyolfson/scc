@@ -36,6 +36,7 @@
 %\pagestyle{empty}
 
 %------------------------------------------------------------------------- 
+\usepackage{multirow}
 \usepackage{arydshln}
 \usepackage{boxedminipage}
 \usepackage{xspace}
@@ -62,10 +63,10 @@
 \newcommand{\note}[1]{{\bf *** NOTE: {#1} ***}}
 %\newcommand{\bfc}{bug-fixing commits}
 %\newcommand{\bic}{bug-introduction commits}
-\newcommand{\linuxP}{86\%\xspace} %precision for linux
-\newcommand{\linuxR}{61\%\xspace} % recall for linux, lower bound
-\newcommand{\postP}{84\%\xspace} % precision ofr postgreSQL
-\newcommand{\postR}{63\%\xspace} % recall for postgreSQL, lower bound
+\newcommand{\linuxP}{87\%\xspace} %precision for linux
+\newcommand{\linuxR}{73\%\xspace} % recall for linux, lower bound
+\newcommand{\postP}{86\%\xspace} % precision ofr postgreSQL
+\newcommand{\postR}{71\%\xspace} % recall for postgreSQL, lower bound
 \newcommand{\linuxBFC}{57,028\xspace} %total number of bug-fixing commits for linux
 \newcommand{\postBFC}{4,399\xspace} % total number of bug-fixing comits for postgreSQL 
 \newcommand{\fbuggy}{1\xspace} % finding on day of week
@@ -77,9 +78,9 @@
 \begin{document}
 %
 % --- Author Metadata here ---
-\conferenceinfo{MSR}{'11 Honolulu, Hawaii, USA}
-%\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
-%\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
+\conferenceinfo{MSR'11,}{ 21-MAY-2011, Waikiki, Honolulu, Hawaii, USA}
+\CopyrightYear{2011}
+\crdata{978-1-4503-0574-7/11/05}
 % --- End of Author Metadata ---
 
 \title{Do Time of Day and Developer Experience Affect Commit Bugginess?}
@@ -168,7 +169,7 @@ Jon Eyolfson, Lin Tan, Patrick Lam\\
 % author on the opening page (as the 'third row') but we ask,
 % for aesthetic reasons that you place these 'additional authors'
 % in the \additional authors block, viz.
-\additionalauthors{}
+% \additionalauthors{}
 %\date{30 July 1999}
 
 % Just remember to make sure that the TOTAL number of authors
@@ -191,8 +192,6 @@ Jon Eyolfson, Lin Tan, Patrick Lam\\
 
 %------------------------------------------------------------------------------
 
-
-
 \input intro
 \input methods
 %\input idea % idea, design, and methods
@@ -200,24 +199,10 @@ Jon Eyolfson, Lin Tan, Patrick Lam\\
 \input related
 \input conclusions
 
-
-
-%\input{intro}
-%\input{design}
-%\input{methodology}
-%\input{results}
-%\input{discussion}
-%\input{related}
-%\input{conclusions}
-
-
-
-
 %{\small 
 \bibliographystyle{abbrv}
 \bibliography{paper}
 %}
-
 
 %\theendnotes
 

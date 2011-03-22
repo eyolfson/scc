@@ -1,107 +1,93 @@
 \section{Conclusions and Future Work}
 \label{sec-conclusion}
 
-This paper analyzes \linuxBFC and \postBFC bug-fixing commits in two large and widely-used open-source software projects, 
-the Linux kernel and PostgreSQL respectively, to study the correlation between commit correctness with 
-several commit social characteristics, such as the time-of-day of commits,
-the day-of-week of commits, developer experience, and developers' activity
-frequency. We found several interesting findings, including: (1)  
-late-night commits (between midnight and 4:00 AM) are buggier than average, 
-while morning commits (7:00 AM-noon) are less buggy, suggesting 
-that developers may want to double check late-night commits before committing, 
-and that it may be beneficial for the version control
-system to warn the developers of late-night commits to improve software reliability; 
-(2) 
-our results show that the bugginess of commits per day-of-week
-varies for different software projects, 
-implying that the bugginess prediction based on the day-of-week of commit metric 
-may need to vary on a project-by-project basis;
-and (3) developers who commit to a project on a daily basis
-write less buggy commits for that project, while day-job developers are more likely to produce
-bugs, indicating that we may
-want to promote the practice of daily committing developers code-reviewing other
-developers' commits.
-We believe such results are valuable to the software engineering community and 
-software developers. 
+This paper analyzes \linuxBFC and \postBFC bug-fixing commits in two large and
+widely-used open-source software projects, the Linux kernel and PostgreSQL
+respectively, to study the correlation between commit correctness with several
+commit social characteristics, such as the time-of-day of commits, the
+day-of-week of commits, developer experience, and developers' activity
+frequency. We found several interesting findings, including: (1) late-night
+commits (between midnight and 4:00 AM) are buggier than average, while morning
+commits (7:00 AM-noon) are less buggy, suggesting that developers may want to
+double check late-night commits before committing, and that it may be beneficial
+for the version control system to warn the developers of late-night commits to
+improve software reliability; (2) our results show that the bugginess of commits
+per day-of-week varies for different software projects, implying that the
+bugginess prediction based on the day-of-week of commit metric may need to vary
+on a project-by-project basis; and (3) developers who commit to a project on a
+daily basis write less buggy commits for that project, while day-job developers
+are more likely to produce bugs, indicating that we may want to promote the
+practice of daily committing developers code-reviewing other developers'
+commits.  We believe such results are valuable to the software engineering
+community and software developers.
 
-In the future, we would like to study commit times with respect to individual developers to 
-understand, for example whether a developer's commits outside of his/her normal committing hours are buggier than average for that developer.
-To extend our developer experience study, we can add developers' contributions to other open-source software projects
-%by crawling these projects version control systems 
-to better understand a developer's overall programming experience. 
-In addition, we plan to study more software projects written in different programming languages
-to further understand how social characteristics affect commit correctness. 
-As there may be interesting correlations between a commit's evolution and its code quality,
-we intend to study such correlations in the future.
-% relative... from todolist
-%We plan to extend the work to software projects that have longer history with
-%time information precise to the hours. 
+In the future, we would like to study commit times with respect to individual
+developers to understand, for example whether a developer's commits outside of
+his/her normal committing hours are buggier than average for that developer.  To
+extend our developer experience study, we can add developers' contributions to
+other open-source software projects to better understand a developer's overall
+programming experience.  In addition, we plan to study more software projects
+written in different programming languages to further understand how social
+characteristics affect commit correctness.  As there may be interesting
+correlations between a commit's evolution and its code quality, we intend to
+study such correlations in the future.
 
+%% \section{Future Work}
+%% \label{sec-future}
 
-\comment{%---------- TEXT COMMENTED OUT----------
-\section{Future Work}
-\label{sec-future}
+%% There are a few parts of the implementation which could be improved to reduce
+%% the number of false positives. First, our fix detection for commit messages is
+%% very simplistic and could be improved to determine fixes which do not refer to
+%% any bugs. We can also introduce additional logic to ignore code which has been
+%% moved or renamed. The author information for experience also did not seem
+%% reliable, due to the fact that we treat every name and e-mail pair as a unique
+%% author. However, this might not be the case if the authors simply changed their
+%% e-mail address.
 
-There are a few parts of the implementation which could be improved to
-reduce the number of false positives. First, our fix detection for
-commit messages is very simplistic and could be improved to determine
-fixes which do not refer to any bugs. We can also introduce additional
-logic to ignore code which has been moved or renamed. The author
-information for experience also did not seem reliable, due to the fact
-that we treat every name and e-mail pair as a unique author. However, this
-might not be the case if the authors simply changed their e-mail address. 
+%% We could also add additional extensions to the database including: categorizing
+%% authors by their official roles, and classifying the size of each commit as well
+%% to determine if larger commits are more likely to contain bugs.
 
-We could also add additional extensions to the database including: categorizing
-authors by their official roles, and classifying the size of each commit as
-well to determine if larger commits are more likely to contain bugs.
+%% In addition we would like to add additional software projects to the
+%% database. Another goal is to release the data to the community so others may
+%% extend and add to it. We believe there are much more interesting results which
+%% could be found using our database.
 
-In addition we would like to add additional software projects to the
-database. Another goal is to release the data to the community so
-others may extend and add to it. We believe there are much more
-interesting results which could be found using our database.
+%% \section{Conclusion}
+%% \label{sec-conclusion}
 
-\section{Conclusion}
-\label{sec-conclusion}
-
-Resolving bugs represent a substantial amount of time and cost in
-software projects. It is important to investigate the cause of bugs in
-order to reduce the amount of bugs which occur. We believe that the
-data we have collected will be beneficial for the software quality
-assurance and software developing personnel to use the correlations we
-found, and investigate other possible correlations from the data we
-collected and stored in a database. From manually checking a random
-sample we found our data to be representative. Our data has
-revealed that Thursdays have a high bug introduction rate relative to
-the total number of commits for that day, while Mondays have the
-lowest bug introduction rates. There may be many reasons behind this
-correlation, but we believe it might be that people are being worn out towards the
-end of the week, and as such are more likely to introduce bugs, except
-this would mean that Fridays would be worst - which is not the
-case. It could also be that on Fridays people are more alert and focused
-because they are excited for the weekend. It was strange that Mondays
-yielded the best results for time to code, but this could be the case
-because people are just back from the weekend and they are fully
-charged, ready to work. Another possible theory for Monday's results,
-which is that people delegate easier tasks for Mondays because its the
-start of the week, or spend more time planning and laying out
-templates of what they will be coding, and as such are not as prone to
-introducing bugs. This of course could be proven by checking the size of
-the commits and what kind of changes are being made on Mondays. Our
-data also showed that coding between 12AM and 9AM is a bad idea, while
-the best time is between 11AM and 3PM. This is not a very surprising
-result, considering how most users sleep during these hours, and if
-they happen to be doing any coding during these hours, it would be
-considered to be outside of their usual working hours - making them
-more prone to errors.  From our commits that were organized by author
-classification, it seems that daily committers are less prone to bug
-introduction than those who are classified as day job users. One
-theory that could potentially explain this result is that hobbyist
-working on open source projects do it because they are highly
-interested, while day job users are doing it to get payed, so the
-difference in motivations could negatively affect the performance
-of the developer. Finally our data shows that bug lifetimes decay
-exponentially, and on average are longer for larger projects. This
-result of course is positive because it indicates that the majority of
-bugs are dealt with fairly quickly.
-}
-%----------- END OF COMMENTED TEXT -------
+%% Resolving bugs represent a substantial amount of time and cost in software
+%% projects. It is important to investigate the cause of bugs in order to reduce
+%% the amount of bugs which occur. We believe that the data we have collected will
+%% be beneficial for the software quality assurance and software developing
+%% personnel to use the correlations we found, and investigate other possible
+%% correlations from the data we collected and stored in a database. From manually
+%% checking a random sample we found our data to be representative. Our data has
+%% revealed that Thursdays have a high bug introduction rate relative to the total
+%% number of commits for that day, while Mondays have the lowest bug introduction
+%% rates. There may be many reasons behind this correlation, but we believe it
+%% might be that people are being worn out towards the end of the week, and as such
+%% are more likely to introduce bugs, except this would mean that Fridays would be
+%% worst - which is not the case. It could also be that on Fridays people are more
+%% alert and focused because they are excited for the weekend. It was strange that
+%% Mondays yielded the best results for time to code, but this could be the case
+%% because people are just back from the weekend and they are fully charged, ready
+%% to work. Another possible theory for Monday's results, which is that people
+%% delegate easier tasks for Mondays because its the start of the week, or spend
+%% more time planning and laying out templates of what they will be coding, and as
+%% such are not as prone to introducing bugs. This of course could be proven by
+%% checking the size of the commits and what kind of changes are being made on
+%% Mondays. Our data also showed that coding between 12AM and 9AM is a bad idea,
+%% while the best time is between 11AM and 3PM. This is not a very surprising
+%% result, considering how most users sleep during these hours, and if they happen
+%% to be doing any coding during these hours, it would be considered to be outside
+%% of their usual working hours - making them more prone to errors.  From our
+%% commits that were organized by author classification, it seems that daily
+%% committers are less prone to bug introduction than those who are classified as
+%% day job users. One theory that could potentially explain this result is that
+%% hobbyist working on open source projects do it because they are highly
+%% interested, while day job users are doing it to get payed, so the difference in
+%% motivations could negatively affect the performance of the developer. Finally
+%% our data shows that bug lifetimes decay exponentially, and on average are longer
+%% for larger projects. This result of course is positive because it indicates that
+%% the majority of bugs are dealt with fairly quickly.
