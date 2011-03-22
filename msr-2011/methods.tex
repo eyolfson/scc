@@ -21,7 +21,7 @@ commit messages for the keyword ``fix'' (as do~\cite{smallCommits05}).  In our
 experience, most developers indicate that a change is a fix by including the
 keyword ``fix'' in the commit message. Section~\ref{sec-results} explains how we
 verified this intuition, and our results show that the precision of this
-heuristic for identifying bug-fixing commits is \postP-\linuxP.  Next, we
+heuristic for identifying bug-fixing commits is \postP--\linuxP.  Next, we
 computed diffs for each file changed in $c$, omitting comments, and recorded the
 line numbers $L_c$ which $c$ changed. Finally, we searched the repository
 metadata (as implemented by the ``git blame'' command) to identify the
@@ -57,7 +57,7 @@ its bug-fixing commit 2cdc03fe in the database, along with an association
 between these two commits.
 
 \begin{lstlisting}[caption=An example bug-fixing commit, label=lst-fix,
-                   frame=single]
+                   frame=single, captionpos=b, basicstyle=\small]
 Commit: 2cdc03fe...
 Author: Alice <alice@project.com>
 Message: I fixed a bug!
@@ -67,12 +67,12 @@ Message: I fixed a bug!
 \end{lstlisting}
 
 \begin{lstlisting}[caption={\tt git blame} output for the bug-fixing commit,
-                   label=lst-blame, frame=single]
+                   label=lst-blame, frame=single, captionpos=b, basicstyle=\small]
 f4ce718c...  100    if (i <= 128) {
 \end{lstlisting}
 
 \begin{lstlisting}[caption=Associated bug-introducing commit for the example,
-                   label=lst-introduction, frame=single]
+                   label=lst-introduction, frame=single, captionpos=b, basicstyle=\small]
 Commit: f4ce718c...
 Author: Bob <bob@project.com>
 Message: I hope this works.
@@ -182,7 +182,7 @@ machine with accurate local time.  The accuracy of the commit times for the
 PostgreSQL repository depends on the accuracy of our time adjustment algorithm
 for the part of the history that was originally a CVS history. We believe that
 committers don't often change time zones\footnote{We were able to identify one
-  move of a committer from Ontario to California, and incorporated that move
+  move of a committer from Ontario, Canada to California, and incorporated that move
   into our adjustments, but did not find evidence of many such moves in our set
   of PostgreSQL contributors.} and that they usually work from their home time
 zone, but the validity of our adjustment does depend on the validity our
