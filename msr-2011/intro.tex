@@ -5,26 +5,26 @@
 \section{Introduction}
 
 \hyphenation{Apa-che}
-Software users demand high reliability. However, as software complexity
-increases, bug counts and rates inevitably also rise, which undermine software
-reliability.  The modern software development paradigm further complicates the
+Software users demand high software reliability. However, as software complexity
+increases, bug counts and rates inevitably rise, which undermine software
+reliability. The modern software development paradigm further complicates the
 situation: many modern software projects, including the Linux kernel,
 PostgreSQL, Eclipse, and Apache, are developed by tens to thousands of
 developers, over decades, in a distributed manner. The software often receives
 tens of thousands or hundreds of thousands of commits
-(Section~\ref{sec-results}).  Developers with different programming experience,
+(Section~\ref{sec-results}). Developers with different programming experience,
 different time commitments, different working hours, different programming
 styles, and from diverse cultures from all over the world, work on the same
 software project at different times and in different time zones. They join and
-leave projects at their own pace over periods of decades.  Code developed in the
+leave projects at their own pace over periods of decades. Code developed in the
 modern paradigm can therefore have different social characteristics from older,
 more homogeneously-developed projects; these characteristics can best be
-measured by going beyond the code itself and into code repositories.
+measured by going beyond the code itself and into the social characteristics of the code. % and into code repositories.
 
-Social characteristics provide a rich and unique source of information for us to
+Software social characteristics provide a rich and unique source of information for us to
 understand software and its bugs. As an example, it would be helpful to know if
 a commit's timestamp (including features such as time of day, day of week, etc.)
-affects the quality of that commit---are commits submitted after midnight
+affects the quality of that commit --- are commits submitted after midnight
 buggier than other commits?  Such correlations may be useful for predicting what
 commits are more likely to be buggy so that we can budget more testing effort on
 these commits, following prior studies~\cite{graves00predicting, guo04robust,
@@ -47,10 +47,10 @@ buggy commits.
 
 In this paper, we study the social characteristics of modern software
 development to understand the correlation between these social characteristics
-and the bugginess of contributions to the software---the likelihood that a
-particular contribution is later fixed, as determined by the fixing author.
+and the bugginess of commits to the software---the likelihood that a
+particular commit is later fixed, as determined by the fixing author.
 Specifically, we study the latest versions of the Linux kernel and PostgreSQL,
-which have 222,332 and 31,098 commits, respectively.  We study the correlation
+which have 222,332 and 31,098 commits, respectively. We study the correlation
 between a commit's bugginess and the time of day of the commit, the day of week
 of the commit, and the experience and activity frequency of the commit authors.
 In addition, we study several other commit characteristics, such as comment-only
@@ -72,8 +72,8 @@ whose commit message contains a bug ID that links to a bug report in a bug
 database. While this approach works for some projects, like Mozilla, it does not
 work for software whose commit messages rarely contain links to bug reports,
 like the Linux kernel.  We have observed that only 2.3\% of the bug-fixing
-commits in the Linux kernel are linked to a bug report.  We address this problem
-by applying heuristics which scan commit messages; they do not rely on any links
+commits in the Linux kernel are linked to a bug report. We address this problem
+by applying heuristics that scan commit messages; they do not rely on any links
 between bug commits and bug reports to extract bug-fixing commits.  Our
 heuristics have a precision of \postP-\linuxP in identifying bug-fixing commits
 (Section~\ref{sec-results}).
