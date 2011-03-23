@@ -109,16 +109,16 @@ indicates the overall percentage number of buggy commits in each project; bars
 shorter than the line indicate that commits at that hour were less likely to be
 buggy, while bars taller than the line indicate hours with more-buggy
 commits. The graphs also contain the raw number of commits at each hour, as
-indicated by the red dots.
+indicated by the circles.
 
-While our principal metrics are the absolute count and percentage of
-bug-introducing commits, we also present results of a third metric, \emph{bug
-  severity}. This metric attributes less weight to a large commit which
-introduces a small number of bugs relative to its size, and more weight to small
-commits which introduce relatively large numbers of bugs. We define bug severity
-to be the number of bug introductions per changed non-comment lines of
-code. Figure~\ref{fig-severity-hour} presents our data correlating severity of
-changes, along with average commit size, with time-of-day.
+%% While our principal metrics are the absolute count and percentage of
+%% bug-introducing commits, we also present results of a third metric, \emph{bug
+%%   severity}. This metric attributes less weight to a large commit which
+%% introduces a small number of bugs relative to its size, and more weight to small
+%% commits which introduce relatively large numbers of bugs. We define bug severity
+%% to be the number of bug introductions per changed non-comment lines of
+%% code. Figure~\ref{fig-severity-hour} presents our data correlating severity of
+%% changes, along with average commit size, with time-of-day.
 
 Figure~\ref{fig-bugginess-hour}, which summarizes bugginess percentages, shows a
 noticeable increase in the amount of commits which introduce a bug between 00:00
@@ -135,12 +135,12 @@ commits, for any hour, is 139 for PostgreSQL (and an order of magnitude higher
 for the Linux kernel), so that all of the depicted bug introduction rates are
 meaningful.
 
-Figures~\ref{fig-linux-severity-hour} and~\ref{fig-postgresql-severity-hour}
-show that the severity of late-night/early-morning changes (before 9AM) is
-surprisingly high, while there is no general trend in the average commit size.
-The average size of Linux commits fluctuates quite a lot; the sizes of
-PostgreSQL commits are more stable.  For PostgreSQL, developers tend to commit
-slightly smaller changes between 5AM and noon, with a spike at 8AM.
+%% Figures~\ref{fig-linux-severity-hour} and~\ref{fig-postgresql-severity-hour}
+%% show that the severity of late-night/early-morning changes (before 9AM) is
+%% surprisingly high, while there is no general trend in the average commit size.
+%% The average size of Linux commits fluctuates quite a lot; the sizes of
+%% PostgreSQL commits are more stable.  For PostgreSQL, developers tend to commit
+%% slightly smaller changes between 5AM and noon, with a spike at 8AM.
 
 We also investigated correlations between the time-of-day and the number of
 bug-fixing commits, rather than the bug-introducing commits that we showed
@@ -314,15 +314,15 @@ Figure~\ref{fig-linux-bugginess-experienced} combines data from
 Section~\ref{sec-time-of-day} and~\ref{sec-dev-exp} which correlates time-of-day
 with commit bugginess for authors who are inexperienced and experienced. We used
 a cutoff of 2 years. This bound separates the total number of commits for each
-category in approximately half. The lines respresent the overall bugginess. We
-only plot this data for the Linux kernel since it has more developers and data.
+category in approximately half. The lines respresent the overall
+bugginess. Note, we only plot this data for the Linux kernel since it has more
+developers and data.
 
-We can see that developers with less than 2 years experience tend to do more
-commits between midnight and 2 AM than developers with greater than 2 years
-experience, who do more commits between 8 AM and 4 PM. However, there is a
-common trend for both categories; late night commits (especially between
-midnight and 2 AM) are more buggy and early morning commits (between 6 AM and
-noon) are less buggy.
+We can see that inexperienced developers tend to do more commits between
+midnight and 2 AM than experienced developers, who do more commits between 8 AM
+and 4 PM. However, there is a common trend for both; late night commits
+(especially between midnight and 2 AM) are more buggy and early morning commits
+(between 6 AM and noon) are less buggy.
 
 \paragraph{Discussion}
 
@@ -381,12 +381,12 @@ Our next experiment attempted to replicate the results
 in~\cite{sliwerski-msr-2005} and correlates the day of the week of a commit with
 its bugginess. Figure~\ref{fig-bugginess-day} compares the day of the week with
 the bugginess of the commits on that day (bars) and also displays the total
-number of commits per day (dots). Here, the solid horizontal line presents the
-overall bugginess of all commits to each project.
+number of commits per day (circles). Here, the solid horizontal line presents
+the overall bugginess of all commits to each project.
 Figure~\ref{fig-introduction-day} presents the number of subsequent bug-fixing
-commits for each bug-introducing commit per day-of-week, while
-Figure~\ref{fig-severity-day} presents the severity of bugs per day-of-week, and
-also presents the average sizes of commits.
+commits for each bug-introducing commit per day-of-week.%% , while
+%% Figure~\ref{fig-severity-day} presents the severity of bugs per day-of-week, and
+%% also presents the average sizes of commits.
 
 Our results, which use a disjoint set of repositories from those
 in~\cite{sliwerski-msr-2005}, found about the same bugginess and number of
@@ -397,10 +397,10 @@ Sunday. These results are statistically significant with a p-value less than
 0.05. Note that, for Linux, Saturday and Sunday each have about half as many
 commits as the other days of the week (commits peak on Tuesday and steadily
 decrease through Friday). For PostgreSQL, commits fluctuate through the days of
-the week and decrease to about 70\% of the weekday volume on the weekend. The
-severity results do not show any particular trends, but we found that the
-average number of lines per commit on Sunday was surprisingly large for both
-Linux and PostgreSQL.
+the week and decrease to about 70\% of the weekday volume on the weekend. %% The
+%% severity results do not show any particular trends, but we found that the
+%% average number of lines per commit on Sunday was surprisingly large for both
+%% Linux and PostgreSQL.
 
 \paragraph{Discussion}
 
@@ -408,10 +408,9 @@ We found that commits on different days of week have the same level of
 bugginess, which does not agree with results from the prior study on two
 different open source projects~\cite{sliwerski-msr-2005}. 
 
-Our result shows that
-the day of week of commits vary for different software projects, implying that
-the bugginess prediction based on the day of week of commits may need to be on a
-project-by-project basis.
+Our result shows that the day of week of commits vary for different software
+projects, implying that the bugginess prediction based on the day of week of
+commits may need to be on a project-by-project basis.
 
 \subsection{Bug Lifetimes}
 \label{sec-bug-lifetime}
