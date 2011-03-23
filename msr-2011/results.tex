@@ -197,11 +197,21 @@ buggy or not.
 
 \paragraph{Discussion}
 
-These results indicate that developers may want to double check the code they
-write for these late-night commits (midnight-4:00 AM).  It may also be
-beneficial for version control system to warn the developers of late-night
-commits to improve software reliability. From the p-values we observe that the
-late night and early morning commits are statistically significant.
+Obviously, code doesn't spontaneously improve if left to mature for 4 hours; 
+our results do not indicate causation,
+but instead demonstrate a correlation between code committed early in the 
+morning and increased bugginess. We do not speculate about the cause
+of this correlation; however, the results in Section~\ref{sec:toddev-exp}
+imply that this correlation holds for both inexperienced and experienced
+developers.
+However, our results do suggest that developers, being aware of such a 
+correlation, may want to double-check code before performing
+late-night commits (midnight-4:00 AM).  It may also be
+beneficial for version control systems or IDEs to warn developers about
+the perils of late-night
+commits to improve software reliability. 
+Our p-values indicate that our
+observed bugginess differences between late-night/early-morning and all other commits are statistically significant.
 
 \begin{figure}[t!hb]
 \begin{center}
