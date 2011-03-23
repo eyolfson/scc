@@ -34,6 +34,14 @@
 \usepackage{times}
 \usepackage{url}
 
+%% Define a new 'leo' style for the package that will use a smaller font.
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother
+%% Now actually use the newly defined style.
+\urlstyle{leo}
+
 %------------------------------------------------------------------------- 
 % take the % away on next line to produce the final camera-ready version 
 \pagestyle{empty}
@@ -44,7 +52,7 @@
 \usepackage{boxedminipage}
 \usepackage{xspace}
 \usepackage{listings}
-\usepackage{subfigure}
+\usepackage[TABBOTCAP]{subfigure}
 
 %%Squeeze space in bibliographybg
 %  \let\oldthebibliography=\thebibliography

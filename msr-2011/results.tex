@@ -154,7 +154,7 @@ bug-fixing is independent of its other characteristics.
 \begin{center}
 \small
 \begin{tabular}{r|r|r}
-\multicolumn{1}{c}{} & \multicolumn{2}{c}{{\bf P-Value}} \\
+\multicolumn{1}{c}{} & \multicolumn{2}{c}{{\bf P-value}} \\
 \multicolumn{1}{c|}{{\bf Hour}} & \multicolumn{1}{c|}{{\bf Linux kernel}} &
 \multicolumn{1}{c}{{\bf PostgreSQL}} \\
 \hline
@@ -186,8 +186,6 @@ bug-fixing is independent of its other characteristics.
 \end{center}
 \caption{\label{tbl-pvalues}Linux kernel and PostgreSQL bugginess p-values}
 \end{table}
-
-\paragraph{Statistical Significance}
 
 We calculated p-values in order to determine the statistical significance of
 bugginess in both the Linux kernel and PostgreSQL. The results are shown in
@@ -304,7 +302,7 @@ revisions.
 \begin{figure*}[tbh]
 \includegraphics[width=\textwidth]{linux-bugginess-hour-experienced.pdf}
 \caption{\label{fig-linux-bugginess-experienced}Percentage of buggy commits
-  (bars) and total number of commits (markers) versus time-of-day for
+  (bars) and total number of commits (circles/triangles) versus time-of-day for
   inexperienced and experienced Linux kernel developers}
 \end{figure*}
 
@@ -412,6 +410,8 @@ Our result shows that the day of week of commits vary for different software
 projects, implying that the bugginess prediction based on the day of week of
 commits may need to be on a project-by-project basis.
 
+\vspace{3em}
+
 \subsection{Bug Lifetimes}
 \label{sec-bug-lifetime}
 
@@ -469,32 +469,38 @@ with the code.
 %% additions. We therefore manually checked (a subsample of) the 49\% more
 %% difficult cases to evaluate the effectiveness of our heuristic for additions.
 
+
+
 \subsection{Validation} 
 \label{sec-validation}
 
-\begin{table}
-\begin{center}
-\begin{tabular}{rrrr}
-& & \multicolumn{2}{c}{Predicted} \\
-& & \multicolumn{1}{|c}{Fix} & \multicolumn{1}{c}{$\neg$Fix} \\ \cline{2-4}
-\multirow{2}{*}{Actual} & \multicolumn{1}{c|}{Fix} &  48 & 18 \\
-                        &  \multicolumn{1}{c|}{$\neg$Fix} & 7 & 127 \\
-\end{tabular}
-\end{center}
-\caption{\label{tbl-linux-confusion}Linux kernel confusion matrix}
-\end{table}
+%% \begin{table}
+%% \begin{center}
+%% \begin{tabular}{rrrr}
+%% & & \multicolumn{2}{c}{Predicted} \\
+%% & & \multicolumn{1}{|c}{Fix} & \multicolumn{1}{c}{$\neg$Fix} \\ \cline{2-4}
+%% \multirow{2}{*}{Actual} & \multicolumn{1}{c|}{Fix} &  48 & 18 \\
+%%                         &  \multicolumn{1}{c|}{$\neg$Fix} & 7 & 127 \\
+%% \end{tabular}
+%% \end{center}
+%% \caption{\label{tbl-linux-confusion}Linux kernel confusion matrix}
+%% \end{table}
 
-\begin{table}
-\begin{center}
-\begin{tabular}{rrrr}
-& & \multicolumn{2}{c}{Predicted} \\
-& & \multicolumn{1}{|c}{Fix} & \multicolumn{1}{c}{$\neg$Fix} \\ \cline{2-4}
-\multirow{2}{*}{Actual} & \multicolumn{1}{c|}{Fix} &  30 & 12\\
-                        &  \multicolumn{1}{c|}{$\neg$Fix} & 5 & 153 \\
-\end{tabular}
-\end{center}
-\caption{\label{tbl-postgresql-confusion}PostgreSQL confusion matrix}
-\end{table}
+%% \begin{table}
+%% \begin{center}
+%% \begin{tabular}{rrrr}
+%% & & \multicolumn{2}{c}{Predicted} \\
+%% & & \multicolumn{1}{|c}{Fix} & \multicolumn{1}{c}{$\neg$Fix} \\ \cline{2-4}
+%% \multirow{2}{*}{Actual} & \multicolumn{1}{c|}{Fix} &  30 & 12\\
+%%                         &  \multicolumn{1}{c|}{$\neg$Fix} & 5 & 153 \\
+%% \end{tabular}
+%% \end{center}
+%% \caption{\label{tbl-postgresql-confusion}PostgreSQL confusion matrix}
+%% \end{table}
+
+
+
+
 
 To validate our results, we estimated the precision and recall of our technique
 for identifying bug-fixing commits on both projects.  As our algorithm for
@@ -504,6 +510,31 @@ brief manual inspection of bug-introducing commits did not reveal any
 anomalies.)  For both projects, we randomly sampled 200 commits and manually
 verified the results. Table~\ref{tbl-linux-confusion} and
 \ref{tbl-postgresql-confusion} summarize our findings.
+
+\begin{table}[tbh]
+\centering
+\small
+\subfigure[{Linux kernel}]{
+  \label{tbl-linux-confusion}
+  \begin{tabular}{rrrr}
+    & & \multicolumn{2}{c}{Predicted} \\
+    & & \multicolumn{1}{|c}{Fix} & \multicolumn{1}{c}{$\neg$Fix} \\ \cline{2-4}
+    \multirow{2}{*}{Actual} & \multicolumn{1}{c|}{Fix} &  30 & 12\\
+                            &  \multicolumn{1}{c|}{$\neg$Fix} & 5 & 153 \\ \\
+  \end{tabular}
+}
+\subfigure[PostgreSQL]{
+  \label{tbl-postgresql-confusion}
+  \begin{tabular}{rrrr}
+    & & \multicolumn{2}{c}{Predicted} \\
+    & & \multicolumn{1}{|c}{Fix} & \multicolumn{1}{c}{$\neg$Fix} \\ \cline{2-4}
+    \multirow{2}{*}{Actual} & \multicolumn{1}{c|}{Fix} &  30 & 12\\
+                            &  \multicolumn{1}{c|}{$\neg$Fix} & 5 & 153 \\ \\
+  \end{tabular}
+}
+\caption{\label{tbl-confusion}Confusion matrices}
+\end{table}
+
 
 We evaluated the precision---that is, the proportion of identified bug-fixing
 commits which do indeed fix bugs---and found that, for the Linux kernel, 48 of
