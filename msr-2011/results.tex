@@ -299,15 +299,26 @@ correlation does not prove that the developer experience caused more experienced
 programmers' commits to be less buggy.  While we believe the above causation to
 hold, other interpretations are possible; perhaps more experienced developers
 wrote more complex code, whose bugs are harder to discover and less likely to be
-reported.  Nonetheless, our results show that given the fact that a commit is
-from a more experience developer, one can be more confident about the
+reported.  Nonetheless, our results show that, given the fact that a commit is
+from a more experienced developer, one can be more confident about the
 correctness of the commit. Such a correlation could be exploited to help predict
 buggy code locations.
 
-We do not understand the spike to the right of the PostgreSQL graph.  Possible
-reasons include the shift to Git, which is a known historical event, or, more
-speculatively, perhaps PostgreSQL recently undertook major ongoing architectural
-revisions.
+One can observe a decline in the total number of commits with experience.
+We believe that this is due to our sliding scale for author experience.
+Consider an author who has committed for 5 years. His or her commits do not
+show up in a single circle at the 1800-day mark; instead, they are distributed
+throughout the 5 years of the commits, so that a commit on the author's second
+birthday gets reported as a commit at day 700. One would therefore expect
+more commits from ``inexperienced'' developers, since all developers go through
+an inexperienced phase, while only a small number of developers reach the
+more experienced phase.
+
+We do not understand the spike in percentage of buggy commits to the
+right of the PostgreSQL graph.  Possible reasons include the shift to
+Git, which is a known historical event, or, more speculatively,
+perhaps PostgreSQL recently undertook major ongoing architectural
+revisions, carried out by the experienced developers.
 
 \begin{figure*}[tbh]
 \includegraphics[width=\textwidth]{linux-bugginess-hour-experienced.pdf}
