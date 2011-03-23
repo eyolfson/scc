@@ -303,22 +303,19 @@ revisions.
 
 \begin{figure*}[tbh]
 \includegraphics[width=\textwidth]{linux-bugginess-hour-experienced.pdf}
-\caption{\label{fig-bugginess-experienced}Percentage of buggy commits (bars) and
-  total number of commits (circles) versus time-of-day for less (blue bars, red
-  circles, blue line) and more (purple bars, yellow circles, green line) than
-  2 years experience for the Linux kernel}
+\caption{\label{fig-linux-bugginess-experienced}Percentage of buggy commits
+  (bars) and total number of commits (markers) versus time-of-day for
+  inexperienced and experienced Linux kernel developers}
 \end{figure*}
-
-% less and more experience, then say 2 years
 
 \subsection{Time-of-day/Developer Experience Results}
 
-Figure~\ref{fig-bugginess-experienced} combines data from
+Figure~\ref{fig-linux-bugginess-experienced} combines data from
 Section~\ref{sec-time-of-day} and~\ref{sec-dev-exp} which correlates time-of-day
-with commit bugginess for authors with less and greater than 2 years
-experience. This bound separates the total number of commits for each category
-in approximately half. The lines respresent the overall bugginess. We only show
-this graph for the Linux kernel since it has more developers and data.
+with commit bugginess for authors who are inexperienced and experienced. We used
+a cutoff of 2 years. This bound separates the total number of commits for each
+category in approximately half. The lines respresent the overall bugginess. We
+only plot this data for the Linux kernel since it has more developers and data.
 
 We can see that developers with less than 2 years experience tend to do more
 commits between midnight and 2 AM than developers with greater than 2 years
