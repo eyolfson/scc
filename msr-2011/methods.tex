@@ -41,20 +41,6 @@ a hexadecimal number\footnote{Following common practice, because we can uniquely
 message, which contains the keyword ``fix''; and a diff, illustrating the lines
 that the commit modified.
 
-First, we would find the commit in Listing~\ref{lst-fix} by searching the commit
-logs for the keyword ``fix'', which is indeed a substring of the commit message,
-``I fixed a bug!''.  Next, we would observe that the commit modifies line 100 of
-an (unidentified) file---in this case, the original author used
-less-than-or-equal (\verb+<=+) instead of strictly-less-than (\verb+<+), and the
-bug-fixing commit changes the comparison operator to the presumably-correct one.
-Finally, we perform a ``git blame'' on this commit, which shows the commit
-responsible for the previous version of line 100. Listing \ref{lst-blame}
-presents plausible ``git blame'' output, which shows that the source of the bug
-fixed in Listing~\ref{lst-fix} is the commit whose id begins with f4ce718c, as
-shown in Listing~\ref{lst-introduction}. We flag this commit as a
-bug-introducing commit and store both the bug-introducing commit f4ce718c and
-its bug-fixing commit 2cdc03fe in the database, along with an association
-between these two commits.
 
 \begin{lstlisting}[caption=An example bug-fixing commit, label=lst-fix,
                    frame=single, captionpos=b, basicstyle=\small]
@@ -83,6 +69,21 @@ Message: I hope this works.
 +        do_unicode(i);
 +    }
 \end{lstlisting}
+
+First, we would find the commit in Listing~\ref{lst-fix} by searching the commit
+logs for the keyword ``fix'', which is indeed a substring of the commit message,
+``I fixed a bug!''.  Next, we would observe that the commit modifies line 100 of
+an (unidentified) file---in this case, the original author used
+less-than-or-equal (\verb+<=+) instead of strictly-less-than (\verb+<+), and the
+bug-fixing commit changes the comparison operator to the presumably-correct one.
+Finally, we perform a ``git blame'' on this commit, which shows the commit
+responsible for the previous version of line 100. Listing \ref{lst-blame}
+presents plausible ``git blame'' output, which shows that the source of the bug
+fixed in Listing~\ref{lst-fix} is the commit whose id begins with f4ce718c, as
+shown in Listing~\ref{lst-introduction}. We flag this commit as a
+bug-introducing commit and store both the bug-introducing commit f4ce718c and
+its bug-fixing commit 2cdc03fe in the database, along with an association
+between these two commits.
 
 Any change in $c$ which removes or modifies an existing line of code is easy to
 attribute to a previous commit $c'$, since the affected line of code existed in
