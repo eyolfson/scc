@@ -261,23 +261,32 @@ understand the evolution of a commit. Since there may be correlations between a
 patch's evolution and its code quality, we intend to investigate these issues in
 future work.
 
-Finally, we discuss threats to our author classification. Some Linux kernel
-authors commit from several email addresses and even names. In order to make our
-data representative we first merge authors with the same email addresses into a
-single author. We then merge authors which share the same full name, as it is
-likely they are the same developer. This is not an issue for PostgreSQL: when
-they converted their repository to Git, they also normalized all author email
-addresses, so that each author has a single email address.
+Finally, we discuss threats to our author classification. Some Linux
+kernel authors commit from several email addresses and with variations
+in their names.  To clean our author data, we first merge authors with
+different names but the same email addresses.  Then, we merge authors
+who share the same full name. This is not an issue for PostgreSQL:
+when they converted their repository to Git, they also normalized all
+author email addresses, so that each author has a single email
+address.
 
-Our day-job classification for authors is based on the fixed hours of 8AM-4PM
-and Monday-Friday days of the week. Many software companies have flexible hours;
-however, we expect that developers who are directed to work on a project as
-their day job would still have the bulk of their commits between those
-hours. The day-job classification applies only to the Linux kernel committers;
-no PostgreSQL committers satisfy the day-job criteria. Even though most of the
-core PostgreSQL team have PostgreSQL-related employment, we believe that they
-are not directed to work on PostgreSQL, which would account for the observation
-that most of their commits to PostgreSQL occur outside normal working hours.
+Our day-job classification for authors is based on the fixed hours of
+8AM-4PM and Monday-Friday days of the week. Many software companies
+have flexible hours; however, we expect that developers who are
+directed to work on a project as their day job would still have the
+bulk of their commits between those hours. The day-job classification
+applies only to the Linux kernel committers; no PostgreSQL committers
+satisfy the day-job criteria. Note that this classification attempts
+to measure whether developers are working on the project of their own
+volition or not: some Linux committers, like Ingo Molnar, are paid to
+work on Linux, but commit at all hours of the day. We believe that, in
+such cases, the committer is exercising substantial autonomy in
+choosing what to work on, and is not being directed to work on
+specific parts of the project.  Similarly, even though most of the
+core PostgreSQL team have PostgreSQL-related employment, we believe
+that they are not directed to work on PostgreSQL, which would account
+for the observation that most of their commits to PostgreSQL occur
+outside normal working hours.
 
 Our author experience information only counts the participation of an author to
 a particular project; a highly-experienced developer may be classified as an
