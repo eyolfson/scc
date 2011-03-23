@@ -24,6 +24,9 @@
 
 \documentclass{sig-alternate}
 
+\pdfpagewidth 8.5in
+\pdfpageheight 11in
+
 \clubpenalty=300 %10000
 \widowpenalty=300 %10000
 %\brokenpenalty=1000 %10000
@@ -33,7 +36,7 @@
 
 %------------------------------------------------------------------------- 
 % take the % away on next line to produce the final camera-ready version 
-%\pagestyle{empty}
+\pagestyle{empty}
 
 %------------------------------------------------------------------------- 
 \usepackage{multirow}
@@ -74,6 +77,9 @@
 \newcommand{\fdaily}{3\xspace} % finding on day of week
 \newcommand{\fday}{4\xspace} % finding on day of week
 
+\def\sharedaffiliation{%
+\end{tabular}
+\begin{tabular}{c}}
 
 \begin{document}
 %
@@ -121,28 +127,43 @@
 % without further effort on your part as the last section in
 % the body of your article BEFORE References or any Appendices.
 
-\numberofauthors{1} %  in this sample file, there are a *total*
-% of EIGHT authors. SIX appear on the 'first-page' (for formatting
-% reasons) and the remaining two appear in the \additionalauthors section.
-%
+%% \numberofauthors{1} %  in this sample file, there are a *total*
+%% % of EIGHT authors. SIX appear on the 'first-page' (for formatting
+%% % reasons) and the remaining two appear in the \additionalauthors section.
+%% %
+%% \author{
+%% % You can go ahead and credit any number of authors here,
+%% % e.g. one 'row of three' or two rows (consisting of one row of three
+%% % and a second row of one, two or three).
+%% %
+%% % The command \alignauthor (no curly braces needed) should
+%% % precede each author name, affiliation/snail-mail address and
+%% % e-mail address. Additionally, tag each line of
+%% % affiliation/address with \affaddr, and tag the
+%% % e-mail address with \email.
+%% %
+%% % 1st. author
+%% \alignauthor
+%% Jon Eyolfson, Lin Tan, Patrick Lam\\ 
+%%        \affaddr{University of Waterloo} \\
+%%        \affaddr{200 University Avenue West}\\
+%%        \affaddr{Waterloo, ON N2L3G1, Canada} \\ 
+%%        \affaddr{\em jon@eyolfson.com, lintan@uwaterloo.ca, p.lam@ece.uwaterloo.ca}
+%% }
+
+
+\numberofauthors{3}
 \author{
-% You can go ahead and credit any number of authors here,
-% e.g. one 'row of three' or two rows (consisting of one row of three
-% and a second row of one, two or three).
-%
-% The command \alignauthor (no curly braces needed) should
-% precede each author name, affiliation/snail-mail address and
-% e-mail address. Additionally, tag each line of
-% affiliation/address with \affaddr, and tag the
-% e-mail address with \email.
-%
-% 1st. author
-\alignauthor
-Jon Eyolfson, Lin Tan, Patrick Lam\\ 
-       \affaddr{University of Waterloo} \\
-       \affaddr{200 University Avenue West}\\
-       \affaddr{Waterloo, ON N2L3G1, Canada} \\ 
-       \affaddr{\em jon@eyolfson.com, lintan@uwaterloo.ca, p.lam@ece.uwaterloo.ca}
+  \alignauthor Jon Eyolfson\\
+  \email{jeyolfso@uwaterloo.ca}
+  \alignauthor Lin Tan\\
+  \email{lintan@uwaterloo.ca}
+  \alignauthor Patrick Lam\\   
+  \email{p.lam@ece.uwaterloo.ca}
+  \sharedaffiliation
+  \affaddr{University of Waterloo}\\
+  \affaddr{200 University Avenue West}\\
+  \affaddr{Waterloo, ON N2L3G1, Canada}
 }
 
 \maketitle
