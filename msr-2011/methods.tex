@@ -117,9 +117,10 @@ frequency between consecutive commits: daily, weekly, monthly, other (less than
 20 commits), and single (only 1 commit). For the author activity classification,
 we count consecutive commits within 30 minutes of each other as one commit. As a
 sub-class of the daily committer classification, we also use a heuristic to
-identify committers who appear to work on the repository solely as part of their
-day job, namely those for which 85\% of commits are between 8 AM and 4 PM Monday
-to Friday.
+identify committers who appear to work on the repository as part of their day
+job, namely those for which 85\% of commits are between 8 AM and 4 PM Monday to
+Friday. This is to seperate developers who must work on the code from those who
+are motived by interest.
 
 {\em Author experience} reports the amount of time since an author's first
 commit to a project. To study the correlation between commit bugginess and
@@ -269,8 +270,8 @@ addresses, so that each author has a single email address.
 
 Our day-job classification for authors is based on the fixed hours of 8AM-4PM
 and Monday-Friday days of the week. Many software companies have flexible hours;
-however, we expect that developers who are directed to work on a project solely
-as their day job would still have the bulk of their commits between those
+however, we expect that developers who are directed to work on a project as
+their day job would still have the bulk of their commits between those
 hours. The day-job classification applies only to the Linux kernel committers;
 no PostgreSQL committers satisfy the day-job criteria. Even though most of the
 core PostgreSQL team have PostgreSQL-related employment, we believe that they
