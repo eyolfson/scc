@@ -10,18 +10,18 @@ in distributed software development; and empirical studies on bug lifetime.
 The most closely related work to ours, \'Sliwerski et
 al~\cite{sliwerski-msr-2005}, studied the day of the week of commits for two
 totally different projects, Eclipse and Mozilla, and found that the commits on
-Fridays are buggiest.  This paper differs from the work of \'Sliwerski et al in
-the following three key aspects.  Firstly, we investigated how the commits' time
+Fridays are buggiest. This paper differs from the work of \'Sliwerski et al in
+the following three key aspects. Firstly, we investigated how the commits' time
 of day correlates with the bugginess of commits, which has not been studied
-before, to the best of our knowledge.  Secondly, we studied developer
+before, to the best of our knowledge. Secondly, we studied developer
 characteristics, including correlations between commit bugginess and developers'
 activity levels, as well as developers' experience, which the previous work did
-not study.  Finally, we used different data collection techniques. Specifically,
+not study. Finally, we used different data collection techniques. Specifically,
 we did not rely on the link between a commit and a bug report to extract
 bug-fixing commits, which enabled us to study software for which such links are
 not maintained or not well maintained by the developers. For example, we found
 that only 2.3\% of the Linux kernel's bug-fixing commits are linked to a bug
-report, by manually examining a random sample of our bug-fixing commits.  While
+report, by manually examining a random sample of our bug-fixing commits. While
 using links between bug reports and bug commits may increase the precision of
 extracting bug-fixing commits, our results demonstrate that high precision can
 be obtained without using such links: the precision of our bug-fixing commit
@@ -45,7 +45,7 @@ one of which is non-functional commits (e.g., modification of comments,
 documentation, etc.).  Our study differs from~\cite{largeCommits} in that we
 specifically investigated comment-fixing commits. For example, a refactoring
 commit would be considered to be a non-functional commit by the previous study,
-but not a comment-fixing commit in this paper.  iComment~\cite{iComment} only
+but not a comment-fixing commit in this paper. iComment~\cite{iComment} only
 showed that FreeBSD contains many comment-fixing commits; it is not a
 comprehensive study on comment-fixing commits.  We estimate that about 1,200 and
 130 commits (Section~\ref{sec-comment-only}) in the Linux kernel and PostgreSQL,
@@ -66,7 +66,7 @@ developers' activity frequencies, etc.
 \paragraph{Bug Lifetime}
 
 Engler et al~\cite{deviant} examined the bug lifetime of the Linux kernel in
-2001.  Our study on the bug lifetime complements theirs by analyzing recent
+2001. Our study on the bug lifetime complements theirs by analyzing recent
 commits to the Linux kernel from 2005-2010.  Kim and Whitehead~\cite{2006-long}
 examined the bug lifetimes in PostgreSQL.  Neither of the two previous studies
 investigated social characteristics such as commit time and author experience.
