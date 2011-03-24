@@ -4,8 +4,8 @@
 Modern software is often developed over many years with hundreds of
 thousands of commits. Commit metadata is a rich source of social
 characteristics, including the commit's time of day and the
-experience and activity level of its author.  The ``bugginess'' of a
-commit is also a critical property of that commit.  In this work, we
+experience and commit frequency of its author.  The ``bugginess'' of a
+commit is also a critical property of that commit. In this paper, we
 investigate the correlation between a commit's social characteristics
 and its ``bugginess''; such results can be very useful for software
 developers and software engineering researchers. For instance,
@@ -14,17 +14,16 @@ verify commits that are more likely to be buggy.
 
 In this paper, we study the correlation between a commit's bugginess
 and the time of day of the commit, the day of week of the commit, and
-the experience and activity frequency of the commit authors.  We
+the experience and commit frequency of the commit authors.  We
 survey two widely-used open source projects: the Linux kernel and
 PostgreSQL.  
 
 Our main findings include: (1) commits submitted between midnight and
 4 AM (referred to as late-night commits) are significantly buggier 
 and commits between 7AM and noon are less buggy, implying that developers 
-may want to double check their own late-night commits; 
-(2) daily committing developers produce less-buggy commits, indicating that we may 
-want to promote the practice of daily committing developers code-reviewing other 
-developers' commits; and (3) 
-the day of week of commits
-vary for different software projects, implying that the bugginess prediction based on 
-the day of week of commits may need to be on a project-by-project basis.
+may want to double-check their own late-night commits; 
+(2) daily-committing developers produce less-buggy commits, indicating that we may 
+want to promote the practice of daily-committing developers reviewing other 
+developers' commits; and (3) the bugginess of
+commits versus day-of-week
+varies for different software projects.

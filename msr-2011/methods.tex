@@ -10,40 +10,13 @@ not necessarily bad code; it is possible that the later fix is adaptive or
 perfective, updating the code to work with changes in third-party code, or
 reflecting a change in requirements.
 
-\subsection{Core Methods}
-
-Following~\cite{sliwerski-msr-2005}, our methodology has three steps: 1)
-enumerating bug-fixing commits; 2) identifying the lines changed in each
-bug-fixing commit; and 3) finding the commits which were responsible for the
-previous (buggy) version of each of the changed lines. We describe each of these
-steps in more detail. First, to detect bug-fixing commits, $c$, we searched the
-commit messages for the keyword ``fix'' (as do~\cite{smallCommits05}).  In our
-experience, most developers indicate that a change is a fix by including the
-keyword ``fix'' in the commit message. Section~\ref{sec-results} explains how we
-verified this intuition, and our results show that the precision of this
-heuristic for identifying bug-fixing commits is \postP--\linuxP.  Next, we
-computed diffs for each file changed in $c$, omitting comments, and recorded the
-line numbers $L_c$ which $c$ changed. Finally, we searched the repository
-metadata (as implemented by the ``git blame'' command) to identify the
-bug-introducing commits, $c'$, which changed the lines $L_c$. In this step, we
-used git blame's {\tt -w} option, which ignores whitespace in attributing
-responsibility for a code change, which addresses some inaccuracies that exist
-in other version control systems such as CVS and Subversion as discussed by Kim
-et al~\cite{2006-automatic}.
-
-\paragraph{Example}
-
-Listing~\ref{lst-fix} presents an example of a bug-fixing commit. Commits
-consist of a commit id, which is a hash of the commit's contents, represented as
-a hexadecimal number\footnote{Following common practice, because we can uniquely
-  identify the commit by the first 8 digits of its commit id, we omit the other
-  digits.}; an author, identified by a name/email address pair; a commit
-message, which contains the keyword ``fix''; and a diff, illustrating the lines
-that the commit modified.
-
-
-\begin{lstlisting}[caption=An example bug-fixing commit, label=lst-fix,
-                   frame=single, captionpos=b, basicstyle=\small]
+\begin{figure}[t!bh]
+\centering
+\rule{0.92\columnwidth}{0.5pt}
+\begin{minipage}[h]{0.92\columnwidth}
+%\begin{lstlisting}[caption=An example bug-fixing commit, label=lst-fix,
+%                  captionpos=b, basicstyle=\small]
+\begin{lstlisting}[basicstyle=\small]
 Commit: 2cdc03fe...
 Author: Alice <alice@project.com>
 Message: I fixed a bug!
@@ -51,14 +24,32 @@ Message: I fixed a bug!
 -    if (i <= 128) {
 +    if (i < 128) {
 \end{lstlisting}
+\end{minipage}
+\rule{0.92\columnwidth}{0.5pt}
+\caption{\label{fig-fix}An example bug-fixing commit}
+\end{figure}
 
-\begin{lstlisting}[caption={\tt git blame} output for the bug-fixing commit,
-                   label=lst-blame, frame=single, captionpos=b, basicstyle=\small]
+\begin{figure}[t!bh]
+\centering
+\rule{0.92\columnwidth}{0.5pt}
+\begin{minipage}[h]{0.92\columnwidth}
+%\begin{lstlisting}[caption={\tt git blame} output for the bug-fixing commit,
+%                   label=lst-blame, frame=single, captionpos=b, basicstyle=\small]
+\begin{lstlisting}[basicstyle=\small]
 f4ce718c...  100    if (i <= 128) {
 \end{lstlisting}
+\end{minipage}
+\rule{0.92\columnwidth}{0.5pt}
+\caption{\label{fig-blame}{\tt git blame} output for the bug-fixing commit}
+\end{figure}
 
-\begin{lstlisting}[caption=Associated bug-introducing commit for the example,
-                   label=lst-introduction, frame=single, captionpos=b, basicstyle=\small]
+\begin{figure}[t!bh]
+\centering
+\rule{0.92\columnwidth}{0.5pt}
+\begin{minipage}[h]{0.92\columnwidth}
+%\begin{lstlisting}[caption=Associated bug-introducing commit for the example,
+%                   label=lst-introduction, frame=single, captionpos=b, basicstyle=\small]
+\begin{lstlisting}[basicstyle=\small]
 Commit: f4ce718c...
 Author: Bob <bob@project.com>
 Message: I hope this works.
@@ -69,21 +60,58 @@ Message: I hope this works.
 +        do_unicode(i);
 +    }
 \end{lstlisting}
+\end{minipage}
+\rule{0.92\columnwidth}{0.5pt}
+\caption{\label{fig-introduction}Associated bug-introducing commit for the example}
+\end{figure}
 
-First, we would find the commit in Listing~\ref{lst-fix} by searching the commit
+\subsection{Core Methodology}
+
+Following~\cite{sliwerski-msr-2005}, our methodology has three steps: 1)
+enumerating bug-fixing commits; 2) identifying the lines changed in each
+bug-fixing commit; and 3) finding the commits which were responsible for the
+previous (buggy) version of each of the changed lines. We describe each of these
+steps in more detail. First, to detect bug-fixing commits, $c$, we searched the
+commit messages for the keyword ``fix'' (as do~\cite{smallCommits05}). In our
+experience, most developers indicate that a change is a fix by including the
+keyword ``fix'' in the commit message. Section~\ref{sec-results} explains how we
+verified this intuition, and our results show that the precision of this
+heuristic for identifying bug-fixing commits is \postP--\linuxP. Next, we
+computed diffs for each file changed in $c$, omitting comments, and recorded the
+line numbers $L_c$ which $c$ changed. Finally, we searched the repository
+metadata (as implemented by the ``git blame'' command) to identify the
+bug-introducing commits, $c'$, which changed the lines $L_c$. In this step, we
+used git blame's {\tt -w} option, which ignores whitespace in attributing
+responsibility for a code change, which addresses some inaccuracies that exist
+in other version control systems such as CVS and Subversion, as discussed by Kim
+et al~\cite{2006-automatic}.
+
+\paragraph{Example}
+
+Figure~\ref{fig-fix} presents an example of a bug-fixing commit. Commits
+consist of a commit id, which is a hash of the commit's contents, represented as
+a hexadecimal number\footnote{Following common practice, we drop trailing
+ digits of the commit id: 
+ our commits have ids with unique first-8-digits.}; an author, identified by a name/email address pair; a commit
+message, which contains the keyword ``fix''; and a diff, showing the lines
+the commit modified.
+
+
+First, we find the commit in Figure~\ref{fig-fix} by searching the commit
 logs for the keyword ``fix'', which is indeed a substring of the commit message,
-``I fixed a bug!''.  Next, we would observe that the commit modifies line 100 of
+``I fixed a bug!''. Next, we observe that the commit modifies line 100 of
 an (unidentified) file---in this case, the original author used
 less-than-or-equal (\verb+<=+) instead of strictly-less-than (\verb+<+), and the
 bug-fixing commit changes the comparison operator to the presumably-correct one.
 Finally, we perform a ``git blame'' on this commit, which shows the commit
-responsible for the previous version of line 100. Listing \ref{lst-blame}
+responsible for the previous version of line 100. Figure~\ref{fig-blame}
 presents plausible ``git blame'' output, which shows that the source of the bug
-fixed in Listing~\ref{lst-fix} is the commit whose id begins with f4ce718c, as
-shown in Listing~\ref{lst-introduction}. We flag this commit as a
+fixed in Figure~\ref{fig-fix} is the commit whose id begins with f4ce718c, as
+shown in Figure~\ref{fig-introduction}. We flag this commit as a
 bug-introducing commit and store both the bug-introducing commit f4ce718c and
-its bug-fixing commit 2cdc03fe in the database, along with an association
-between these two commits.
+its bug-fixing commit 2cdc03fe in our database, along with an association
+between these two commits. If a bug was introduced by multiple commits, 
+then all of these bug-introducing commits are stored in our database. 
 
 Any change in $c$ which removes or modifies an existing line of code is easy to
 attribute to a previous commit $c'$, since the affected line of code existed in
@@ -92,41 +120,42 @@ corresponding change in any previous revision, since that line did not
 previously exist. In that case, we attribute responsibility to the commit which
 introduced the line just before the new line. This heuristic does not work for
 bug-introducing changes in newly-introduced files. Fortunately, our data show
-that such changes are extremely rare, so we can ignore them entirely.
+that such changes are extremely rare, so ignoring them should not affect the validity of our study. 
 
 \subsection{Data Collected}
 \label{sec:data}
 
 Executing the above algorithm gives us data about the bug-fixing and
 bug-introducing commits in each repository, as well as about the authors of
-these commits.  We record the following data for each commit: author (as a
-name/email pair); adjusted time (as described below); number of lines changed;
+these commits. We record the following data for each commit: author (as a
+name/email pair); adjusted local time (as described below); number of lines changed;
 and number of times the commit introduced a bug later corrected (which is
 derived data; we record it to simplify later database queries). We also record a
 relation connecting bug-introducing commits and bug-fixing commits. For each
-author, we record the name, email(s) and frequency classification. We define a
-bug's lifetime to be the time from the earliest commit which introduced the bug
-to the bug-fixing commit.
+author, we record the name, email(s) and 
+commit frequency classification (defined below). We define a
+bug's {\em lifetime} to be the time from the earliest commit which introduced 
+the bug to the bug-fixing commit.
 
-We compute each author's activity classification, based on the frequency of an
+We compute each author's commit frequency classification, based on the frequency of an
 author's commits to a particular project, and author experience at commit time
 for each patch, based on the elapsed time between that author's first commit to
 the project and the commit time.
 
-The {\em author activity} classification describes the author's most-common
-frequency between consecutive commits: daily, weekly, monthly, other (less than
-20 commits), and single (only 1 commit). For the author activity classification,
+The {\em author commit frequency} classification describes the author's most-common
+frequency between two consecutive commits by that author: daily, weekly, monthly, other (less than
+20 commits and more than 1 commit), and single (only 1 commit). For the author commit frequency classification,
 we count consecutive commits within 30 minutes of each other as one commit. As a
 sub-class of the daily committer classification, we also use a heuristic to
 identify committers who appear to work on the repository as part of their day
 job, namely those for which 85\% of commits are between 8 AM and 4 PM Monday to
-Friday. This is to seperate developers who must work on the code from those who
-are motived by interest.
+Friday (see Section~\ref{sec-validity} for more discussion on this heuristic). This is to separate developers who must work on the code from those who
+are motivated by interest.
 
 {\em Author experience} reports the amount of time since an author's first
 commit to a project. To study the correlation between commit bugginess and
 author experience, we calculate the author's experience at the time of the
-commit.  For example, author X's first commit to the Linux kernel was on March
+commit. For example, author X's first commit to the Linux kernel was on March
 28, 2009, so that commit is by an author with 0 days of experience. Then, the
 second commit was on April 13, 2009, so it is by an author with 16 days of
 experience. We bin the commits by author experience and present the percentage
@@ -148,6 +177,7 @@ committer is indeed in the time zone we have estimated for that committer; we
 discuss this threat to validity in greater detail below.
 
 \subsection{Threats to Validity}
+\label{sec-validity}
 
 We discuss several threats to validity and how we address them, including
 general threats to construct validity and external validity, and specific
@@ -164,8 +194,8 @@ false negatives contribute to precision and recall; Section~\ref{sec-results}
 presents our evaluation of precision and recall in greater detail.
 
 While we believe that the commits from the software that we examined well
-represents commits in open source software, we do not intend to claim external
-validity and draw any general conclusions about all software.  Like any other
+represent commits in open source software, we do not intend to claim external
+validity and draw any general conclusions about all software. Like any other
 characteristic study, our findings should be considered together with our
 evaluation methodology.
 
@@ -180,13 +210,13 @@ information for commits.) In that repository, the local time might be inaccurate
 if a developer commits from a server in a different time zone; however, because
 Git was designed to work best when developers commit to local workstations, we
 expect that most of the 8000 Linux kernel contributors will commit locally on a
-machine with accurate local time.  The accuracy of the commit times for the
+machine with accurate local time. The accuracy of the commit times for the
 PostgreSQL repository depends on the accuracy of our time adjustment algorithm
 for the part of the history that was originally a CVS history. We believe that
 committers don't often change time zones\footnote{We were able to identify one
-  move of a committer from Ontario, Canada to California, and incorporated that move
-  into our adjustments, but did not find evidence of many such moves in our set
-  of PostgreSQL contributors.} and that they usually work from their home time
+ move of a committer from Ontario, Canada to California, and incorporated that move
+ into our adjustments, but did not find evidence of many such moves in our set
+ of PostgreSQL contributors.} and that they usually work from their home time
 zone, but the validity of our adjustment does depend on the validity our
 assumptions about home time zones. We present all of our results in the local
 time of the committer, when relevant.
@@ -197,26 +227,26 @@ commit will never introduce or fix bugs; that will be attributed to one of the
 specific commits being merged.
 
 Because the PostgreSQL repository was converted from CVS to Git, the accuracy of
-the conversion is another potential threat to validity.  In particular, CVS does
+the conversion is another potential threat to validity. In particular, CVS does
 not have a notion of atomic multi-file commits, while Git does, and our
 methodology relies on the existence of such commits. The PostgreSQL conversion
 used the standard {\tt cvs2git} tool, with customizations for their particular
-repository~\cite{haas09:_so_why_postg_using_git}. We have reasons to believe
-that the conversion was performed with care, therefore mitigating threats to
-validity from repository corruption.  Also, note that the conversion to Git
+repository~\cite{haas09:_so_why_postg_using_git}. The existence of these
+customizations lead us to believe
+that the conversion was performed with care, mitigating threats to
+validity from repository corruption. Also, note that the conversion to Git
 obviates the need to mine transactions from CVS histories, as
 in~\cite{zimmermann-msr-2004}.
 
 We excluded commits that merge different branches from our study, because
 including these merging commits would double-count a commit, once for the
-original commit and once for the merging commit.  Additionally, these merging
-commits take up only 6.25\% of all the commits, therefore, excluding them should
-not affect the representativeness of our results.
+original commit and once for the merging commit. Note that merging
+commits account for only 6.25\% of all commits.
 
 \paragraph{Threats due to imperfect recall}
 
 Because our methodology only identifies bugs which have later been corrected, it
-will definitely omit recently-introduced bugs, as well as longer-running bugs
+will omit recently-introduced bugs, as well as longer-running bugs
 which have not yet been corrected. Furthermore, our recall of \postR for
 PostgreSQL and \linuxR for the Linux kernel means that our methodology does not
 manage to identify some of the bug fixes in the repository histories.
@@ -231,11 +261,10 @@ bug-introducing and bug-fixing commits for these software projects.
 \paragraph{Threats to commit characteristics}
 
 The next family of threats concerns commit characteristics, including the
-attributed time and author information for a commit.  These threats do not apply
+attributed time and author information for a commit. These threats do not apply
 to the Linux kernel repository, as the Linux kernel community uses the merge
 functionality of Git to preserve commit metadata from external
-contributors. (PostgreSQL committers, by contrast, manually merge diffs
-contributed by external contributors).  The implications of Linux's Git merges
+contributors. The implications of Linux's Git merges
 on our data are that 1) the commit time reflects the initial author's commit
 decision, and 2) the attributed author of a commit actually wrote the commit.
 
@@ -244,55 +273,61 @@ patch: the set of PostgreSQL committers is quite small, so external PostgreSQL
 commits will always be attributed to a member of the PostgreSQL team. Although
 Git can record both the author and committer of a patch, the PostgreSQL
 community is currently requiring that the ``author'' field of a patch always
-equal its ``committer'' field.  Third-party commits add more uncertainty about
+equal its ``committer'' field. Third-party commits add uncertainty about
 when a patch was originally written, and confound our data about patch authors.
 We believe, however, that even for PostgreSQL, it is reasonable to ascribe
 responsibility for the patch to its committer, who would presumably review a
 patch before committing it.
 
 Developers work on a patch over a possibly discontiguous time interval. However,
-the final commit only indicates the endpoint of that interval.  The bug database
+the final commit only indicates the endpoint of that interval. The bug database
 may contain more information about the starting point of the interval (e.g. it
 records when a bug is assigned to a developer), but still does not capture any
 information about the work patterns of the developer within the interval. Some
 Git repositories, including some Linux kernel sub-repositories, do contain more
 information about intermediate local commits by developers, which can help
-understand the evolution of a commit. Since there may be correlations between a
-patch's evolution and its code quality, we intend to investigate these issues in
+understand the evolution of a commit. There may be correlations between a
+patch's evolution and its code quality, and we intend to investigate these issues in
 future work.
 
 Finally, we discuss threats to our author classification. Some Linux
 kernel authors commit from several email addresses and with variations
-in their names.  To clean our author data, we first merge authors with
-different names but the same email addresses.  Then, we merge authors
+in their names. To clean our author data, we first merge authors with
+different names but the same email addresses. Then, we merge authors
 who share the same full name. This is not an issue for PostgreSQL:
 when they converted their repository to Git, they also normalized all
 author email addresses, so that each author has a single email
 address.
 
 Our day-job classification for authors is based on the fixed hours of
-8AM-4PM and Monday-Friday days of the week. Many software companies
+8 AM--4 PM and Monday--Friday days of the week. Many software companies
 have flexible hours; however, we expect that developers who are
 directed to work on a project as their day job would still have the
 bulk of their commits between those hours. The day-job classification
 applies only to the Linux kernel committers; no PostgreSQL committers
-satisfy the day-job criteria. Note that this classification attempts
+satisfy our day-job criterion. Note that this classification attempts
 to measure whether developers are working on the project of their own
-volition or not: some Linux committers, like Ingo Molnar, are paid to
-work on Linux, but commit at all hours of the day. We believe that, in
-such cases, the committer is exercising substantial autonomy in
+volition or not: some Linux committers 
+%, such as Ingo Molnar, 
+are paid to work on Linux, but commit at all hours of the day. 
+We believe that, in
+such cases, the committer has substantial autonomy in
 choosing what to work on, and is not being directed to work on
-specific parts of the project.  Similarly, even though most of the
+specific parts of the project. Similarly, even though most of the
 core PostgreSQL team have PostgreSQL-related employment, we believe
 that they are not directed to work on PostgreSQL, which would account
 for the observation that most of their commits to PostgreSQL occur
 outside normal working hours.
 
-Our author experience information only counts the participation of an author to
+Our author experience only counts the participation of an author to
 a particular project; a highly-experienced developer may be classified as an
 inexperienced developer for one of our projects due to a short history of
-contributions to that project. We expect, however, that there is some value to
-characterizing authors by their participation in a single project when analyzing
-the quality of their contributions to that project. It would be possible to
+contributions to that project. 
+Therefore, the author experience in this paper should be interpreted as the 
+author's experience with the target project. 
+%However, it is appropriate to characterize authors by their participation in 
+%a single project when analyzing the quality of their contributions to that 
+%project. 
+It would be possible to
 survey developers' participation across multiple projects by studying the public
 record, but such a study is beyond the scope of this paper.
