@@ -10,6 +10,61 @@ not necessarily bad code; it is possible that the later fix is adaptive or
 perfective, updating the code to work with changes in third-party code, or
 reflecting a change in requirements.
 
+\begin{figure}[t!bh]
+\centering
+\rule{0.92\columnwidth}{0.5pt}
+\begin{minipage}[h]{0.92\columnwidth}
+%\begin{lstlisting}[caption=An example bug-fixing commit, label=lst-fix,
+%                  captionpos=b, basicstyle=\small]
+\begin{lstlisting}[basicstyle=\small]
+Commit: 2cdc03fe...
+Author: Alice <alice@project.com>
+Message: I fixed a bug!
+@@ -100,1 +100,1 @@
+-    if (i <= 128) {
++    if (i < 128) {
+\end{lstlisting}
+\end{minipage}
+\rule{0.92\columnwidth}{0.5pt}
+\caption{\label{fig-fix}An example bug-fixing commit}
+\end{figure}
+
+\begin{figure}[t!bh]
+\centering
+\rule{0.92\columnwidth}{0.5pt}
+\begin{minipage}[h]{0.92\columnwidth}
+%\begin{lstlisting}[caption={\tt git blame} output for the bug-fixing commit,
+%                   label=lst-blame, frame=single, captionpos=b, basicstyle=\small]
+\begin{lstlisting}[basicstyle=\small]
+f4ce718c...  100    if (i <= 128) {
+\end{lstlisting}
+\end{minipage}
+\rule{0.92\columnwidth}{0.5pt}
+\caption{\label{fig-blame}{\tt git blame} output for the bug-fixing commit}
+\end{figure}
+
+\begin{figure}[t!bh]
+\centering
+\rule{0.92\columnwidth}{0.5pt}
+\begin{minipage}[h]{0.92\columnwidth}
+%\begin{lstlisting}[caption=Associated bug-introducing commit for the example,
+%                   label=lst-introduction, frame=single, captionpos=b, basicstyle=\small]
+\begin{lstlisting}[basicstyle=\small]
+Commit: f4ce718c...
+Author: Bob <bob@project.com>
+Message: I hope this works.
+@@ -100,0 +100,5 @@
++    if (i <= 128) {
++        do_ascii(i);
++    else {
++        do_unicode(i);
++    }
+\end{lstlisting}
+\end{minipage}
+\rule{0.92\columnwidth}{0.5pt}
+\caption{\label{fig-introduction}Associated bug-introducing commit for the example}
+\end{figure}
+
 \subsection{Core Methods}
 
 Following~\cite{sliwerski-msr-2005}, our methodology has three steps: 1)
@@ -33,7 +88,7 @@ et al~\cite{2006-automatic}.
 
 \paragraph{Example}
 
-Listing~\ref{lst-fix} presents an example of a bug-fixing commit. Commits
+Figure~\ref{fig-fix} presents an example of a bug-fixing commit. Commits
 consist of a commit id, which is a hash of the commit's contents, represented as
 a hexadecimal number\footnote{Following common practice, because we can uniquely
  identify the commit by the first 8 digits of its commit id, we omit the other
@@ -42,45 +97,17 @@ message, which contains the keyword ``fix''; and a diff, illustrating the lines
 that the commit modified.
 
 
-\begin{lstlisting}[caption=An example bug-fixing commit, label=lst-fix,
-                  frame=single, captionpos=b, basicstyle=\small]
-Commit: 2cdc03fe...
-Author: Alice <alice@project.com>
-Message: I fixed a bug!
-@@ -100,1 +100,1 @@
--    if (i <= 128) {
-+    if (i < 128) {
-\end{lstlisting}
-
-\begin{lstlisting}[caption={\tt git blame} output for the bug-fixing commit,
-                   label=lst-blame, frame=single, captionpos=b, basicstyle=\small]
-f4ce718c...  100    if (i <= 128) {
-\end{lstlisting}
-
-\begin{lstlisting}[caption=Associated bug-introducing commit for the example,
-                   label=lst-introduction, frame=single, captionpos=b, basicstyle=\small]
-Commit: f4ce718c...
-Author: Bob <bob@project.com>
-Message: I hope this works.
-@@ -100,0 +100,5 @@
-+    if (i <= 128) {
-+        do_ascii(i);
-+    else {
-+        do_unicode(i);
-+    }
-\end{lstlisting}
-
-First, we find the commit in Listing~\ref{lst-fix} by searching the commit
+First, we find the commit in Figure~\ref{fig-fix} by searching the commit
 logs for the keyword ``fix'', which is indeed a substring of the commit message,
 ``I fixed a bug!''. Next, we observe that the commit modifies line 100 of
 an (unidentified) file---in this case, the original author used
 less-than-or-equal (\verb+<=+) instead of strictly-less-than (\verb+<+), and the
 bug-fixing commit changes the comparison operator to the presumably-correct one.
 Finally, we perform a ``git blame'' on this commit, which shows the commit
-responsible for the previous version of line 100. Listing \ref{lst-blame}
+responsible for the previous version of line 100. Figure~\ref{fig-blame}
 presents plausible ``git blame'' output, which shows that the source of the bug
-fixed in Listing~\ref{lst-fix} is the commit whose id begins with f4ce718c, as
-shown in Listing~\ref{lst-introduction}. We flag this commit as a
+fixed in Figure~\ref{fig-fix} is the commit whose id begins with f4ce718c, as
+shown in Figure~\ref{fig-introduction}. We flag this commit as a
 bug-introducing commit and store both the bug-introducing commit f4ce718c and
 its bug-fixing commit 2cdc03fe in the database, along with an association
 between these two commits. If a bug was introduced by multiple commits, 
