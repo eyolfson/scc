@@ -544,8 +544,8 @@ verified the results. Table~\ref{tbl-linux-confusion} and
  \begin{tabular}{rrrr}
    & & \multicolumn{2}{c}{Predicted} \\
    & & \multicolumn{1}{|c}{Fix} & \multicolumn{1}{c}{$\neg$Fix} \\ \cline{2-4}
-   \multirow{2}{*}{Actual} & \multicolumn{1}{c|}{Fix} & 30 & 12\\
-                          &  \multicolumn{1}{c|}{$\neg$Fix} & 5 & 153 \\ \\
+   \multirow{2}{*}{Actual} & \multicolumn{1}{c|}{Fix} & 48 & 18\\
+                          &  \multicolumn{1}{c|}{$\neg$Fix} & 7 & 127 \\ \\
   \end{tabular}
 }
 \subfigure[PostgreSQL]{
@@ -575,5 +575,5 @@ changes, which moved or renamed functions; these could arguably be considered
 to be fixes to a buggy initial design.
 
 Our recall---the proportion of bug-fixing commits in the entire sample that our
-technique identifies---is at least \linuxR for Linux and \postR for
+technique identifies---is \linuxR for Linux and \postR for
 PostgreSQL.
