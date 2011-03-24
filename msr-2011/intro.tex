@@ -15,7 +15,7 @@ developers, over decades, in a distributed manner. The software often receives
 tens of thousands or hundreds of thousands of commits
 (Section~\ref{sec-results}). Developers with different programming experience,
 time commitments, working hours, programming
-styles, and from diverse cultures from all over the world, work on the same
+styles, and from diverse cultures across the world, work on the same
 software project at different times and in different time zones. They join and
 leave projects at their own pace over periods of decades. Code developed in the
 modern paradigm can therefore have different social characteristics from older,
@@ -62,10 +62,10 @@ to study the correlation between the commit time of day and the commit
 correctness.
 
 To study the correlation between commit time and commit bugginess, we start from
-{\em bug-fixing commits}, commits that fix software bugs, and then leverage the
-version control system to discover when the corresponding bugs were
+{\em bug-fixing commits}, commits that fix software bugs, and then mine the
+version control history to discover when the corresponding bugs were
 introduced~\cite{sliwerski-msr-2005}. Our methodology enables us to observe
-when bugs are more likely to be introduced. Note that we simply use ``bug'' to
+circumstances where bugs are more likely to be introduced. Note that we simply use ``bug'' to
 denote code that is later changed, even though such code may objectively be
 correct; we expand on this discussion later, in Section~\ref{sec:method}.
 
@@ -82,7 +82,7 @@ heuristics have a precision of \postP-\linuxP in identifying bug-fixing commits
 (Section~\ref{sec-results}).
 
 Our major findings are summarized below ($\S$ denotes the section where the
-finding and its {\em implications} are discussed):
+finding and its implications are discussed):
 
 \begin{list}{\labelitemi}{\topsep=0pt\parsep=0pt\leftmargin=9pt\itemindent=0pt}
 
@@ -104,16 +104,16 @@ reliability.
 Developers who commit to the repository on a daily basis write less-buggy
 commits, while developers who appear to work on a project as part of their
 day-job are more likely to produce bugs, indicating that we may want to promote
-the practice of daily-committing developers code-reviewing other developers'
+the practice of daily-committing developers reviewing other developers'
 commits.
 
 \item {\bf Finding \fday ($\S$\ref{sec-day-of-week}):} 
 In contrast to a prior finding that Friday commits are
 buggier~\cite{sliwerski-msr-2005}, our results on the Linux kernel and
 PostgreSQL show that the bugginess differences of commits that are checked in on
-different days of week are slight. Our result shows that the bugginess per
+different days of week are small. We found that the bugginess per
 day-of-week for commits varies for different software projects, implying that
-bugginess prediction based on this metric may need to be on a project-by-project
-basis.
+bugginess prediction based on day-of-week may need to be calibrated on a 
+per-project basis.
 
 \end{list}
