@@ -27,20 +27,20 @@ the code.
 Software social characteristics provide a rich and unique source of information
 for us to understand software and its bugs. As an example, it would be helpful
 to know if a commit's timestamp (including features such as time of day, day of
-week, etc.)  affects the quality of that commit --- are commits submitted after
-midnight buggier than other commits?  Such correlations may be useful for
+week, etc.) affects the quality of that commit --- are commits submitted after
+midnight buggier than other commits? Such correlations may be useful for
 predicting what commits are more likely to be buggy so that we can budget more
 testing effort on these commits, following prior
 studies~\cite{graves00predicting, guo04robust, Hassan09, libre07, devNetwork08,
-  predictionMenzies10, effort03, ostrand05predicting, depGraph08,
-  zimmermann-promise-2007}, which predict buggy locations based on code
+ predictionMenzies10, effort03, ostrand05predicting, depGraph08,
+ zimmermann-promise-2007}, which predict buggy locations based on code
 complexity, code locations, the amount of in-house testing, historical data,
 socio-technical networks, etc. A second interesting question is whether more
 experienced developers are more or less likely to write buggy commits.
 
 %% Additionally, it is difficult to know how experienced the developers are in an
 %% open source development environment as such information is often not documented
-%% and subjective.  We make our best-effort approximation by calculating the
+%% and subjective. We make our best-effort approximation by calculating the
 %% duration of a developer contributing to an open source project (i.e., the time
 %% between a developer's earliest and latest commits to the project), which allows
 %% us to discover important findings and implications regarding developers'
@@ -57,15 +57,15 @@ which have 222,332 and 31,098 commits, respectively. We study the correlation
 between a commit's bugginess and the time of day of the commit, the day of week
 of the commit, and the experience and commit frequency of the commit authors.
 In addition, we study several other commit characteristics, such as comment-only
-fixes and bug lifetimes.  To the best of our knowledge, we are the {\bf first}
+fixes and bug lifetimes. To the best of our knowledge, we are the {\bf first}
 to study the correlation between the commit time of day and the commit
 correctness.
 
 To study the correlation between commit time and commit bugginess, we start from
 {\em bug-fixing commits}, commits that fix software bugs, and then leverage the
 version control system to discover when the corresponding bugs were
-introduced~\cite{sliwerski-msr-2005}.  Our methodology enables us to observe
-when bugs are more likely to be introduced.  Note that we simply use ``bug'' to
+introduced~\cite{sliwerski-msr-2005}. Our methodology enables us to observe
+when bugs are more likely to be introduced. Note that we simply use ``bug'' to
 denote code that is later changed, even though such code may objectively be
 correct; we expand on this discussion later, in Section~\ref{sec:method}.
 
@@ -74,10 +74,10 @@ Prior work~\cite{sliwerski-msr-2005} defines a bug-fixing commit to be a commit
 whose commit message contains a bug ID that links to a bug report in a bug
 database. While this approach works for some projects, like Mozilla, it does not
 work for software whose commit messages rarely contain links to bug reports,
-like the Linux kernel.  We have observed that only 2.3\% of the bug-fixing
+like the Linux kernel. We have observed that only 2.3\% of the bug-fixing
 commits in the Linux kernel are linked to a bug report. We address this problem
 by applying heuristics that scan commit messages; they do not rely on any links
-between bug commits and bug reports to extract bug-fixing commits.  Our
+between bug commits and bug reports to extract bug-fixing commits. Our
 heuristics have a precision of \postP-\linuxP in identifying bug-fixing commits
 (Section~\ref{sec-results}).
 
@@ -94,9 +94,9 @@ them.
 \item {\bf Finding \fhour ($\S$\ref{sec-time-of-day}):} 
 Commits that are checked into the software repository around midnight (between
 0:00-4:00 AM) are more likely to be incorrect than average, while commits in the
-morning (7:00 AM-noon) are more likely to be correct.  The result indicate that
+morning (7:00 AM-noon) are more likely to be correct. The result indicate that
 developers may want to double-check the code they write for these late-night
-commits (0:00-4:00 AM).  It may also be beneficial for the version control
+commits (0:00-4:00 AM). It may also be beneficial for the version control
 system to warn the developers of late-night commits to improve software
 reliability.
 
