@@ -1,4 +1,4 @@
-\section{Experimental Methods}
+\section{Expeeimental Methods}
 \label{sec:method}
 
 Our overall goal is to investigate the properties of ``buggy'', or
@@ -93,14 +93,14 @@ corresponding change in any previous revision, since that line did not
 previously exist. In that case, we attribute responsibility to the commit which
 introduced the line just before the new line. This heuristic does not work for
 bug-introducing changes in newly-introduced files. Fortunately, our data show
-that such changes are extremely rare, so we can ignore them entirely.
+that such changes are extremely rare, therefore, ignoring them should not affect the validity of our study. 
 
 \subsection{Data Collected}
 \label{sec:data}
 
 Executing the above algorithm gives us data about the bug-fixing and
 bug-introducing commits in each repository, as well as about the authors of
-these commits.  We record the following data for each commit: author (as a
+these commits. We record the following data for each commit: author (as a
 name/email pair); adjusted time (as described below); number of lines changed;
 and number of times the commit introduced a bug later corrected (which is
 derived data; we record it to simplify later database queries). We also record a
@@ -117,12 +117,12 @@ the project and the commit time.
 
 The {\em author commit frequency} classification describes the author's most-common
 frequency between consecutive commits: daily, weekly, monthly, other (less than
-20 commits), and single (only 1 commit). For the author commit frequency classification,
+20 commits and more than 1 commit), and single (only 1 commit). For the author commit frequency classification,
 we count consecutive commits within 30 minutes of each other as one commit. As a
 sub-class of the daily committer classification, we also use a heuristic to
 identify committers who appear to work on the repository as part of their day
 job, namely those for which 85\% of commits are between 8 AM and 4 PM Monday to
-Friday. This is to separate developers who must work on the code from those who
+Friday (The justification is provided in Section~\ref{sec-validity}). This is to separate developers who must work on the code from those who
 are motived by interest.
 
 {\em Author experience} reports the amount of time since an author's first
@@ -150,6 +150,7 @@ committer is indeed in the time zone we have estimated for that committer; we
 discuss this threat to validity in greater detail below.
 
 \subsection{Threats to Validity}
+\label{sec-validity}
 
 We discuss several threats to validity and how we address them, including
 general threats to construct validity and external validity, and specific
@@ -218,7 +219,7 @@ not affect the representativeness of our results.
 \paragraph{Threats due to imperfect recall}
 
 Because our methodology only identifies bugs which have later been corrected, it
-will definitely omit recently-introduced bugs, as well as longer-running bugs
+will omit recently-introduced bugs, as well as longer-running bugs
 which have not yet been corrected. Furthermore, our recall of \postR for
 PostgreSQL and \linuxR for the Linux kernel means that our methodology does not
 manage to identify some of the bug fixes in the repository histories.
@@ -280,8 +281,10 @@ bulk of their commits between those hours. The day-job classification
 applies only to the Linux kernel committers; no PostgreSQL committers
 satisfy the day-job criteria. Note that this classification attempts
 to measure whether developers are working on the project of their own
-volition or not: some Linux committers, like Ingo Molnar, are paid to
-work on Linux, but commit at all hours of the day. We believe that, in
+volition or not: some Linux committers 
+%, such as Ingo Molnar, 
+are paid to work on Linux, but commit at all hours of the day. 
+We believe that, in
 such cases, the committer is exercising substantial autonomy in
 choosing what to work on, and is not being directed to work on
 specific parts of the project.  Similarly, even though most of the
@@ -293,8 +296,12 @@ outside normal working hours.
 Our author experience information only counts the participation of an author to
 a particular project; a highly-experienced developer may be classified as an
 inexperienced developer for one of our projects due to a short history of
-contributions to that project. We expect, however, that there is some value to
-characterizing authors by their participation in a single project when analyzing
-the quality of their contributions to that project. It would be possible to
+contributions to that project. %We expect, however, %that there is some value to
+Therefore, the author experience in this paper should be interpreted as the 
+author's experience with the target project. 
+%However, it is appropriate to characterize authors by their participation in 
+%a single project when analyzing the quality of their contributions to that 
+%project. 
+It would be possible to
 survey developers' participation across multiple projects by studying the public
 record, but such a study is beyond the scope of this paper.

@@ -15,17 +15,16 @@ recall of our methodology and how we computed these figures.
 \label{sec-proj-char}
 
 We chose two large open-source software repositories for our investigations:
-Linus Torvalds's mainline Linux kernel, from \url{git.kernel.org} and
-PostgreSQL, from the project's repository at \url{git.postgresql.org}.
-
-Table~\ref{tab:characteristics} summarizes the characteristics of each of our
-repositories.  The row ``lines of code at tip'' refers to the current size of
+Linus Torvalds's mainline Linux kernel %, from \url{git.kernel.org} 
+and PostgreSQL. %, from the project's repository at \url{git.postgresql.org}.
+%
+Table~\ref{tab:characteristics} summarizes the characteristics of our
+repositories.  The row ``lines of code'' refers to the current size of
 the code in the repository.  The row ``\# bug-introducing'' shows that
-23.7-25.5\% of the commits are buggy, which is slightly lower than the
+23.7--25.5\% of the commits are buggy, which is slightly lower than the
 previously reported figure of nearly 40\% for a commercial switching
 system~\cite{smallCommits05}.  Note that the PostgreSQL repository was carefully
-converted from CVS using {\code cvs2git} in September 2010. We discussed some of
-the quirks of the PostgreSQL repository in Section~\ref{sec:method}.
+converted from CVS using {\code cvs2git} in September 2010. We discussed the quirks of the PostgreSQL repository in Section~\ref{sec:method}.
 
 \begin{table}
 \begin{tabular}{l|r|r}
@@ -478,7 +477,7 @@ A surprisingly large number of bug-fixing commits in the database reported 0
 changed lines of code. We performed a random sample on 50 of these commits for
 each project and found that almost all of them only changed comments in the
 source code, which we did not count as changed lines of code. For the Linux
-kernel 2.15~$\pm$~0.10\%~\footnote{We report the margin of error with 95\%
+kernel 2.15~$\pm$~0.10\%\footnote{We report the margin of error with 95\%
   confidence level.}  of the bug-fixing commits (1,220
 commits\footnote{Estimated based on the percentage of comment-only commits and
   the total number of commits.}) were on comments only. We followed the same
