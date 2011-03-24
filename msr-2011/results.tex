@@ -123,8 +123,8 @@ noticeable increase in the amount of commits which introduce a bug between 00:00
 average, gradually increasing until noon. In the Linux kernel, commits between
 noon and midnight fluctuate around the average bugginess level, while the
 PostgreSQL commits are generally above the average bugginess level between 16:00
-(4PM) and 20:00 (8PM), and then below the average bugginess level between 20:00
-(8PM) and 00:00 (midnight). Figure~\ref{fig-introduction-hour}, which shows the
+(4 PM) and 20:00 (8 PM), and then below the average bugginess level between 20:00
+(8 PM) and 00:00 (midnight). Figure~\ref{fig-introduction-hour}, which shows the
 number of subsequent bug-fixing commits for each bug-introducing commit 
 (indicating how difficult it was to correct a bug), follows the trends from
 Figure~\ref{fig-bugginess-hour}. Note that even the smallest total number of
@@ -211,14 +211,14 @@ imply that this correlation holds for both inexperienced and experienced
 developers.
 Our results do suggest that developers, being aware of such a 
 correlation, may want to double-check code before performing
-late-night commits (midnight-4:00 AM). It may also be
+late-night commits (midnight--4:00 AM). It may also be
 beneficial for version control systems or IDEs to warn developers about
 the perils of late-night
 commits. 
 Our p-values indicate that our
 observed bugginess differences between late-night/early-morning and all other commits are statistically significant.
 
-Our results also suggest that tired developers (midnight-4 AM) are more likely to
+Our results also suggest that tired developers (midnight--4 AM) are more likely to
 miss corner cases in a pre-commit review (for PostgreSQL) or while finalizing
 their patch (for the Linux kernel). Furthermore, we can observe that commits
 before noon are least likely to be bug-introducing; perhaps committers are most
