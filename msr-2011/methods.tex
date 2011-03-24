@@ -70,9 +70,9 @@ Message: I hope this works.
 +    }
 \end{lstlisting}
 
-First, we would find the commit in Listing~\ref{lst-fix} by searching the commit
+First, we find the commit in Listing~\ref{lst-fix} by searching the commit
 logs for the keyword ``fix'', which is indeed a substring of the commit message,
-``I fixed a bug!''. Next, we would observe that the commit modifies line 100 of
+``I fixed a bug!''. Next, we observe that the commit modifies line 100 of
 an (unidentified) file---in this case, the original author used
 less-than-or-equal (\verb+<=+) instead of strictly-less-than (\verb+<+), and the
 bug-fixing commit changes the comparison operator to the presumably-correct one.
@@ -105,18 +105,19 @@ name/email pair); adjusted time (as described below); number of lines changed;
 and number of times the commit introduced a bug later corrected (which is
 derived data; we record it to simplify later database queries). We also record a
 relation connecting bug-introducing commits and bug-fixing commits. For each
-author, we record the name, email(s) and frequency classification. We define a
-bug's lifetime to be the time from the earliest commit which introduced the bug
-to the bug-fixing commit.
+author, we record the name, email(s) and 
+commit frequency classification (defined below). We define a
+bug's {\em lifetime} to be the time from the earliest commit which introduced 
+the bug to the bug-fixing commit.
 
-We compute each author's activity classification, based on the frequency of an
+We compute each author's commit frequency classification, based on the frequency of an
 author's commits to a particular project, and author experience at commit time
 for each patch, based on the elapsed time between that author's first commit to
 the project and the commit time.
 
-The {\em author activity} classification describes the author's most-common
+The {\em author commit frequency} classification describes the author's most-common
 frequency between consecutive commits: daily, weekly, monthly, other (less than
-20 commits), and single (only 1 commit). For the author activity classification,
+20 commits), and single (only 1 commit). For the author commit frequency classification,
 we count consecutive commits within 30 minutes of each other as one commit. As a
 sub-class of the daily committer classification, we also use a heuristic to
 identify committers who appear to work on the repository as part of their day
