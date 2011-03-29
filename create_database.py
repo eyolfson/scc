@@ -1,47 +1,56 @@
-# Modes:
-# Init - Populates Repository, RawAuthor, RawCommit and Author models
-# Find Bugs - Populates the rest
-
+import argparse
 import codecs
 from datetime import datetime
+import difflib
 import git
 import multiprocessing
 import os
 import re
 import shutil
 import threading
-
 os.environ['DJANGO_SETTINGS_MODULE']='scc_website.settings'
 from scc_website.apps.scc import models
 
-# repo_slug = "test"
-# repo_dir = "/home/jon/workspace/scc_test"
+# Command line parser
+parser = argparse.ArgumentParser(
+    description="Python script to create SCC database.")
+parser.add_argument("slug", help="unique name for the repository (eg. linux)")
+parser.add_argument("directory", nargs='?',
+                    help="directory of the git repository")
+parser.add_argument("encoding", nargs='?',
+                    help="encoding of the git repository")
+parser.add_argument("--skip-merge", action='store_true',
+                    help="skip author merging")
+args = parser.parse_args()
 
-repo_slug = "linux"
-repo_dir = "/home/jon/workspace/linux-2.6"
+# Use easier to read names and set encoding if needed
+repo_slug = args.slug
+if args.directory:
+    repo_dir = args.directory
+if args.encoding:
+    git.Commit.default_encoding = args.encoding
 
+# Create global variables
+db_repo = models.Repository.objects.get_or_create(slug=repo_slug)[0]
+if args.directory:
+    commits_iter = \
+        git.Repo(repo_dir, odbt=git.GitCmdObjectDB).iter_commits("master")
+    commits_lock = threading.Lock()
+    db_lock = threading.Lock()
+    num_threads = multiprocessing.cpu_count()
 
-# This is needed to actually decode the Linux repository
-git.Commit.default_encoding = "iso-8859-1"
-
-commits_iter = git.Repo(repo_dir).iter_commits("master")
-commits_lock = threading.Lock()
-
+# Logging functions
 def get_log_file():
     if not os.path.exists(log_dir):
         os.mkdir(log_dir)
     log_filename = "log.log"
-    # Remove the line above when finished
+    # Remove the line above when finished and uncomment
     # log_filename = "%s.log" % datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     return codecs.open(os.path.join(log_dir, log_filename), "w", "utf-8")
 
 log_dir = "logs"
 log_file = get_log_file()
 log_lock = threading.Lock()
-
-num_threads = multiprocessing.cpu_count()
-
-db_repo = models.Repository.objects.get_or_create(slug=repo_slug)[0]
 
 def log(msg):
     log_lock.acquire()
@@ -58,7 +67,7 @@ def log_thread(thread, msg):
 def db_get_commit(sha1):
     return models.RawCommit.objects.get(author__repository=db_repo, sha1=sha1)
 
-# This should only be called if you catch models.RawCommit.DoesNotExist
+# This should only be called if we catch models.RawCommit.DoesNotExist
 def db_create_commit(commit):
     # Get the RawAuthor object
     if commit.author.name:
@@ -68,25 +77,122 @@ def db_create_commit(commit):
     if commit.author.email:
         email = commit.author.email
     else:
-        email = ""        
-    author = models.RawAuthor.objects.get_or_create(repository=db_repo,
-                                                    name=name,
-                                                    email=email)[0]
+        email = ""
+    db_lock.acquire()
+    try:
+        author = models.RawAuthor.objects.get_or_create(repository=db_repo,
+                                                        name=name,
+                                                        email=email)[0]
+    finally:
+        db_lock.release()
+
     # Create the RawCommit object
+    sha1 = commit.hexsha
     merge = len(commit.parents) > 1
     utc_time = datetime.utcfromtimestamp(commit.authored_date)
     local_time = datetime.utcfromtimestamp(commit.authored_date
                                            - commit.author_tz_offset)
-    return models.RawCommit.objects.create(author=author, sha1=sha1,
-                                           merge=merge, utc_time=utc_time,
-                                           local_time=local_time)
-
-def find_bugs(commit):
-    sha1 = commit.hexsha
+    db_lock.acquire()
     try:
-        db_commit = db_get_commit(sha1)
+        rawcommit = models.RawCommit.objects.get_or_create(author=author,
+            sha1=sha1, merge=merge, utc_time=utc_time, local_time=local_time)[0]
+    finally:
+        db_lock.release()
+    return rawcommit
+
+if args.directory:
+    comment_re = re.compile(r"^\s*(/\*|\*\s|//)")
+    filetypes_re = re.compile(r"\.(c|cpp|cc|cp|cxx|c\+\+"
+                              "|h|hpp|hh|hp|hxx|h\+\+)$",
+                              re.IGNORECASE)
+    fix_re = re.compile(r"fix", re.I)
+    line_numbers_re = re.compile(r"@@ -(\d+),\d+ \+(\d+),\d+ @@")
+
+def find_bugs(thread, commit):
+    sha1 = commit.hexsha
+    merge = len(commit.parents) > 1
+    try:
+        db_root_commit = db_get_commit(sha1)
     except models.RawCommit.DoesNotExist:
-        db_commit = db_create_commit(commit)
+        db_root_commit = db_create_commit(commit)
+
+    # Set the first commit to the commit without parents
+    if len(commit.parents) == 0:
+        db_lock.acquire()
+        if db_repo.first_commit:
+            if db_root_commit.utc_time < db_repo.first_commit.utc_time:
+                db_repo.first_commit = db_root_commit
+                db_repo.save()
+                log_thread(thread, "Changed first commit to %s" % sha1)
+        else:
+            db_repo.first_commit = db_root_commit
+            db_repo.save()
+            log_thread(thread, "Set first commit to %s" % sha1)
+        db_lock.release()
+
+    # Ignore any merges or commits which are not fixes
+    if merge or not fix_re.search(commit.message):
+        return
+
+    # We do not need to use db_lock here since this will only be called once
+    # per fix commit
+    db_bug = models.Bug.objects.get_or_create(fix_commit=db_root_commit)[0]
+
+    previous_rev = "%s~1" % sha1
+
+    # An exception occurs if this commit does not have any previous commits
+    try:
+        diff_index = commit.diff(previous_rev)
+    except:
+        diff_index = []
+
+    for diff in diff_index:
+        # NOTE: Rename detection doesn't seem to work, maybe a bug with
+        # GitPython?
+
+        # This diff is a deleted or new file, so ignore it
+        if diff.deleted_file or diff.new_file:
+            continue
+
+        assert diff.a_blob.path == diff.b_blob.path
+        filename = diff.a_blob.path
+
+        # This file isn't a valid filetype, so ignore it
+        if not filetypes_re.search(filename):
+            continue
+
+        # Read the data and get the lines (yes I know it seems backwards)
+        previous_lines = \
+            diff.b_blob.data_stream.read().replace('\r','').splitlines()
+        current_lines = \
+            diff.a_blob.data_stream.read().replace('\r','').splitlines()
+
+        # Compute the unified diff, and throw away the first two file
+        # information lines
+        unified_diff_iter = difflib.unified_diff(previous_lines, current_lines)
+        for i in xrange(2):
+            unified_diff_iter.next()
+
+
+
+        log_thread(thread, "Commit: %s" % sha1)
+        blame_lines = []
+        for line in unified_diff_iter:
+            if line.startswith("@@"):
+                match = line_numbers_re.match(line)
+                # Subtract one so our increment on the next line is correct
+                previous_line_number = int(match.group(1)) - 1
+                current_line_number = int(match.group(2)) - 1
+            elif line.startswith("-"):
+                previous_line_number += 1
+            elif line.startswith("+"):
+                current_line_number += 1
+            else:
+                previous_line_number += 1
+                current_line_number += 1
+
+            log_thread(thread, "%d|%d|%s" % (previous_line_number, current_line_number, line))
+
 
 def merge_rawauthors():
     # Email regular expression modified from django.core.validators.email_re
@@ -113,7 +219,6 @@ def merge_rawauthors():
         match = email_re.search(rawauthor.name)
         if match:
             email = match.group(0)
-            print email
             if email in email_dict:
                 email_dict[email].append(rawauthor)
             else:
@@ -233,31 +338,43 @@ class SCCThread(threading.Thread):
             shutil.copytree(repo_dir, copy_dir)
             log_thread(self, "Copying finished" % (repo_dir, copy_dir))
 
-        self.repo = git.Repo(copy_dir)
+        self.repo = git.Repo(copy_dir, odbt=git.GitCmdObjectDB)
 
     def run(self):
         log_thread(self, "Finding bugs starting")
-        while mode == MODE_INIT:
+        while True:
             commits_lock.acquire()
             try:
                 commit_sha1 = commits_iter.next().hexsha
                 commit = self.repo.commit(commit_sha1)
-                find_bugs(commit)
+                find_bugs(self, commit)
             except StopIteration:
                 break
             finally:
                 commits_lock.release()
         log_thread(self, "Finding bugs finished")
 
-# log("Creating %d threads." % num_threads)
-# threads = [SCCThread(i) for i in xrange(num_threads)]
-# for thread in threads:
-#     thread.start()
-# for thread in threads:
-#     thread.join()
+if args.directory:
+    # Set the last commit to master
+    last_commit = git.Repo(repo_dir, odbt=git.GitCmdObjectDB).commit("master")
+    try:
+        db_commit = db_get_commit(last_commit.hexsha)
+    except models.RawCommit.DoesNotExist:
+        db_commit = db_create_commit(last_commit)
+        db_repo.last_commit = db_commit
+        db_repo.save()
+        log("Set last commit to %s" % last_commit.hexsha)
 
-log("Merging RawAuthors starting")
-merge_rawauthors()
-log("Merging RawAuthors finished")
+    log("Creating %d threads." % num_threads)
+    threads = [SCCThread(i) for i in xrange(num_threads)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+
+if not args.skip_merge:
+    log("Merging RawAuthors starting")
+    merge_rawauthors()
+    log("Merging RawAuthors finished")
 
 log_file.close()

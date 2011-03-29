@@ -35,7 +35,7 @@ class RawAuthor(models.Model):
 
 class RawCommit(models.Model):
     author = models.ForeignKey(RawAuthor)
-    sha1 = models.CharField(max_length=40)
+    sha1 = models.CharField(max_length=40, db_index=True)
     merge = models.BooleanField()
     utc_time = models.DateTimeField()
     local_time = models.DateTimeField()
