@@ -472,15 +472,17 @@ class SCCThread(threading.Thread):
     def run(self):
         log_thread(self, "Finding bugs starting")
         while True:
+            # The commits lock just protects the shared commit iterator
             commits_lock.acquire()
             try:
-                commit_sha1 = commits_iter.next().hexsha
-                commit = self.repo.commit(commit_sha1)
-                find_bugs(self, commit)
+                commit_sha1 = commits_iter.next().hexsha    
             except StopIteration:
                 break
             finally:
                 commits_lock.release()
+            commit = self.repo.commit(commit_sha1)
+            find_bugs(self, commit)
+
         # Clean-up
         log_thread(self, "Finding bugs cleaning up")
         self.git.checkout(["master"])

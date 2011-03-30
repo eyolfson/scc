@@ -49,7 +49,7 @@ class Commit(models.Model):
 class Bug(models.Model):
     introducing_commits = models.ManyToManyField(RawCommit,
         related_name="bug_introductions", through="BugSource")
-    fix_commit = models.ForeignKey(RawCommit, unique=True)
+    fix_commit = models.OneToOneField(RawCommit, primary_key=True)
 
 class BugSource(models.Model):
     commit = models.ForeignKey(RawCommit)
