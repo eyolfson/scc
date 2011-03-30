@@ -57,4 +57,4 @@ class BugSource(models.Model):
     files = models.ManyToManyField("File", related_name="bug_sources")
 
 class File(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=256)

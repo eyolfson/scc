@@ -118,7 +118,10 @@ def get_diff_iter(previous_lines, current_lines):
     # information lines
     diff_iter = difflib.unified_diff(previous_lines, current_lines)
     for i in xrange(2):
-        diff_iter.next()
+        try:
+            diff_iter.next()
+        except StopIteration:
+            pass
     return diff_iter
 
 def find_bugs(thread, commit):
@@ -279,6 +282,10 @@ def find_bugs(thread, commit):
         # Populate the bug_introduction dictionary along with all the filenames
         # TODO: Maybe do something more efficient than checking if the filename
         #       is already in the list
+        # TODO: The blame also includes the file location if it was different
+        #       before, we could take this into account. Currently the file
+        #       stored in the database is the most recent name, which is
+        #       arguably better, but less correct
         for line in blame_lines:
             # The line is 1-indexed since it is a line number, and the blame is
             # 0-indexed, so adjust
@@ -442,6 +449,8 @@ def merge_rawauthors():
         rawauthor.author = author
         rawauthor.save()
         log("Unmerged RawAuthor %d" % rawauthor.pk)
+
+    # TODO: Add Author classification here
 
 class SCCThread(threading.Thread):
 
