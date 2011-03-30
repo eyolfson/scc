@@ -36,16 +36,17 @@ if args.directory:
     commits_iter = \
         git.Repo(repo_dir, odbt=git.GitCmdObjectDB).iter_commits("master")
     commits_lock = threading.Lock()
-    db_lock = threading.Lock()
+    db_author_lock = threading.Lock()
+    db_commit_lock = threading.Lock()
+    db_file_lock = threading.Lock()
+    db_repository_lock = threading.Lock()
     num_threads = multiprocessing.cpu_count()
 
 # Logging functions
 def get_log_file():
     if not os.path.exists(log_dir):
         os.mkdir(log_dir)
-    log_filename = "log.log"
-    # Remove the line above when finished and uncomment
-    # log_filename = "%s.log" % datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    log_filename = "%s.log" % datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     return codecs.open(os.path.join(log_dir, log_filename), "w", "utf-8")
 
 log_dir = "logs"
@@ -78,13 +79,10 @@ def db_create_commit(commit):
         email = commit.author.email
     else:
         email = ""
-    db_lock.acquire()
-    try:
-        author = models.RawAuthor.objects.get_or_create(repository=db_repo,
-                                                        name=name,
-                                                        email=email)[0]
-    finally:
-        db_lock.release()
+    db_author_lock.acquire()
+    author = models.RawAuthor.objects.get_or_create(repository=db_repo,
+                                                    name=name, email=email)[0]
+    db_author_lock.release()
 
     # Create the RawCommit object
     sha1 = commit.hexsha
@@ -92,12 +90,11 @@ def db_create_commit(commit):
     utc_time = datetime.utcfromtimestamp(commit.authored_date)
     local_time = datetime.utcfromtimestamp(commit.authored_date
                                            - commit.author_tz_offset)
-    db_lock.acquire()
-    try:
-        rawcommit = models.RawCommit.objects.get_or_create(author=author,
-            sha1=sha1, merge=merge, utc_time=utc_time, local_time=local_time)[0]
-    finally:
-        db_lock.release()
+    db_commit_lock.acquire()
+    rawcommit = models.RawCommit.objects.get_or_create(
+        author=author, sha1=sha1, merge=merge, utc_time=utc_time,
+        local_time=local_time)[0]
+    db_commit_lock.release()
     return rawcommit
 
 if args.directory:
@@ -108,17 +105,87 @@ if args.directory:
     fix_re = re.compile(r"fix", re.I)
     line_numbers_re = re.compile(r"@@ -(\d+),\d+ \+(\d+),\d+ @@")
 
+def get_diff_index(commit, previous_rev):
+    # An exception occurs if this commit does not have any previous commits
+    try:
+        return commit.diff(previous_rev)
+    except:
+        return []
+
+# Return a diff iterator object between the previous and current lines
+def get_diff_iter(previous_lines, current_lines):
+    # Compute the unified diff, and throw away the first two file
+    # information lines
+    diff_iter = difflib.unified_diff(previous_lines, current_lines)
+    for i in xrange(2):
+        diff_iter.next()
+    return diff_iter
+
 def find_bugs(thread, commit):
     sha1 = commit.hexsha
+    previous_rev = "%s~1" % sha1
     merge = len(commit.parents) > 1
+    
     try:
         db_root_commit = db_get_commit(sha1)
     except models.RawCommit.DoesNotExist:
         db_root_commit = db_create_commit(commit)
 
-    # Set the first commit to the commit without parents
+    # Create the Commit object if needed
+    # Note: We don't need a lock here because it will only be accessed once
+    try:
+        models.Commit.objects.get(commit=db_root_commit)
+    except models.Commit.DoesNotExist:
+        lines_changed_code = 0
+        lines_changed_comments = 0
+        lines_changed_other = 0
+        
+        diff_index = get_diff_index(commit, previous_rev)
+        for diff in diff_index:
+            # This diff is a deleted or new file, so ignore it
+            if diff.deleted_file or diff.new_file:
+                continue
+
+            assert diff.a_blob.path == diff.b_blob.path
+            filename = diff.a_blob.path
+
+            # Keep track whether or not the changes are for code or not
+            if filetypes_re.search(filename):
+                is_code_change = True
+            else:
+                is_code_change = False
+
+            # Read the data and get the lines (yes I know it seems backwards) and
+            # remove Windows' stupid newline character which messes things up on
+            # UNIX
+            previous_lines = \
+                diff.b_blob.data_stream.read().replace("\r","").splitlines()
+            current_lines = \
+                diff.a_blob.data_stream.read().replace("\r","").splitlines()
+
+            # We're just keeping track of how many lines changed and added,
+            # which are all just additions in the unified diff
+            for line in get_diff_iter(previous_lines, current_lines):
+                if line.startswith("+"):
+                    if is_code_change:
+                        if not comment_re.match(line[1:]):
+                            lines_changed_code += 1
+                        else:
+                            lines_changed_comments += 1
+                    else:
+                        lines_changed_other += 1
+
+        # Finally, create the Commit object
+        models.Commit.objects.create(commit=db_root_commit,
+            lines_changed_code=lines_changed_code,
+            lines_changed_comments=lines_changed_comments,
+            lines_changed_other=lines_changed_other)
+
+    log_thread(thread, "Commit object done for ID %d" % db_root_commit.pk)
+
+    # Set the first commit to the earliest commit without parents
     if len(commit.parents) == 0:
-        db_lock.acquire()
+        db_repository_lock.acquire()
         if db_repo.first_commit:
             if db_root_commit.utc_time < db_repo.first_commit.utc_time:
                 db_repo.first_commit = db_root_commit
@@ -128,24 +195,18 @@ def find_bugs(thread, commit):
             db_repo.first_commit = db_root_commit
             db_repo.save()
             log_thread(thread, "Set first commit to %s" % sha1)
-        db_lock.release()
+        db_repository_lock.release()
 
     # Ignore any merges or commits which are not fixes
     if merge or not fix_re.search(commit.message):
         return
 
-    # We do not need to use db_lock here since this will only be called once
+    # We do not need to use a lock here since this will only be called once
     # per fix commit
     db_bug = models.Bug.objects.get_or_create(fix_commit=db_root_commit)[0]
+    bug_introduction = {}
 
-    previous_rev = "%s~1" % sha1
-
-    # An exception occurs if this commit does not have any previous commits
-    try:
-        diff_index = commit.diff(previous_rev)
-    except:
-        diff_index = []
-
+    diff_index = get_diff_index(commit, previous_rev)
     for diff in diff_index:
         # NOTE: Rename detection doesn't seem to work, maybe a bug with
         # GitPython?
@@ -161,38 +222,95 @@ def find_bugs(thread, commit):
         if not filetypes_re.search(filename):
             continue
 
-        # Read the data and get the lines (yes I know it seems backwards)
+        # Read the data and get the lines (yes I know it seems backwards) and
+        # remove Windows' stupid newline character which messes things up on
+        # UNIX
         previous_lines = \
-            diff.b_blob.data_stream.read().replace('\r','').splitlines()
+            diff.b_blob.data_stream.read().replace("\r","").splitlines()
         current_lines = \
-            diff.a_blob.data_stream.read().replace('\r','').splitlines()
+            diff.a_blob.data_stream.read().replace("\r","").splitlines()
 
-        # Compute the unified diff, and throw away the first two file
-        # information lines
-        unified_diff_iter = difflib.unified_diff(previous_lines, current_lines)
-        for i in xrange(2):
-            unified_diff_iter.next()
-
-
-
-        log_thread(thread, "Commit: %s" % sha1)
+        # Remember: only the previous file's line number matters when we do the
+        # blaming, so we only need to record that
         blame_lines = []
-        for line in unified_diff_iter:
+        # We can ignore the next add line if the line before it was a removal
+        # otherwise, we cannot.
+        # If we're in an add block and not ignoring we look for the first line
+        # added which is not a comment; in this case add the current line number
+        # to the blame (which is the line before the add block in the previous
+        # file) and ignore the rest of the block.
+        for line in get_diff_iter(previous_lines, current_lines):
             if line.startswith("@@"):
                 match = line_numbers_re.match(line)
                 # Subtract one so our increment on the next line is correct
-                previous_line_number = int(match.group(1)) - 1
-                current_line_number = int(match.group(2)) - 1
+                line_number = int(match.group(1)) - 1
+                ignore_next_add = False
             elif line.startswith("-"):
-                previous_line_number += 1
+                line_number += 1
+                if not comment_re.match(line[1:]):
+                    blame_lines.append(line_number)
+                # TODO: Actually, this probably shouldn't be ignored if the
+                # entire remove block was comments
+                ignore_next_add = True
             elif line.startswith("+"):
-                current_line_number += 1
+                if not ignore_next_add:
+                    if not comment_re.match(line[1:]):
+                        blame_lines.append(line_number)
+                        ignore_next_add = True
             else:
-                previous_line_number += 1
-                current_line_number += 1
+                line_number += 1
+                ignore_next_add = False
 
-            log_thread(thread, "%d|%d|%s" % (previous_line_number, current_line_number, line))
+        # Nothing to blame, so carry on (my wayward son)
+        if len(blame_lines) == 0:
+            continue
 
+        # If the blame doesn't work, it's because the file doesn't exist in the
+        # currently checked out branch, so switch the branch to the revision of
+        # the blame
+        try:
+            blame = thread.git.blame(["-l", "-s", "-w", "--root", previous_rev,
+                                      filename]).replace('\r','').splitlines()
+        except:
+            thread.switch_to_rev(previous_rev)
+            blame = thread.git.blame(["-l", "-s", "-w", "--root", previous_rev,
+                                      filename]).replace('\r','').splitlines()
+
+        # Populate the bug_introduction dictionary along with all the filenames
+        # TODO: Maybe do something more efficient than checking if the filename
+        #       is already in the list
+        for line in blame_lines:
+            # The line is 1-indexed since it is a line number, and the blame is
+            # 0-indexed, so adjust
+            introducing_sha1 = blame[line-1].split()[0]
+
+            if introducing_sha1 in bug_introduction:
+                if not filename in bug_introduction[introducing_sha1]:
+                    bug_introduction[introducing_sha1].append(filename)
+            else:
+                bug_introduction[introducing_sha1] = [filename]
+
+    # Creating the BugSources for this bug-fix
+    for (introducing_sha1, filename_list) in bug_introduction.iteritems():
+        # Get the introducing commit
+        try:
+            db_introducing_commit = db_get_commit(introducing_sha1)
+        except models.RawCommit.DoesNotExist:
+            introducing_commit = thread.repo.commit(introducing_sha1)
+            db_introducing_commit = db_create_commit(introducing_commit)
+
+        # Don't need a lock here, since it'll be the only one
+        db_bugsource = models.BugSource.objects.get_or_create(
+            commit=db_introducing_commit, bug=db_bug)[0]
+
+        # Add the files for this source
+        for filename in filename_list:
+            db_file_lock.acquire()
+            db_file = models.File.objects.get_or_create(name=filename)[0]
+            db_file_lock.release()
+            db_bugsource.files.add(db_file)
+
+    log_thread(thread, "Bug object done for ID %d" % db_root_commit.pk)
 
 def merge_rawauthors():
     # Email regular expression modified from django.core.validators.email_re
@@ -336,9 +454,20 @@ class SCCThread(threading.Thread):
         if not os.path.exists(copy_dir):
             log_thread(self, "Copying '%s' to '%s'" % (repo_dir, copy_dir))
             shutil.copytree(repo_dir, copy_dir)
-            log_thread(self, "Copying finished" % (repo_dir, copy_dir))
+            log_thread(self, "Copying finished")
 
         self.repo = git.Repo(copy_dir, odbt=git.GitCmdObjectDB)
+        self.git = git.Git(copy_dir)
+        self._current_branch = "scc_left"
+        self._free_branch = "scc_right"
+        self.git.checkout(["-b", self._current_branch, "master"])
+
+    def switch_to_rev(self, rev):
+        self.git.checkout(["-b", self._free_branch, rev])
+        # Swap
+        self._current_branch, self._free_branch = \
+            self._free_branch, self._current_branch
+        self.git.branch(["-D", self._free_branch])
 
     def run(self):
         log_thread(self, "Finding bugs starting")
@@ -352,6 +481,10 @@ class SCCThread(threading.Thread):
                 break
             finally:
                 commits_lock.release()
+        # Clean-up
+        log_thread(self, "Finding bugs cleaning up")
+        self.git.checkout(["master"])
+        self.git.branch(["-D", self._current_branch])
         log_thread(self, "Finding bugs finished")
 
 if args.directory:
