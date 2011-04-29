@@ -40,6 +40,10 @@ class Author(models.Model):
                                       choices=CLASSIFICATION_CHOICES,
                                       blank=True, null=True)
 
+    def total_commits(self):
+        return RawCommit.objects.filter(author__in=
+                                        self.rawauthor_set.all()).count()
+
 class Commit(models.Model):
     commit = models.OneToOneField(RawCommit, primary_key=True)
     lines_changed_code = models.PositiveIntegerField()

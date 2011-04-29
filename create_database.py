@@ -1,10 +1,11 @@
 import argparse
 import codecs
-from datetime import datetime
+from datetime import datetime, timedelta
 import difflib
 import git
 import multiprocessing
 import os
+from pytz import timezone, utc
 import re
 import shutil
 import threading
@@ -19,6 +20,8 @@ parser.add_argument("directory", nargs='?',
                     help="directory of the git repository")
 parser.add_argument("encoding", nargs='?',
                     help="encoding of the git repository")
+parser.add_argument("--log", action='store_true',
+                    help="enable logging")
 parser.add_argument("--skip-merge", action='store_true',
                     help="skip author merging")
 args = parser.parse_args()
@@ -42,28 +45,36 @@ if args.directory:
     db_repository_lock = threading.Lock()
     num_threads = multiprocessing.cpu_count()
 
-# Logging functions
-def get_log_file():
-    if not os.path.exists(log_dir):
-        os.mkdir(log_dir)
-    log_filename = "%s.log" % datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-    return codecs.open(os.path.join(log_dir, log_filename), "w", "utf-8")
+if args.log:
+    # Logging functions
+    def get_log_file():
+        if not os.path.exists(log_dir):
+            os.mkdir(log_dir)
+        log_filename = "%s.log" % datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+        return codecs.open(os.path.join(log_dir, log_filename), "w", "utf-8")
 
-log_dir = "logs"
-log_file = get_log_file()
-log_lock = threading.Lock()
+    log_dir = "logs"
+    log_file = get_log_file()
+    log_lock = threading.Lock()
 
-def log(msg):
-    log_lock.acquire()
-    try:
-        time_stamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
-        log_file.write("[%s] %s\n" % (time_stamp, msg))
-        log_file.flush()
-    finally:
-        log_lock.release()
+    def log(msg):
+        log_lock.acquire()
+        try:
+            time_stamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+            log_file.write("[%s] %s\n" % (time_stamp, msg))
+            log_file.flush()
+        finally:
+            log_lock.release()
 
-def log_thread(thread, msg):
-    log("<T%d> %s" % (thread.id, msg))
+    def log_thread(thread, msg):
+        log("<T%d> %s" % (thread.id, msg))
+else:
+    # Empty functions
+    def log(msg):
+        pass
+
+    def log_thread(thread, msg):
+        pass
 
 def db_get_commit(sha1):
     return models.RawCommit.objects.get(author__repository=db_repo, sha1=sha1)
@@ -121,7 +132,7 @@ def get_diff_iter(previous_lines, current_lines):
         try:
             diff_iter.next()
         except StopIteration:
-            pass
+            break
     return diff_iter
 
 def find_bugs(thread, commit):
@@ -247,7 +258,8 @@ def find_bugs(thread, commit):
                 match = line_numbers_re.match(line)
                 # Subtract one so our increment on the next line is correct
                 line_number = int(match.group(1)) - 1
-                ignore_next_add = False
+                # We should ignore here, because there's no context before
+                ignore_next_add = True
             elif line.startswith("-"):
                 line_number += 1
                 if not comment_re.match(line[1:]):
@@ -450,7 +462,138 @@ def merge_rawauthors():
         rawauthor.save()
         log("Unmerged RawAuthor %d" % rawauthor.pk)
 
-    # TODO: Add Author classification here
+def classify_authors():
+    author_qs = models.Author.objects.filter(
+        rawauthor__repository=db_repo).distinct()
+
+    first_utc_datetime = db_repo.first_commit.utc_time
+    last_utc_datetime = db_repo.last_commit.utc_time
+
+    for author in author_qs:
+        # Get all their datetimes in a sorted list
+        commit_datetimes = []
+        for rawauthor in author.rawauthor_set.all():
+            for commit in rawauthor.rawcommit_set.all():
+                # Make sure the commit is valid
+                if commit.utc_time >= first_utc_datetime and \
+                   commit.utc_time <= last_utc_datetime:
+                    # Add the datetime to the list (we're using local time here
+                    # so we can compute whether or not this is their day job)
+                    commit_datetimes.append(commit.local_time)
+        commit_datetimes.sort()
+
+        # The main classification
+        if len(commit_datetimes) == 1:
+            author.classification = 'S'
+        elif len(commit_datetimes) < 20:
+            author.classification = 'O'
+        else:
+            daily_commits = 0
+            weekly_commits = 0
+            monthly_commits = 0
+
+            last_datetime = commit_datetimes[0]
+            ignore_before_datetime = last_datetime + timedelta(minutes=30)
+            for dt in commit_datetimes[1:]:
+                if dt >= ignore_before_datetime:
+                    # Use the delta to see how close the commits are
+                    delta = dt - last_datetime
+                    if delta.days < 7:
+                        daily_commits += 1
+                    elif delta.days < 31:
+                        weekly_commits += 1
+                    else:
+                        monthly_commits += 1
+
+                    # Update the ignore and the last datetime
+                    ignore_before_datetime = dt + timedelta(minutes=30)
+                    last_datetime = dt
+
+            # Whatever has the higher count, classify the author as such
+            if daily_commits >= weekly_commits and \
+               daily_commits >= monthly_commits:
+                author.classification = 'D'
+            elif weekly_commits >= daily_commits and \
+                 weekly_commits >= monthly_commits:
+                author.classification = 'W'
+            else:
+                author.classification = 'M'
+
+            # Check to see if this is their job
+            if author.classification == 'D':
+                # Count the number of normal work hour commits
+                day_commits = 0
+                for dt in commit_datetimes:
+                    if not (dt.weekday == 5 or dt.weekday == 6) and \
+                       (dt.hour >=8 and dt.hour <= 16):
+                        day_commits += 1
+
+                # We conclude if >85% of their commits are within normal work
+                # then this is their day job
+                if float(day_commits)/float(len(commit_datetimes)) > 0.85:
+                    author.classification = 'J'
+
+        author.save()
+
+def adjust_timezone():
+    if repo_slug == 'postgresql':
+        # Timezone information
+        tzs = {}
+        tzs['proff@suburbia.net'] = 'Australia/Melbourne'
+        tzs['bryanh@giraffe.netgate.net'] = 'America/Los_Angeles'
+        tzs['E.Mergl@bawue.de'] = 'Europe/Berlin'
+        tzs['byronn@insightdist.com'] = 'America/New_York'
+        tzs['peter@retep.org.uk'] = 'Europe/London'
+        tzs['vadim4o@yahoo.com'] = 'America/Los_Angeles'
+        tzs['vev@michvhf.com'] = 'America/Detroit'
+        tzs['pjw@rhyme.com.au'] = 'Australia/Melbourne'
+        tzs['lockhart@fourpalms.org'] = 'America/Los_Angeles'
+        tzs['inoue@tpf.co.jp'] = 'Asia/Tokyo'
+        tzs['barry@xythos.com'] = 'America/Los_Angeles'
+        tzs['davec@fastcrypt.com'] = 'America/Toronto'
+        tzs['books@ejurka.com'] = 'America/Los_Angeles'
+        tzs['db@zigo.dhs.org'] = 'Europe/London'
+        tzs['webmaster@postgresql.org'] = 'UTC'
+        tzs['JanWieck@Yahoo.com'] = 'America/New_York'
+        tzs['darcy@druid.net'] = 'America/Toronto'
+        tzs['stark@mit.edu'] = 'Europe/Dublin'
+        tzs['teodor@sigaev.ru'] = 'Europe/Moscow'
+        tzs['ishii@postgresql.org'] = 'Asia/Tokyo'
+        tzs['scrappy@hub.org'] = 'America/Halifax'
+        tzs['mail@joeconway.com'] = 'America/Los_Angeles'
+        tzs['simon@2ndQuadrant.com'] = 'Europe/London'
+        tzs['itagaki.takahiro@gmail.com'] = 'Asia/Tokyo'
+        tzs['meskes@postgresql.org'] = 'Europe/Berlin'
+        tzs['alvherre@alvh.no-ip.org'] = 'America/Santiago'
+        tzs['andrew@dunslane.net'] = 'America/New_York'
+        tzs['tgl@sss.pgh.pa.us'] = 'America/New_York'
+        tzs['magnus@hagander.net'] = 'Europe/Stockholm'
+        tzs['heikki.linnakangas@iki.fi'] = 'Europe/Helsinki'
+        tzs['rhaas@postgresql.org'] = 'America/New_York'
+        tzs['peter_e@gmx.net'] = 'Europe/Helsinki'
+        tzs['bruce@momjian.us'] = 'America/New_York'
+
+        for c in models.RawCommit.objects.filter(author__repository=db_repo):
+            # Check if there's possibly no timezone information
+            if c.local_time == c.utc_time:
+                try:
+                    # Get the timezone
+                    tz = timezone(tzs[c.author.author.email])
+                except KeyError:
+                    # Handle the special cases
+                    if c.author.email == 'neilc@samurai.com':
+                        if c.utc_time.year <= 2007:
+                            tz = timezone('America/Toronto')
+                        else:
+                            tz = timezone('America/Los_Angeles')
+                    else:
+                        # Reraise the exception
+                        raise KeyError
+
+                # Modify and save
+                time_utc = c.local_time.replace(tzinfo=utc)
+                c.local_time = time_utc.astimezone(tz).replace(tzinfo=None)
+                c.save()
 
 class SCCThread(threading.Thread):
 
@@ -462,7 +605,7 @@ class SCCThread(threading.Thread):
         copy_dir = "work/%s-%d" % (repo_slug, id)
         if not os.path.exists(copy_dir):
             log_thread(self, "Copying '%s' to '%s'" % (repo_dir, copy_dir))
-            shutil.copytree(repo_dir, copy_dir)
+            shutil.copytree(repo_dir, copy_dir, symlinks=True)
             log_thread(self, "Copying finished")
 
         self.repo = git.Repo(copy_dir, odbt=git.GitCmdObjectDB)
@@ -484,7 +627,7 @@ class SCCThread(threading.Thread):
             # The commits lock just protects the shared commit iterator
             commits_lock.acquire()
             try:
-                commit_sha1 = commits_iter.next().hexsha    
+                commit_sha1 = commits_iter.next().hexsha
             except StopIteration:
                 break
             finally:
@@ -520,5 +663,12 @@ if not args.skip_merge:
     log("Merging RawAuthors starting")
     merge_rawauthors()
     log("Merging RawAuthors finished")
+    log("Classifying Authors starting")
+    classify_authors()
+    log("Classifying Authors finished")
+    log("Adjusting timezones starting")
+    adjust_timezone()
+    log("Adjusting timezones finished")
 
-log_file.close()
+if args.log:
+    log_file.close()
