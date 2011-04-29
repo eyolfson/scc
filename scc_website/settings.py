@@ -26,12 +26,13 @@ ROOT_URLCONF = 'scc_website.urls'
 TEMPLATE_DIRS = [os.path.join(os.path.dirname(__file__), "templates")]
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.admin',
+    # Default apps
+    # 'django.contrib.auth',
+    # 'django.contrib.contenttypes',
+    # 'django.contrib.sessions',
+    # 'django.contrib.sites',
+    # 'django.contrib.messages',
+    # 'django.contrib.admin',
     'scc',
 )
 

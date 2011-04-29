@@ -1,0 +1,283 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usetheme{Antibes}
+
+\makeatletter\let\frametextheight\beamer@frametextheight\makeatother
+
+\setbeamertemplate{frametitle continuation}{(\insertcontinuationcount)}
+\setbeamertemplate{footline}[page number]
+
+\beamertemplatenavigationsymbolsempty
+
+\setbeamerfont{title}{series=\bfseries}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamerfont{title in head/foot}{series=\bfseries}
+
+\usepackage{graphicx}
+
+\newcommand {\centergraphic}[1] {
+  \begin{center}
+    \includegraphics[width=\textwidth,height=6.5cm,keepaspectratio]
+                    {#1}
+  \end{center}
+}
+
+\newcommand {\framegraphic}[2] {
+  \begin{frame}
+    \frametitle{#1}
+    \centergraphic{#2}
+  \end{frame}
+}
+
+\title{Do Time of Day and Developer Experience Affect Commit Bugginess?}
+\author{{\em Jon Eyolfson}, Lin Tan, Patrick Lam}
+\institute{University of Waterloo}
+\date{May 22, 2011}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Outline}
+  \setcounter{tocdepth}{1}
+  \tableofcontents
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Motivation}
+  
+  \begin{itemize}
+
+    \item Software repositories contain a wealth of information
+
+    \begin{itemize}
+
+      \item What's available?
+
+      \item Is it possible to leverage this data?
+
+      \item What could we learn?
+
+    \end{itemize}
+
+    \item Can also create connections between bug introductions and fixes
+
+    \item We intend to find correlations for these ``buggy'' commits
+
+  \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Experimental Methods}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Creating Connections}
+  
+  \begin{itemize}
+
+    \item Find the bug fixing commits (keyword search) and for each
+
+    \begin{itemize}
+      \item Find lines which changed
+
+      \item Use ``blame'' to find which commit(s) caused the bug
+
+      \item Record information to database
+    \end{itemize}
+
+    \item Keyword search precision of 86\%--87\% and recall of 71\%--73\%
+
+    \item Additional information is available
+
+  \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Additional Information}
+
+  \begin{itemize}
+
+    \item Record the following
+
+    \begin{itemize}
+      \item Commit times (local and UTC)
+
+      \item Number of lines changed in code/comments/other in commit
+
+      \item Merge authors with same name/email
+    \end{itemize}
+
+    \item We can now determine    
+  
+      \begin{itemize}
+        \item Developer experience
+
+        \item Bug lifetime
+
+        \item Whether a commit contains a bug and how many fixes were applied
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Results}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Repositories}
+
+  \begin{center}
+    \begin{tabular}{l|r|r}
+      & \multicolumn{1}{c|}{{\bf Linux kernel}}
+      & \multicolumn{1}{c}{{\bf PostgreSQL}} \\ \hline
+      First commit & April 16, 2005 & July 9, 1996 \\
+      Last commit & Nov. 21, 2010 & Jan. 24, 2011 \\
+      Lines of code & over 5 million & over 750,000 \\
+      Number of authors & 8,594 & 34 \\
+      Total commits & 222,332 & 31,098 \\
+      Introducing commits & 56,681 (25.5\%) & 7,366 (23.7\%) \\
+      Fixing commits & 57,028 & 4,399
+    \end{tabular}
+  \end{center}
+  \begin{itemize}
+    \item Note: results on website have better author merging and minor
+                improvements
+  \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Time-of-day}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\framegraphic{Does Time-of-day Affect Linux?}
+             {../figure/linux-bugginess-hour}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\framegraphic{What About Time-of-day and PostgreSQL?}
+             {../figure/postgresql-bugginess-hour}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Developer Experience}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\framegraphic{Do Experienced Linux Developers Commit Less Bugs?}
+             {../figure/linux-bugginess-experience}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\framegraphic{Does PostgreSQL Follow the Same Trend?}
+             {../figure/postgresql-bugginess-experience}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Developer Commit Frequency}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\framegraphic{Does Developer Activeness Matter for Linux?}
+             {../figure/linux-bugginess-author-class}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Combined Time-of-day and Experience}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]
+  \frametitle{Differences for Inexperienced and Experienced Linux Developers}
+  \centergraphic{../figure/linux-bugginess-hour-combined-1}
+  \centergraphic{../figure/linux-bugginess-hour-combined-2}               
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Day-of-week}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\framegraphic{Is a ``Case of the Mondays'' True for Linux?}
+             {../figure/linux-bugginess-day}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\framegraphic{What are the Worst Days for PostgreSQL?}
+             {../figure/postgresql-bugginess-day}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Related Work}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Previous Studies}
+
+  \begin{itemize}
+    \item Commits for Eclipse and Mozilla were found to be buggiest on Fridays \cite{sliwerski-msr-2005}
+
+    \item Classification of commits into different categories \cite{largeCommits}
+
+    \item Bug lifetimes for Linux and PostgreSQL \cite{deviant,2006-long}
+
+    \item We found average buglifetimes of
+
+    \begin{itemize}
+      \item 1.38 years ($\sigma = 1.35$) for Linux
+
+      \item 3.07 years ($\sigma = 3.19$) for PostgreSQL
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusions and Future Work}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Summary of Findings}
+  
+  \begin{itemize}
+    \item Commits between midnight and 4 AM are more likely to be buggy
+
+    \item Commits between 7 AM and noon are less likely to be buggy
+
+    \item More active developers commit less bugs
+
+    \item More experienced developers commit less bugs
+
+    \item The worst day of the week varies between projects
+  \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{For the Future}
+
+  
+  \begin{itemize}
+    \item Study individual developers
+   
+    \begin{itemize}
+      \item Are commits outside their normal schedule worse?
+
+      \item Experience including other open-source projects?
+    \end{itemize}
+
+    \item More software projects
+
+    \item Correlations involving code quality
+
+    \item Data is now broswable at \url{http://www.eyolfson.com/scc/}
+  \end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[allowframebreaks]
+  \frametitle{References}
+  \bibliographystyle{abbrv}
+  \bibliography{presentation}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

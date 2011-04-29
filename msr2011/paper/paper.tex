@@ -1,0 +1,126 @@
+% This is "sig-alternate.tex" V1.9 April 2009
+% This file should be compiled with V2.4 of "sig-alternate.cls" April 2009
+%
+% ----------------------------------------------------------------------------------------------------------------
+% This .tex file (and associated .cls V2.4) produces:
+%       1) The Permission Statement
+%       2) The Conference (location) Info information
+%       3) The Copyright Line with ACM data
+%       4) NO page numbers
+%
+% as against the acm_proc_article-sp.cls file which
+% DOES NOT produce 1) thru' 3) above.
+%
+% Using 'sig-alternate.cls' you have control, however, from within
+% the source .tex file, over both the CopyrightYear
+% (defaulted to 200X) and the ACM Copyright Data
+% (defaulted to X-XXXXX-XX-X/XX/XX).
+% e.g.
+% \CopyrightYear{2007} will cause 2007 to appear in the copyright line.
+% \crdata{0-12345-67-8/90/12} will cause 0-12345-67-8/90/12 to appear in the copyright line.
+%
+%
+% For tracking purposes - this is V1.9 - April 2009
+
+\documentclass{sig-alternate}
+
+\pdfpagewidth 8.5in
+\pdfpageheight 11in
+
+\clubpenalty=100000000
+\widowpenalty=100000000
+%\brokenpenalty=100000000
+
+\usepackage{times}
+\usepackage{url}
+
+%% Define a new 'leo' style for the package that will use a smaller font.
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother
+%% Now actually use the newly defined style.
+\urlstyle{leo}
+
+%------------------------------------------------------------------------- 
+% take the % away on next line to produce the final camera-ready version 
+\pagestyle{empty}
+
+%------------------------------------------------------------------------- 
+\usepackage{multirow}
+\usepackage{arydshln}
+\usepackage{boxedminipage}
+\usepackage{xspace}
+\usepackage{listings}
+\usepackage[TABBOTCAP]{subfigure}
+
+\lstset{language=C}
+
+\newcommand{\code}{\tt \small}
+
+\newcommand{\comment}[1]{{}}
+\newcommand{\note}[1]{{\bf *** NOTE: {#1} ***}}
+\newcommand{\linuxP}{87\%\xspace} %precision for linux
+\newcommand{\linuxR}{73\%\xspace} % recall for linux, lower bound
+\newcommand{\postP}{86\%\xspace} % precision ofr postgreSQL
+\newcommand{\postR}{71\%\xspace} % recall for postgreSQL, lower bound
+\newcommand{\linuxBFC}{57,028\xspace} %total number of bug-fixing commits for linux
+\newcommand{\postBFC}{4,399\xspace} % total number of bug-fixing comits for postgreSQL 
+\newcommand{\fbuggy}{1\xspace} % finding on day of week
+\newcommand{\fhour}{2\xspace} % finding on day of week
+\newcommand{\fdaily}{3\xspace} % finding on day of week
+\newcommand{\fday}{4\xspace} % finding on day of week
+
+\def\sharedaffiliation{%
+\end{tabular}
+\begin{tabular}{c}}
+
+\begin{document}
+
+\conferenceinfo{MSR}{'11, May 21-22, Waikiki, Honolulu, Hawaii, USA}
+\CopyrightYear{2011}
+\crdata{978-1-4503-0574-7/11/05}
+
+\title{Do Time of Day and Developer Experience Affect Commit Bugginess?}
+
+\numberofauthors{3}
+\author{
+  \alignauthor Jon Eyolfson\\
+  \email{jeyolfso@uwaterloo.ca}
+  \alignauthor Lin Tan\\
+  \email{lintan@uwaterloo.ca}
+  \alignauthor Patrick Lam\\   
+  \email{p.lam@ece.uwaterloo.ca}
+  \sharedaffiliation
+  \affaddr{University of Waterloo}\\
+  \affaddr{200 University Avenue West}\\
+  \affaddr{Waterloo, Ontario, Canada N2L3G1}
+}
+
+\maketitle
+
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+\category{D.2.7}{Software Engineering}{Distribution, Maintenance, and Enhancement}
+\category{D.2.9}{Software Engineering}{Management}
+
+\terms
+Human Factors, Management, Measurement, Reliability 
+
+\keywords
+Bug Detection, Empirical Study, Source Control System
+
+\maketitle
+
+\input introduction
+\input experimental-methods
+\input results
+\input related-work
+\input conclusions-and-future-work
+
+\bibliographystyle{abbrv}
+\bibliography{paper}
+
+\end{document}
