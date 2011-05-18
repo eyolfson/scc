@@ -51,11 +51,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{Outline}
-  \setcounter{tocdepth}{1}
-  \tableofcontents
-\end{frame}
+%% \begin{frame}
+%%   \frametitle{Outline}
+%%   \setcounter{tocdepth}{1}
+%%   \tableofcontents
+%% \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}
@@ -82,8 +82,27 @@
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Experimental Methods}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Summary of Findings}
+  
+  \begin{itemize}
+    \item Data is available and browsable at \url{http://www.eyolfson.com/scc/}
 
+    \item Commits between midnight and 4 AM are more likely to be buggy
+
+    \item Commits between 7 AM and noon are less likely to be buggy
+
+    \item More active developers commit fewer bugs
+
+    \item More experienced developers commit fewer bugs
+
+    \item The worst day of the week varies between projects
+  \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Experimental Methods}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
   \frametitle{Example}
@@ -112,6 +131,10 @@ f4ce718c...  100    if (i <= 128) {
 \begin{frame}
   \frametitle{Creating Connections}
 
+  \begin{definition}
+    A ``buggy'' or \alert{introducing commit} is a commit changed by at least one fixing commit
+  \end{definition}
+
   \tikzstyle{greenblock} = [rectangle, draw, fill=green!20, text centered, rounded corners]
   \tikzstyle{redblock} = [rectangle, draw, fill=red!20, text centered, rounded corners]
   \tikzstyle{line} = [draw, -latex']
@@ -138,11 +161,6 @@ f4ce718c...  100    if (i <= 128) {
     \item Keyword search precision of 86\%--87\% and recall of 71\%--73\%
 
   \end{itemize}
-
-  \begin{definition}
-    A ``buggy'' or introducing commit is a commit changed by at least one fixing commit
-  \end{definition}
-
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -157,19 +175,19 @@ f4ce718c...  100    if (i <= 128) {
     \begin{itemize}
       \item Commit times (local and UTC)
 
-      \item Number of lines changed in code/comments/other in commit
+      \item Authors merged by same name/email
 
-      \item Merge authors with same name/email
+      \item Number of lines changed in code/comments/other in commit
     \end{itemize}
 
     \item We can now determine    
   
       \begin{itemize}
+        \item Whether a commit contains a bug and how many fixes were applied
+
         \item Developer experience
 
         \item Bug lifetime
-
-        \item Whether a commit contains a bug and how many fixes were applied
       \end{itemize}
   \end{itemize}
 \end{frame}
@@ -202,32 +220,31 @@ f4ce718c...  100    if (i <= 128) {
 
 \subsection{Time-of-day}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{Does Time-of-day Affect Linux?}
-             {../figure/linux-bugginess-hour}
+\framegraphic{Linux - Most Commits Late Afternoon}
+             {../figure/linux-bugginess-hour-red-green}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{Linux Late Night Commits are 20\% More Buggy}
-             {../figure/linux-bugginess-hour-red}
+\framegraphic{Linux - Late Night Commits are Up To 21\% More Buggy}
+             {../figure/linux-bugginess-hour-red-green}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{Linux Early Morning Commits Produce 25\% Fewer Bugs}
+\framegraphic{Linux - Early Morning Commits Produce Up To 25\% Fewer Bugs}
              {../figure/linux-bugginess-hour-red-green}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\postgresqlHourTitle}{What About Time-of-day and PostgreSQL?}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{What About Time-of-day and PostgreSQL?}
-             {../figure/postgresql-bugginess-hour}
+\framegraphic{PostgreSQL - Most Commits In Evening}
+             {../figure/postgresql-bugginess-hour-red-green}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{Similarity Late Night Commits are 26\% More Buggy}
-             {../figure/postgresql-bugginess-hour-red}
+\framegraphic{PostgreSQL - Late Night Commits are Up To 27\% More Buggy}
+             {../figure/postgresql-bugginess-hour-red-green}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{Also Early Morning Commits Produce 27\% Fewer Bugs}
+\framegraphic{PostgreSQL - Early Morning Commits Produce Up To 28\% Fewer Bugs}
              {../figure/postgresql-bugginess-hour-red-green}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Developer Experience}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-  \frametitle{What Is Experience?}
+  \frametitle{Our Definition of Experience}
 
   \begin{definition}
     Experience is the number of days from the author's first commit to the
@@ -249,19 +266,19 @@ f4ce718c...  100    if (i <= 128) {
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{Do Experienced Linux Developers Commit Fewer Bugs?}
+\framegraphic{Linux - More Experienced Developers Commit Fewer Bugs}
              {../figure/linux-bugginess-experience}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{Does PostgreSQL Follow the Same Trend?}
+\framegraphic{PostgreSQL - More Experienced Developers Commit Fewer Bugs}
              {../figure/postgresql-bugginess-experience}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Developer Commit Frequency}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-  \frametitle{Classifications}
+  \frametitle{Our Frequency Classifications}
 
   \begin{itemize}
     \item Based on frequency
@@ -286,43 +303,33 @@ f4ce718c...  100    if (i <= 128) {
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{Does Developer Activeness Matter for Linux?}
+\framegraphic{Linux - More Active Developers Commit Fewer Bugs}
              {../figure/linux-bugginess-author-class}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Combined Time-of-day and Experience}
-\newcommand{\linuxCombinedTitle}
-           {Differences for Inexperienced and Experienced Linux Developers}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{\linuxCombinedTitle\hspace{0.5em}(1)}
-             {../figure/linux-bugginess-hour-combined-1}
+\framegraphic{Linux - Inexperienced Developers Have More Late Night Commits}
+             {../figure/linux-bugginess-hour-combined-1-red-green-total-commits}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{\linuxCombinedTitle\hspace{0.5em}(1)}
-             {../figure/linux-bugginess-hour-combined-1-red}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{\linuxCombinedTitle\hspace{0.5em}(1)}
-             {../figure/linux-bugginess-hour-combined-1-red-green}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{\linuxCombinedTitle\hspace{0.5em}(2)}
-             {../figure/linux-bugginess-hour-combined-2}
+\framegraphic{Linux - Both Sets of Developers Have Similar Good and Bad Hours}
+             {../figure/linux-bugginess-hour-combined-1-red-green-percentage-buggy}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Day-of-week}
-\newcommand{\linuxDayTitle}{Is a ``Case of the Mondays'' True for Linux?}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{\linuxDayTitle}
-             {../figure/linux-bugginess-day}
+\framegraphic{Linux - More Bugs Committed on Monday}
+             {../figure/linux-bugginess-day-red-green}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{\linuxDayTitle}
+\framegraphic{Linux - Fewer Bugs Commited on Sunday}
              {../figure/linux-bugginess-day-red-green}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\postgresqlDayTitle}{What are the Worst Days for PostgreSQL?}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{\postgresqlDayTitle}
-             {../figure/postgresql-bugginess-day}
+\framegraphic{PostgreSQL - More Bugs Committed on Sunday}
+             {../figure/postgresql-bugginess-day-red-green}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\framegraphic{\postgresqlDayTitle}
+\framegraphic{PostgreSQL - Fewer Bugs Commited on Tuesday}
              {../figure/postgresql-bugginess-day-red-green}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -358,7 +365,11 @@ f4ce718c...  100    if (i <= 128) {
 
     \item Classification of commits into different categories \cite[MSR]{largeCommits}
 
-    \item Bug lifetimes for Linux and PostgreSQL \cite[MSR]{deviant,2006-long}
+    \item Bug lifetimes for PostgreSQL \cite[MSR]{2006-long}
+
+    \begin{itemize}
+      \item Average of 2 years
+    \end{itemize}
   \end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -381,7 +392,7 @@ f4ce718c...  100    if (i <= 128) {
 
     \item Correlations involving code quality
 
-    \item Data is available and browsable at \url{http://www.eyolfson.com/scc/}
+    \item Prediction models
   \end{itemize}
 
 \end{frame}
@@ -392,6 +403,8 @@ f4ce718c...  100    if (i <= 128) {
   \frametitle{Summary of Findings}
   
   \begin{itemize}
+    \item Data is available and browsable at \url{http://www.eyolfson.com/scc/}
+
     \item Commits between midnight and 4 AM are more likely to be buggy
 
     \item Commits between 7 AM and noon are less likely to be buggy
@@ -407,7 +420,7 @@ f4ce718c...  100    if (i <= 128) {
 
 \section*{References}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[allowframebreaks]
+\begin{frame}
   \frametitle{References}
   \bibliographystyle{apalike}
   \bibliography{presentation}
@@ -420,6 +433,8 @@ f4ce718c...  100    if (i <= 128) {
   \frametitle{Summary of Findings}
 
   \begin{itemize}
+    \item Data is available and browsable at \url{http://www.eyolfson.com/scc/}
+
     \item Commits between midnight and 4 AM are more likely to be buggy
 
     \item Commits between 7 AM and noon are less likely to be buggy
