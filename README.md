@@ -22,5 +22,5 @@ postgresql. I created the table dump by running the command
 2. Create your own database, define it in `scc_website/settings_local.py` and
 run `scc_website/manage.py syncdb` to create all the tables for you. You can
 then use `populate_tables.py`. Some code repositories, such as the Linux kernel,
-use a specific encoding. For example, I used the command `python populate_tables.py
-linux $HOME/workspace/linux-2.6 iso-8859-1`.
+use a specific encoding. For example, I used the command `python2 populate_tables.py
+linux $HOME/workspace/linux iso-8859-2`.
