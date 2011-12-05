@@ -1,0 +1,886 @@
+Stable sha1: 38cad36d1cd15e66cc6e4a018c6f0f347fa508a3
+Stable summary: Input: logips2pp - fix button mapping for MX300
+Master sha1: 0c19fcd83793be248f8108a52f895c8d0034b182
+Master summary: Input: logips2pp - fix button mapping for MX300
+********************************************************************************
+Stable sha1: 1358c6514ee69aede18947bb8152b464067e114e
+Stable summary: ahci: do not fail softreset if PHY reports no device
+Master sha1: c2a6585296009379e0f4eff39cdcb108b457ebf2
+Master summary: [PATCH] ahci: do not fail softreset if PHY reports no device
+********************************************************************************
+Stable sha1: 7a84f5cbcf9e0159a2ddde55647a8d69396fd238
+Stable summary: MMC: Always use a sector size of 512 bytes
+Master sha1: 6fe9febb8af2f82f9caace1aa1c00cd8de7469ac
+Master summary: [MMC] Always use a sector size of 512 bytes
+********************************************************************************
+Stable sha1: 144bfae25349b7c4be0c6ee82bcb7c3d05990fa8
+Stable summary: Add PIIX4 APCI quirk for the 440MX chipset too
+Master sha1: c67646641cab01c93a56674bfcd963f55442dad5
+Master summary: Add PIIX4 APCI quirk for the 440MX chipset too
+********************************************************************************
+Stable sha1: 8d73f56f5f020bf99be61a6f4ba50be72c97dd0c
+Stable summary: xirc2ps_cs: Cannot reset card in atomic context
+Master sha1: 9a469abe9c6bab3ce237ee433541931bbd827faf
+Master summary: [PATCH] xirc2ps_cs: Cannot reset card in atomic context
+********************************************************************************
+Stable sha1: a7f0f4dc1aa3b640549507ed1ebfb46ab45eebfe
+Stable summary: PKT_SCHED: cls_basic: Use unsigned int when generating handle
+Master sha1: 658270a0a49612a0e3fdc01c2e8c0e1a6d47cbf4
+Master summary: [PKT_SCHED] cls_basic: Use unsigned int when generating handle
+********************************************************************************
+Stable sha1: c22025315f2b57bed56cfe2a63c9b291f03fe3ba
+Stable summary: Fix sparc64 ramdisk handling
+Master sha1: 5da11dcde3d2a91688e02f032062fa26877eacb0
+Master summary: wl1271: Fix ad-hoc mode handling
+********************************************************************************
+Stable sha1: 47ca006812200d8cdc2745bdcadc126e5b360004
+Stable summary: SPARC64: Fix serious bug in sched_clock() on sparc64
+Master sha1: 03983ab858ae6aea273060277c9b290498340047
+Master summary: [SPARC64]: Fix sched_clock() et al.
+********************************************************************************
+Stable sha1: 2d287e0384ce2b7c8d2e54697c95a83fc417a2e1
+Stable summary: DVB: cx24123: fix PLL divisor setup
+Master sha1: 4bf1226a7018bf79d05e0ce59244d702819529d1
+Master summary: V4L/DVB (7749): cx88: fix tuner setup
+********************************************************************************
+Stable sha1: 90d684520e3484b913647bf1c0026f795a087905
+Stable summary: V4L: Fix msp343xG handling regression
+Master sha1: de98cdaf7ead419fe8b0a0a636ffb175489958fe
+Master summary: V4L/DVB (4688): Fix msp343xG handling (regression from 2.6.16)
+********************************************************************************
+Stable sha1: 91d72bbd4cc7a04e3c2402da85385a2fb377575a
+Stable summary: sysfs: remove duplicated dput in sysfs_update_file
+Master sha1: e42344514c6e8ca7f5427da9b1407b56550dfa01
+Master summary: sysfs: remove duplicated dput in sysfs_update_file
+********************************************************************************
+Stable sha1: cfb3f12260beaf5dc8f765a1c191822896019d8a
+Stable summary: ext3 sequential read regression fix
+Master sha1: 20acaa18d0c002fec180956f87adeb3f11f635a6
+Master summary: [PATCH] ext3 sequential read regression fix
+********************************************************************************
+Stable sha1: 63a17cfcfce2888f55f16e2d1e1c587351fffa38
+Stable summary: Backport: Old IDE, fix SATA detection for cabling
+Master sha1: 1a1276e7b6cba549553285f74e87f702bfff6fac
+Master summary: [PATCH] Old IDE, fix SATA detection for cabling
+********************************************************************************
+Stable sha1: d3ea6449776ebc644c587b4e4be9b92840b3c5d4
+Stable summary: NFS: More page cache revalidation fixups
+Master sha1: 38478b24e37587f1c4fedf8ac070ca54f052ed28
+Master summary: NFS: More page cache revalidation fixups
+********************************************************************************
+Stable sha1: 387436208278da65b5715e0b3f96a8a3b5a4ed08
+Stable summary: LOCKD: Fix a deadlock in nlm_traverse_files()
+Master sha1: 01df9c5e918ae5559f2d96da0143f8bfbb9e6171
+Master summary: LOCKD: Fix a deadlock in nlm_traverse_files()
+********************************************************************************
+Stable sha1: 4ab4245c7088519526e1c0e60f02a4807ecf2492
+Stable summary: SUNRPC: avoid choosing an IPMI port for RPC traffic
+Master sha1: 8e037094c414172481c5ce903efdab50ce932343
+Master summary: SUNRPC: avoid choosing an IPMI port for RPC traffic
+********************************************************************************
+Stable sha1: 18807ffe4e541639abae40dcd2ebd7a20e9078d6
+Stable summary: NFS: Fix a potential deadlock in nfs_release_page
+Master sha1: ddeff520f02b92128132c282c350fa72afffb84a
+Master summary: NFS: Fix a potential deadlock in nfs_release_page
+********************************************************************************
+Stable sha1: b7a7e34e7e033822ffef7386b1b884edede7f6c5
+Stable summary: dvb-core: Proper handling ULE SNDU length of 0 (CVE-2006-4623)
+Master sha1: 327fa1c29466b8fe471a91fc11e9c6171163c81a
+Master summary: ide: move error handling code to ide-eh.c (v2)
+********************************************************************************
+Stable sha1: 722cc750d76f384c5b881a1dad7e1e12c5d7fb79
+Stable summary: [PATCH] lib: add idr_replace
+Master sha1: 5806f07cd2c32920d5105e0f9ff3117338f34eec
+Master summary: [PATCH] lib: add idr_replace
+********************************************************************************
+Stable sha1: 386986a5c2f0d5bd4a9b184f9093391a581bf601
+Stable summary: [PATCH] pci_ids.h: add some VIA IDE identifiers
+Master sha1: 4c0c2fd486b6598e37c77b5d81a08bc2d948aa7b
+Master summary: [PATCH] pci_ids: add new device ids
+********************************************************************************
+Stable sha1: b3c725e4a9a403d86770d43d57eb0f016f055fac
+Stable summary: sky2: version 1.6.1
+Master sha1: 285e6ddd013bafa6278a0e4b76a25a075be74e14
+Master summary: sky2: version 1.11.1
+********************************************************************************
+Stable sha1: 983e6379274534e80c1bcf9ba8ed7ddb50e4eb17
+Stable summary: sky2: fix fiber support
+Master sha1: b89165f2b75ba0a79eb5ed60924835cf3c54c51a
+Master summary: [PATCH] sky2: fiber support
+********************************************************************************
+Stable sha1: 3489a9e868343cb4c49a8bea541c324ae50366bc
+Stable summary: sky2: MSI test timing
+Master sha1: bb507fe11ffda19eee158ce0be42d222135b7aca
+Master summary: [PATCH] sky2: MSI test timing
+********************************************************************************
+Stable sha1: f117ca328f2de3ca2db90d5775031152fe0c2496
+Stable summary: sky2: use dev_alloc_skb for receive buffers
+Master sha1: b5d56ddc3f839e94e97a3eb8afb4d0d64a9f2ef8
+Master summary: [PATCH] skge: dont use dev_alloc_skb for rx buffs
+********************************************************************************
+Stable sha1: 15d658cb2010ec52e74920cfa64ef0427191ec3e
+Stable summary: sky2: clear status IRQ after empty
+Master sha1: af18d8b89930aecc742982634adaf97dfb43ed3b
+Master summary: sky2: cleanup restart operations
+********************************************************************************
+Stable sha1: 669763679043a814febae9ac1501bd2c9f848559
+Stable summary: sky2: accept flow control
+Master sha1: 585b56012f08a6edc598d17b28a6c434134bfaff
+Master summary: [PATCH] sky2: turn on tx flow control
+********************************************************************************
+Stable sha1: e2b53b19856422ad050fadb5f30424c53698eb36
+Stable summary: dm: Fix deadlock under high i/o load in raid1 setup.
+Master sha1: c06aad854fdb9da38fcc22dccfe9d72919453e43
+Master summary: [PATCH] dm: Fix deadlock under high i/o load in raid1 setup.
+********************************************************************************
+Stable sha1: eeae03f8f7842d4a981e54b5a2a76b5dbacee82e
+Stable summary: Remove redundant up() in stop_machine()
+Master sha1: 4edb9a143e31d2e191c199262226e1a5923ff8f7
+Master summary: [PATCH] Remove redundant up() in stop_machine()
+********************************************************************************
+Stable sha1: 1a9546a59f5792d2baeedb6b290a9449e3c43f9e
+Stable summary: Missing PCI id update for VIA IDE
+Master sha1: a7dec1e0dbb9e8e032b56a62d07ab6ac009109d3
+Master summary: [PATCH] Missing PCI id update for VIA IDE
+********************************************************************************
+Stable sha1: f3658cfac5012abbb8bed0bb027983e1cdf168bc
+Stable summary: PKTGEN: Fix oops when used with balance-tlb bonding
+Master sha1: aaf580601ff244df82324fff380ed6740f27ef03
+Master summary: [PKTGEN]: Fix oops when used with balance-tlb bonding
+********************************************************************************
+Stable sha1: ee2abb104a850954eb54b2bf6579463fad146634
+Stable summary: PKTGEN: Make sure skb->{nh,h} are initialized in fill_packet_ipv6() too.
+Master sha1: 69d8c28c9578ce78b3dc1b9be36926d962282898
+Master summary: [PKTGEN]: Make sure skb->{nh,h} are initialized in fill_packet_ipv6() too.
+********************************************************************************
+Stable sha1: d6b7fe9e1d58514758c6dfe54f949333e830485e
+Stable summary: Silent data corruption caused by XPC
+Master sha1: 7682a4c624e0011b5f3e8dd3021dc54961260d97
+Master summary: [IA64-SGI] Silent data corruption caused by XPC V2.
+********************************************************************************
+Stable sha1: 4ccc9a4b06b170b88d25bfd2d50fce487ed1471c
+Stable summary: uhci-hcd: fix list access bug
+Master sha1: db59b464f8708cdba857f16b183cff0b7466d6b5
+Master summary: uhci-hcd: fix list access bug
+********************************************************************************
+Stable sha1: 4be6107d35a5b5f8eac9b92eef1e243a033a3f39
+Stable summary: binfmt_elf: fix checks for bad address
+Master sha1: ce51059be56f63762089412b3ece348067afda85
+Master summary: [PATCH] binfmt_elf: fix checks for bad address
+********************************************************************************
+Stable sha1: 2cd6b01ad38d34b805a0a052725ec3f37e387ecd
+Stable summary: bug in futex unqueue_me
+Master sha1: e91467ecd1ef381377fd327c0ded922835ec52ab
+Master summary: [PATCH] bug in futex unqueue_me
+********************************************************************************
+Stable sha1: f4eb9f37abad092ac27fabc7d451d6980fff8fb1
+Stable summary: fcntl(F_SETSIG) fix
+Master sha1: 74361cb6828398a96167b3234e186fbd731e5f30
+Master summary: [PATCH] fcntl(F_SETSIG) fix
+********************************************************************************
+Stable sha1: a13aeb6eb26f3457e47f0c604104e30ed8262ca9
+Stable summary: IPV6 OOPS'er triggerable by any user
+Master sha1: e55ffac6011731c455856072cb23aa20bd55c367
+Master summary: [IPV6]: order addresses by scope
+********************************************************************************
+Stable sha1: e564f8a9cc64ebc06794d716e3240538b4a61f28
+Stable summary: SCTP: Fix sctp_primitive_ABORT() call in sctp_close().
+Master sha1: b9ac86727fc02cc7117ef3fe518a4d51cd573c82
+Master summary: [SCTP]: Fix sctp_primitive_ABORT() call in sctp_close().
+********************************************************************************
+Stable sha1: 24e2c32c847ab496bd79d417265534ff3da7b009
+Stable summary: SPARC64: Fix X server crashes on sparc64
+Master sha1: f0882589666440d573f657cb3a1d5f66f3caa157
+Master summary: [SPARC64]: Fix several kprobes bugs.
+********************************************************************************
+Stable sha1: 88704f0be8a67a1676b3a00b7e25d718ae2f4957
+Stable summary: TG3: Disable TSO by default
+Master sha1: 4e3a7aaa28db952392814f889dfbd25672266d29
+Master summary: [TG3]: Enable TSO by default
+********************************************************************************
+Stable sha1: 8135c5c1b9f88c5e1147a5275cd07782c3a54761
+Stable summary: dm: mirror sector offset fix
+Master sha1: e4c8b3ba34cc1aeab451c7a5cc843c5fd62cbe3d
+Master summary: [PATCH] dm: mirror sector offset fix
+********************************************************************************
+Stable sha1: 16470822339528fff62338f8cd87a7c48ef2cfa2
+Stable summary: dm: fix block device initialisation
+Master sha1: f0b04115368ff383654a3bd26baf8f4be5e81132
+Master summary: [PATCH] dm: fix block device initialisation
+********************************************************************************
+Stable sha1: 659a8ced33c4e01ff0807ba42ca6697a81fd26eb
+Stable summary: dm: add module ref counting
+Master sha1: 10da4f795f965f22039aa2930b6f80964aad3ee5
+Master summary: [PATCH] dm: add module ref counting
+********************************************************************************
+Stable sha1: 6731637067000c92d8957ddec764f31720c89c15
+Stable summary: dm: fix mapped device ref counting
+Master sha1: 7ec75f254742766eb729f1d1024a5b4e6692fc5f
+Master summary: [PATCH] dm: fix mapped device ref counting
+********************************************************************************
+Stable sha1: 1d62e5eb23afbc3a36795a165fe2ffae6268b57f
+Stable summary: dm: add DMF_FREEING
+Master sha1: fba9f90e568e17c326257ee293207b75880b39d6
+Master summary: [PATCH] dm: add DMF_FREEING
+********************************************************************************
+Stable sha1: 5fcee2b37b0bcec3862c8a20ad9c260b795f18de
+Stable summary: dm: change minor_lock to spinlock
+Master sha1: f32c10b09940cffc3620ce111315ec44343fd3ca
+Master summary: [PATCH] dm: change minor_lock to spinlock
+********************************************************************************
+Stable sha1: cb352363ced7914a6d7d2c17d86e746c4bd582dc
+Stable summary: dm: move idr_pre_get
+Master sha1: 62f75c2f3244553b1290447abd1f1e6b1144d3e9
+Master summary: [PATCH] dm: move idr_pre_get
+********************************************************************************
+Stable sha1: 84d73ab65454d09d4547c8d5357f237902b81189
+Stable summary: dm: fix idr minor allocation
+Master sha1: ba61fdd17d73ddb5c892a9f12383c6c560a20d56
+Master summary: [PATCH] dm: fix idr minor allocation
+********************************************************************************
+Stable sha1: 208b2761fe4610452ac076630e241a95dcf79725
+Stable summary: dm snapshot: unify chunk_size
+Master sha1: c51c2752491e5e771de6c8861a85ba46752d7888
+Master summary: [PATCH] dm snapshot: unify chunk_size
+********************************************************************************
+Stable sha1: 2336231e06979e7073132c22b121c34123f295a6
+Stable summary: Have ext2 reject file handles with bad inode numbers early.
+Master sha1: ecaff756ff540f3821e2b00b8fa19aca07c7c3e5
+Master summary: [PATCH] knfsd: Have ext2 reject file handles with bad inode numbers early
+********************************************************************************
+Stable sha1: 31e8b3a3708f75d9e012e2c2ed2b9d6d69ad0491
+Stable summary: Allow per-route window scale limiting
+Master sha1: 345cda2fd695534be5a4494f1b59da9daed33663
+Master summary: Allow to turn off TCP window scale opt per route
+********************************************************************************
+Stable sha1: 9d3925d7a0eb89385cfef62020578baff230dfce
+Stable summary: bridge-netfilter: don't overwrite memory outside of skb
+Master sha1: 4c3a76abd379d9a4668b2d417baa991de9757dc2
+Master summary: bridge: netfilter: fix a memory leak
+********************************************************************************
+Stable sha1: 7cadd43d5a72cb042e09fed4816d818615b2ca73
+Stable summary: fix compilation error on IA64
+Master sha1: 046d886db18260d4435c942985392b7ef872337f
+Master summary: OMAP: fix compilation error
+********************************************************************************
+Stable sha1: ea624f5adfb84678011dd39422fe1366440a978b
+Stable summary: Fix output framentation of paged-skbs
+Master sha1: 2a80a3783d975dadea9740b0ac84c2e8796ee5bb
+Master summary: Fix documentation of sysrq-q
+********************************************************************************
+Stable sha1: 35d2f110af2b9415dec490a0f59303ee7b3ba41c
+Stable summary: spectrum_cs: Fix firmware uploading errors
+Master sha1: c5ab964debe92d0ec7af330f350a3433c1b5b61e
+Master summary: [PATCH] spectrum_cs: Fix firmware uploading errors
+********************************************************************************
+Stable sha1: 940d7bceb97c8989e700de946b0514acc9b739c5
+Stable summary: TEXTSEARCH: Fix Boyer Moore initialization bug
+Master sha1: 3ffaa8c7c0f884171a273cd2145b8fbbf233ba22
+Master summary: [TEXTSEARCH]: Fix Boyer Moore initialization bug
+********************************************************************************
+Stable sha1: 338341c1cea5d13428c242c1f624df644c7fb068
+Stable summary: 1394: fix for recently added firewire patch that breaks things on ppc
+Master sha1: 7334bb4ae931159384acf168eacb0d5d6e0d083c
+Master summary: [PATCH] 1394: fix for recently added firewire patch that breaks things on ppc
+********************************************************************************
+Stable sha1: dc41bfe271fee237ae41e3cbd8b4789b60da3e53
+Stable summary: MD: Fix a potential NULL dereference in md/raid1
+Master sha1: 15bde72738f373aa060ececeda8e064e4f924360
+Master summary: RxRPC: Fix a potential NULL dereference
+********************************************************************************
+Stable sha1: 49071b9f45d2483dbde395fd6aa11f53974e7665
+Stable summary: swsusp: Fix swap_type_of
+Master sha1: b6b5bce3571e496504a89ee575d32101e0a98b93
+Master summary: [PATCH] swsusp: Fix swap_type_of
+********************************************************************************
+Stable sha1: f5ce8b3e07e46f4ca1408d5e42f561028cd69719
+Stable summary: dm: BUG/OOPS fix
+Master sha1: 485311a23c72c87332f9a55ce25e650e40ae3fc7
+Master summary: [PATCH] dm: BUG/OOPS fix
+********************************************************************************
+Stable sha1: 67ce628f410668c5ddee2f4c7424a1bd8a8fc64b
+Stable summary: Fix ipv4 routing locking bug
+Master sha1: 3a31b9d2f2d98667832e87fa1853754ff062d6ef
+Master summary: [DECNET]: Fix input routing bug
+********************************************************************************
+Stable sha1: 8833ebaa3f4325820fe3338ccf6fae04f6669254
+Stable summary: IA64: local DoS with corrupted ELFs
+Master sha1: 3a459756810912d2c2bf188cef566af255936b4d
+Master summary: [PATCH] IA64,sparc: local DoS with corrupted ELFs
+********************************************************************************
+Stable sha1: 0872a284963a642ba748cbd75842138dd9a3bd00
+Stable summary: ip_tables: fix table locking in ipt_do_table
+Master sha1: 8311731afc439f508ab4d759edadedae75afb73e
+Master summary: [NETFILTER]: ip_tables: fix table locking in ipt_do_table
+********************************************************************************
+Stable sha1: 21fb3eb8606821cc654ee65ee28e18f4c43d47fa
+Stable summary: PCI: fix ICH6 quirks
+Master sha1: 65ae4dddbb56c7415c31e9aae0b3811cb583bbea
+Master summary: [PATCH] PCI: fix ICH6 quirks
+********************************************************************************
+Stable sha1: 9df256a6742e951aef286bd8ffc859dd79509ad7
+Stable summary: SERIAL: icom: select FW_LOADER
+Master sha1: cb2fc532d0a304631c92b175f886934654c60907
+Master summary: [SERIAL] icom: select FW_LOADER
+********************************************************************************
+Stable sha1: 024bd8b8e0a55a53422d5f6138974b2c83f0a73e
+Stable summary: sys_getppid oopses on debug kernel
+Master sha1: 6997a6faaa129a1c91775f7344c8d371a05178ea
+Master summary: [PATCH] sys_getppid oopses on debug kernel
+********************************************************************************
+Stable sha1: bb417c4bad96b07f075b98f874fb28cf258f8065
+Stable summary: ulog: fix panic on SMP kernels
+Master sha1: dcb7cd97f133f7cfbd181149a1e60215a869f895
+Master summary: [NETFILTER]: ulog: fix panic on SMP kernels
+********************************************************************************
+Stable sha1: f60aad27513c78d0c0e5feaeb1013f8ce6c07a7c
+Stable summary: tpm: interrupt clear fix
+Master sha1: cab091eaa4952777d3183b6d7ce203a213cddc12
+Master summary: [PATCH] tpm: interrupt clear fix
+********************************************************************************
+Stable sha1: 5a4ceb2adfc3f7d35fa07420582f626c8402e605
+Stable summary: ipx: header length validation needed
+Master sha1: 8b5cc5ef40c83c6ea4c90b203bb2c8b17edfa11b
+Master summary: [IPX]: Header length validation needed
+********************************************************************************
+Stable sha1: a80b26d5597e62094c165c26e77fde4d4ab2e37e
+Stable summary: disable debugging version of write_lock()
+Master sha1: 72f0b4e2133ba1d65147d06016c0b6d2202235ca
+Master summary: [PATCH] disable debugging version of write_lock()
+********************************************************************************
+Stable sha1: 2fc58b11d73cc8baafa61b70e4c749d466f92b2a
+Stable summary: Fix BeFS slab corruption
+Master sha1: 94f563c426a78c97fc2a377315995e6ec8343872
+Master summary: [PATCH] Fix BeFS slab corruption
+********************************************************************************
+Stable sha1: 216cf62f1fd2fba890d43956a8548eb10382b658
+Stable summary: Fix IFLA_ADDRESS handling
+Master sha1: 70f8e78e150425b01c1099087ad3decacf7e4ccf
+Master summary: [RTNETLINK]: Fix IFLA_ADDRESS handling.
+********************************************************************************
+Stable sha1: 7e9d4f4ffd29c60abc35d5bf535d3712f662567c
+Stable summary: Fix timer race in dst GC code
+Master sha1: 306bb73d12f13684ffcd735838c3e6f7515ab626
+Master summary: fix the crap in dst/dcore
+********************************************************************************
+Stable sha1: b3b3410f3e2579314adcdd9366b5429ba06b07d7
+Stable summary: Kill HASH_HIGHMEM from route cache hash sizing
+Master sha1: c9503e0fe052020e0294cd07d0ecd982eb7c9177
+Master summary: ipv4: Limit size of route cache hash table
+********************************************************************************
+Stable sha1: 0ce4f0dbc2cb547077cbc903a53b4638ae0cac55
+Stable summary: sky2: phy power problem on 88e805x
+Master sha1: 8d3d35b4e20dc2e678fc7cb51165905b5a32fb76
+Master summary: [PATCH] sky2: phy power problems on 88e805X chips
+********************************************************************************
+Stable sha1: bd2a1e115cf239c708747bae1cf1c0757686af50
+Stable summary: Have ext3 reject file handles with bad inode numbers early
+Master sha1: ecaff756ff540f3821e2b00b8fa19aca07c7c3e5
+Master summary: [PATCH] knfsd: Have ext2 reject file handles with bad inode numbers early
+********************************************************************************
+Stable sha1: 4bf7989b2326fecad1181985f5fa9860d50fb89f
+Stable summary: elv_unregister: fix possible crash on module unload
+Master sha1: 2d8f613160ed303f5fe310f21bba334a4b074fa5
+Master summary: elv_unregister: fix possible crash on module unload
+********************************************************************************
+Stable sha1: 7127be29378b1230eb8dd8b84f18d6b69c56e959
+Stable summary: Fix possible UDF deadlock and memory corruption (CVE-2006-4145)
+Master sha1: 00a2b0f6dd2372842df73de72d51621b539fea44
+Master summary: Fix possible UDF deadlock and memory corruption (CVE-2006-4145)
+********************************************************************************
+Stable sha1: 96ec9da385cf72c5f775e5f163420ea92e66ded2
+Stable summary: Fix sctp privilege elevation (CVE-2006-3745)
+Master sha1: c164a9ba0a8870c5c9d353f63085319931d69f23
+Master summary: Fix sctp privilege elevation (CVE-2006-3745)
+********************************************************************************
+Stable sha1: 35a472de81cfdb37f3cfb49fde4987d99b81f996
+Stable summary: [PATCH] powerpc: Clear HID0 attention enable on PPC970 at boot time (CVE-2006-4093)
+Master sha1: 9a936a2e0526089194159eae31238e36b1c19e74
+Master summary: [POWERPC] powerpc: Clear HID0 attention enable on PPC970 at boot time
+********************************************************************************
+Stable sha1: a2f4638207875fb0a164cd39f16174ef794a1906
+Stable summary: ALSA: Don't reject O_RDWR at opening PCM OSS
+Master sha1: 6cb53e7ed77d429531afa8d822d59909f953a771
+Master summary: [ALSA] Don't reject O_RDWR at opening PCM OSS with read/write-only device
+********************************************************************************
+Stable sha1: 2181f8c0a96a7b0e29151330c2fae6e18831ed3a
+Stable summary: Add stable branch to maintainers file
+Master sha1: 4ca8a3c1b17cde8241eb9157484519427fa5bf91
+Master summary: Add stable branch to maintainers file
+********************************************************************************
+Stable sha1: e294e7d480581084e0a0a7044f8451023ae1a114
+Stable summary: tty serialize flush_to_ldisc
+Master sha1: e045fec48970df84647a47930fcf7a22ff7229c0
+Master summary: tty: prevent DOS in the flush_to_ldisc
+********************************************************************************
+Stable sha1: 3b6eaf273f4a41cbba86e0cb164e5d69c84c25a3
+Stable summary: S390: fix futex_atomic_cmpxchg_inatomic
+Master sha1: 13492c50f69bdf60a42debc6bd3ec49cc1dc941e
+Master summary: [S390] fix futex_atomic_cmpxchg_inatomic
+********************************************************************************
+Stable sha1: 93257abd22720f4508e134e31c3f172c6c898d68
+Stable summary: Fix budget-av compile failure
+Master sha1: 4e1491847ef5ca1c5a661601d5f96dcb7d90d2f0
+Master summary: Fix up ARM serial driver compile failure
+********************************************************************************
+Stable sha1: fed0a6b6fb78cd432863f29e83a458c9fd13a308
+Stable summary: cond_resched() fix
+Master sha1: e7b384043e27bed4f23b108481b99c518dd01a01
+Master summary: [PATCH] cond_resched() fix
+********************************************************************************
+Stable sha1: accdd0e1f5080ec98f7bf87c5a8b255539e1ab4b
+Stable summary: e1000: add forgotten PCI ID for supported device
+Master sha1: 5881cde8a38cab3b228a63516ab64f8d79acc4f5
+Master summary: e1000: Add PCI ID 0x10a4 for our new 4-port PCI-Express device
+********************************************************************************
+Stable sha1: 9636beeac888673d0c5ae0587acbf5542a6015fb
+Stable summary: ext3: avoid triggering ext3_error on bad NFS file handle
+Master sha1: 2ccb48ebb4de139eef4fcefd5f2bb823cb0d81b9
+Master summary: [PATCH] ext3: avoid triggering ext3_error on bad NFS file handle
+********************************************************************************
+Stable sha1: de877c1d977aa0b55952cb7325956e5bd59fc75f
+Stable summary: ext3 -nobh option causes oops
+Master sha1: 0e31f51d8177320d61ec5786ca4aafa7b7a749b4
+Master summary: [PATCH] ext3 -nobh option causes oops
+********************************************************************************
+Stable sha1: d267cf77ff0425cd0f3292aa312588baaf304bb5
+Stable summary: Fix race related problem when adding items to and svcrpc auth cache.
+Master sha1: 2f34931fdc78b4895553aaa33748939cc7697c99
+Master summary: [PATCH] knfsd: fix race related problem when adding items to and svcrpc auth cache
+********************************************************************************
+Stable sha1: c21e358f1136635d6f2bbc6552efef8b01499254
+Stable summary: ieee1394: sbp2: enable auto spin-up for Maxtor disks
+Master sha1: e31f59ce593b073ee14241781edfb0637697eeb6
+Master summary: [PATCH] ieee1394: sbp2: enable auto spin-up for Maxtor disks
+********************************************************************************
+Stable sha1: b02ef087a8379fc757b894d6d2e0deff79ccdf20
+Stable summary: invalidate_bdev() speedup
+Master sha1: 0e1dfc66b6ec94984a4778132147a8aa36461d58
+Master summary: [PATCH] invalidate_bdev() speedup
+********************************************************************************
+Stable sha1: cd62705f099033ea8aeeb47688f4572b3532db93
+Stable summary: Sparc64 quad-float emulation fix
+Master sha1: 92f282988b4ce3967ee8399f7d1184ebfa04e48b
+Master summary: [SPARC64]: Fix quad-float multiply emulation.
+********************************************************************************
+Stable sha1: d3a03e82305595317f8d40a8c8154e731c51bb84
+Stable summary: VLAN state handling fix
+Master sha1: 1402c8519acba215f5a6101b9e5ada07ab371273
+Master summary: [VLAN]: sparse warning fix
+********************************************************************************
+Stable sha1: 31d65c2bc7971b07e341d045a7063cfa90866225
+Stable summary: Update frag_list in pskb_trim
+Master sha1: 27b437c8b7d519aac70a0254c2e04c29eff565a2
+Master summary: [NET]: Update frag_list in pskb_trim
+********************************************************************************
+Stable sha1: ab96dcd3d043f6169c6c309012b8a6aa28b83e18
+Stable summary: UHCI: Fix handling of short last packet
+Master sha1: ad0f9904444de1309dedd2b9e365cae8af77d9b1
+Master summary: gro: Fix handling of imprecisely split packets
+********************************************************************************
+Stable sha1: 1e1f0476535c248fb65ac11e1ae4adee221a2fc3
+Stable summary: sky2: NAPI bug
+Master sha1: 8f70920f2f2a699b4ad35e625071cd92f4ba6ca3
+Master summary: sky2: GPIO register
+********************************************************************************
+Stable sha1: e932b368e48ce2b9caf82c505b938a711ed4e045
+Stable summary: i2c: Fix 'ignore' module parameter handling in i2c-core
+Master sha1: 2369df933f1c632ec3f230774019e37c3969b7ec
+Master summary: [PATCH] i2c: Fix 'ignore' module parameter handling in i2c-core
+********************************************************************************
+Stable sha1: 73e6c2a4799708d6e4ccdf9b30b47422a969e053
+Stable summary: scx200_acb: Fix the block transactions
+Master sha1: c3efacaa68a75049a859cbfd03d52dfdebb7527b
+Master summary: [PATCH] scx200_acb: Fix the block transactions
+********************************************************************************
+Stable sha1: f1a360dce49a51350f255fcd8d89fb132a9c3b60
+Stable summary: scx200_acb: Fix the state machine
+Master sha1: fd627a01477dadaef3bc8556e5e9d0ef80310c3a
+Master summary: [PATCH] scx200_acb: Fix the state machine
+********************************************************************************
+Stable sha1: 4f40508af128fc5ead71aab6e9932039d2a07fd4
+Stable summary: H.323 helper: fix possible NULL-ptr dereference
+Master sha1: 083edca05ab1fa6efac1ba414018f7f45a4a83ff
+Master summary: [NETFILTER]: H.323 helper: fix possible NULL-ptr dereference
+********************************************************************************
+Stable sha1: 7e92c4788d4bbc03d00553dda3c3572b33ae0d2b
+Stable summary: Don't allow chmod() on the /proc/<pid>/ files
+Master sha1: 6d76fa58b050044994fe25f8753b8023f2b36737
+Master summary: Don't allow chmod() on the /proc/<pid>/ files
+********************************************************************************
+Stable sha1: ef2a8a41fdd6f0c8079e6fd4cad1eebdce99aa9a
+Stable summary: PCI: fix issues with extended conf space when MMCONFIG disabled because of e820
+Master sha1: ead2bfeb7f739d2ad6e09dc1343f0da51feb7f51
+Master summary: [PATCH] PCI: fix issues with extended conf space when MMCONFIG disabled because of e820
+********************************************************************************
+Stable sha1: 8456c78dfa94a54d0ac78cf5190b3b8c7ea045cf
+Stable summary: struct file leakage
+Master sha1: de45921535bfc3b1f63b426c2a9739635f864283
+Master summary: [PATCH] struct file leakage
+********************************************************************************
+Stable sha1: 44896b17f1c2d8824250e06bd07d7b5a4b7e6be4
+Stable summary: serial 8250: sysrq deadlock fix
+Master sha1: 68aa2c0d4a36b43ea9c6d77134c94b4501fd2eb4
+Master summary: [SERIAL] 8250: sysrq deadlock fix
+********************************************************************************
+Stable sha1: 7eb990848664564593c96c5d1cf148ce23b34732
+Stable summary: pdflush: handle resume wakeups
+Master sha1: d616e09ab33aa4d013a93c9b393efd5cebf78521
+Master summary: [PATCH] pdflush: handle resume wakeups
+********************************************************************************
+Stable sha1: 3f2ffbcff824e464376eae8e62c4ef92deecdbc4
+Stable summary: ieee80211: TKIP requires CRC32
+Master sha1: ca0084fa90533687b6317e6d084141da87c74d5c
+Master summary: [PATCH] ieee80211: TKIP requires CRC32
+********************************************************************************
+Stable sha1: 1e8cd841d65774e96f5a52b0faa898b7ffebcece
+Stable summary: Fix IPv4/DECnet routing rule dumping
+Master sha1: 26e0fd1ce2418b10713b569a195bdb679233066b
+Master summary: [NET]: Fix IPv4/DECnet routing rule dumping
+********************************************************************************
+Stable sha1: 1dff316b54b9db4e17f191b4e12f032cde57b921
+Stable summary: fix fdset leakage
+Master sha1: d579091b4385e9386e244622d593fe064aa8e8e7
+Master summary: [PATCH] fix fdset leakage
+********************************************************************************
+Stable sha1: b66a64d8fa30e003494040d4a7eb6587fa3fffcc
+Stable summary: Suppress irq handler mismatch messages in ALSA ISA drivers
+Master sha1: 02ada9c112eb00ecb9d2c04b6132f48ade534dbf
+Master summary: [ALSA] Suppress irq handler mismatch messages in ALSA ISA drivers
+********************************************************************************
+Stable sha1: 7c7b60b196c9fd91425cb801ad3f317961310c12
+Stable summary: ALSA: RME HDSP - fixed proc interface (missing {})
+Master sha1: ecb594e66e740dc390a301768d89662777f1fde2
+Master summary: [ALSA] RME HDSP - fixed proc interface (missing {})
+********************************************************************************
+Stable sha1: e8967dfa4074fef1a114169b58ba05730165d143
+Stable summary: ALSA: hda-intel - Fix race in remove
+Master sha1: f079c25ab8a7d223875c5bac9b23b484e4a18f88
+Master summary: [ALSA] hda-intel - Fix race in remove
+********************************************************************************
+Stable sha1: 7dd9dac03853e21bcc38f681bf01a890c24e1d15
+Stable summary: ALSA: Fix workaround for AD1988A rev2 codec
+Master sha1: 1a806f487da563d0b60375665911009e60a7d121
+Master summary: [ALSA] Fix workaround for AD1988A rev2 codec
+********************************************************************************
+Stable sha1: 5b6aeb44a10c08019f3d53c85de82317658e2ef5
+Stable summary: ALSA: Fix undefined (missing) references in ISA MIRO sound driver
+Master sha1: d2a5b9d45f31bf5e5a1b89a87421e218ebe1a6ba
+Master summary: [ALSA] Fix undefined (missing) references in ISA MIRO sound driver
+********************************************************************************
+Stable sha1: 08d60485398b5c66b6084ba210a5a12faa02e2fa
+Stable summary: ALSA: fix the SND_FM801_TEA575X dependencies
+Master sha1: efce4bb9ecd033c9e0f221549be0098bcf6a3aad
+Master summary: [ALSA] fix the SND_FM801_TEA575X dependencies
+********************************************************************************
+Stable sha1: eca58f40f141b0a209dd487ca0a0886ba8279bea
+Stable summary: ALSA: Fix mute switch on VAIO laptops with STAC7661
+Master sha1: a9393d70e564e4afe0333b1e26dda48af8b9305e
+Master summary: [ALSA] hda-codec - Fix mute switch on VAIO laptops with STAC7661
+********************************************************************************
+Stable sha1: 4b5ae6ca7b23f85091be1c17286762e58e2b700f
+Stable summary: ALSA: Fix model for HP dc7600
+Master sha1: 766a6c36f3a0b12e1c55dddc1df6673db6b22bfb
+Master summary: [ALSA] hda-codec - Fix model for HP dc7600
+********************************************************************************
+Stable sha1: 27f1b268d39125a116080a5831c883b6b276a97a
+Stable summary: ALSA: Fix missing array terminators in AD1988 codec support
+Master sha1: 2ece5f42a284fecfb77b1c63f2263065e12a518f
+Master summary: [ALSA] hda-codec - Fix missing array terminators in AD1988 codec support
+********************************************************************************
+Stable sha1: 62d99ac2aeb0a91d7f5f3a4f1532c686b736b37e
+Stable summary: ALSA: Fix a deadlock in snd-rtctimer
+Master sha1: 2999ff5ba12a3dce5a86acd7078fd8787623ec63
+Master summary: [ALSA] Fix a deadlock in snd-rtctimer
+********************************************************************************
+Stable sha1: 954d53d3ea28bcd12396f7d26b78dd16719246c6
+Stable summary: ALSA: au88x0 - Fix 64bit address of MPU401 MMIO port
+Master sha1: d5a31b8b6e79145c832d530743ca80bf5f58a965
+Master summary: [ALSA] au88x0 - Fix 64bit address of MPU401 MMIO port
+********************************************************************************
+Stable sha1: cefc30b36a16abd1284425aff1aaf0cc2b51b047
+Stable summary: Add missing UFO initialisations
+Master sha1: 57a09a7b3d9445a17c78d544f1e49d4d7d61705a
+Master summary: ocfs2: Add missing initialization
+********************************************************************************
+Stable sha1: 949837a9ea1aba1c9ca19bf1969cd72c7de72d75
+Stable summary: generic_file_buffered_write(): handle zero-length iovec segments
+Master sha1: 81b0c8713385ce1b1b9058e916edcf9561ad76d6
+Master summary: [PATCH] generic_file_buffered_write(): handle zero-length iovec segments
+********************************************************************************
+Stable sha1: b5e475eb0506f525abd38782e40c4acd0b280f28
+Stable summary: generic_file_buffered_write(): deadlock on vectored write
+Master sha1: 6527c2bdf1f833cc18e8f42bd97973d583e4aa83
+Master summary: [PATCH] generic_file_buffered_write(): deadlock on vectored write
+********************************************************************************
+Stable sha1: ba4532fa45b99a866d253877372f086503a944c6
+Stable summary: USB serial ftdi_sio: Prevent userspace DoS (CVE-2006-2936)
+Master sha1: 224654004ca688af67cec44d9300e8c3f647577c
+Master summary: [PATCH] USB serial ftdi_sio: Prevent userspace DoS
+********************************************************************************
+Stable sha1: 5bd9689ce4b9ffd657be1462f4b2f5a0d10cd450
+Stable summary: splice: fix problems with sys_tee()
+Master sha1: aadd06e5c56b9ff5117ec77e59eada43dc46e2fc
+Master summary: [PATCH] splice: fix problems with sys_tee()
+********************************************************************************
+Stable sha1: 015b18b4bff96be06c0396c03650be06091dafbc
+Stable summary: cdrom: fix bad cgc.buflen assignment
+Master sha1: 454d6fbc48374be8f53b9bafaa86530cf8eb3bc1
+Master summary: [PATCH] cdrom: fix bad cgc.buflen assignment
+********************************************************************************
+Stable sha1: 88caad141b0245b150ab24579d5a168c7314fb67
+Stable summary: Fix powernow-k8 SMP kernel on UP hardware bug.
+Master sha1: 9ed059e1551bf36092215b965838502ac21f42e4
+Master summary: [CPUFREQ] Fix powernow-k8 SMP kernel on UP hardware bug.
+********************************************************************************
+Stable sha1: 070cc2d0510eaa75f9c580f082bb3031d9c9faeb
+Stable summary: Make powernow-k7 work on SMP kernels.
+Master sha1: 436fe7b8b4a5016ef1fcb32bff77bde84003e15d
+Master summary: [CPUFREQ] Make powernow-k7 work on SMP kernels.
+********************************************************************************
+Stable sha1: 0fd4fe8a44fbc58608f27d7246927024bbcf934c
+Stable summary: dvb-bt8xx: fix frontend detection for DViCO FusionHDTV DVB-T Lite rev 1.2
+Master sha1: 8c99024b88b5da3a73f0575dad98527c9a278d1b
+Master summary: V4L/DVB (3765): Dvb-bt8xx: add support for DViCO FusionHDTV DVB-T Lite 2nd revision
+********************************************************************************
+Stable sha1: 54f8bab3f331ee569aad3074d9c81dfb395482c0
+Stable summary: v4l/dvb: stradis: dont export MODULE_DEVICE_TABLE
+Master sha1: 19234cdda517396e5e0b10e77493afa9e30095c3
+Master summary: gpio: add MODULE_DEVICE_TABLE
+********************************************************************************
+Stable sha1: 5bb61972dababe40d58c08de886e5d01f2603163
+Stable summary: v4l/dvb: Backport the budget driver DISEQC instability fix
+Master sha1: 7a6ad1dd86a45da8f235300349d4abd9ae7d1a21
+Master summary: usb: gadget zero timer init fix
+********************************************************************************
+Stable sha1: 3900669ef7b9e732dc5b4a38f72afa0237486dd8
+Stable summary: v4l/dvb: Backport the DISEQC regression fix to 2.6.17.x
+Master sha1: fad99fac2627e2cc0ebfe07fcb5046c0b4e103f9
+Master summary: x86,kgdb: fix debugger hw breakpoint test regression in 2.6.35
+********************************************************************************
+Stable sha1: aacc143cb727db86692910ff5cf72bac8afe975b
+Stable summary: v4l/dvb: Backport fix to artec USB DVB devices
+Master sha1: df23fa01acc77444453633e1dec59cd7a4ea8ec3
+Master summary: USB: Driver to charge USB blackberry devices
+********************************************************************************
+Stable sha1: 07d1f3a0037a0e4b1b1aff13d97180189148f4f4
+Stable summary: PKT_SCHED: Fix error handling while dumping actions
+Master sha1: 4fe683f50d3fc8e36d4749277631dfc711393aa0
+Master summary: [PKT_SCHED]: Fix error handling while dumping actions
+********************************************************************************
+Stable sha1: 0a5bad5657163f8f44f6220929a70acf297d3dd5
+Stable summary: PKT_SCHED: Return ENOENT if action module is unavailable
+Master sha1: d152b4e1e9a18f332ecd9e66492d706edc083345
+Master summary: [PKT_SCHED]: Return ENOENT if action module is unavailable
+********************************************************************************
+Stable sha1: 5bf5d453cd5479783020d2cd76138812de947106
+Stable summary: PKT_SCHED: Fix illegal memory dereferences when dumping actions
+Master sha1: 26dab8930b408d5e5eb9ef496d68364dc955e249
+Master summary: [PKT_SCHED]: Fix illegal memory dereferences when dumping actions
+********************************************************************************
+Stable sha1: d7f69eaa106a0b46474e116216a81f72ff28e507
+Stable summary: v4l/dvb: Kconfig: fix description and dependencies for saa7115 module
+Master sha1: 8ca4deb259f17a9a209030baa36aca39ec03ceaf
+Master summary: V4L/DVB (4124): Kconfig: fix description for saa7115 module
+********************************************************************************
+Stable sha1: 6d4764bead69f0092049fa6fe409d1c989e75af6
+Stable summary: ethtool: oops in ethtool_set_pauseparam()
+Master sha1: af2a3eac2fe6a6d8e9fdf6927284b34466a7d808
+Master summary: mdio: Add mdio45_ethtool_spauseparam_an()
+********************************************************************************
+Stable sha1: a78a731dfd6c060dfb6cbc93a0363defb4727212
+Stable summary: via-velocity: the link is not correctly detected when the device starts
+Master sha1: 8a22dddb2a5b5834577afd9e25b5392218715611
+Master summary: via-velocity: the link is not correctly detected when the device starts
+********************************************************************************
+Stable sha1: b5e47cc4d14da20f21c9399eafe6c274ff3317eb
+Stable summary: Reduce ACPI verbosity on null handle condition
+Master sha1: 1616a25493cce727d582886f162c5bb0abd87e6a
+Master summary: drbd: Reduce the verbosity of some state transitions
+********************************************************************************
+Stable sha1: a9eaad8dc41a6a700e3be89f4e13632db5e3184f
+Stable summary: pnp: suppress request_irq() warning
+Master sha1: 0cadaf45bd7c19f0bef49d1eebfff38a046b9ba4
+Master summary: [PATCH] pnp: suppress request_irq() warning
+********************************************************************************
+Stable sha1: 76e89d27432c00b797b8ef6106aaf5b2c393b5e6
+Stable summary: v4l/dvb: Fix CI interface on PRO KNC1 cards
+Master sha1: c5e768a1ec281926e3a3a2b804d5004a2693d7e8
+Master summary: V4L/DVB (4277): Fix CI interface on PRO KNC1 cards
+********************************************************************************
+Stable sha1: 572b3be58804375d728de9de50cd5716c07b7863
+Stable summary: v4l/dvb: Fix CI on old KNC1 DVBC cards
+Master sha1: fd6decfbb86a73f3bdf3df2281191e7a978d8b77
+Master summary: V4L/DVB (4276): Fix CI on old KNC1 DVBC cards
+********************************************************************************
+Stable sha1: bdfb0d8e84cc4feb14509a3e4efeb5e2a48a3a4c
+Stable summary: v4l/dvb: Fix budget-av frontend detection
+Master sha1: 473f54276a814810d4a06616b223a7d6829e1ad5
+Master summary: V4L/DVB (3805): Fix KNC1 card frontend detection
+********************************************************************************
+Stable sha1: 4b6f4d57b81ba77366c329bd90c76bc0e5c5b20d
+Stable summary: memory hotplug: solve config broken: undefined reference to `online_page'
+Master sha1: cc57637b0b015fb5d70dbbec740de516d33af07d
+Master summary: [PATCH] solve config broken: undefined reference to `online_page'
+********************************************************************************
+Stable sha1: 9f24916834aaa1a31d90505c671e4746471200bf
+Stable summary: BLOCK: Fix bounce limit address check
+Master sha1: 8269730b389d4793348d521140f9c76fb1828249
+Master summary: [BLOCK] Fix bounce limit address check
+********************************************************************************
+Stable sha1: 395e8c5b6b0a3ceaf5e95b79f327028a8a48f481
+Stable summary: x86_64: Fix modular pc speaker
+Master sha1: 9c63f8738734eb7e6d3f76ca03186f16ef88edf5
+Master summary: [PATCH] x86_64: Fix modular pc speaker
+********************************************************************************
+Stable sha1: 14c620f9a7f2627953d6d52f196a5773d379533d
+Stable summary: IB/mthca: restore missing PCI registers after reset
+Master sha1: 13aa6ecb47990cfc78e20e347fdd3f1df6189426
+Master summary: IB/mthca: restore missing PCI registers after reset
+********************************************************************************
+Stable sha1: 9f67d487c336a68dd025ae99877115c7e016fe86
+Stable summary: XFS: corruption fix
+Master sha1: de986e859a29097fb9211b052d86a9a2c868f6cd
+Master summary: [GFS2] Data corruption fix
+********************************************************************************
+Stable sha1: 1d87a98f9db06b6c7fadd20f13ab092875d53801
+Stable summary: [PATCH] Relax /proc fix a bit
+Master sha1: 9ee8ab9fbf21e6b87ad227cd46c0a4be41ab749b
+Master summary: Relax /proc fix a bit
+********************************************************************************
+Stable sha1: 4a7ac3ab06932949d3069c1811f6f2a310f656c4
+Stable summary: [PATCH] Fix nasty /proc vulnerability (CVE-2006-3626)
+Master sha1: 18b0bbd8ca6d3cb90425aa0d77b99a762c6d6de3
+Master summary: Fix nasty /proc vulnerability
+********************************************************************************
+Stable sha1: 0af184bb9f80edfbb94de46cb52e9592e5a547b0
+Stable summary: fix prctl privilege escalation and suid_dumpable (CVE-2006-2451)
+Master sha1: abf75a5033d4da7b8a7e92321d74021d1fcfb502
+Master summary: [PATCH] Fix prctl privilege escalation and suid_dumpable (CVE-2006-2451)
+********************************************************************************
+Stable sha1: 9c48e1ea8cf8800cc5e2d39ccbb8b5ff9704f8e9
+Stable summary: [PATCH] NETFILTER: SCTP conntrack: fix crash triggered by packet without chunks [CVE-2006-2934]
+Master sha1: dd7271feba61d5dc0fab1cb5365db9926d35ea3a
+Master summary: [NETFILTER]: SCTP conntrack: fix crash triggered by packet without chunks
+********************************************************************************
+Stable sha1: 988bc3337ebc15c7c6078d3263b0599bc744d693
+Stable summary: [PATCH] Input: return correct size when reading modalias attribute
+Master sha1: 8a3cf456adbde8317a15fc038cfe82c630512f2e
+Master summary: Input: return correct size when reading modalias attribute
+********************************************************************************
+Stable sha1: 26992852dde78e6acc9a9b2bdc9e734428e34d65
+Stable summary: [PATCH] idr: fix race in idr code
+Master sha1: 1eec00565d849ceda67f425e089c3233e3ef2ca2
+Master summary: [PATCH] fix race in idr code
+********************************************************************************
+Stable sha1: c4389daed17fb3d6ec54f2759e2705c268828899
+Stable summary: [PATCH] Link error when futexes are disabled on 64bit architectures
+Master sha1: 2aa92581fb13e04e1440e5041b412cc06c782e0e
+Master summary: [PATCH] Link error when futexes are disabled on 64bit architectures
+********************************************************************************
+Stable sha1: 6bd6b5c7d81c365b53ff40f9c049e19aa104f6ac
+Stable summary: [PATCH] kbuild: bugfix with initramfs
+Master sha1: ff5417107b7615fcef772cabcb717f4a715ffadc
+Master summary: kbuild: bugfix with initramfs
+********************************************************************************
+Stable sha1: 27877d06fea98a4ae485250db523bb5eea27235c
+Stable summary: [PATCH] ide-io: increase timeout value to allow for slave wakeup
+Master sha1: 178184b60979992508130741f16499c360bc9c9a
+Master summary: [PATCH] ide-io: increase timeout value to allow for slave wakeup
+********************************************************************************
+Stable sha1: f92b235f72be34e66357df72794f2baa0221524d
+Stable summary: [PATCH] libata: minor patch for ATA_DFLAG_PIO
+Master sha1: 2719736779da2c7fbb17d3de16c817b429bfeb9c
+Master summary: [PATCH] libata: add ATA_QCFLAG_IO
+********************************************************************************
+Stable sha1: 4f75bf81d40d4c5b459343ef34d05478b8bed47d
+Stable summary: [PATCH] ohci1394: Fix broken suspend/resume in ohci1394
+Master sha1: b21efb59c5d317a2a972b9d66939cbfeababd982
+Master summary: Fix broken suspend/resume in ohci1394
+********************************************************************************
+Stable sha1: e778d0ec93ec97fb851b8e0bd5e1488f083baa6a
+Stable summary: [PATCH] IPV6 ADDRCONF: Fix default source address selection without CONFIG_IPV6_PRIVACY
+Master sha1: 5e2707fa3aed8c24075087cbaea2628725adbe55
+Master summary: [IPV6] ADDRCONF: Fix default source address selection without CONFIG_IPV6_PRIVACY
+********************************************************************************
+Stable sha1: ac16ac4c1202baff72f889f3904ca480bea93d76
+Stable summary: [PATCH] IPV6: Fix source address selection.
+Master sha1: 6ae5f983cf8de769214d2d9e8a783c881eccd4cd
+Master summary: [IPV6]: Fix source address selection.
+********************************************************************************
+Stable sha1: e0072c1bbbdcb819e8df0a67229bb9eed2accec3
+Stable summary: [PATCH] UML: fix uptime
+Master sha1: 9f793d2c77ec5818679e4747c554d9333cecf476
+Master summary: [PATCH] USB: fix ub issues
+********************************************************************************
+Stable sha1: e45424909c0a8ffc7afbea6e35da582f782fc618
+Stable summary: [PATCH] bcm43xx: init fix for possible Machine Check
+Master sha1: 2230daa0fd50bf82303fd8da96b088310851d803
+Master summary: [PATCH] bcm43xx: fix dyn tssi2dbm memleak
+********************************************************************************
+Stable sha1: 5cb91c1a730874dd915eba983996b3e45378e39b
+Stable summary: [PATCH] x86: compile fix for asm-i386/alternatives.h
+Master sha1: 30343d6c3d4e3fe961369e7be19935683e808c88
+Master summary: [PATCH] x86: compile fix for asm-i386/alternatives.h
+********************************************************************************
+Stable sha1: 323e290abcbdf84afde0fbbd775f3ba4b784655a
+Stable summary: [PATCH] NTFS: Critical bug fix (affects MIPS and possibly others)
+Master sha1: f893afbe1262e27e91234506f72e17716190dd2f
+Master summary: [PATCH] NTFS: Critical bug fix (affects MIPS and possibly others)
+********************************************************************************
+Stable sha1: 50cdbb604d8e4f38c30e387ef28433a02b91e6f1
+Stable summary: [PATCH] SPARC32: Fix iommu_flush_iotlb end address
+Master sha1: 3185d4d2873a46ca1620d784013f285522091aa0
+Master summary: [SPARC]: Fix iommu_flush_iotlb end address
+********************************************************************************
+Stable sha1: 94f37cf0a304c16dcf86ec542e88b5448b2edfb7
+Stable summary: [PATCH] ETHTOOL: Fix UFO typo
+Master sha1: 47552c4e555eefe381f3d45140b59a2ea4b16486
+Master summary: [ETHTOOL]: Fix UFO typo
+********************************************************************************
+Stable sha1: c2ba44b229b04cbd57106107d0047e2c666040ce
+Stable summary: [PATCH] SCTP: Fix persistent slowdown in sctp when a gap ack consumes rx buffer.
+Master sha1: d5b9f4c083b0e3102f3101545279f623680cb3a0
+Master summary: [SCTP]: Fix persistent slowdown in sctp when a gap ack consumes rx buffer.
+********************************************************************************
+Stable sha1: f0a0819784268d7ca479b4538b07124249137500
+Stable summary: [PATCH] SCTP: Send only 1 window update SACK per message.
+Master sha1: d7c2c9e3977e4312d093ac092761798d4d47c9e0
+Master summary: [SCTP]: Send only 1 window update SACK per message.
+********************************************************************************
+Stable sha1: ac3e4adefd766840f20e7cad6aa430f3fb491c4d
+Stable summary: [PATCH] SCTP: Reset rtt_in_progress for the chunk when processing its sack.
+Master sha1: 4c9f5d5305a23851e67471b147e0d459a7166717
+Master summary: [SCTP] Reset rtt_in_progress for the chunk when processing its sack.
+********************************************************************************
+Stable sha1: 8cd8533a381af92ff3febeb0ab82b4d145be1257
+Stable summary: [PATCH] SCTP: Reject sctp packets with broadcast addresses.
+Master sha1: 5636bef7324f49e36f05ec8a5f6284e11b1bcca4
+Master summary: [SCTP]: Reject sctp packets with broadcast addresses.
+********************************************************************************
+Stable sha1: 617495463a301a956990b87913849dd740e58bcf
+Stable summary: [PATCH] SCTP: Limit association max_retrans setting in setsockopt.
+Master sha1: 402d68c43326d2f0e7e2e9a9013cd4c098d9b87c
+Master summary: [SCTP]: Limit association max_retrans setting in setsockopt.
+********************************************************************************
+Stable sha1: f67656ad55536533ebc33e3154184aeb53b379b8
+Stable summary: [PATCH] PFKEYV2: Fix inconsistent typing in struct sadb_x_kmprivate.
+Master sha1: c7ce1ae21223fe1f905feba272bc14b87994a57d
+Master summary: [PFKEYV2]: Fix inconsistent typing in struct sadb_x_kmprivate.
+********************************************************************************
+Stable sha1: 8fbc89242905b7645064d6946ac86d4bd77c55c5
+Stable summary: [PATCH] IPV6: Sum real space for RTAs.
+Master sha1: c5396a31b20991c856facbce18a2a56d1a14e8d0
+Master summary: [IPV6]: Sum real space for RTAs.
+********************************************************************************
+Stable sha1: 9baa5f6d7e59d7aecf4c17cc5ac9a162e65e1f72
+Stable summary: [PATCH] USB: Whiteheat: fix firmware spurious errors
+Master sha1: 09fd6bc8b453c9215e81911cbb6882556aa03639
+Master summary: [PATCH] USB: Whiteheat: fix firmware spurious errors
+********************************************************************************
+Stable sha1: b9d3e52e0e0f95ab5198ac20fbc47b3cb1a63407
+Stable summary: [PATCH] xt_sctp: fix endless loop caused by 0 chunk length (CVE-2006-3085)
+Master sha1: d3dcd4efe2ad1ad1865b2fe5c863c1ebd9482a84
+Master summary: [NETFILTER]: xt_sctp: fix endless loop caused by 0 chunk length
+********************************************************************************
+177 stable commits

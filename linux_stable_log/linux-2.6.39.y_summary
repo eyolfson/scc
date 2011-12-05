@@ -1,0 +1,2186 @@
+Stable sha1: 3d0475119d8722798db5e88f26493f6547a4bb5b
+Stable summary: alpha: fix several security issues
+Master sha1: 21c5977a836e399fc710ff2c5367845ed5c2527f
+Master summary: alpha: fix several security issues
+********************************************************************************
+Stable sha1: 30f311db2bee9f2e0373619dee1acd6182819ee1
+Stable summary: proc: restrict access to /proc/PID/io
+Master sha1: 1d1221f375c94ef961ba8574ac4f85c8870ddd51
+Master summary: proc: restrict access to /proc/PID/io
+********************************************************************************
+Stable sha1: 64b1641d7c7b9a65619522a11ce4abe9b8fd2d9c
+Stable summary: oom: task->mm == NULL doesn't mean the memory was freed
+Master sha1: c027a474a68065391c8773f6e83ed5412657e369
+Master summary: oom: task->mm == NULL doesn't mean the memory was freed
+********************************************************************************
+Stable sha1: 95df2d8860b2fd0759722fe691c244f0769829c6
+Stable summary: FS-Cache: Fix __fscache_uncache_all_inode_pages()'s outer loop
+Master sha1: b307d4655a71749ac3f91c6dbe33d28cc026ceeb
+Master summary: FS-Cache: Fix __fscache_uncache_all_inode_pages()'s outer loop
+********************************************************************************
+Stable sha1: 2cdac5f07180d5536b7f695685dd2bc49bc79e23
+Stable summary: gro: Only reset frag0 when skb can be pulled
+Master sha1: 17dd759c67f21e34f2156abcf415e1f60605a188
+Master summary: gro: Only reset frag0 when skb can be pulled
+********************************************************************************
+Stable sha1: 2cfb25e6c60e5c5e0b93cf5ea26ba85200cca532
+Stable summary: bridge: send proper message_age in config BPDU
+Master sha1: 0c03150e7ea8f7fcd03cfef29385e0010b22ee92
+Master summary: bridge: send proper message_age in config BPDU
+********************************************************************************
+Stable sha1: 3d729b1a87d579ce9ebec2008ebbfa1100f0cb90
+Stable summary: cifs: lower default and max wsize to what 2.6.39 can handle
+Master sha1: 87bc730c07a0884d14d6af5c9d49f4669c0a0589
+Master summary: udf: fix default mode and dmode options handling
+********************************************************************************
+Stable sha1: c0f3315e568a5424c3b84b987cd57aaecc5aed9b
+Stable summary: cifs: fix wsize negotiation to respect max buffer size and active signing (try #4)
+Master sha1: 1190f6a067bf27b2ee7e06ec0776a17fe0f6c4d8
+Master summary: cifs: fix wsize negotiation to respect max buffer size and active signing (try #4)
+********************************************************************************
+Stable sha1: 601309611a1714cca934161550291dc5553b6b63
+Stable summary: vfs: fix race in rcu lookup of pruned dentry
+Master sha1: 59430262401bec02d415179c43dbe5b8819c09ce
+Master summary: vfs: fix race in rcu lookup of pruned dentry
+********************************************************************************
+Stable sha1: 6ba8838527eab698d2b252b750cd5743b09c9737
+Stable summary: Revert "DiBxxxx: get rid of DMA buffer on stack"
+Master sha1: 5a0deeed5741117ee8625d6305d0034e219f102c
+Master summary: [media] DiBxxxx: get rid of DMA buffer on stack
+********************************************************************************
+Stable sha1: ae32cfba804b4940a31fbc075b95e324f932a1f5
+Stable summary: mm: vmscan: only read new_classzone_idx from pgdat when reclaiming successfully
+Master sha1: 215ddd6664ced067afca7eebd2d1eb83f064ff5a
+Master summary: mm: vmscan: only read new_classzone_idx from pgdat when reclaiming successfully
+********************************************************************************
+Stable sha1: 2de64879148c55b02528bb7e217edc8a1699d812
+Stable summary: mm: vmscan: do not apply pressure to slab if we are not applying pressure to zone
+Master sha1: d7868dae893c83c50c7824bc2bc75f93d114669f
+Master summary: mm: vmscan: do not apply pressure to slab if we are not applying pressure to zone
+********************************************************************************
+Stable sha1: 0388b9459eb4752072e4b3b61e809d3678f0bf45
+Stable summary: cifs: clean up wsize negotiation and allow for larger wsize
+Master sha1: f7910cbd9fa319ee4501074f1f3b5ce23c4b1518
+Master summary: cifs: clean up wsize negotiation and allow for larger wsize
+********************************************************************************
+Stable sha1: 5dde5952b696d0f97730ed45271d21d9e50b32f7
+Stable summary: xfs [stable only]: restart busy extent search after node removal
+Master sha1: b1a4d96509a78ad234d94e0b914b289c60d2969d
+Master summary: Btrfs: tweak the inode-map and free extent search starts on cold mount
+********************************************************************************
+Stable sha1: 3c84cb1e00ef95da040d93b92ae00e16c3b2dabc
+Stable summary: mm: compaction: abort compaction if too many pages are isolated and caller is asynchronous V2
+Master sha1: f9e35b3b41f47c4e17d8132edbcab305a6aaa4b0
+Master summary: mm: compaction: abort compaction if too many pages are isolated and caller is asynchronous V2
+********************************************************************************
+Stable sha1: acd640b8cf7e3a9e554a0ceadb2f73516c09256f
+Stable summary: mm: vmscan: do not use page_count without a page pin
+Master sha1: d179e84ba5da1d0024087d1759a2938817a00f3f
+Master summary: mm: vmscan: do not use page_count without a page pin
+********************************************************************************
+Stable sha1: 16d266cc0c634cd38d47eb7acc06bedfce83a9f2
+Stable summary: mm: compaction: ensure that the compaction free scanner does not move to the next zone
+Master sha1: 7454f4ba40b419eb999a3c61a99da662bf1a2bb8
+Master summary: mm: compaction: ensure that the compaction free scanner does not move to the next zone
+********************************************************************************
+Stable sha1: 950b809e6c27e81d63010ed807605dd50047567e
+Stable summary: ext4: fix oops in ext4_quota_off()
+Master sha1: 0b26859027ce0005ef89520af20351360e51ad76
+Master summary: ext4: fix oops in ext4_quota_off()
+********************************************************************************
+Stable sha1: a1083b5db47a007efca12466a6520db1d65de09d
+Stable summary: libata: fix unexpectedly frozen port after ata_eh_reset()
+Master sha1: 8c56cacc724c7650b893d43068fa66044aa29a61
+Master summary: libata: fix unexpectedly frozen port after ata_eh_reset()
+********************************************************************************
+Stable sha1: 0188e16c28f109896fe91d4787a3c2e38cf995d4
+Stable summary: vmscan: fix a livelock in kswapd
+Master sha1: 4746efded84d7c5a9c8d64d4c6e814ff0cf9fb42
+Master summary: vmscan: fix a livelock in kswapd
+********************************************************************************
+Stable sha1: bce06722151048b4cd4103ddf2f941ea65c6f1dc
+Stable summary: davinci: DM365 EVM: fix video input mux bits
+Master sha1: 9daedd833a38edd90cf7baa1b1fcf61c3a0721e3
+Master summary: davinci: DM365 EVM: fix video input mux bits
+********************************************************************************
+Stable sha1: b55ef8959fd088bcc515b3924cd808c2bbc0605c
+Stable summary: x86: Make Dell Latitude E5420 use reboot=pci
+Master sha1: b7798d28ec15d20fd34b70fa57eb13f0cf6d1ecd
+Master summary: x86: Make Dell Latitude E5420 use reboot=pci
+********************************************************************************
+Stable sha1: 00a5d03b28d28185121cbfc444157b88d62dc691
+Stable summary: mmc: sdhci-esdhc-imx: SDHCI_CARD_PRESENT does not get cleared
+Master sha1: 803862a6f7de4939e0a557214e5e4b37e36f87ff
+Master summary: mmc: sdhci-esdhc-imx: SDHCI_CARD_PRESENT does not get cleared
+********************************************************************************
+Stable sha1: 10ecd66736d5e34cc2e85c9b0705a785fc8d7068
+Stable summary: mmc: Added quirks for Ricoh 1180:e823 lower base clock frequency
+Master sha1: 15bed0f2fa8e1d7db201692532c210a7823d2d21
+Master summary: mmc: Added quirks for Ricoh 1180:e823 lower base clock frequency
+********************************************************************************
+Stable sha1: f3224411a780b5849a7983e5415c7521866af384
+Stable summary: hwmon: (max1111) Fix race condition causing NULL pointer exception
+Master sha1: d3f684f2820a7f42acef68bea6622d9032127fb2
+Master summary: hwmon: (max1111) Fix race condition causing NULL pointer exception
+********************************************************************************
+Stable sha1: 9c48d9aa90d28159c7dd7a23d48eaca1ac4bf201
+Stable summary: hwmon: (asus_atk0110) Fix memory leak
+Master sha1: 0b8e77f12cb6bfe2e5a67f2cdc8c7af23abc4ccf
+Master summary: hwmon: (asus_atk0110) Fix memory leak
+********************************************************************************
+Stable sha1: e715786e4900af13f80c73d2af461a0ad57d3330
+Stable summary: hwmon: (it87) Fix label group removal
+Master sha1: fa8b69758e65b406c8010936b541cd00deef804d
+Master summary: hwmon: (it87) Fix label group removal
+********************************************************************************
+Stable sha1: 305105a4c66b9add5561132bf3efbba3b34796eb
+Stable summary: ASoC: Fix shift in WM8958 accessory detection default implementation
+Master sha1: b35e160a111aa9ae3fad6294e038be20d0da721b
+Master summary: ASoC: Fix shift in WM8958 accessory detection default implementation
+********************************************************************************
+Stable sha1: 58adb574b85520b41aaf49385353eb6ede15586f
+Stable summary: ASoC: Correct WM8994 MICBIAS supply widget hookup
+Master sha1: b793eb60a01d5b5e4aaeb2fbc2b036dec0d9f84d
+Master summary: ASoC: Correct WM8994 MICBIAS supply widget hookup
+********************************************************************************
+Stable sha1: 064368f233a99c4ae72619dade84b2fe036b5625
+Stable summary: si4713-i2c: avoid potential buffer overflow on si4713
+Master sha1: dc6b845044ccb7e9e6f3b7e71bd179b3cf0223b6
+Master summary: si4713-i2c: avoid potential buffer overflow on si4713
+********************************************************************************
+Stable sha1: 9a4be8a64f562f1550a5ebb779e6fe9410c39691
+Stable summary: Revert "V4L/DVB: cx23885: Enable Message Signaled Interrupts(MSI)"
+Master sha1: d7515b8866b60c9526d2d7af37ebcd16c3c5ed97
+Master summary: [media] Revert "V4L/DVB: cx23885: Enable Message Signaled Interrupts(MSI)"
+********************************************************************************
+Stable sha1: e804ff107806d691c7aae6d94a4c64abd53ca05d
+Stable summary: GFS2: make sure fallocate bytes is a multiple of blksize
+Master sha1: 6905d9e4dda6112f007e9090bca80507da158e63
+Master summary: GFS2: make sure fallocate bytes is a multiple of blksize
+********************************************************************************
+Stable sha1: 209f2c8170f4a5e96a98c95c0c38489f24eb1858
+Stable summary: drm/radeon: fix oops in ttm reserve when pageflipping (v2)
+Master sha1: 498c555f56a02ec1059bc150cde84411ba0ac010
+Master summary: drm/radeon: fix oops in ttm reserve when pageflipping (v2)
+********************************************************************************
+Stable sha1: fada75ea2cd00ff6f44adc90ed9e99085f8578d6
+Stable summary: drm/radeon/kms: clean up multiple crtc handling for evergreen+ (v2)
+Master sha1: b7eff394670366a42935bfbaef67a6f7185627d7
+Master summary: drm/radeon/kms: clean up multiple crtc handling for evergreen+ (v2)
+********************************************************************************
+Stable sha1: 96072b5c6761cf0b196211f5a30b892192ec764c
+Stable summary: ath5k: fix incorrect use of drvdata in PCI suspend/resume code
+Master sha1: 37000b305bff81bb1ee2f7f37b1319b670a08f76
+Master summary: ath5k: fix incorrect use of drvdata in PCI suspend/resume code
+********************************************************************************
+Stable sha1: 5c02d1c7c6bf910fc93698259a4d7320a3c6d72d
+Stable summary: ath5k: fix incorrect use of drvdata in sysfs code
+Master sha1: 95acbd432b4c6498c5b4b2f92e0e05e3c032d4f8
+Master summary: ath5k: fix incorrect use of drvdata in sysfs code
+********************************************************************************
+Stable sha1: 296c6a42eef092fbb2a1739864d538e5bc037628
+Stable summary: ath9k: Fix tx throughput drops for AR9003 chips with AES encryption
+Master sha1: 4f6760b01bda625e9555e16d8e9ba8126a9c9498
+Master summary: ath9k: Fix tx throughput drops for AR9003 chips with AES encryption
+********************************************************************************
+Stable sha1: 4d41aa3de799ce980cd18efb4bade4a61563e42a
+Stable summary: drm/radeon/kms: add new NI pci ids
+Master sha1: e3c1620434ac77b618ce74c024ace3559602ac99
+Master summary: drm/radeon/kms: add new NI pci ids
+********************************************************************************
+Stable sha1: bfa71434e40f632d466ce7b57857f1e159c4605e
+Stable summary: SUNRPC: Fix use of static variable in rpcb_getport_async
+Master sha1: ec0dd267bf7d08cb30e321e45a75fd40edd7e528
+Master summary: SUNRPC: Fix use of static variable in rpcb_getport_async
+********************************************************************************
+Stable sha1: 7d95a21c6893359dd0bc29663e2ad5554c1a6ed2
+Stable summary: SUNRPC: Fix a race between work-queue and rpc_killall_tasks
+Master sha1: b55c59892e1f3b6c7d4b9ccffb4263e1486fb990
+Master summary: SUNRPC: Fix a race between work-queue and rpc_killall_tasks
+********************************************************************************
+Stable sha1: 906179e992c4073bb4849681a4ec71d0bf91707e
+Stable summary: rtlwifi: rtl8192cu: Add new USB ID for Netgear WNA1000M
+Master sha1: 35cbcbc6f39da30c39bc0a1e679ec44506c4eb3d
+Master summary: rtlwifi: rtl8192cu: Add new USB ID for Netgear WNA1000M
+********************************************************************************
+Stable sha1: 798c33c91af7aaf6c21ccb15c6aa365299049a37
+Stable summary: carl9170: add NEC WL300NU-AG usbid
+Master sha1: 06a86ddbf557cb8a0f7ded54e872e9d456002d52
+Master summary: carl9170: add NEC WL300NU-AG usbid
+********************************************************************************
+Stable sha1: c1c6eb4848b7d5dda0abb5ee8e1c8078b268b840
+Stable summary: mac80211: fix TKIP replay vulnerability
+Master sha1: 34459512ffa7236c849466e3bd604801389734e1
+Master summary: mac80211: fix TKIP replay vulnerability
+********************************************************************************
+Stable sha1: b886f3482f013c83d6daa71099cb74b38f164d51
+Stable summary: NFSv4.1: update nfs4_fattr_bitmap_maxsz
+Master sha1: e5012d1f3861d18c7f3814e757c1c3ab3741dbcd
+Master summary: NFSv4.1: update nfs4_fattr_bitmap_maxsz
+********************************************************************************
+Stable sha1: b39e35d4cc84c41af9e4a441722b0f508f9cb932
+Stable summary: drm/radeon/kms: fix backend map typo on juniper
+Master sha1: 9a4a0b9c9fa6ad9902f49801d7b770462b69c4d3
+Master summary: drm/radeon/kms: fix backend map typo on juniper
+********************************************************************************
+Stable sha1: 4e2eea001cffa8f18cb57d8798a31f556b696f25
+Stable summary: fs/partitions/efi.c: corrupted GUID partition tables can cause kernel oops
+Master sha1: 3eb8e74ec72736b9b9d728bad30484ec89c91dde
+Master summary: fs/partitions/efi.c: corrupted GUID partition tables can cause kernel oops
+********************************************************************************
+Stable sha1: 7928e3776a73df3e51f028b11d28dffb340681a9
+Stable summary: bttv: fix s_tuner for radio
+Master sha1: a024c1a6b274e11596d124619e43c25560f64c01
+Master summary: [media] bttv: fix s_tuner for radio
+********************************************************************************
+Stable sha1: 6eba1b67f9d2138dfd1c73570e15d82f1ba6d8bd
+Stable summary: pvrusb2: fix g/s_tuner support
+Master sha1: 50e9efd60b213ce43ad6979bfc18e25eec2d8413
+Master summary: [media] pvrusb2: fix g/s_tuner support
+********************************************************************************
+Stable sha1: 2566537358964c1f572e565ae34973e56886f1f6
+Stable summary: hwmon: (pmbus) Improve auto-detection of temperature status register
+Master sha1: 22e6b2312d221376dcd98a8afb0f314b62d33a91
+Master summary: hwmon: (pmbus) Improve auto-detection of temperature status register
+********************************************************************************
+Stable sha1: 200b5a77bedf1e5569a0183e86b100f126ecf061
+Stable summary: tuner-core: fix tuner_resume: use t->mode instead of t->type
+Master sha1: 9bf0ef060ebae452c07cf5b0616247780740bb50
+Master summary: [media] tuner-core: fix tuner_resume: use t->mode instead of t->type
+********************************************************************************
+Stable sha1: f0c8bfe6f4a207816d0e0537b99d44924100dad5
+Stable summary: tuner-core: fix s_std and s_tuner
+Master sha1: 4e4a31fb95d88518180517bae3098a23ebde9f9c
+Master summary: [media] tuner-core: fix s_std and s_tuner
+********************************************************************************
+Stable sha1: 4f378612389839ed7fa00ad1dad4533bb4008395
+Stable summary: v4l2-ioctl.c: prefill tuner type for g_frequency and g/s_tuner
+Master sha1: 227690df75382e46a4f6ea1bbc5df855a674b47f
+Master summary: [media] v4l2-ioctl.c: prefill tuner type for g_frequency and g/s_tuner
+********************************************************************************
+Stable sha1: 18afcab7581b876e5673d9c305516a42b2644dd2
+Stable summary: Revert: "dell-laptop: Toggle the unsupported hardware killswitch"
+Master sha1: be65dde82a4a402e9607c2f306f343bf0912623c
+Master summary: Revert: "dell-laptop: Toggle the unsupported hardware killswitch"
+********************************************************************************
+Stable sha1: 618ad84bb39dd8d38fd9e40824d73cc3a7357304
+Stable summary: firewire: ohci: do not bind to Pinnacle cards, avert panic
+Master sha1: 7f7e37115a8b6724f26d0637a04e1d35e3c59717
+Master summary: firewire: ohci: do not bind to Pinnacle cards, avert panic
+********************************************************************************
+Stable sha1: 560a0d439f706e1239eeda9b6596d3646d87ae07
+Stable summary: ARM: pxa: fix PGSR register address calculation
+Master sha1: beb0c9b056b1c23d2029b46a425362e9ccbeba01
+Master summary: ARM: pxa: fix PGSR register address calculation
+********************************************************************************
+Stable sha1: 8a13118043cc06528450ea7cc4876c58d8710373
+Stable summary: ARM: pxa910: correct nand pmu setting
+Master sha1: d204b2c5b16df935fa9a546c528e168859fddcc0
+Master summary: ARM: pxa910: correct nand pmu setting
+********************************************************************************
+Stable sha1: b3275e80eef9961924994dafccb41b710e9c6836
+Stable summary: ARM: pxa168: correct nand pmu setting
+Master sha1: 6662498e132dfa758925a160fd5ef80a083651c3
+Master summary: ARM: pxa168: correct nand pmu setting
+********************************************************************************
+Stable sha1: d00726a966330f798b9cb055611be5d11547dbdd
+Stable summary: ARM: 6989/1: perf: do not start the PMU when no events are present
+Master sha1: f4f38430c94c38187db73a2cf3892cc8b12a2713
+Master summary: ARM: 6989/1: perf: do not start the PMU when no events are present
+********************************************************************************
+Stable sha1: f26417930bc1b60ffd1a0ffc11e4a86a48e9d9bc
+Stable summary: ASoC: ak4642: fixup snd_soc_update_bits mask for PW_MGMT2
+Master sha1: bd7fdbcaa2d06d446577fd3c9b81847b04469e01
+Master summary: ASoC: ak4642: fixup snd_soc_update_bits mask for PW_MGMT2
+********************************************************************************
+Stable sha1: 27c1e50b83622a07bb39ccbf1c332e476e1a0cd8
+Stable summary: ASoC: Ensure we delay long enough for WM8994 FLL to lock when starting
+Master sha1: 8e9ddf811ba021506d2316fcfe619faa0ab3f567
+Master summary: ASoC: Ensure we delay long enough for WM8994 FLL to lock when starting
+********************************************************************************
+Stable sha1: 34396acf40adf67140aa163cb7e6efe9d366d8e6
+Stable summary: ASoC: Fix Blackfin I2S _pointer() implementation return in bounds values
+Master sha1: e999dc50404d401150a5429b6459473a691fd1a0
+Master summary: ASoC: Fix Blackfin I2S _pointer() implementation return in bounds values
+********************************************************************************
+Stable sha1: 10e3fcd9aa47f02694fdb33501ee2287337bf7cd
+Stable summary: hwmon: (pmbus) Use long variables for register to data conversions
+Master sha1: f450c1504d3ff6aace3927c805bdea0ac0669efd
+Master summary: hwmon: (pmbus) Use long variables for register to data conversions
+********************************************************************************
+Stable sha1: 41330bdffea8e1a6a5e82a23f0ed4b767226f3fd
+Stable summary: hwmon: (pmbus) Improve fan detection
+Master sha1: 81ae68142a0483b3791cba99eab268859858f508
+Master summary: hwmon: (pmbus) Improve fan detection
+********************************************************************************
+Stable sha1: dad44d6aa368ded6f12f534eb0a61c9275b10548
+Stable summary: hwmon: (pmbus) Drop check for PMBus revision register in probe function
+Master sha1: 7f2c0662e5cfd05f12ca49109e8f787bf2d87b66
+Master summary: hwmon: (pmbus) Drop check for PMBus revision register in probe function
+********************************************************************************
+Stable sha1: dd3e1c4614e7f6d09aefb6c83c219a6819556be4
+Stable summary: hwmon: (pmbus) Auto-detect temp2 and temp3 registers/attributes
+Master sha1: 0e502ec889d33bfcb348e420d7e105bc61c45eb4
+Master summary: hwmon: (pmbus) Auto-detect temp2 and temp3 registers/attributes
+********************************************************************************
+Stable sha1: ba46bc74116de89360aa481f7bb08d7fe3fd9f06
+Stable summary: hwmon: (lm95241) Fix negative temperature results
+Master sha1: 0c2a40e2fe4f4af0410f57e84b95b817ec15aa70
+Master summary: hwmon: (lm95241) Fix negative temperature results
+********************************************************************************
+Stable sha1: 80cf500447b42c201db5116d1591d39f1d4530f1
+Stable summary: hwmon: (lm95241) Fix chip detection code
+Master sha1: 27739e694a3c34b5e371575d74e500d60111c689
+Master summary: hwmon: (lm95241) Fix chip detection code
+********************************************************************************
+Stable sha1: 3e04233dfb00de548700e29f59f733d0f616f3a2
+Stable summary: mm: vmscan: evaluate the watermarks against the correct classzone
+Master sha1: da175d06b437093f93109ba9e5efbe44dfdf9409
+Master summary: mm: vmscan: evaluate the watermarks against the correct classzone
+********************************************************************************
+Stable sha1: f8936c0405f71df612e6e4cb19dbed35caa79680
+Stable summary: mm/nommu.c: fix remap_pfn_range()
+Master sha1: 8f3b1327aa454bc8283e96bca7669c3c88b83f79
+Master summary: mm/nommu.c: fix remap_pfn_range()
+********************************************************************************
+Stable sha1: 0cd2efd36623c7888a9ae10a7e834cc20f6b300a
+Stable summary: mm: vmscan: correct check for kswapd sleeping in sleeping_prematurely
+Master sha1: 08951e545918c1594434d000d88a7793e2452a9b
+Master summary: mm: vmscan: correct check for kswapd sleeping in sleeping_prematurely
+********************************************************************************
+Stable sha1: 56438a55808985facfd8afdca247c59db41bc74c
+Stable summary: drm/radeon/kms: fix typo in IH_CNTL swap bitfield
+Master sha1: fcb857abc4c0d512e99a08ba0415be9a6d65b4c0
+Master summary: drm/radeon/kms: fix typo in IH_CNTL swap bitfield
+********************************************************************************
+Stable sha1: 914b1dfbb95376c9b853f2e58921ff3dea450543
+Stable summary: drm/radeon/kms: fix typo in evergreen disp int status register
+Master sha1: 37cba6c6f4687e694ac6e3adcf2c2b2974aa3aae
+Master summary: drm/radeon/kms: fix typo in evergreen disp int status register
+********************************************************************************
+Stable sha1: 28d191d0c66e25f5da5d5ed60a0427d0efb47895
+Stable summary: drm/radeon/kms: free ib pool on module unloading
+Master sha1: ccd6895d401efad0c0e41d0e93fba4ef3085e268
+Master summary: drm/radeon/kms: free ib pool on module unloading
+********************************************************************************
+Stable sha1: c74e61504ad7d1bc11311d5e1e18b889f7058fc4
+Stable summary: USB: serial: add IDs for WinChipHead USB->RS232 adapter
+Master sha1: 026dfaf18973404a01f488d6aa556a8c466e06a4
+Master summary: USB: serial: add IDs for WinChipHead USB->RS232 adapter
+********************************************************************************
+Stable sha1: b8680d130d565da6eb07567bd6ff20b73f747498
+Stable summary: USB: additional regression fix for device removal
+Master sha1: ca5c485f55d326d9a23e4badd05890148aa53f74
+Master summary: USB: additional regression fix for device removal
+********************************************************************************
+Stable sha1: 497bf5d2301241813317f5d66b8934ce628060a8
+Stable summary: drm/i915: Apply HWSTAM workaround for BSD ring on SandyBridge
+Master sha1: ec6a890dfed7dd245beba5e5bcdfcffbd934c284
+Master summary: drm/i915: Apply HWSTAM workaround for BSD ring on SandyBridge
+********************************************************************************
+Stable sha1: 6b2f7b61532834cd42f6b89294c3ce0ace801476
+Stable summary: IPVS netns exit causes crash in conntrack
+Master sha1: 8f4e0a18682d91abfad72ede3d3cb5f3ebdf54b4
+Master summary: IPVS netns exit causes crash in conntrack
+********************************************************************************
+Stable sha1: a6e5fedf94a24caa2bd80dd83a81d245b1b895b4
+Stable summary: KVM: Fix register corruption in pvclock_scale_delta
+Master sha1: de2d1a524e94a79078d9fe22c57c0c6009237547
+Master summary: KVM: Fix register corruption in pvclock_scale_delta
+********************************************************************************
+Stable sha1: 5c23d2dac35b93f160f6285f874a163544992115
+Stable summary: Revert "KVM: Save/restore state of assigned PCI device"
+Master sha1: ed78661f2614d3c9f69c23e280db3bafdabdf5bb
+Master summary: KVM: Save/restore state of assigned PCI device
+********************************************************************************
+Stable sha1: 11915b98996882bdc5ae58b992cf929f2c824b66
+Stable summary: xfrm: Fix off by one in the replay advance functions
+Master sha1: e756682c8baa47da1648c0c016e9f48ed66bc32d
+Master summary: xfrm: Fix off by one in the replay advance functions
+********************************************************************************
+Stable sha1: 5a6f784d68bb0ad9c2eae599ab90baf9d98f9ec2
+Stable summary: vlan: fix typo in vlan_dev_hard_start_xmit()
+Master sha1: 307f73df2b9829ee5a261d1ed432ff683c426cdf
+Master summary: vlan: fix typo in vlan_dev_hard_start_xmit()
+********************************************************************************
+Stable sha1: b95484f930629da00b491fb63eff41788d194344
+Stable summary: netfilter: Fix ip_route_me_harder triggering ip_rt_bug
+Master sha1: ed6e4ef836d425bc35e33bf20fcec95e68203afa
+Master summary: netfilter: Fix ip_route_me_harder triggering ip_rt_bug
+********************************************************************************
+Stable sha1: 9672388919350b5f188722ac608bdc32f9bc3c3d
+Stable summary: ipv4: fix multicast losses
+Master sha1: 9aa3c94ce59066f545521033007abb6441706068
+Master summary: ipv4: fix multicast losses
+********************************************************************************
+Stable sha1: 042fe1a2805b175b318db0fa10cf8c9df192fa7c
+Stable summary: USB: fix regression occurring during device removal
+Master sha1: e534c5b831c8b8e9f5edee5c8a37753c808b80dc
+Master summary: USB: fix regression occurring during device removal
+********************************************************************************
+Stable sha1: 8c603fc5c6608bac3e3df537f8f4a70a24e4edd0
+Stable summary: USB: don't let the hub driver prevent system sleep
+Master sha1: cbb330045e5df8f665ac60227ff898421fc8fb92
+Master summary: USB: don't let the hub driver prevent system sleep
+********************************************************************************
+Stable sha1: c4c3048b2bda6562bcdf5507bb9c6c248a87f675
+Stable summary: USB: don't let errors prevent system sleep
+Master sha1: 0af212ba8f123c2eba151af7726c34a50b127962
+Master summary: USB: don't let errors prevent system sleep
+********************************************************************************
+Stable sha1: 0deaf29b6a17686569e90cb722cd03df61104db5
+Stable summary: NLM: Don't hang forever on NLM unlock requests
+Master sha1: 0b760113a3a155269a3fba93a409c640031dd68f
+Master summary: NLM: Don't hang forever on NLM unlock requests
+********************************************************************************
+Stable sha1: 0185a6fcc949e606b4de21afc01b2cb1bf632f73
+Stable summary: Fix CPU spinlock lockups on secondary CPU bringup
+Master sha1: 1b19ca9f0bdab7d5035821e1ec8f39df9a6e3ee0
+Master summary: Fix CPU spinlock lockups on secondary CPU bringup
+********************************************************************************
+Stable sha1: 196188270f0ef3f44f77457517af7c03c06faa48
+Stable summary: taskstats: don't allow duplicate entries in listener mode
+Master sha1: 26c4caea9d697043cc5a458b96411b86d7f6babd
+Master summary: taskstats: don't allow duplicate entries in listener mode
+********************************************************************************
+Stable sha1: c9b0a3029446f29e59f04d0274537d1e3c83c39a
+Stable summary: drivers/misc/lkdtm.c: fix race when crashpoint is hit multiple times before checking count
+Master sha1: aa2c96d6f329e66cc59352b0f12e8f04e6a9593b
+Master summary: drivers/misc/lkdtm.c: fix race when crashpoint is hit multiple times before checking count
+********************************************************************************
+Stable sha1: 283f795cc145256c9eb0c0eaf7392be97d189444
+Stable summary: iwlagn: fix change_interface for P2P types
+Master sha1: 5306c0807491e891125f4fb08b04340c91530f57
+Master summary: iwlagn: fix change_interface for P2P types
+********************************************************************************
+Stable sha1: 1f224f1fcc301d291e0ef607b294c5dc3a2b3a5b
+Stable summary: 6pack,mkiss: fix lock inconsistency
+Master sha1: 6e4e2f811bade330126d4029c88c831784a7efd9
+Master summary: 6pack,mkiss: fix lock inconsistency
+********************************************************************************
+Stable sha1: 8c6da99ab8d0330e35e1ec044787855cc01a663f
+Stable summary: FS-Cache: Add a helper to bulk uncache pages on an inode
+Master sha1: c902ce1bfb40d8b049bd2319b388b4b68b04bc27
+Master summary: FS-Cache: Add a helper to bulk uncache pages on an inode
+********************************************************************************
+Stable sha1: 9f8cc942aafab2f90c3ff42e1921691b8212fa5e
+Stable summary: fs: fix lock initialization
+Master sha1: a51cb91d81f8e6fc4e5e08b772cc3ceb13ac9d37
+Master summary: fs: fix lock initialization
+********************************************************************************
+Stable sha1: ae852760d3e8a170226f30badad6777ec2c1d847
+Stable summary: drivers/base/platform.c: don't mark platform_device_register_resndata() as __init_or_module
+Master sha1: bb2b43fefab723f4a0760146e7bed59d41a50e53
+Master summary: drivers/base/platform.c: don't mark platform_device_register_resndata() as __init_or_module
+********************************************************************************
+Stable sha1: cef65bae7fe7fb3abeafb5b64c90bbe5e7e3dc27
+Stable summary: ASoC: pxa-ssp: Correct check for stream presence
+Master sha1: 53dea36c70c1857149a8c447224e3936eb8b5339
+Master summary: ASoC: pxa-ssp: Correct check for stream presence
+********************************************************************************
+Stable sha1: 43aa522a034e574853b949e5acb97d05776f5b8a
+Stable summary: SUNRPC: Ensure the RPC client only quits on fatal signals
+Master sha1: 5afa9133cfe67f1bfead6049a9640c9262a7101c
+Master summary: SUNRPC: Ensure the RPC client only quits on fatal signals
+********************************************************************************
+Stable sha1: 1ba0b35675c0acec330a0b19c1e7ce9d8acb55f6
+Stable summary: md: avoid endless recovery loop when waiting for fail device to complete.
+Master sha1: 4274215d24633df7302069e51426659d4759c5ed
+Master summary: md: avoid endless recovery loop when waiting for fail device to complete.
+********************************************************************************
+Stable sha1: 2e7c4a283602594b4b74ab636493665531a04e6e
+Stable summary: hfsplus: add missing call to bio_put()
+Master sha1: 50176ddefa4a942419cb693dd2d8345bfdcde67c
+Master summary: hfsplus: add missing call to bio_put()
+********************************************************************************
+Stable sha1: 27747f54a2365afc4e7c10ee9540e350b785eb91
+Stable summary: i2c/pca954x: Initialize the mux to disconnected state
+Master sha1: cd823db8b1161ef0d756514d280715a576d65cc3
+Master summary: i2c/pca954x: Initialize the mux to disconnected state
+********************************************************************************
+Stable sha1: 6e8ab50e5301fb74d9874ba3f66b4c930c72b487
+Stable summary: i2c-taos-evm: Fix log messages
+Master sha1: 9b640f2e154268cb516efcaf9c434f2e73c6783e
+Master summary: i2c-taos-evm: Fix log messages
+********************************************************************************
+Stable sha1: 59ae4caf46efbdae86a3a1d23cee82b8a82d6a0f
+Stable summary: KEYS: Fix error handling in construct_key_and_link()
+Master sha1: b1d7dd80aadb9042e83f9778b484a2f92e0b04d4
+Master summary: KEYS: Fix error handling in construct_key_and_link()
+********************************************************************************
+Stable sha1: 781b230e803f12b8c49eca9fe6d29d13ece665ee
+Stable summary: PM / Hibernate: Fix free_unnecessary_pages()
+Master sha1: 4d4cf23cdde2f8f9324f5684a7f349e182039529
+Master summary: PM / Hibernate: Fix free_unnecessary_pages()
+********************************************************************************
+Stable sha1: 81fdcbdd2dc212eb5d89b5fa4e1f69b48843d037
+Stable summary: PM: Fix async resume following suspend failure
+Master sha1: 6d0e0e84f66d32c33511984dd3badd32364b863c
+Master summary: PM: Fix async resume following suspend failure
+********************************************************************************
+Stable sha1: 1823968020d2e0e173a001e38ed648595c817fe1
+Stable summary: PM: Rename dev_pm_info.in_suspend to is_prepared
+Master sha1: f76b168b6f117a49d36307053e1acbe30580ea5b
+Master summary: PM: Rename dev_pm_info.in_suspend to is_prepared
+********************************************************************************
+Stable sha1: d1657494cad496bf8e45cad7c236236c4a1a5a0d
+Stable summary: PCI / PM: Block races between runtime PM and system sleep
+Master sha1: a5f76d5eba157bf637beb2dd18026db2917c512e
+Master summary: PCI / PM: Block races between runtime PM and system sleep
+********************************************************************************
+Stable sha1: 01251271a43e01b1fbdffcb92136304f6650993e
+Stable summary: block: use the passed in @bdev when claiming if partno is zero
+Master sha1: d4c208b86b8be4254eba0e74071496e599f94639
+Master summary: block: use the passed in @bdev when claiming if partno is zero
+********************************************************************************
+Stable sha1: a8bb0163f9185d7df8aeda6aca2bef6d38ac10a0
+Stable summary: cfq-iosched: make code consistent
+Master sha1: 726e99ab88db059fe1422e15376ae404f8c66eb4
+Master summary: cfq-iosched: make code consistent
+********************************************************************************
+Stable sha1: 3ad80528ba9a8d2e69aba2e110dc875765196bac
+Stable summary: cfq-iosched: fix a rcu warning
+Master sha1: 3181faa85bda3dc3f5e630a1846526c9caaa38e3
+Master summary: cfq-iosched: fix a rcu warning
+********************************************************************************
+Stable sha1: b1ad9117b692986f2fc0d2d1b3f6f56b696d38cc
+Stable summary: cfq-iosched: fix locking around ioc->ioc_data assignment
+Master sha1: 9b50902db5eb8a220160fb89e95aa11967998d12
+Master summary: cfq-iosched: fix locking around ioc->ioc_data assignment
+********************************************************************************
+Stable sha1: 11c30d19fccd0f63f447b20588b84c1deb059745
+Stable summary: debugobjects: Fix boot crash when kmemleak and debugobjects enabled
+Master sha1: 161b6ae0e067e421b20bb35caf66bdb405c929ac
+Master summary: debugobjects: Fix boot crash when kmemleak and debugobjects enabled
+********************************************************************************
+Stable sha1: d02ec2a0a712e8636f65985457169458a822d17e
+Stable summary: Input: properly assign return value of clamp() macro.
+Master sha1: 8c127f0717b438e6abc3d92d4ae248c4224b9dcb
+Master summary: Input: properly assign return value of clamp() macro.
+********************************************************************************
+Stable sha1: 46c441db452d0eb8e52b426f37304f131e30c808
+Stable summary: NFSv4: Fix a readdir regression
+Master sha1: ee7b75fc4f3ae49e1f25bf56219bb5de3c29afaf
+Master summary: NFSv4: Fix a readdir regression
+********************************************************************************
+Stable sha1: cd620702508a716ff5e16421fd65b47cdba68ba9
+Stable summary: NFSv4.1: allow zero fh array in filelayout decode layout
+Master sha1: cec765cf5891c7fc3d905832b481bfb6fd55825d
+Master summary: NFSv4.1: allow zero fh array in filelayout decode layout
+********************************************************************************
+Stable sha1: 1c1b19ee3309e7462094a42adfad24e6cada0a20
+Stable summary: NFSv4.1: allow nfs_fhget to succeed with mounted on fileid
+Master sha1: 533eb4611c9eea53072eb6a61d5a6393b6a77ed7
+Master summary: NFSv4.1: allow nfs_fhget to succeed with mounted on fileid
+********************************************************************************
+Stable sha1: 52b0d3944350446f8ffd96f5e711ff4fa4142ba4
+Stable summary: nfsd4: fix break_lease flags on nfsd open
+Master sha1: 105f4622104848ff1ee1f644d661bef9dec3eb27
+Master summary: nfsd4: fix break_lease flags on nfsd open
+********************************************************************************
+Stable sha1: 1036994e7bfd7957ddedd0c24c74e8ca07b03601
+Stable summary: nfsd: link returns nfserr_delay when breaking lease
+Master sha1: 7d751f6f8c679f51b73d01a1b5269347a929004c
+Master summary: nfsd: link returns nfserr_delay when breaking lease
+********************************************************************************
+Stable sha1: f82d6a7238ab01903c290c56eae900d4b468c181
+Stable summary: nfsd: fix dependency of nfsd on auth_rpcgss
+Master sha1: b084f598df36b62dfae83c10ed17f0b66b50f442
+Master summary: nfsd: fix dependency of nfsd on auth_rpcgss
+********************************************************************************
+Stable sha1: 6ab4d111a375a58eb0898651ddbdad7a34bff6c7
+Stable summary: nfsd: v4 support requires CRYPTO
+Master sha1: be1f4084b4824301e640e81d63b6275cd99ee6a1
+Master summary: nfsd: v4 support requires CRYPTO
+********************************************************************************
+Stable sha1: bdb51c44cde3903ed22dcf9469be4afe9fa0b46d
+Stable summary: watchdog: mtx1-wdt: request gpio before using it
+Master sha1: 9b19d40aa3ebaf1078779da10555da2ab8512422
+Master summary: watchdog: mtx1-wdt: request gpio before using it
+********************************************************************************
+Stable sha1: cb9131e898a0f61df3877a109ff383afe04a90aa
+Stable summary: ite-cir: 8709 needs to use pnp resource 2
+Master sha1: 35d136c8dab034ee14aa00d6082229b4b74607da
+Master summary: [media] ite-cir: 8709 needs to use pnp resource 2
+********************************************************************************
+Stable sha1: 5a17a780a4491afae243c6ac97381214d0fc3346
+Stable summary: uvcvideo: Remove buffers from the queues when freeing
+Master sha1: 8ca2c80b170c47eeb55f0c2a0f2b8edf85f35d49
+Master summary: [media] uvcvideo: Remove buffers from the queues when freeing
+********************************************************************************
+Stable sha1: ac80f4105f8d3ce09ac29ca44f41e8523723e76f
+Stable summary: keymaps: fix table for pinnacle pctv hd devices
+Master sha1: 1ba9268c2bfeebfd70193145685e12faeae92882
+Master summary: [media] keymaps: fix table for pinnacle pctv hd devices
+********************************************************************************
+Stable sha1: bc3ab9505120e944244508c60786616f904e246a
+Stable summary: lirc_zilog: fix spinning rx thread
+Master sha1: 6a8c97ac92461ec57e36b10572e78d4221e8faa8
+Master summary: [media] lirc_zilog: fix spinning rx thread
+********************************************************************************
+Stable sha1: 1601e4bd145b1309894cfe42c2de5795a01db4d8
+Stable summary: rc: fix ghost keypresses with certain hw
+Master sha1: 3f5c4c73322e4d6f3d40b697dac3073d2adffe41
+Master summary: [media] rc: fix ghost keypresses with certain hw
+********************************************************************************
+Stable sha1: a8ece95dee741125ac6c20987bea46b2b346715c
+Stable summary: ALSA: HDA: Add a new Conexant codec ID (506c)
+Master sha1: f0ca89b031d327b80b612a0608d31b8e13e6dc33
+Master summary: ALSA: HDA: Add a new Conexant codec ID (506c)
+********************************************************************************
+Stable sha1: 0bf6e77377c9e99642596243befd1093bea8fca9
+Stable summary: ALSA: HDA: Remove quirk for an HP device
+Master sha1: 6f2e810ad5d162c2bfa063c1811087277b299e4e
+Master summary: ALSA: HDA: Remove quirk for an HP device
+********************************************************************************
+Stable sha1: 88d2962961388f76104a443bcdff579310acc36f
+Stable summary: mm, hotplug: fix error handling in mem_online_node()
+Master sha1: 7553e8f2d5161a2b7a9b7a9f37be1b77e735552f
+Master summary: mm, hotplug: fix error handling in mem_online_node()
+********************************************************************************
+Stable sha1: 712283fb329cf8ff02e72f2f70cf735f01f7c040
+Stable summary: NFS41: do not update isize if inode needs layoutcommit
+Master sha1: 0f66b5984df2fe1617c05900a39a7ef493ca9de9
+Master summary: NFS41: do not update isize if inode needs layoutcommit
+********************************************************************************
+Stable sha1: d1229b3c4d52210b6ee09902b5a705c6509eeb1a
+Stable summary: block: add REQ_SECURE to REQ_COMMON_MASK
+Master sha1: 155d109b5f52ffd749219b27702462dcd9cf4f8d
+Master summary: block: add REQ_SECURE to REQ_COMMON_MASK
+********************************************************************************
+Stable sha1: e1f73259cd179844324212e940ef0115fa072b80
+Stable summary: mm: fix negative commitlimit when gigantic hugepages are allocated
+Master sha1: b0320c7b7d1ac1bd5c2d9dff3258524ab39bad32
+Master summary: mm: fix negative commitlimit when gigantic hugepages are allocated
+********************************************************************************
+Stable sha1: 0c79f65e8d8ce889bbafa63f3ecf4dd7b9c91eaf
+Stable summary: mmc: Add PCI fixup quirks for Ricoh 1180:e823 reader
+Master sha1: be98ca652faa6468916a9b7608befff215a8ca70
+Master summary: mmc: Add PCI fixup quirks for Ricoh 1180:e823 reader
+********************************************************************************
+Stable sha1: e58b733e71538e81705400c0aab8f17fa418e8e2
+Stable summary: mmc: tmio: fix regression in TMIO_MMC_WRPROTECT_DISABLE handling
+Master sha1: 7d8b4c2a4b73da8e3632603691838ca5b2a8c26d
+Master summary: mmc: tmio: fix regression in TMIO_MMC_WRPROTECT_DISABLE handling
+********************************************************************************
+Stable sha1: 3688f0cdb363affcbf24ba3cf2caa44ba02902a0
+Stable summary: oprofile, x86: Fix race in nmi handler while starting counters
+Master sha1: 8fe7e94eb71430cf63a742f3c19739d82a662758
+Master summary: oprofile, x86: Fix race in nmi handler while starting counters
+********************************************************************************
+Stable sha1: 4278b4493b78b75a1fcce4c4722074117fa7a30e
+Stable summary: x86, suspend: Restore MISC_ENABLE MSR in realmode wakeup
+Master sha1: 7a3136666bc0f0419f7aaa7b1fabb4b0e0a7fb76
+Master summary: x86, suspend: Restore MISC_ENABLE MSR in realmode wakeup
+********************************************************************************
+Stable sha1: 0976b5a625477c9782a0cb10eec6bff3a923d452
+Stable summary: ath9k: Fix suspend/resume when no interface is UP
+Master sha1: c31eb8e926835582cd186b33a7a864880a4c0c79
+Master summary: ath9k: Fix suspend/resume when no interface is UP
+********************************************************************************
+Stable sha1: 13437076f02872e9cd3273959c9ff8b2693f243a
+Stable summary: pxa168_eth: fix race in transmit path.
+Master sha1: 384420409d9b5d4443940abace49363d26135412
+Master summary: pxa168_eth: fix race in transmit path.
+********************************************************************************
+Stable sha1: bdc5ce7ef6b7a4aa7a9ae7c60767783e6c5e438a
+Stable summary: ath5k: Disable fast channel switching by default
+Master sha1: a99168eece601d2a79ecfcb968ce226f2f30cf98
+Master summary: ath5k: Disable fast channel switching by default
+********************************************************************************
+Stable sha1: f1d30323f165eb429fba86981edd8f0e06b52f46
+Stable summary: ath5k: fix memory leak when fewer than N_PD_CURVES are in use
+Master sha1: a0b8de350be458b33248e48b2174d9af8a4c4798
+Master summary: ath5k: fix memory leak when fewer than N_PD_CURVES are in use
+********************************************************************************
+Stable sha1: b2d786200219377e321c8281c46076b1db890763
+Stable summary: PM: Free memory bitmaps if opening /dev/snapshot fails
+Master sha1: 8440f4b19494467883f8541b7aa28c7bbf6ac92b
+Master summary: PM: Free memory bitmaps if opening /dev/snapshot fails
+********************************************************************************
+Stable sha1: b50d3d6759c7912261c803d117d5d54dabaa40d4
+Stable summary: mm/memory-failure.c: fix page isolated count mismatch
+Master sha1: 5db8a73a8d7cc6a66afbf25ed7fda338caa8f5f9
+Master summary: mm/memory-failure.c: fix page isolated count mismatch
+********************************************************************************
+Stable sha1: fcfcae003848dd4013761e8874136f2b4301357c
+Stable summary: USB: Add new FT232H chip to drivers/usb/serial/ftdi_sio.c
+Master sha1: 309427b6351b763917caac3e4b2ab5651df99823
+Master summary: USB: Add new FT232H chip to drivers/usb/serial/ftdi_sio.c
+********************************************************************************
+Stable sha1: a96e5158f0cab04b29e9236f04214c056efe3a04
+Stable summary: USB: Free bandwidth when usb_disable_device is called.
+Master sha1: fccf4e86200b8f5edd9a65da26f150e32ba79808
+Master summary: USB: Free bandwidth when usb_disable_device is called.
+********************************************************************************
+Stable sha1: 0c6f67c9e49dd99d92eeed74c2f58fa096f9e0b1
+Stable summary: xhci: Always set urb->status to zero for isoc endpoints.
+Master sha1: b3df3f9c7df9a8d85e03e158d35487618a160901
+Master summary: xhci: Always set urb->status to zero for isoc endpoints.
+********************************************************************************
+Stable sha1: 35c8e70897c718597b9ef10214771dc46de548f4
+Stable summary: xhci: Add reset on resume quirk for asrock p67 host
+Master sha1: c877b3b2ad5cb9d4fe523c5496185cc328ff3ae9
+Master summary: xhci: Add reset on resume quirk for asrock p67 host
+********************************************************************************
+Stable sha1: 5c89454022889b5eec277f73cfc9fa9b7d1e4861
+Stable summary: xhci: Reject double add of active endpoints.
+Master sha1: fa75ac379e63c2864e9049b5e8615e40f65c1e70
+Master summary: xhci: Reject double add of active endpoints.
+********************************************************************************
+Stable sha1: 08f7de138ca1a943a7a4bdfc5cba9a47560078a6
+Stable summary: Connector: Correctly set the error code in case of success when dispatching receive callbacks
+Master sha1: 663dd6dcaf7e95526e469e91f41972a9c0cca30c
+Master summary: Connector: Correctly set the error code in case of success when dispatching receive callbacks
+********************************************************************************
+Stable sha1: 9522ed1f8edb8f754f5f5349292bed355a2b6400
+Stable summary: Connector: Set the CN_NETLINK_USERS correctly
+Master sha1: ea2c00095c022846dd8dfd211de05154d3e4e1b8
+Master summary: Connector: Set the CN_NETLINK_USERS correctly
+********************************************************************************
+Stable sha1: d462abdd16d8a7dcc1447500ad474f549af2b97b
+Stable summary: TTY: ldisc, do not close until there are readers
+Master sha1: 92f6fa09bd453ffe3351fa1f1377a1b7cfa911e6
+Master summary: TTY: ldisc, do not close until there are readers
+********************************************************************************
+Stable sha1: b03b2a0ccce0a97f3697b61ae3fb784a11262289
+Stable summary: ARM: SAMSUNG: serial: Fix on handling of one clock source for UART
+Master sha1: 470f22975448a65a1084a6f0721fa5df15323f02
+Master summary: ARM: SAMSUNG: serial: Fix on handling of one clock source for UART
+********************************************************************************
+Stable sha1: 7ef2f804a814c763cfbaacca35aaec38a4641f90
+Stable summary: clocksource: Make watchdog robust vs. interruption
+Master sha1: b5199515c25cca622495eb9c6a8a1d275e775088
+Master summary: clocksource: Make watchdog robust vs. interruption
+********************************************************************************
+Stable sha1: 7a2a2812f3a0ad037261cd5cb10119ce7dc8d135
+Stable summary: xen/pci: Move check for acpi_sci_override_gsi to xen_setup_acpi_sci.
+Master sha1: ee339fe63ac408e4604c1c88b1f9a428f2511b70
+Master summary: xen/pci: Move check for acpi_sci_override_gsi to xen_setup_acpi_sci.
+********************************************************************************
+Stable sha1: 26ae56d8c1c5f63fa96038035151f0ce561035c7
+Stable summary: xen/mmu: Fix for linker errors when CONFIG_SMP is not defined.
+Master sha1: 32dd11942aeb47f91209a446d6b10063c5b69389
+Master summary: xen/mmu: Fix for linker errors when CONFIG_SMP is not defined.
+********************************************************************************
+Stable sha1: 5d2ab11259e3180fd7030102116309c0ded41636
+Stable summary: xen/pci: Use the INT_SRC_OVR IRQ (instead of GSI) to preset the ACPI SCI IRQ.
+Master sha1: 155a16f21923bc2f04161ac92acca986371ef27b
+Master summary: xen/pci: Use the INT_SRC_OVR IRQ (instead of GSI) to preset the ACPI SCI IRQ.
+********************************************************************************
+Stable sha1: 1636e2289a510b092ec9354fef3f6d3194b59262
+Stable summary: xen: partially revert "xen: set max_pfn_mapped to the last pfn mapped"
+Master sha1: a91d92875ee94e4703fd017ccaadb48cfb344994
+Master summary: xen: partially revert "xen: set max_pfn_mapped to the last pfn mapped"
+********************************************************************************
+Stable sha1: 5c5925760958a553752436a0e3c829adcfbb0658
+Stable summary: xen: support CONFIG_MAXSMP
+Master sha1: 900cba8881b39dfbc7c8062098504ab93f5387a8
+Master summary: xen: support CONFIG_MAXSMP
+********************************************************************************
+Stable sha1: a15806feae64870c1fe0ed208d2168b9dc9f6887
+Stable summary: drm: populate irq_by_busid-member for pci
+Master sha1: 45e97ab65026a3391cb2c938f834ca5db4d2e5b3
+Master summary: drm: populate irq_by_busid-member for pci
+********************************************************************************
+Stable sha1: 358466cb1596bb001f8050ea84fdbbd9bfdd69c1
+Stable summary: drm/i915: Fix gen6 (SNB) missed BLT ring interrupts.
+Master sha1: 498e720b96379d8ee9c294950a01534a73defcf3
+Master summary: drm/i915: Fix gen6 (SNB) missed BLT ring interrupts.
+********************************************************************************
+Stable sha1: 6f6d3321d249bbf8bd3a04d3f04281441c8012fa
+Stable summary: drm/radeon/kms: Fix chremap setup on RV770 CE
+Master sha1: daf54f1f363a61c618662ef66d4bf09d2b090941
+Master summary: drm/radeon/kms: Fix chremap setup on RV770 CE
+********************************************************************************
+Stable sha1: b6136efc2e61ec8d731b5e9c898b9b7b2e551b01
+Stable summary: drm/radeon/kms/atom: fix duallink on some early DCE3.2 cards
+Master sha1: 8323fa6ba313ae2664420ec34d56a7fb0bbbe525
+Master summary: drm/radeon/kms/atom: fix duallink on some early DCE3.2 cards
+********************************************************************************
+Stable sha1: 699ea72e02ecd0fc22e9059b04082ef613f92126
+Stable summary: Revert "drm/i915: Enable GMBUS for post-gen2 chipsets"
+Master sha1: 826c7e4147f902737b281e8a5a7d7aa33fd63316
+Master summary: Revert "drm/i915: Enable GMBUS for post-gen2 chipsets"
+********************************************************************************
+Stable sha1: d631323f1151c09c21985cb1bba8a17eba83ad99
+Stable summary: hwmon: (ibmpex) Initialize sysfs attributes
+Master sha1: fb794e0f7153918c33f2300986d995524ab711cf
+Master summary: hwmon: (ibmpex) Initialize sysfs attributes
+********************************************************************************
+Stable sha1: af3071a228ce8e0dc98c8082cee2e95d223bd4fe
+Stable summary: hwmon: (s3c) Initialize sysfs attributes
+Master sha1: b1e698db0939b04602ded2a2196ff69c92b49378
+Master summary: hwmon: (s3c) Initialize sysfs attributes
+********************************************************************************
+Stable sha1: 4ee267bbbd58bdcf9dc84ebc01a34ff68b5de3ed
+Stable summary: hwmon: (ibmaem) Initialize sysfs attributes
+Master sha1: 3cdb2052a6e365ad56202874e6a8a05a2bb336fc
+Master summary: hwmon: (ibmaem) Initialize sysfs attributes
+********************************************************************************
+Stable sha1: 38ec4b47d1f474f6da8b5249fd631312b1bf61a9
+Stable summary: migrate: don't account swapcache as shmem
+Master sha1: 99a15e21d96f6857dafab1e5167e5e8183215c9c
+Master summary: migrate: don't account swapcache as shmem
+********************************************************************************
+Stable sha1: 6a435c15c4f4374c2311532791f4bc1d19683e66
+Stable summary: drivers/tty/serial/pch_uart.c: don't oops if dmi_get_system_info returns NULL
+Master sha1: fb139dfeef9558a12ffdbf9e26951fd1a9304f3b
+Master summary: drivers/tty/serial/pch_uart.c: don't oops if dmi_get_system_info returns NULL
+********************************************************************************
+Stable sha1: baa7218beb703e11f24ffd75e9e4ae102450766a
+Stable summary: ksm: fix NULL pointer dereference in scan_get_next_rmap_item()
+Master sha1: 2b472611a32a72f4a118c069c2d62a1a3f087afd
+Master summary: ksm: fix NULL pointer dereference in scan_get_next_rmap_item()
+********************************************************************************
+Stable sha1: 03f96d9a71e4b181bfd3946c66f7cf611235bbc7
+Stable summary: udp/recvmsg: Clear MSG_TRUNC flag when starting over for a new packet
+Master sha1: 9cfaa8def1c795a512bc04f2aec333b03724ca2e
+Master summary: udp/recvmsg: Clear MSG_TRUNC flag when starting over for a new packet
+********************************************************************************
+Stable sha1: ecb58722ec1cdd36e177711fe73b718c89ed1a8c
+Stable summary: ipv6/udp: Use the correct variable to determine non-blocking condition
+Master sha1: 32c90254ed4a0c698caa0794ebb4de63fcc69631
+Master summary: ipv6/udp: Use the correct variable to determine non-blocking condition
+********************************************************************************
+Stable sha1: 841a8158ef02b2125c816bae29720c7df27f426c
+Stable summary: net/ipv4: Check for mistakenly passed in non-IPv4 address
+Master sha1: d0733d2e29b652b2e7b1438ececa732e4eed98eb
+Master summary: net/ipv4: Check for mistakenly passed in non-IPv4 address
+********************************************************************************
+Stable sha1: 9d569ed9dda00472c3d9efaab9e34c193fafc555
+Stable summary: inet_diag: fix inet_diag_bc_audit()
+Master sha1: eeb1497277d6b1a0a34ed36b97e18f2bd7d6de0d
+Master summary: inet_diag: fix inet_diag_bc_audit()
+********************************************************************************
+Stable sha1: 99b10d9afa00889134c325c49aac684d8a9212b2
+Stable summary: af_packet: prevent information leak
+Master sha1: 13fcb7bd322164c67926ffe272846d4860196dc6
+Master summary: af_packet: prevent information leak
+********************************************************************************
+Stable sha1: fac1e65a8e5f16105f47eaed0e7d8d53273cb5ee
+Stable summary: bridge: provide a cow_metrics method for fake_ops
+Master sha1: 6407d74c5106bb362b4087693688afd34942b094
+Master summary: bridge: provide a cow_metrics method for fake_ops
+********************************************************************************
+Stable sha1: c9f1dcbe9f046d8840467395ba83dbfdd77bce65
+Stable summary: inetpeer: fix race in unused_list manipulations
+Master sha1: 686a7e32ca7fdd819eb9606abd3db52b77d1479f
+Master summary: inetpeer: fix race in unused_list manipulations
+********************************************************************************
+Stable sha1: 335e781b640b24b9043319cbf5c8a131bee4d522
+Stable summary: IPVS: bug in ip_vs_ftp, same list heaad used in all netns.
+Master sha1: c74c0bfe0b61cf41a897c2444c038e0d3f600556
+Master summary: IPVS: bug in ip_vs_ftp, same list heaad used in all netns.
+********************************************************************************
+Stable sha1: ea8427b46500a931847b9211f8302a3618b319d2
+Stable summary: bug.h: Move ratelimit warn interfaces to ratelimit.h
+Master sha1: 86e4ca66e81bba0f8640f1fa19b8b8f72cbd0561
+Master summary: bug.h: Move ratelimit warn interfaces to ratelimit.h
+********************************************************************************
+Stable sha1: 4ada2b7ac89f3fc634b8213900f43c11b8bfb96f
+Stable summary: bug.h: Fix build with CONFIG_PRINTK disabled.
+Master sha1: 6b3678354647a653e669746c05765f05d2b90239
+Master summary: bug.h: Fix build with CONFIG_PRINTK disabled.
+********************************************************************************
+Stable sha1: a79f0f1511ba8616043f95359c594f544a9e8850
+Stable summary: net: filter: Use WARN_RATELIMIT
+Master sha1: 6c4a5cb219520c7bc937ee186ca53f03733bd09f
+Master summary: net: filter: Use WARN_RATELIMIT
+********************************************************************************
+Stable sha1: e6b5dabafd11975bacc1485de5d1eca92712a56e
+Stable summary: bug.h: Add WARN_RATELIMIT
+Master sha1: b3eec79b0776e5340a3db75b34953977c7e5086e
+Master summary: bug.h: Add WARN_RATELIMIT
+********************************************************************************
+Stable sha1: 32f8181903197a374e0f1c35ca27eb91bedef27e
+Stable summary: netfilter: ipset: fix ip_set_flush return code
+Master sha1: 9184a9cba622d9e38462ce11dff7da094b4fea84
+Master summary: netfilter: ipset: fix ip_set_flush return code
+********************************************************************************
+Stable sha1: 464a3e3890273dfdfcd6a2a1054c32d49c0fb366
+Stable summary: netfilter: ipset: remove unused variable from type_pf_tdel()
+Master sha1: b141c242ff978b63cdf0f3d1a767a5152750166b
+Master summary: netfilter: ipset: remove unused variable from type_pf_tdel()
+********************************************************************************
+Stable sha1: 70e0b9c5761165977eb698a36a781830e1e7832e
+Stable summary: net: fix ETHTOOL_SFEATURES compatibility with old ethtool_ops.set_flags
+Master sha1: fd0daf9d58f6b3342d07c5f6bbfb304dbe5db4ec
+Master summary: net: fix ETHTOOL_SFEATURES compatibility with old ethtool_ops.set_flags
+********************************************************************************
+Stable sha1: b850cf360e080311d74ff0cb94118cb466a29a95
+Stable summary: netfilter: ipset: Use proper timeout value to jiffies conversion
+Master sha1: 249ddc79a38a8918ad53ac22606ca8af694344a5
+Master summary: netfilter: ipset: Use proper timeout value to jiffies conversion
+********************************************************************************
+Stable sha1: 890cd1ba9bba495fd7eb8e8cdfea0b016a34bfa6
+Stable summary: iwlegacy: fix channel switch locking
+Master sha1: 51e65257142a87fe46a1ce5c35c86c5baf012614
+Master summary: iwlegacy: fix channel switch locking
+********************************************************************************
+Stable sha1: 4d41d0d8666e0bb083224cf1cd49f1c9be55d467
+Stable summary: iwlagn: fix channel switch locking
+Master sha1: 6f213ff1919fab6f8244ceae55631b5d6ef750a7
+Master summary: iwlagn: fix channel switch locking
+********************************************************************************
+Stable sha1: aa27055641f8f60c26e9f436b08350f9b339cd3a
+Stable summary: iwlagn: send tx power command if defer cause by RXON not match
+Master sha1: 43e4e0b94984b45d52048e3ac027cac15c718b65
+Master summary: iwlagn: send tx power command if defer cause by RXON not match
+********************************************************************************
+Stable sha1: 2cd3e43e8db9d0ae1af443418547f65ee1efa280
+Stable summary: md/raid5: fix FUA request handling in ops_run_io()
+Master sha1: b062962edb086011e94ec4d9eb3f6a6d814f2a8f
+Master summary: md/raid5: fix FUA request handling in ops_run_io()
+********************************************************************************
+Stable sha1: fbfa65f9e3eb26937a90f023a8fd4d181189c1ef
+Stable summary: md/raid5: fix raid5_set_bi_hw_segments
+Master sha1: 9b2dc8b665932a8e681a7ab3237f60475e75e161
+Master summary: md/raid5: fix raid5_set_bi_hw_segments
+********************************************************************************
+Stable sha1: 1d15c2e0b935bcc27fe802655058051f934adf1d
+Stable summary: md: check ->hot_remove_disk when removing disk
+Master sha1: 01393f3d5836b7d62e925e6f4658a7eb22b83a11
+Master summary: md: check ->hot_remove_disk when removing disk
+********************************************************************************
+Stable sha1: 93b18ca021e7b38d26eb55bcb0d1ca4c9105f643
+Stable summary: TOMOYO: Fix oops in tomoyo_mount_acl().
+Master sha1: 4e78c724d47e2342aa8fde61f6b8536f662f795f
+Master summary: TOMOYO: Fix oops in tomoyo_mount_acl().
+********************************************************************************
+Stable sha1: 89ae106c9a9c2747e11ae1bacd7f5a65207a9296
+Stable summary: CPUFREQ: Remove cpufreq_stats sysfs entries on module unload.
+Master sha1: 13f067537f34456443f61c950cd6dc37d1d5f3ee
+Master summary: [CPUFREQ] Remove cpufreq_stats sysfs entries on module unload.
+********************************************************************************
+Stable sha1: 28223659e8b6af5d7303849f64cc3e7a4003bcbc
+Stable summary: x86: cpu-hotplug: Prevent softirq wakeup on wrong CPU
+Master sha1: fd8a7de177b6f56a0fc59ad211c197a7df06b1ad
+Master summary: x86: cpu-hotplug: Prevent softirq wakeup on wrong CPU
+********************************************************************************
+Stable sha1: 9441ac93bbff3c5759058f26999f26002d99e82b
+Stable summary: x86: devicetree: Add missing early_init_dt_setup_initrd_arch stub
+Master sha1: 977cb76d52e7aa040e18a84b29fe6fd80d79319b
+Master summary: x86: devicetree: Add missing early_init_dt_setup_initrd_arch stub
+********************************************************************************
+Stable sha1: 007b2687279cc06356884433ee630c1663d8378b
+Stable summary: mac80211: fix IBSS teardown race
+Master sha1: f3209bea110cade12e2b133da8b8499689cb0e2e
+Master summary: mac80211: fix IBSS teardown race
+********************************************************************************
+Stable sha1: 50224eeecc2357b6287ed2dc81963b61d89f824d
+Stable summary: igb: fix i350 SR-IOV failture
+Master sha1: 665c8c8ee405738375b679246b49342ce38ba056
+Master summary: igb: fix i350 SR-IOV failture
+********************************************************************************
+Stable sha1: c0ada91b9e3d46f7584f5a5392baecd5b3add5a8
+Stable summary: iwl4965: set tx power after rxon_assoc
+Master sha1: 51892dbbd511911c0f965a36b431fc3e8f1e4f8a
+Master summary: iwl4965: set tx power after rxon_assoc
+********************************************************************************
+Stable sha1: cb7520a5acacfdc38c56cbb568e177086c9901d1
+Stable summary: iwlagn: use cts-to-self protection on 5000 adapters series
+Master sha1: 42b70a5f6d18165a075d189d1bee82fad7cdbf29
+Master summary: iwlagn: use cts-to-self protection on 5000 adapters series
+********************************************************************************
+Stable sha1: 6a523c78659129ea7c0c3c6be9c67cac6812b08f
+Stable summary: drm/radeon/kms: do bounds checking for 3D_LOAD_VBPNTR and bump array limit
+Master sha1: a27bb4b209dd6c327fa4e7185f2487f9508a58db
+Master summary: drm/radeon/kms: do bounds checking for 3D_LOAD_VBPNTR and bump array limit
+********************************************************************************
+Stable sha1: 4164979de808ea1f11ee404f8e60227464620aeb
+Stable summary: oprofile, dcookies: Fix possible circular locking dependency
+Master sha1: fe47ae7f53e179d2ef6771024feb000cbb86640f
+Master summary: oprofile, dcookies: Fix possible circular locking dependency
+********************************************************************************
+Stable sha1: f79cee54477edb58f0eebdea6107eb33731361ab
+Stable summary: oprofile: Fix locking dependency in sync_start()
+Master sha1: 130c5ce716c9bfd1c2a2ec840a746eb7ff9ce1e6
+Master summary: oprofile: Fix locking dependency in sync_start()
+********************************************************************************
+Stable sha1: 409dbd2f927fe65ffad9eb57253abded37ed1905
+Stable summary: oprofile: Free potentially owned tasks in case of errors
+Master sha1: 6ac6519b93065625119a347be1cbcc1b89edb773
+Master summary: oprofile: Free potentially owned tasks in case of errors
+********************************************************************************
+Stable sha1: f94e820b157193b5b518aa891f5f19da5c9ab395
+Stable summary: ALSA: hda: Fix quirk for Dell Inspiron 910
+Master sha1: 0a1896b27b030529ec770aefd790544a1bdb7d5a
+Master summary: ALSA: hda: Fix quirk for Dell Inspiron 910
+********************************************************************************
+Stable sha1: 71ccce482d457ee108e02bb3b636b1bdbe4aa218
+Stable summary: ASoC: SAMSUNG: Fix the incorrect referencing of I2SCON register
+Master sha1: 33195500edf260e8c8809ab9dfc67f50e0ce031f
+Master summary: ASoC: SAMSUNG: Fix the incorrect referencing of I2SCON register
+********************************************************************************
+Stable sha1: a28f077aa8b13983837eaad2a3897891b9d511be
+Stable summary: ASoC: snd_soc_new_{mixer,mux,pga} make sure to use right DAPM context
+Master sha1: 4b80b8c2eee5282dab57f094fd3893c0c09f750c
+Master summary: ASoC: snd_soc_new_{mixer,mux,pga} make sure to use right DAPM context
+********************************************************************************
+Stable sha1: ea0fd1f2712b03caa2f7a55ea7ff2fb062d43996
+Stable summary: ASoC: WM8804 does not support sample rates below 32kHz
+Master sha1: 3115ae174620eeab4b16f52c8d0a9a35d2717e3c
+Master summary: ASoC: WM8804 does not support sample rates below 32kHz
+********************************************************************************
+Stable sha1: 67a07350f91e72a2fa3156128b6fd86a72b1ced2
+Stable summary: ASoC: Fix WM8962 headphone volume update for use of advanced caches
+Master sha1: 0f82bdf572fc6e42147151aa4d52542f7fc6d793
+Master summary: ASoC: Fix WM8962 headphone volume update for use of advanced caches
+********************************************************************************
+Stable sha1: 2df3e8e0679694d0e653b2ac2b6b4dfd5094b072
+Stable summary: ASoC: AD1836: Fix setting the PCM format
+Master sha1: 8ca695f273709a9d147826716a8dee3e0eb2407f
+Master summary: ASoC: AD1836: Fix setting the PCM format
+********************************************************************************
+Stable sha1: 2b19835bf217dc2264e68706be3741e3e7fb5fdd
+Stable summary: cifs: don't allow cifs_reconnect to exit with NULL socket pointer
+Master sha1: 7fdbaa1b8daa1009b705985b903e3d2ebccad456
+Master summary: cifs: don't allow cifs_reconnect to exit with NULL socket pointer
+********************************************************************************
+Stable sha1: 83a9a8034ee98ac21804c376ec90af8e4997790e
+Stable summary: AppArmor: Fix sleep in invalid context from task_setrlimit
+Master sha1: 1780f2d3839a0d3eb85ee014a708f9e2c8f8ba0e
+Master summary: AppArmor: Fix sleep in invalid context from task_setrlimit
+********************************************************************************
+Stable sha1: a765227c18a65d95783442983e3653f2e339dc51
+Stable summary: USB: xhci - fix interval calculation for FS isoc endpoints
+Master sha1: cd3c18ba2fac14b34d03cae111f215009735ea06
+Master summary: USB: xhci - fix interval calculation for FS isoc endpoints
+********************************************************************************
+Stable sha1: 6f4e275454b31659f57ad6203fd912a08d8f0e9f
+Stable summary: xhci: Disable MSI for some Fresco Logic hosts.
+Master sha1: f5182b4155b9d686c5540a6822486400e34ddd98
+Master summary: xhci: Disable MSI for some Fresco Logic hosts.
+********************************************************************************
+Stable sha1: 604759f768090595b1ee6cb08371c7f9b0625a6f
+Stable summary: xhci: Do not issue device reset when device is not setup
+Master sha1: 001fd3826f4c736ce292315782d015f768399080
+Master summary: xhci: Do not issue device reset when device is not setup
+********************************************************************************
+Stable sha1: 91b0ce380e8ce633aa6803f62e70890774a42c53
+Stable summary: xhci: Add defines for hardcoded slot states
+Master sha1: e2b0217715c6d10379d94bdfe5560af96eecbb7c
+Master summary: xhci: Add defines for hardcoded slot states
+********************************************************************************
+Stable sha1: 4a2cb90c538f06c873a187aa743575d48685d7a6
+Stable summary: Revert "x86, efi: Retain boot service code until after switching to virtual mode"
+Master sha1: 916f676f8dc016103f983c7ec54c18ecdbb6e349
+Master summary: x86, efi: Retain boot service code until after switching to virtual mode
+********************************************************************************
+Stable sha1: f8c003f782fd913969aa44648fd382d998587533
+Stable summary: usb-storage: redo incorrect reads
+Master sha1: 21c13a4f7bc185552c4b402b792c3bbb9aa69df0
+Master summary: usb-storage: redo incorrect reads
+********************************************************************************
+Stable sha1: 4506268880911c6c25128611d071405561094783
+Stable summary: USB: serial: add another 4N-GALAXY.DE PID to ftdi_sio driver
+Master sha1: a26d31cef06f43a76327c21235e75450869df2b8
+Master summary: USB: serial: add another 4N-GALAXY.DE PID to ftdi_sio driver
+********************************************************************************
+Stable sha1: 3e94008b59acfad59d2e76e17750e91b476ea6e1
+Stable summary: USB: core: Tolerate protocol stall during hub and port status read
+Master sha1: 3824c1ddaf744be44b170a335332b9d6afe79254
+Master summary: USB: core: Tolerate protocol stall during hub and port status read
+********************************************************************************
+Stable sha1: 4a4a0b34ef0e4bc65dc38bb5366397d19e3a08fc
+Stable summary: Revert "USB: option: add ID for ZTE MF 330"
+Master sha1: 3095ec895fd5ec19a7cb60b5cbfa766d68a74a24
+Master summary: Revert "USB: option: add ID for ZTE MF 330"
+********************************************************************************
+Stable sha1: a33ebb8d3f369922763afbf744f7dad9ba6f7318
+Stable summary: USB: option Add blacklist for ZTE K3765-Z (19d2:2002)
+Master sha1: 7e8e62e4a5d26e4cb45f25dddd093837d75616c2
+Master summary: USB: option Add blacklist for ZTE K3765-Z (19d2:2002)
+********************************************************************************
+Stable sha1: 5618dd5ab02b2fbd93e432954725bfe8c5ae6032
+Stable summary: option: add Prolink PH300 modem IDs
+Master sha1: 5c3e4076ee8253c1e3688d10653ddee47a03b0db
+Master summary: option: add Prolink PH300 modem IDs
+********************************************************************************
+Stable sha1: 546dfbd1cb8678d70d2bbacc1d7aaf5417cc12a4
+Stable summary: option: add Alcatel X200 to sendsetup blacklist
+Master sha1: 15badbcc8eede58b0d7e53a3acde1c90a7b6e40e
+Master summary: option: add Alcatel X200 to sendsetup blacklist
+********************************************************************************
+Stable sha1: 54aa4fdee504e9ece39880032ea4331001802d8d
+Stable summary: option: add Zoom 4597 modem USB IDs
+Master sha1: cdacb598fe7ab85de80908c818dd7d66a2971117
+Master summary: option: add Zoom 4597 modem USB IDs
+********************************************************************************
+Stable sha1: c14276ca9b14f8a7f3b40bec3083c276754e012b
+Stable summary: exec: delay address limit change until point of no return
+Master sha1: dac853ae89043f1b7752875300faf614de43c74b
+Master summary: exec: delay address limit change until point of no return
+********************************************************************************
+Stable sha1: 50091c12f224d7b767efd11478f6948812728c07
+Stable summary: staging: gma500: get control from firmware framebuffer if conflicts
+Master sha1: aaa5c677910d313ca1318c905c799c459c6f0078
+Master summary: staging: gma500: get control from firmware framebuffer if conflicts
+********************************************************************************
+Stable sha1: b2577a0c1590467946eb245b76006a2369779a52
+Stable summary: USB: cdc-acm: Adding second ACM channel support for Nokia E7 and C7
+Master sha1: 4061fde2fa80f40cb27114f60500d38d0afcf350
+Master summary: USB: cdc-acm: Adding second ACM channel support for Nokia E7 and C7
+********************************************************************************
+Stable sha1: 17753081ca3a32851ef406ca076fcec20152a00c
+Stable summary: x86/amd-iommu: Fix boot crash with hidden PCI devices
+Master sha1: 26018874e3584f1658570d41d57d4c34f6a53aa0
+Master summary: x86/amd-iommu: Fix boot crash with hidden PCI devices
+********************************************************************************
+Stable sha1: c79ad65e6c31da9955b0848fb0be15a6b95d7ef8
+Stable summary: x86/amd-iommu: Fix 3 possible endless loops
+Master sha1: 0de66d5b35ee148455e268b2782873204ffdef4b
+Master summary: x86/amd-iommu: Fix 3 possible endless loops
+********************************************************************************
+Stable sha1: a4d37345244dea111a49dda25cc30b2ae7dab05c
+Stable summary: x86/amd-iommu: Use only per-device dma_ops
+Master sha1: 27c2127a15d340706c0aa84e311188a14468d841
+Master summary: x86/amd-iommu: Use only per-device dma_ops
+********************************************************************************
+Stable sha1: 69694054d5004619d095cdcd1346cf291068a84d
+Stable summary: media: Fix media device minor registration
+Master sha1: 8c89ddd536bbe97c1e50424778a139abbf5763c3
+Master summary: [media] media: Fix media device minor registration
+********************************************************************************
+Stable sha1: e18e2fa510632dbbfcabc8f60c817f4a8576b11f
+Stable summary: cifs: silence printk when establishing first session on socket
+Master sha1: 9c4843ea576107a3c1fb94f2f758f198e9fe9e54
+Master summary: cifs: silence printk when establishing first session on socket
+********************************************************************************
+Stable sha1: da85f8e3be97d43ec727637c40e8b5d7a2731e34
+Stable summary: genirq: Fix descriptor init on non-sparse IRQs
+Master sha1: e7fbad300a7a6432238f086e3c9a61538a905858
+Master summary: genirq: Fix descriptor init on non-sparse IRQs
+********************************************************************************
+Stable sha1: dec314e6cc29b2c5d19aa84c1267a1dd750451cf
+Stable summary: video: Fix use-after-free by vga16fb on rmmod
+Master sha1: a50d28de8d5085e0f34f96088a45cc156d022021
+Master summary: video: Fix use-after-free by vga16fb on rmmod
+********************************************************************************
+Stable sha1: 8f83b904ea7590794fc8ce490eaf57ac68955ee7
+Stable summary: xen: off by one errors in multicalls.c
+Master sha1: f124c6ae59e193705c9ddac57684d50006d710e6
+Master summary: xen: off by one errors in multicalls.c
+********************************************************************************
+Stable sha1: 36980edb6cde842b885c118f59a8e3c9d51d7869
+Stable summary: fat: Fix corrupt inode flags when remove ATTR_SYS flag
+Master sha1: 1adffbae22332bb558c2a29de19d9aca391869f6
+Master summary: fat: Fix corrupt inode flags when remove ATTR_SYS flag
+********************************************************************************
+Stable sha1: 473e5a1d28fc1842fd9714a97d46af2c6b6fc1b0
+Stable summary: drm/radeon/kms: fix for radeon on systems >4GB without hardware iommu
+Master sha1: 62fff811d73095bd95579d72f558f03c78f7914a
+Master summary: drm/radeon/kms: fix for radeon on systems >4GB without hardware iommu
+********************************************************************************
+Stable sha1: a9f1135fc0a404146e3147a921a19b7a312c5642
+Stable summary: drm/radeon/kms: viewport height has to be even
+Master sha1: adcfde516e10aad72d66f6fefd36e6d0e6bd7be7
+Master summary: drm/radeon/kms: viewport height has to be even
+********************************************************************************
+Stable sha1: 6cafca4977364cbc0dc0ecf985f72e52ef5bd808
+Stable summary: drm/i915: Add a no lvds quirk for the Asus EeeBox PC EB1007
+Master sha1: 6a574b5b9b186e28abd3e571dfd1700c5220b510
+Master summary: drm/i915: Add a no lvds quirk for the Asus EeeBox PC EB1007
+********************************************************************************
+Stable sha1: e53108c524204a64f92030e7e983807b5d5f3fcd
+Stable summary: lockdep: Fix lock_is_held() on recursion
+Master sha1: f2513cde93f0957d5dc6c09bc24b0cccd27d8e1d
+Master summary: lockdep: Fix lock_is_held() on recursion
+********************************************************************************
+Stable sha1: 7f7638a04e4229fec978f7055150be5f6cee7bd9
+Stable summary: usbnet/cdc_ncm: add missing .reset_resume hook
+Master sha1: 85e3c65fa3a1d0542c181510a950a2be7733ff29
+Master summary: usbnet/cdc_ncm: add missing .reset_resume hook
+********************************************************************************
+Stable sha1: 10f1c78901cbd8a181d47e978e0a2930e3d323a8
+Stable summary: block: export blk_{get,put}_queue()
+Master sha1: d86e0e83b32bc84600adb0b6ea1fce389b266682
+Master summary: block: export blk_{get,put}_queue()
+********************************************************************************
+Stable sha1: 8220b32e2fd53d8b6afb103237a99634139769eb
+Stable summary: nl80211: fix check for valid SSID size in scan operations
+Master sha1: 208c72f4fe44fe09577e7975ba0e7fa0278f3d03
+Master summary: nl80211: fix check for valid SSID size in scan operations
+********************************************************************************
+Stable sha1: 1605e36ae2144c97685dcfa251e4de789c2a5c76
+Stable summary: asus-wmi: Remove __init from asus_wmi_platform_init
+Master sha1: 39ddf3bf6463bc86041e806b43e014d50a144aa4
+Master summary: asus-wmi: Remove __init from asus_wmi_platform_init
+********************************************************************************
+Stable sha1: 37978293453b3cfcf1d659ed6836b9f8de8ca0fa
+Stable summary: powerpc: Fix 32-bit SMP build
+Master sha1: 6de06f313a65d0ecabf055e708d082002b568866
+Master summary: powerpc: Fix 32-bit SMP build
+********************************************************************************
+Stable sha1: a9c48a40ee2a8e5bf07515ec4cfcd349b8f0f8ad
+Stable summary: PCI: Set PCIE maxpayload for card during hotplug insertion
+Master sha1: e522a7126c7c144a1dd14c6f217ac31e71082b1d
+Master summary: PCI: Set PCIE maxpayload for card during hotplug insertion
+********************************************************************************
+Stable sha1: 66bff327ac7ed733f6c99e4ac65647b94441b608
+Stable summary: serial: core, remove uart_update_termios
+Master sha1: 6f5c24ad0f7619502199185a026a228174a27e68
+Master summary: serial: core, remove uart_update_termios
+********************************************************************************
+Stable sha1: 8d99e578d8688d146e37d6fa099e7e7d4b14ab21
+Stable summary: serial: core, do not set DTR/RTS twice on startup
+Master sha1: 303a7a1199c20f7c9452f024a6e17bf348b6b398
+Master summary: serial: core, do not set DTR/RTS twice on startup
+********************************************************************************
+Stable sha1: b218cdecace041cad6d46b1f5a4e57fb9976f598
+Stable summary: serial: core, move termios handling to uart_startup
+Master sha1: c7d7abff40c27f82fe78b1091ab3fad69b2546f9
+Master summary: serial: core, move termios handling to uart_startup
+********************************************************************************
+Stable sha1: 2d9da2444b556ba2cfeaa2223f6247f5cc7b6803
+Stable summary: mm: fix ENOSPC returned by handle_mm_fault()
+Master sha1: e0dcd8a05be438b3d2e49ef61441ea3a463663f8
+Master summary: mm: fix ENOSPC returned by handle_mm_fault()
+********************************************************************************
+Stable sha1: 097f0612d1769feab15f2bb6b346d7cfd24f1812
+Stable summary: zd1211rw: fix to work on OHCI
+Master sha1: 59342f6a6bc35df623fb44784daa5e1077063b8f
+Master summary: zd1211rw: fix to work on OHCI
+********************************************************************************
+Stable sha1: 99117bb2c3c260dceab0ff02c16c03b9e84c5ae8
+Stable summary: iwl4965: correctly validate temperature value
+Master sha1: dfe21582ac5ebc460dda98c67e8589dd506d02cd
+Master summary: iwl4965: correctly validate temperature value
+********************************************************************************
+Stable sha1: 0db9466ed48263ab2951e89240b482912695c4a6
+Stable summary: iwl4965: fix 5GHz operation
+Master sha1: aac11c1b351413aa3412e258e2b2dcba31777209
+Master summary: iwl4965: fix 5GHz operation
+********************************************************************************
+Stable sha1: dfa6c86d98fb51982aae3e89a7025c5136adcebe
+Stable summary: hwmon: (coretemp) Relax target temperature range check
+Master sha1: 4c6e0f8101e62d8b2d01dc94b835a98b191a1454
+Master summary: hwmon: (coretemp) Relax target temperature range check
+********************************************************************************
+Stable sha1: a1a7093468df0a3704fcf6dbf0628dd83be223f9
+Stable summary: hwmon: (coretemp) Fix TjMax detection for older CPUs
+Master sha1: 4f5f71a7abe329bdad81ee6a8e4545054a7cc30a
+Master summary: hwmon: (coretemp) Fix TjMax detection for older CPUs
+********************************************************************************
+Stable sha1: 09babe131592377e75ccaf0bb276d481566d1f2b
+Stable summary: ath9k: fix two more bugs in tx power
+Master sha1: 21fdc87248d1d28492c775e05fa92b3c8c7bc8db
+Master summary: ath9k: fix two more bugs in tx power
+********************************************************************************
+Stable sha1: 50735b7c8817711271b1c399b75014b0b0d68097
+Stable summary: ath9k: set 40 Mhz rate only if hw is configured in ht40
+Master sha1: 41e2b05b9598d6bdf91fc20280bfc538d853f769
+Master summary: ath9k: set 40 Mhz rate only if hw is configured in ht40
+********************************************************************************
+Stable sha1: 3493a689667e041c73be8bfd5144df1b480866e0
+Stable summary: ath9k: Reset chip on baseband hang
+Master sha1: a4d86d953b8593791cb29cf2acffd48f9ee6c4f9
+Master summary: ath9k: Reset chip on baseband hang
+********************************************************************************
+Stable sha1: 0769e21bf4b5cf48878c1ca819276e80465b39e7
+Stable summary: Fix oops caused by queue refcounting failure
+Master sha1: e73e079bf128d68284efedeba1fbbc18d78610f9
+Master summary: [SCSI] Fix oops caused by queue refcounting failure
+********************************************************************************
+Stable sha1: e0b1510e56c0f40a7d84a766a53521a268c41d75
+Stable summary: nbd: limit module parameters to a sane value
+Master sha1: 3b2710824e00d238554c13b5add347e6c701ab1a
+Master summary: nbd: limit module parameters to a sane value
+********************************************************************************
+Stable sha1: b7f788ce3f4ad895fe29cb225765c54f59a64d4d
+Stable summary: block: blkdev_get() should access ->bd_disk only after success
+Master sha1: 4c49ff3fe128ca68dabd07537415c419ad7f82f9
+Master summary: block: blkdev_get() should access ->bd_disk only after success
+********************************************************************************
+Stable sha1: 344bfe4456acedc5087677dd84b5a1aaa3137f8b
+Stable summary: UBIFS: fix memory leak on error path
+Master sha1: 812eb258311f89bcd664a34a620f249d54a2cd83
+Master summary: UBIFS: fix memory leak on error path
+********************************************************************************
+Stable sha1: 103b2f0904c37b7dfe919489d268e5090a4a6a89
+Stable summary: UBIFS: fix shrinker object count reports
+Master sha1: cf610bf4199770420629d3bc273494bd27ad6c1d
+Master summary: UBIFS: fix shrinker object count reports
+********************************************************************************
+Stable sha1: 646543453327a2b85083f4012d3bbeb5dabdabb8
+Stable summary: arch/tile: allocate PCI IRQs later in boot
+Master sha1: f4de51de2edcd26ec77bfc71b1f00b1de5a5dc20
+Master summary: arch/tile: allocate PCI IRQs later in boot
+********************************************************************************
+Stable sha1: c39eaeb11a73c6f09d2042d55930c54e356fc1c1
+Stable summary: powerpc/4xx: Fix regression in SMP on 476
+Master sha1: c560bbceaf6b06e52f1ef20131b76a3fdc0a2c19
+Master summary: powerpc/4xx: Fix regression in SMP on 476
+********************************************************************************
+Stable sha1: f4f6cfc11c3481c36cc3c8cff15dd756ddf1748e
+Stable summary: intel-iommu: Add domain check in domain_remove_one_dev_info
+Master sha1: 8519dc4401ddf8a5399f979870bbeeadbc111186
+Master summary: intel-iommu: Add domain check in domain_remove_one_dev_info
+********************************************************************************
+Stable sha1: b8f794de1463ab32ed90c97ad6edbcecd931abed
+Stable summary: intel-iommu: Remove Host Bridge devices from identity mapping
+Master sha1: 825507d6d059f1cbe2503e0e5a3926225b983aec
+Master summary: intel-iommu: Remove Host Bridge devices from identity mapping
+********************************************************************************
+Stable sha1: 80ebe0ace73cb376f66bdeeb92f4e7b5d4a3f8fb
+Stable summary: intel-iommu: Use coherent DMA mask when requested
+Master sha1: c681d0ba1252954208220ad32248a3e8e2fc98e4
+Master summary: intel-iommu: Use coherent DMA mask when requested
+********************************************************************************
+Stable sha1: 87cc4d1e3e05af38c7c51323a3d86fe2572ab033
+Stable summary: intel-iommu: Dont cache iova above 32bit
+Master sha1: 1c9fc3d11b84fbd0c4f4aa7855702c2a1f098ebb
+Master summary: intel-iommu: Dont cache iova above 32bit
+********************************************************************************
+Stable sha1: 3a2bc9ae5ee092a0db8aa07d695e15b14a3fe2a4
+Stable summary: intel-iommu: Speed up processing of the identity_mapping function
+Master sha1: cb452a4040bb051d92e85d6e7eb60c11734c1781
+Master summary: intel-iommu: Speed up processing of the identity_mapping function
+********************************************************************************
+Stable sha1: 001a5287ce15ac855136d9912ba3a71e40befa0a
+Stable summary: intel-iommu: Check for identity mapping candidate using system dma mask
+Master sha1: 8fcc5372fbac085199d84a880503ed67aba3fe49
+Master summary: intel-iommu: Check for identity mapping candidate using system dma mask
+********************************************************************************
+Stable sha1: 26265892ce15ab6637959631b03d25528f817e76
+Stable summary: intel-iommu: Only unlink device domains from iommu
+Master sha1: 9b4554b21ed07e8556405510638171f0c787742a
+Master summary: intel-iommu: Only unlink device domains from iommu
+********************************************************************************
+Stable sha1: a58f19eeb2ed09582f482e9ecdc6438ee6a28f0a
+Stable summary: intel-iommu: Flush unmaps at domain_exit
+Master sha1: 7b668357810ecb5fdda4418689d50f5d95aea6a8
+Master summary: intel-iommu: Flush unmaps at domain_exit
+********************************************************************************
+Stable sha1: 3e8b966859c94b48e13e95c3f829743453451f72
+Stable summary: lguest: fix timer interrupt setup
+Master sha1: 15517f7c213442e4d8a098cf0732b237f764c576
+Master summary: lguest: fix timer interrupt setup
+********************************************************************************
+Stable sha1: b8ccd154b8435ba1f60c6a41d38a53c30d295218
+Stable summary: AppArmor: fix oops in apparmor_setprocattr
+Master sha1: a5b2c5b2ad5853591a6cac6134cd0f599a720865
+Master summary: AppArmor: fix oops in apparmor_setprocattr
+********************************************************************************
+Stable sha1: a50ee58396be6f8398b2de911dac148bfb424c35
+Stable summary: ext4: Use schedule_timeout_interruptible() for waiting in lazyinit thread
+Master sha1: 4ed5c033c11b33149d993734a6a8de1016e8f03f
+Master summary: ext4: Use schedule_timeout_interruptible() for waiting in lazyinit thread
+********************************************************************************
+Stable sha1: 0e73b1f4f61142e32ec5acbda8e50bfc79dbec87
+Stable summary: ext4: fix possible use-after-free in ext4_remove_li_request()
+Master sha1: 1bb933fb1fa8e4cb337a0d5dfd2ff4c0dc2073e8
+Master summary: ext4: fix possible use-after-free in ext4_remove_li_request()
+********************************************************************************
+Stable sha1: 9a18274e9444e3581a6ba7479ddad080d1be63c0
+Stable summary: block: don't block events on excl write for non-optical devices
+Master sha1: d4dc210f69bcb0b4bef5a83b1c323817be89bad1
+Master summary: block: don't block events on excl write for non-optical devices
+********************************************************************************
+Stable sha1: 86bc85941ec3dff36ba442f181e5d7e28ac7e2f7
+Stable summary: xen mmu: fix a race window causing leave_mm BUG()
+Master sha1: 7899891c7d161752f29abcc9bc0a9c6c3a3af26c
+Master summary: xen mmu: fix a race window causing leave_mm BUG()
+********************************************************************************
+Stable sha1: 0d97559675bcba247e705712800ccd2c6d3674f1
+Stable summary: xen/setup: Ignore E820_UNUSABLE when setting 1-1 mappings.
+Master sha1: 15bfc094517db2ddf38ca7ed47f3a1c0ad24f7c4
+Master summary: xen/setup: Ignore E820_UNUSABLE when setting 1-1 mappings.
+********************************************************************************
+Stable sha1: 0fa5814524bb6c60fdc28915f367d8a5aa2b72c4
+Stable summary: xen/setup: Fix for incorrect xen_extra_mem_start initialization under 32-bit
+Master sha1: 0f16d0dfcdb5aab97d9e368f008b070b5b3ec6d3
+Master summary: xen/setup: Fix for incorrect xen_extra_mem_start initialization under 32-bit
+********************************************************************************
+Stable sha1: da115763a03d730d374b5105fb5ded0c90b3329e
+Stable summary: xen/p2m: Create entries in the P2M_MFN trees's to track 1-1 mappings
+Master sha1: 8c5950881c3b5e6e350e4b0438a8ccc513d90df9
+Master summary: xen/p2m: Create entries in the P2M_MFN trees's to track 1-1 mappings
+********************************************************************************
+Stable sha1: e8dbdcfd31544a412f49046a2be5e70fe28f5fc9
+Stable summary: PCI: Add quirk for setting valid class for TI816X Endpoint
+Master sha1: 63c4408074cbcc070ac17fc10e524800eb9bd0b0
+Master summary: PCI: Add quirk for setting valid class for TI816X Endpoint
+********************************************************************************
+Stable sha1: 51b79580f09e3566a7bdbf885b9d2dfbd9817be1
+Stable summary: nfs41: Correct offset for LAYOUTCOMMIT
+Master sha1: 4b8ee2b82e8b0b6e17ee33feb74fcdb5c6d8dbdd
+Master summary: nfs41: Correct offset for LAYOUTCOMMIT
+********************************************************************************
+Stable sha1: f2277bfde1808ad803ada27f80f1f3e7dc680c8e
+Stable summary: NFSv4.1: Fix the handling of NFS4ERR_SEQ_MISORDERED errors
+Master sha1: 444f72fe7e7b5f4db34cee933fa3546ebb8e9122
+Master summary: NFSv4.1: Fix the handling of NFS4ERR_SEQ_MISORDERED errors
+********************************************************************************
+Stable sha1: 5f857b3e33f57e4277c04efd810902b347fc76b6
+Stable summary: NFSv4: Handle expired stateids when the lease is still valid
+Master sha1: 0ced63d1a245ac11241a5d37932e6d04d9c8040d
+Master summary: NFSv4: Handle expired stateids when the lease is still valid
+********************************************************************************
+Stable sha1: 721c196a63eb2b149ae0856f7dc7243303a1e79b
+Stable summary: SUNRPC: Deal with the lack of a SYN_SENT sk->sk_state_change callback...
+Master sha1: fe19a96b10032035a35779f42ad59e35d6dd8ffd
+Master summary: SUNRPC: Deal with the lack of a SYN_SENT sk->sk_state_change callback...
+********************************************************************************
+Stable sha1: 0b9fb9202dac3ba4542556d57ccbe3fdd63d8b89
+Stable summary: drm/radeon/kms: add wait idle ioctl for eg->cayman
+Master sha1: 97bfd0acd32e9639c9136e03955d574655d5cc2b
+Master summary: drm/radeon/kms: add wait idle ioctl for eg->cayman
+********************************************************************************
+Stable sha1: 5e9b0976b345e6ba50bcfb663db3d6fc37a07727
+Stable summary: drm/radeon/kms: fix tile_config value reported to userspace on cayman.
+Master sha1: cde5083b051e9c66c99a8764aefbc13349e7730d
+Master summary: drm/radeon/kms: fix tile_config value reported to userspace on cayman.
+********************************************************************************
+Stable sha1: 960f84f94493758bb0ffa4d1ddea341db573bfe7
+Stable summary: drm/radeon/kms: fix incorrect comparison in cayman setup code.
+Master sha1: c289cff10a265ec4afe4396425297ff979a840b5
+Master summary: drm/radeon/kms: fix incorrect comparison in cayman setup code.
+********************************************************************************
+Stable sha1: 0891360a901d93135e0f79b579e7085905ee70fb
+Stable summary: drm/radeon/evergreen/btc/fusion: setup hdp to invalidate and flush when asked
+Master sha1: f25a5c63bfa017498c9adecb24d649ae96ba5c68
+Master summary: drm/radeon/evergreen/btc/fusion: setup hdp to invalidate and flush when asked
+********************************************************************************
+Stable sha1: a4760aef8cda5b338de1dbe17fc51766b985e239
+Stable summary: drm/radeon/cayman: setup hdp to invalidate and flush when asked
+Master sha1: 0b65f83f9d2fab47b9b6040fe75fc2cfc73032d4
+Master summary: drm/radeon/cayman: setup hdp to invalidate and flush when asked
+********************************************************************************
+Stable sha1: 9c9f8b0de180b801dedf0429a7788b07d5215ab5
+Stable summary: drm/i915: fix user irq miss in BSD ring on g4x
+Master sha1: 5bfa1063a775836a84f97e4df863fc36e1f856ad
+Master summary: drm/i915: fix user irq miss in BSD ring on g4x
+********************************************************************************
+Stable sha1: 23dffbd0c8e3d6e418c7438f7343dcc83fefa87b
+Stable summary: brd: handle on-demand devices correctly
+Master sha1: af46566885a373b0a526932484cd8fef8de7b598
+Master summary: brd: handle on-demand devices correctly
+********************************************************************************
+Stable sha1: db39f5be9655ae28ba51d06b5c353f619abf826a
+Stable summary: brd: limit 'max_part' module param to DISK_MAX_PARTS
+Master sha1: 315980c8688c4b06713c1a5fe9d64cdf8ab57a72
+Master summary: brd: limit 'max_part' module param to DISK_MAX_PARTS
+********************************************************************************
+Stable sha1: 96f59247b06552ab29000012f0878cbbd522bab2
+Stable summary: atm: expose ATM device index in sysfs
+Master sha1: e7a46b4d0839c2a3aa2e0ae0b145f293f6738498
+Master summary: atm: expose ATM device index in sysfs
+********************************************************************************
+Stable sha1: e753e72e4d6698a629634e66580638e7bd6835ba
+Stable summary: tmpfs: fix race between truncate and writepage
+Master sha1: 826267cf1e6c6899eda1325a19f1b1d15c558b20
+Master summary: tmpfs: fix race between truncate and writepage
+********************************************************************************
+Stable sha1: ca328545a1eca31a6c15487e526ddfaf870bc749
+Stable summary: ARM: 6941/1: cache: ensure MVA is cacheline aligned in flush_kern_dcache_area
+Master sha1: a248b13b21ae00b97638b4f435c8df3075808b5d
+Master summary: ARM: 6941/1: cache: ensure MVA is cacheline aligned in flush_kern_dcache_area
+********************************************************************************
+Stable sha1: 7d65f8ababe778107b12acc7b1ab998c03cfe48c
+Stable summary: dm mpath: do not fail paths after integrity errors
+Master sha1: 6f13f6fba76edc7d0e7580c5deee829d59a41b2f
+Master summary: dm mpath: do not fail paths after integrity errors
+********************************************************************************
+Stable sha1: c43a24963bf8d5dc865186d51c63599a8e5b1fd8
+Stable summary: dm table: reject devices without request fns
+Master sha1: f4808ca99a203f20b4475601748e44b25a65bdec
+Master summary: dm table: reject devices without request fns
+********************************************************************************
+Stable sha1: 3378432e8db20345aa68e9a795f93689f1378956
+Stable summary: idle governor: Avoid lock acquisition to read pm_qos before entering idle
+Master sha1: 333c5ae9948194428fe6c5ef5c088304fc98263b
+Master summary: idle governor: Avoid lock acquisition to read pm_qos before entering idle
+********************************************************************************
+Stable sha1: 75ea36a5365918b3a66d2273a87cdad146959c32
+Stable summary: cpuidle: menu: fixed wrapping timers at 4.294 seconds
+Master sha1: 7467571f4480b273007517b26297c07154c73924
+Master summary: cpuidle: menu: fixed wrapping timers at 4.294 seconds
+********************************************************************************
+Stable sha1: f40e1a49dbb9bd52bb7a8ddbf98b4520e33a3190
+Stable summary: hwmon: (pmbus) Initialize sysfs attributes
+Master sha1: eec752b2b99c794766926a9bac59b0d7df5b09c2
+Master summary: hwmon: (pmbus) Initialize sysfs attributes
+********************************************************************************
+Stable sha1: 17fdfc59e1cdf37689f5747ed527dbd5961b2010
+Stable summary: i8k: Avoid lahf in 64-bit code
+Master sha1: bc1f419c76a2d6450413ce4349f4e4a07be011d5
+Master summary: i8k: Avoid lahf in 64-bit code
+********************************************************************************
+Stable sha1: 82ce79999abf4899b10481209db7f0af8057a561
+Stable summary: Set cred->user_ns in key_replace_session_keyring
+Master sha1: f7285b5d631fd6096b11c6af0058ed3a2b30ef4e
+Master summary: Set cred->user_ns in key_replace_session_keyring
+********************************************************************************
+Stable sha1: 39b4e54266a625a141dac11c7bd22729b00c94d7
+Stable summary: kbuild: Fix GNU make v3.80 compatibility
+Master sha1: 43f67c98161c65f1b2e3af3a9ce6741850072c06
+Master summary: kbuild: Fix GNU make v3.80 compatibility
+********************************************************************************
+Stable sha1: 817db79f05be31b511c24c2bfc731b934f46262a
+Stable summary: UBIFS: fix a rare memory leak in ro to rw remounting path
+Master sha1: eaeee242c531cd4b0a4a46e8b5dd7ef504380c42
+Master summary: UBIFS: fix a rare memory leak in ro to rw remounting path
+********************************************************************************
+Stable sha1: 3e06eba936b0e872ba18649cfd34398b92b120dd
+Stable summary: eCryptfs: Allow 2 scatterlist entries for encrypted filenames
+Master sha1: 8d08dab786ad5cc2aca2bf870de370144b78c85a
+Master summary: eCryptfs: Allow 2 scatterlist entries for encrypted filenames
+********************************************************************************
+Stable sha1: f2212c86b7bcd04b94fd11c34e95c102506180b4
+Stable summary: eCryptfs: Clear i_nlink in rmdir
+Master sha1: 07850552b92b3637fa56767b5e460b4238014447
+Master summary: eCryptfs: Clear i_nlink in rmdir
+********************************************************************************
+Stable sha1: 1dd46c1c58394949c8d24eadaa5edc5905b55999
+Stable summary: p54usb: add zoom 4410 usbid
+Master sha1: 9368a9a2378ab721f82f59430a135b4ce4ff5109
+Master summary: p54usb: add zoom 4410 usbid
+********************************************************************************
+Stable sha1: 4e2c4040f3e270dbd66e094a3dff196495d5b765
+Stable summary: mfd: Fix omap usbhs crash when rmmoding ehci or ohci
+Master sha1: 6eb6fbbf3eca6dfba73e72de5ab2eeb52ae41f7a
+Master summary: mfd: Fix omap usbhs crash when rmmoding ehci or ohci
+********************************************************************************
+Stable sha1: c8b7f76958e22a88f2fa510ab05aff1ca08358a6
+Stable summary: sh: fixup fpu.o compile order
+Master sha1: a375b15164dd9264f724ad941825e52c90145151
+Master summary: sh: fixup fpu.o compile order
+********************************************************************************
+Stable sha1: dd04ac7182e11f77da6d12d2c3ff868c5bbedcd1
+Stable summary: sh: clkfwk: fixup clk_rate_table_build parameter in div6 clock
+Master sha1: 52c10ad22b7e317960b4d411c9a9ddeaf3d5ae39
+Master summary: sh: clkfwk: fixup clk_rate_table_build parameter in div6 clock
+********************************************************************************
+Stable sha1: fa7e5a133b16147d942345d4dd73665a3d8d1bb2
+Stable summary: cx88: hold device lock during sub-driver initialization
+Master sha1: 1d6213ab995c61f7d1d81cf6cf876acf15d6e714
+Master summary: [media] cx88: hold device lock during sub-driver initialization
+********************************************************************************
+Stable sha1: 09c90392d070959e7f4b7942482326aa502298f0
+Stable summary: cx88: fix locking of sub-driver operations
+Master sha1: 1fe70e963028f34ba5e32488a7870ff4b410b19b
+Master summary: [media] cx88: fix locking of sub-driver operations
+********************************************************************************
+Stable sha1: 508d613a04b5af41b4e9e030082dea0c672b1e62
+Stable summary: cx88: protect per-device driver list with device lock
+Master sha1: 8a317a8760cfffa8185b56ff59fb4b6c58488d79
+Master summary: [media] cx88: protect per-device driver list with device lock
+********************************************************************************
+Stable sha1: 673de951a6cbaa7a9c4518e03e78b88809828497
+Stable summary: DiBxxxx: get rid of DMA buffer on stack
+Master sha1: 5a0deeed5741117ee8625d6305d0034e219f102c
+Master summary: [media] DiBxxxx: get rid of DMA buffer on stack
+********************************************************************************
+Stable sha1: c98650d51417a7535746e2c9a4883380fb09bd02
+Stable summary: USB: remove remaining usages of hcd->state from usbcore and fix regression
+Master sha1: 69fff59de4d844f8b4c2454c3c23d32b69dcbfd7
+Master summary: USB: remove remaining usages of hcd->state from usbcore and fix regression
+********************************************************************************
+Stable sha1: 69d8d8fd0dabc5357f5ec91046bc1bd9011012b6
+Stable summary: OHCI: fix regression caused by nVidia shutdown workaround
+Master sha1: 2b7aaf503d56216b847c8265421d2a7d9b42df3e
+Master summary: OHCI: fix regression caused by nVidia shutdown workaround
+********************************************************************************
+Stable sha1: 7808101fa826f276ac709b6386e74d3021b788ce
+Stable summary: USB: option: add support for Huawei E353 device
+Master sha1: 610ba42f29c3dfa46a05ff8c2cadc29f544ff76d
+Master summary: USB: option: add support for Huawei E353 device
+********************************************************************************
+Stable sha1: f3b357fe2ce2d26501f60361e2d5410de99d09d6
+Stable summary: xhci: Fix memory leak bug when dropping endpoints
+Master sha1: 834cb0fc4712a3b21c6b8c5cb55bd13607191311
+Master summary: xhci: Fix memory leak bug when dropping endpoints
+********************************************************************************
+Stable sha1: 25afe6356878eef126a1957537ba32e0ca570bee
+Stable summary: xhci: Fix memory leak in ring cache deallocation.
+Master sha1: 30f89ca021c3e584b61bc5a14eede89f74b2e826
+Master summary: xhci: Fix memory leak in ring cache deallocation.
+********************************************************************************
+Stable sha1: 3a88301797a457d61cdb05754dd0f8cf05a61c60
+Stable summary: xhci: Fix full speed bInterval encoding.
+Master sha1: b513d44751bfb609a3c20463f764c8ce822d63e9
+Master summary: xhci: Fix full speed bInterval encoding.
+********************************************************************************
+Stable sha1: 4cb5ddcc9b8d2f5714f608924726d3076c7c212b
+Stable summary: usb: gadget: rndis: don't test against req->length
+Master sha1: 472b91274a6c6857877b5caddb875dcb5ecdfcb8
+Master summary: usb: gadget: rndis: don't test against req->length
+********************************************************************************
+Stable sha1: 0e3d8df94196537be5998c7aa36827fe2dac6a2f
+Stable summary: usb/gadget: at91sam9g20 fix end point max packet size
+Master sha1: bf1f0a05d472e33dda8e5e69525be1584cdbd03a
+Master summary: usb/gadget: at91sam9g20 fix end point max packet size
+********************************************************************************
+Stable sha1: 7d980c323625ee2b5f556f8056dbe0f059e4b231
+Stable summary: xhci: Fix bug in control transfer cancellation.
+Master sha1: 3abeca998a44205cfd837fa0bf1f7c24f8294acb
+Master summary: xhci: Fix bug in control transfer cancellation.
+********************************************************************************
+Stable sha1: 20a5c175ee2efee6a4e7410dc567ec2343e1933f
+Stable summary: USB: cdc_acm: Fix oops when Droids MuIn LCD is connected
+Master sha1: fd5054c169d29747a44b4e1419ff47f57ae82dbc
+Master summary: USB: cdc_acm: Fix oops when Droids MuIn LCD is connected
+********************************************************************************
+Stable sha1: 9ca086461a130c0733b910fadb8de678018e717d
+Stable summary: Bind only modem AT command endpoint to option module.
+Master sha1: 15b2f3204a5c878c32939094775fb7349f707263
+Master summary: Bind only modem AT command endpoint to option module.
+********************************************************************************
+Stable sha1: 26405736b2c4b993ad912c65220cf4328e8af0cf
+Stable summary: USB: gamin_gps: Fix for data transfer problems in native mode
+Master sha1: b4026c4584cd70858d4d3450abfb1cd0714d4f32
+Master summary: USB: gamin_gps: Fix for data transfer problems in native mode
+********************************************************************************
+Stable sha1: bbe69212aa5b7b2e9e06b3c03a4387d4489cfb76
+Stable summary: USB: gadget: g_multi: fixed vendor and product ID in inf files
+Master sha1: 7701846fd52f86dffe50715e0e63154088b7c982
+Master summary: USB: gadget: g_multi: fixed vendor and product ID in inf files
+********************************************************************************
+Stable sha1: 428eb700f6f94c7222e80000d0d1b95942e6e860
+Stable summary: USB: serial: ftdi_sio: adding support for TavIR STK500
+Master sha1: 37909fe588c9e09ab57cd267e98678a17ceda64a
+Master summary: USB: serial: ftdi_sio: adding support for TavIR STK500
+********************************************************************************
+Stable sha1: a085e0068aec5489c3a07f3405c48e60e579a61b
+Stable summary: USB: moto_modem: Add USB identifier for the Motorola VE240.
+Master sha1: 3938a0b32dc12229e76735679b37095bc2bc1578
+Master summary: USB: moto_modem: Add USB identifier for the Motorola VE240.
+********************************************************************************
+Stable sha1: c8809bff71a493e7951cddac5d65cb66ea5a7d46
+Stable summary: USB: CP210x Add 4 Device IDs for AC-Services Devices
+Master sha1: 4eff0b40a7174896b860312910e0db51f2dcc567
+Master summary: USB: CP210x Add 4 Device IDs for AC-Services Devices
+********************************************************************************
+Stable sha1: ae1b0404f221396bda01b06865d2785fcae65603
+Stable summary: i2c/writing-clients: Fix foo_driver.id_table
+Master sha1: 3116c86033079a1d4d4e84c40028f96b614843b8
+Master summary: i2c/writing-clients: Fix foo_driver.id_table
+********************************************************************************
+Stable sha1: 2beb758f2dc6ccc4ab6b8aee00891ef52bc58606
+Stable summary: i2c: tegra: Enable new slave mode.
+Master sha1: 65a1a0ace554d61ea5a90377a54df1505275c1b1
+Master summary: i2c: tegra: Enable new slave mode.
+********************************************************************************
+Stable sha1: 76575b1770af39c3583242c3d22fa012603c1223
+Stable summary: loop: handle on-demand devices correctly
+Master sha1: a1c15c59feee36267c43142a41152fbf7402afb6
+Master summary: loop: handle on-demand devices correctly
+********************************************************************************
+Stable sha1: 95f49bfc1c873713762561e2087de910e8824760
+Stable summary: loop: limit 'max_part' module param to DISK_MAX_PARTS
+Master sha1: 78f4bb367fd147a0e7e3998ba6e47109999d8814
+Master summary: loop: limit 'max_part' module param to DISK_MAX_PARTS
+********************************************************************************
+Stable sha1: bc50c5751c34128e0cbc30e7f5ea990bd1199429
+Stable summary: mm/page_alloc.c: prevent unending loop in __alloc_pages_slowpath()
+Master sha1: cfa54a0fcfc1017c6f122b6f21aaba36daa07f71
+Master summary: mm/page_alloc.c: prevent unending loop in __alloc_pages_slowpath()
+********************************************************************************
+Stable sha1: a5ccaac64c17ce3cc1878a6d479a6f1b16092c24
+Stable summary: HID: magicmouse: ignore 'ivalid report id' while switching modes
+Master sha1: 23746a66d7d9e73402c68ef00d708796b97ebd72
+Master summary: HID: magicmouse: ignore 'ivalid report id' while switching modes
+********************************************************************************
+Stable sha1: a7ceecdbb6c3cc4368be3f4f3032dc5fb52b6308
+Stable summary: ASoC: fix raumfeld platform
+Master sha1: 477a66948ef8683f182682cc68e8520baf8a5b43
+Master summary: ASoC: fix raumfeld platform
+********************************************************************************
+Stable sha1: 4d0d9331bb845057b558abaa83b244c12ddc606a
+Stable summary: ASoC: Add some missing volume update bit sets for wm_hubs devices
+Master sha1: fb5af53d421d80725172427e9076f6e889603df6
+Master summary: ASoC: Add some missing volume update bit sets for wm_hubs devices
+********************************************************************************
+Stable sha1: 7b8fd7f7dfc4a1ecc1d60325520283a4dd244e10
+Stable summary: ASoC: Ensure output PGA is enabled for line outputs in wm_hubs
+Master sha1: d0b48af6c2b887354d0893e598d92911ce52620e
+Master summary: ASoC: Ensure output PGA is enabled for line outputs in wm_hubs
+********************************************************************************
+Stable sha1: 3ad8305aab787b2acc690a6e756e9fb594ab0c27
+Stable summary: ALSA: hda - Use LPIB for ATI/AMD chipsets as default
+Master sha1: 50e3bbf9898840eead86f90a43b3625a2b2f4112
+Master summary: ALSA: hda - Use LPIB for ATI/AMD chipsets as default
+********************************************************************************
+Stable sha1: eff306d801588164b2763139ff98d57c3ba862aa
+Stable summary: ALSA: hda - Fix input-src parse in patch_analog.c
+Master sha1: 5a2d227fdc7a02ed1b4cebba391d8fb9ad57caaf
+Master summary: ALSA: hda - Fix input-src parse in patch_analog.c
+********************************************************************************
+Stable sha1: 1cb49cb8e35eaa4a1721ddad5ba0206ae6631db8
+Stable summary: ALSA: HDA: Add quirk for Lenovo U350
+Master sha1: d2859fd49200f1f3efd8acdb54b6d51d3ab82302
+Master summary: ALSA: HDA: Add quirk for Lenovo U350
+********************************************************************************
+Stable sha1: bdf305efb9acb9acdbb2d4ebebfc0d4f6285a771
+Stable summary: ALSA: HDA: Use one dmic only for Dell Studio 1558
+Master sha1: e033ebfb399227e01686260ac271029011bc6b47
+Master summary: ALSA: HDA: Use one dmic only for Dell Studio 1558
+********************************************************************************
+Stable sha1: 440316e6310c2ce372e32d12c83ccc8ddcfb5028
+Stable summary: slub: Make CONFIG_DEBUG_PAGE_ALLOC work with new fastpath
+Master sha1: 1393d9a1857471f816d0be1ccc1d6433a86050f6
+Master summary: slub: Make CONFIG_DEBUG_PAGE_ALLOC work with new fastpath
+********************************************************************************
+Stable sha1: 22d82c7586eb492067805dd781f84f5a94133357
+Stable summary: mm: vmscan: correctly check if reclaimer should schedule during shrink_slab
+Master sha1: f06590bd718ed950c98828e30ef93204028f3210
+Master summary: mm: vmscan: correctly check if reclaimer should schedule during shrink_slab
+********************************************************************************
+Stable sha1: 75cd1e8f7b2737a8bb2f1817f23e83135579569f
+Stable summary: mm: vmscan: correct use of pgdat_balanced in sleeping_prematurely
+Master sha1: afc7e326a3f5bafc41324d7926c324414e343ee5
+Master summary: mm: vmscan: correct use of pgdat_balanced in sleeping_prematurely
+********************************************************************************
+Stable sha1: a6b2de6dae30c9565999760b91d1c22f77613c9d
+Stable summary: md/bitmap: fix saving of events_cleared and other state.
+Master sha1: 8258c53208d7a9b7207e7d4dae36d2ea384cb278
+Master summary: md/bitmap: fix saving of events_cleared and other state.
+********************************************************************************
+Stable sha1: 37c90a7e80f988b23618db27e3b06ba4c6ea1eab
+Stable summary: md: Fix race when creating a new md device.
+Master sha1: b0140891a8cea36469f58d23859e599b1122bd37
+Master summary: md: Fix race when creating a new md device.
+********************************************************************************
+Stable sha1: 395b93001142c32243d471c391c319f9bbe91dae
+Stable summary: seqlock: Don't smp_rmb in seqlock reader spin loop
+Master sha1: 5db1256a5131d3b133946fa02ac9770a784e6eb2
+Master summary: seqlock: Don't smp_rmb in seqlock reader spin loop
+********************************************************************************
+Stable sha1: 4be113c2944089074e534bfd01ed0fa85f002587
+Stable summary: Fix for buffer overflow in ldm_frag_add not sufficient
+Master sha1: cae13fe4cc3f24820ffb990c09110626837e85d4
+Master summary: Fix for buffer overflow in ldm_frag_add not sufficient
+********************************************************************************
+Stable sha1: 02ca42f78e4cc3b41c8fecb9ad3a8f547db87a85
+Stable summary: staging: brcm80211: bugfix for div by zero in minstrel_ht_tx_status
+Master sha1: e9c661e08c2a6015c1b7cba1cecefa27a089df71
+Master summary: staging: brcm80211: bugfix for div by zero in minstrel_ht_tx_status
+********************************************************************************
+Stable sha1: 9edb40ddd05b47703bb1b5757ba36e96c77d1fdd
+Stable summary: staging: r8712u: Fix driver to support ad-hoc mode
+Master sha1: 62819fd9481021db7f87d5f61f2e2fd2be1dfcfa
+Master summary: staging: r8712u: Fix driver to support ad-hoc mode
+********************************************************************************
+Stable sha1: d13ae39a34fb711bf0add4bfd25e08b2f7aba104
+Stable summary: staging: usbip: fix wrong endian conversion
+Master sha1: cacd18a8476ce145ca5dcd46dc5b75585fd1289c
+Master summary: staging: usbip: fix wrong endian conversion
+********************************************************************************
+Stable sha1: 4538148bcdc6a2a6fa642e24a7a2f73fd19be651
+Stable summary: When mandatory encryption on share, fail mount
+Master sha1: 6848b7334b24b47aa3d0e70342ff839ffa95d5fa
+Master summary: [CIFS] When mandatory encryption on share, fail mount
+********************************************************************************
+Stable sha1: 83d325137dd93da7227b80a477c075f7cb1c0c54
+Stable summary: rcu: Fix unpaired rcu_irq_enter() from locking selftests
+Master sha1: ba9f207c9f82115aba4ce04b22e0081af0ae300f
+Master summary: rcu: Fix unpaired rcu_irq_enter() from locking selftests
+********************************************************************************
+Stable sha1: 514c59e1338d437e820a3103e26315e4c503a45e
+Stable summary: oprofile, x86: Enable preemption during pci device setup in IBS init
+Master sha1: 3d2606f42984613d324ad3047cf503bcddc3880a
+Master summary: oprofile, x86: Enable preemption during pci device setup in IBS init
+********************************************************************************
+Stable sha1: b2df62abeb1d07812c5e409ca8cde300f39b52d0
+Stable summary: x86, cpufeature: Update CPU feature RDRND to RDRAND
+Master sha1: 7ccafc5f75c87853f3c49845d5a884f2376e03ce
+Master summary: x86, cpufeature: Update CPU feature RDRND to RDRAND
+********************************************************************************
+Stable sha1: 0aed459e8487eb6ebdb4efe8cefe1eafbc704b30
+Stable summary: x86, efi: Retain boot service code until after switching to virtual mode
+Master sha1: 916f676f8dc016103f983c7ec54c18ecdbb6e349
+Master summary: x86, efi: Retain boot service code until after switching to virtual mode
+********************************************************************************
+Stable sha1: 7e0121f7eeec1c3bd688fd45f225ffd271dabd07
+Stable summary: x86, amd: Use _safe() msr access for GartTlbWlk disable code
+Master sha1: d47cc0db8fd6011de2248df505fc34990b7451bf
+Master summary: x86, amd: Use _safe() msr access for GartTlbWlk disable code
+********************************************************************************
+Stable sha1: 10ac0fbefd65ff09ce3a884400c5afe62c9707b5
+Stable summary: x86, amd: Do not enable ARAT feature on AMD processors below family 0x12
+Master sha1: e9cdd343a5e42c43bcda01e609fa23089e026470
+Master summary: x86, amd: Do not enable ARAT feature on AMD processors below family 0x12
+********************************************************************************
+Stable sha1: f76923c73aad9b726825e70d07f49a572938dc80
+Stable summary: x86, ioapic: Fix potential resume deadlock
+Master sha1: b64ce24daffb634b5b3133a2e411bd4de50654e8
+Master summary: x86, ioapic: Fix potential resume deadlock
+********************************************************************************
+Stable sha1: ff06554f5afc8ff13b55fa3d4a13a18b2683e05d
+Stable summary: um: Use RWSEM_GENERIC_SPINLOCK on x86
+Master sha1: 3a3679078aed2c451ebc32836bbd3b8219a65e01
+Master summary: um: Use RWSEM_GENERIC_SPINLOCK on x86
+********************************************************************************
+Stable sha1: 9d6b9519ace96a810c5ebe316f1301ca8be94d92
+Stable summary: target: Fix task->task_execute_queue=1 clear bug + LUN_RESET OOPs
+Master sha1: ccf4d680f80941f0073a9bc6a5e0ed41496b46e7
+Master summary: [SCSI] target: Fix task->task_execute_queue=1 clear bug + LUN_RESET OOPs
+********************************************************************************
+Stable sha1: c20bc94058d10ee00a72490e05b9c314f2a75d4e
+Stable summary: target: Fix bug with task_sg chained transport_free_dev_tasks release
+Master sha1: 42c6951e2f7a665bcb57b92fe3f806ba48152c0e
+Master summary: [SCSI] target: Fix bug with task_sg chained transport_free_dev_tasks release
+********************************************************************************
+Stable sha1: 26e45fbaec96c748f807925ea3855deb3c504118
+Stable summary: target: Fix interrupt context bug with stats_lock and core_tmr_alloc_req
+Master sha1: 1e7de68c57daf75ec4b721f101f88cccf029e38c
+Master summary: [SCSI] target: Fix interrupt context bug with stats_lock and core_tmr_alloc_req
+********************************************************************************
+Stable sha1: f4d195fe897027ee3da1bd89b5a25631ebb7da6a
+Stable summary: target: Fix multi task->task_sg[] chaining logic bug
+Master sha1: 4a8fcc2cc34b7546584bf9ebd8f0caf433e4736e
+Master summary: [SCSI] target: Fix multi task->task_sg[] chaining logic bug
+********************************************************************************
+Stable sha1: 020d7f0a3afe02e399859332593067909df2f001
+Stable summary: Fix Ultrastor asm snippet
+Master sha1: fad4dab5e44e10acf6b0235e469cb8e773b58e31
+Master summary: [SCSI] Fix Ultrastor asm snippet
+********************************************************************************
+Stable sha1: 9f589e61371066e57513c2d878efad8f4d76e766
+Stable summary: bnx2i: Updated the connection shutdown/cleanup timeout
+Master sha1: d5307a078bb0288945c900c6f4a2fd77ba6d0817
+Master summary: [SCSI] bnx2i: Updated the connection shutdown/cleanup timeout
+********************************************************************************
+Stable sha1: f04c018579fcbded5f53fb8447925e1762751315
+Stable summary: bnx2i: Fixed packet error created when the sq_size is set to 16
+Master sha1: 7287c63e986fe1a51a89f4bb1327320274a7a741
+Master summary: [SCSI] bnx2i: Fixed packet error created when the sq_size is set to 16
+********************************************************************************
+Stable sha1: 4cfc249a3b73a6afee1ec58ab42f63aceb920f5d
+Stable summary: mpt2sas: move even handling of MPT2SAS_TURN_ON_FAULT_LED into process context
+Master sha1: 3ace8e052be5293ebb3e00f819effccc64108a38
+Master summary: [SCSI] mpt2sas: move even handling of MPT2SAS_TURN_ON_FAULT_LED into process context
+********************************************************************************
+Stable sha1: 6de88839e47b4cb4dc97b095a2a89399fbec8a23
+Stable summary: dst: catch uninitialized metrics
+Master sha1: 1f37070d3ff325827c6213e51b57f21fd5ac9d05
+Master summary: dst: catch uninitialized metrics
+********************************************************************************
+Stable sha1: 88bb492456d6ba8c860060d08fc1370a8ce979b0
+Stable summary: net: fix __dst_destroy_metrics_generic()
+Master sha1: b30c516f875004f025f4d10147bde28c5e98466b
+Master summary: net: fix __dst_destroy_metrics_generic()
+********************************************************************************
+Stable sha1: 9df49f2bfe862573911a080c75a6d81113c5c81d
+Stable summary: sch_sfq: avoid giving spurious NET_XMIT_CN signals
+Master sha1: 8efa885406359af300d46910642b50ca82c0fe47
+Master summary: sch_sfq: avoid giving spurious NET_XMIT_CN signals
+********************************************************************************
+Stable sha1: 37d37d7502216a7d0e0fb33018afd8e714963b20
+Stable summary: bonding: prevent deadlock on slave store with alb mode (v3)
+Master sha1: 9fe0617d9b6d21f700ee9e658e1c9fe3be2fb402
+Master summary: bonding: prevent deadlock on slave store with alb mode (v3)
+********************************************************************************
+Stable sha1: b262a5da755cc6ed0cb4fba230cd9bf4037e1096
+Stable summary: sch_sfq: fix peek() implementation
+Master sha1: 07bd8df5df4369487812bf85a237322ff3569b77
+Master summary: sch_sfq: fix peek() implementation
+********************************************************************************
+Stable sha1: 5e29567e54ba77297911659047184b6d551e38e8
+Stable summary: sctp: fix memory leak of the ASCONF queue when free asoc
+Master sha1: 8b4472cc13136d04727e399c6fdadf58d2218b0a
+Master summary: sctp: fix memory leak of the ASCONF queue when free asoc
+********************************************************************************
+Stable sha1: 42923465fb8d025a2b5153f2e7ab1e6e1058bf00
+Stable summary: bridge: initialize fake_rtable metrics
+Master sha1: 33eb9873a283a2076f2b5628813d5365ca420ea9
+Master summary: bridge: initialize fake_rtable metrics
+********************************************************************************
+Stable sha1: 40093a2a3e53af2f1a0754fe40b7513ebf6e0c8f
+Stable summary: igmp: call ip_mc_clear_src() only when we have no users of ip_mc_list
+Master sha1: 24cf3af3fed5edcf90bc2a0ed181e6ce1513d2dc
+Master summary: igmp: call ip_mc_clear_src() only when we have no users of ip_mc_list
+********************************************************************************
+Stable sha1: a0e3d9a50be5f6cffbc4fbc9e44105c5def26cf0
+Stable summary: SCTP: fix race between sctp_bind_addr_free() and sctp_bind_addr_conflict()
+Master sha1: c182f90bc1f22ce5039b8722e45621d5f96862c2
+Master summary: SCTP: fix race between sctp_bind_addr_free() and sctp_bind_addr_conflict()
+********************************************************************************
+Stable sha1: 8884892fcbe700a595a6e6d11fca1a0281793d7e
+Stable summary: macvlan: fix panic if lowerdev in a bond
+Master sha1: d93515611bbc70c2fe4db232e5feb448ed8e4cc9
+Master summary: macvlan: fix panic if lowerdev in a bond
+********************************************************************************
+Stable sha1: 3a029a52f334fcdf19da9496f3ec122fafe4cad5
+Stable summary: net: add skb_dst_force() in sock_queue_err_skb()
+Master sha1: abb57ea48fd9431fa320a5c55f73e6b5a44c2efb
+Master summary: net: add skb_dst_force() in sock_queue_err_skb()
+********************************************************************************
+Stable sha1: b71dedf430e6a345b4ba47212ba1b433eef999dc
+Stable summary: net: ethtool: fix IPV6 checksum feature name string
+Master sha1: 7cc31a9ae1477abc79d5992b3afe889f25c50c99
+Master summary: net: ethtool: fix IPV6 checksum feature name string
+********************************************************************************
+Stable sha1: 9532805bdd4bdcb203d53ebeac345c27a9436007
+Stable summary: net: Change netdev_fix_features messages loglevel
+Master sha1: 604ae14ffb6d75d6eef4757859226b758d6bf9e3
+Master summary: net: Change netdev_fix_features messages loglevel
+********************************************************************************
+Stable sha1: 6fcd74f9528a56d6247454cf5cdc94706dddbb75
+Stable summary: net: use hlist_del_rcu() in dev_change_name()
+Master sha1: 372b2312010bece1e36f577d6c99a6193ec54cbd
+Master summary: net: use hlist_del_rcu() in dev_change_name()
+********************************************************************************
+Stable sha1: 6406426e95eea9ccfcc8b15ac6613c8af438cffe
+Stable summary: netfilter: nf_ct_sip: fix SDP parsing in TCP SIP messages for some Cisco phones
+Master sha1: e6e4d9ed11fb1fab8b3256a3dc14d71b5e984ac4
+Master summary: netfilter: nf_ct_sip: fix SDP parsing in TCP SIP messages for some Cisco phones
+********************************************************************************
+Stable sha1: fa8c3f668b17e2e508d14f44bbf8368b3d7ea92e
+Stable summary: netfilter: nf_ct_sip: validate Content-Length in TCP SIP messages
+Master sha1: 274ea0e2a4cdf18110e5931b8ecbfef6353e5293
+Master summary: netfilter: nf_ct_sip: validate Content-Length in TCP SIP messages
+********************************************************************************
+Stable sha1: d9b389384c8805635af0955549cb10012b8c4d68
+Stable summary: ext4: release page cache in ext4_mb_load_buddy error path
+Master sha1: 26626f1172fb4f3f323239a6a5cf4e082643fa46
+Master summary: ext4: release page cache in ext4_mb_load_buddy error path
+********************************************************************************
+Stable sha1: 0f9d470eb46c67c0ac63cbbc26afb83f8cd85caa
+Stable summary: jbd: fix fsync() tid wraparound bug
+Master sha1: d9b01934d56a96d9f4ae2d6204d4ea78a36f5f36
+Master summary: jbd: fix fsync() tid wraparound bug
+********************************************************************************
+Stable sha1: 0a5cb949920f8796c684fcde2da098e00c4c28da
+Stable summary: jbd: Fix forever sleeping process in do_get_write_access()
+Master sha1: 2842bb20eed2e25cde5114298edc62c8883a1d9a
+Master summary: jbd: Fix forever sleeping process in do_get_write_access()
+********************************************************************************
+Stable sha1: 61485c2e416f12932cfd9423ad0641b975b4de65
+Stable summary: ext3: Fix fs corruption when make_indexed_dir() fails
+Master sha1: 86c4f6d85595cd7da635dc6985d27bfa43b1ae10
+Master summary: ext3: Fix fs corruption when make_indexed_dir() fails
+********************************************************************************
+Stable sha1: 91180a0401c2348d3c488613dbe39ae2e306ec20
+Stable summary: usb-storage: fix up the unusual_realtek device list
+Master sha1: a8e62dd6d91f3bc3687abbb26227e5fc39c4829c
+Master summary: usb-storage: fix up the unusual_realtek device list
+********************************************************************************
+Stable sha1: 7a538094d533fc4c836d1164103e6a15491a2daa
+Stable summary: pata_cm64x: fix boot crash on parisc
+Master sha1: 9281b16caac1276817b77033c5b8a1f5ca30102c
+Master summary: pata_cm64x: fix boot crash on parisc
+********************************************************************************
+Stable sha1: f632b4a6ec47d2ecee7d2f1c2bf902b1384201ac
+Stable summary: wire up syncfs syscall
+Master sha1: 2e7bad5f34b5beed47542490c760ed26574e38ba
+Master summary: [PARISC] wire up syncfs syscall
+********************************************************************************
+Stable sha1: 8afcbeeb63abdd9baa50289ebde9f1f457f132db
+Stable summary: wire up the fhandle syscalls
+Master sha1: a71aae4cec120ee85cf32608fca40a4605461214
+Master summary: [PARISC] wire up the fhandle syscalls
+********************************************************************************
+Stable sha1: 8fd886735c5309c3805b33047ae4b6868cc0d534
+Stable summary: wire up clock_adjtime syscall
+Master sha1: c3f957a22eca106bd28136943305b390b4337ebf
+Master summary: [PARISC] wire up clock_adjtime syscall
+********************************************************************************
+Stable sha1: 21fbdbf013675102412635fdf0f47fd1b86fc074
+Stable summary: wire up fanotify syscalls
+Master sha1: 1824074b07ee66fa0f714e08579ad85075132d7b
+Master summary: [PARISC] wire up fanotify syscalls
+********************************************************************************
+Stable sha1: 084013b8e040a1414f83e5574d2716019c180a11
+Stable summary: VFS: move BUG_ON test for symlink nd->depth after current->link_count test
+Master sha1: 1a4022f88d40e1255920b017556092ab926d7f66
+Master summary: VFS: move BUG_ON test for symlink nd->depth after current->link_count test
+********************************************************************************
+Stable sha1: 05e9a48acf36b2b8ded09d4c630ec4671de713db
+Stable summary: mac80211: fix a few RCU issues
+Master sha1: a3836e02ba4c50db958d32d710b226f2408623dc
+Master summary: mac80211: fix a few RCU issues
+********************************************************************************
+Stable sha1: 195a03999469b672c2a2a709b848db378bc57f2e
+Stable summary: nl80211: Fix set_key regression with some drivers
+Master sha1: 0e579d6a8f4aea346da818f13ee71401c125e639
+Master summary: nl80211: Fix set_key regression with some drivers
+********************************************************************************
+Stable sha1: 7a8fa3e16202fc5caec6787b4f394aecca7dc17a
+Stable summary: mac80211: use wake_queue to restart trasmit
+Master sha1: 470ab2a23b453518ac86937572b4531d8925ca55
+Master summary: mac80211: use wake_queue to restart trasmit
+********************************************************************************
+Stable sha1: a46053ab736c81bcfc442f9ca44317d64159dfb3
+Stable summary: iwlwifi: fix bugs in change_interface
+Master sha1: a2b76b3b31568da9d281a393845f17689594ccdf
+Master summary: iwlwifi: fix bugs in change_interface
+********************************************************************************
+Stable sha1: 0d6a1cd7121da74a36846dfa1701c37ccee8faac
+Stable summary: libata: Use Maximum Write Same Length to report discard size limit
+Master sha1: 5f4e206666f834340b69ddb43f86de3851c8675a
+Master summary: libata: Use Maximum Write Same Length to report discard size limit
+********************************************************************************
+Stable sha1: d3b2cb8d5114ff591925a40e9d33e4cf956eb1f4
+Stable summary: x86, 64-bit: Fix copy_[to/from]_user() checks for the userspace address limit
+Master sha1: 26afb7c661080ae3f1f13ddf7f0c58c4f931c22b
+Master summary: x86, 64-bit: Fix copy_[to/from]_user() checks for the userspace address limit
+********************************************************************************
+Stable sha1: 6fe4503c6bed5328c9edd017d54fd2987d58e7fd
+Stable summary: SATA: enable non-queueable flush flag
+Master sha1: 900e599eb0c16390ff671652a44e0ea90532220e
+Master summary: SATA: enable non-queueable flush flag
+********************************************************************************
+Stable sha1: d27053116fa81d3730cf1604ee74480724d9ebe2
+Stable summary: mtd: omap: fix subpage ecc issue with prefetch
+Master sha1: c5d8c0cae4af7d78823d32fcd1c458ee1a1b5489
+Master summary: mtd: omap: fix subpage ecc issue with prefetch
+********************************************************************************
+Stable sha1: 78a26f6c46eb3c01982b07048a1c547c5c16a4ff
+Stable summary: mtd: return badblockbits back
+Master sha1: 26d9be11485ea8c1102c3e8eaa7667412eef4950
+Master summary: mtd: return badblockbits back
+********************************************************************************
+Stable sha1: cc5c1422098715ec19ae109b75f54ab9e029e24b
+Stable summary: mtd: mtdconcat: fix NAND OOB write
+Master sha1: 431e1ecabddcd7cbba237182ddf431771f98bb4c
+Master summary: mtd: mtdconcat: fix NAND OOB write
+********************************************************************************
+Stable sha1: 9206053d7efb79adb564ccf7055342318b22475c
+Stable summary: block: always allocate genhd->ev if check_events is implemented
+Master sha1: 75e3f3ee3c64968d42f4843ec49e579f84b5aa0c
+Master summary: block: always allocate genhd->ev if check_events is implemented
+********************************************************************************
+Stable sha1: 294319fea7169f8a4abb48b1e9b3b98c7334e465
+Stable summary: block: add proper state guards to __elv_next_request
+Master sha1: 0a58e077eb600d1efd7e54ad9926a75a39d7f8ae
+Master summary: block: add proper state guards to __elv_next_request
+********************************************************************************
+Stable sha1: 071f305d6f2ecd2239f148858ead57a2f4fb16d9
+Stable summary: block: Fix discard topology stacking and reporting
+Master sha1: a934a00a69e940b126b9bdbf83e630ef5fe43523
+Master summary: block: Fix discard topology stacking and reporting
+********************************************************************************
+Stable sha1: 7da70b9a620f8da390bcd441b346c51cd48f979b
+Stable summary: block: hold queue if flush is running for non-queueable flush drive
+Master sha1: 3ac0cc4508709d42ec9aa351086c7d38bfc0660c
+Master summary: block: hold queue if flush is running for non-queueable flush drive
+********************************************************************************
+Stable sha1: 81b5f4969a360c24882a44e91e6177d2d79f933f
+Stable summary: block: add a non-queueable flush flag
+Master sha1: f3876930952390a31c3a7fd68dd621464a36eb80
+Master summary: block: add a non-queueable flush flag
+********************************************************************************
+Stable sha1: bd1a4347d6d4157cdd9424a85979e3ee2e9533a3
+Stable summary: block: move bd_set_size() above rescan_partitions() in __blkdev_get()
+Master sha1: ff2a9941ca27ab18169d17b3803aca68b154951c
+Master summary: block: move bd_set_size() above rescan_partitions() in __blkdev_get()
+********************************************************************************
+Stable sha1: 939f271827199c186116dae00ca8cea8af560992
+Stable summary: ext4: don't set PageUptodate in ext4_end_bio()
+Master sha1: 39db00f1c45e770856264bdb3ceca27980b01965
+Master summary: ext4: don't set PageUptodate in ext4_end_bio()
+********************************************************************************
+Stable sha1: 462a14519a4206926db6bf3ecddc0f13810764aa
+Stable summary: iwlagn: fix iwl_is_any_associated
+Master sha1: 054ec924944912413e4ee927b8cf02f476d08783
+Master summary: iwlagn: fix iwl_is_any_associated
+********************************************************************************
+Stable sha1: 002b0d10cb04e5e4036e0d3fd830f2cca81be69b
+Stable summary: powerpc/oprofile: Handle events that raise an exception without overflowing
+Master sha1: ad5d5292f16c6c1d7d3e257c4c7407594286b97e
+Master summary: powerpc/oprofile: Handle events that raise an exception without overflowing
+********************************************************************************
+Stable sha1: ae408510ef79d498015ab8614a70616175b211bc
+Stable summary: ath9k_hw: Fix STA connection issues with AR9380 (XB113).
+Master sha1: be0e6aa5a0c487a2a0880dda8bc70f7f1860fc39
+Master summary: ath9k_hw: Fix STA connection issues with AR9380 (XB113).
+********************************************************************************
+Stable sha1: ac256ca700c6a7eee16b03efc3f3d63f0a4f041b
+Stable summary: ath9k_hw: fix dual band assumption for XB113
+Master sha1: 9ba7f4f5eba5f4b44c7796bbad29f8ec3a7d5864
+Master summary: ath9k_hw: fix dual band assumption for XB113
+********************************************************************************
+Stable sha1: 37dfacd92cd7ed22c9bad21cd32e7106db23fd2b
+Stable summary: ath9k_hw: fix power for the HT40 duplicate frames
+Master sha1: cf3a03b9c99a0b2715741d116f50f513f545bb2d
+Master summary: ath9k_hw: fix power for the HT40 duplicate frames
+********************************************************************************
+Stable sha1: 0b58a77dd1aa5f775b804d720da047160c0f0ead
+Stable summary: ath9k_hw: do noise floor calibration only on required chains
+Master sha1: 28ef6450f0182f95c4f50aaa0ab2043a09c72b0a
+Master summary: ath9k_hw: do noise floor calibration only on required chains
+********************************************************************************
+Stable sha1: 4d298dbad2464a45b55aac309ea82dfdfe4291f5
+Stable summary: x86, cpufeature: Fix cpuid leaf 7 feature detection
+Master sha1: 2494b030ba9334c7dd7df9b9f7abe4eacc950ec5
+Master summary: x86, cpufeature: Fix cpuid leaf 7 feature detection
+********************************************************************************
+Stable sha1: ca2c08d39e4c5a493d12e04da38f824d7c1a9ef2
+Stable summary: powerpc/kexec: Fix memory corruption from unallocated slaves
+Master sha1: 3d2cea732d68aa270c360f55d8669820ebce188a
+Master summary: powerpc/kexec: Fix memory corruption from unallocated slaves
+********************************************************************************
+Stable sha1: 3115875e9cace0d65df3ec0b07edbe10da1068ad
+Stable summary: powerpc/kdump64: Don't reference freed memory as pacas
+Master sha1: bd9e5eefecb3d69018bb95796298019d309cbec8
+Master summary: powerpc/kdump64: Don't reference freed memory as pacas
+********************************************************************************
+Stable sha1: 2016e5d81c5c3d8d0a9aa21353aac88900aa5a9d
+Stable summary: qla2xxx: Fix vport delete hang when logins are outstanding.
+Master sha1: 9f40682e2857a3c2ddb80a87b185af3c6a708346
+Master summary: [SCSI] qla2xxx: Fix vport delete hang when logins are outstanding.
+********************************************************************************
+Stable sha1: 500412699c7cbc1fcda2cc9a146da78760c5386f
+Stable summary: qla2xxx: Fix virtual port failing to login after chip reset.
+Master sha1: cefcaba67ab97fb756b3a6af5139c94d861b660d
+Master summary: [SCSI] qla2xxx: Fix virtual port failing to login after chip reset.
+********************************************************************************
+Stable sha1: 517f567248f199edf3e182fe8b1366a0422b10db
+Stable summary: qla2xxx: Fix hang during driver unload when vport is active.
+Master sha1: 43ebf16d762b082663976b679b813e1b546548d1
+Master summary: [SCSI] qla2xxx: Fix hang during driver unload when vport is active.
+********************************************************************************
+Stable sha1: eea39c13d16351956b93014e441dc94b54e842a2
+Stable summary: qla2xxx: Properly set the dsd_list_len for dsd_chaining in cmd type 6.
+Master sha1: fa96d927362a422405d65491326f8ef763572e84
+Master summary: [SCSI] qla2xxx: Properly set the dsd_list_len for dsd_chaining in cmd type 6.
+********************************************************************************
+Stable sha1: 8c624dacbf94dd92bc6385cfd0b97698f56cedbd
+Stable summary: ftrace: Only update the function code on write to filter files
+Master sha1: 058e297d34a404caaa5ed277de15698d8dc43000
+Master summary: ftrace: Only update the function code on write to filter files
+********************************************************************************
+Stable sha1: 9aefae678abf4ba79f97983dd014135c3d46f96a
+Stable summary: net: recvmmsg: Strip MSG_WAITFORONE when calling recvmsg
+Master sha1: b9eb8b8752804cecbacdb4d24b52e823cf07f107
+Master summary: net: recvmmsg: Strip MSG_WAITFORONE when calling recvmsg
+********************************************************************************
+Stable sha1: 61d0510ca043687e6671321be87124a4acb4a0cd
+Stable summary: Fix memory leak in cpufreq_stat
+Master sha1: 98586ed8b8878e10691203687e89a42fa3355300
+Master summary: [CPUFREQ] Fix memory leak in cpufreq_stat
+********************************************************************************
+Stable sha1: 5e982fede3ac5a43fa5e13c3b4fbe86488f22c05
+Stable summary: CPU hotplug, re-create sysfs directory and symlinks
+Master sha1: 27ecddc2a9f99ce4ac9a59a0acd77f7100b6d034
+Master summary: [CPUFREQ] CPU hotplug, re-create sysfs directory and symlinks
+********************************************************************************
+Stable sha1: 62264def13786a7009cad80a292c39cb7c5bde79
+Stable summary: Fix _OSC UUID in pcc-cpufreq
+Master sha1: 904cc1e637a00dba1b58e7752f485f90ebf2a568
+Master summary: [CPUFREQ] Fix _OSC UUID in pcc-cpufreq
+********************************************************************************
+Stable sha1: 41989a22f4afd8f1b3caffd837d2d2597c4907d6
+Stable summary: kmemleak: Initialise kmemleak after debug_objects_mem_init()
+Master sha1: 9b090f2da85bd0df5e1a1ecfe4120b7b50358f48
+Master summary: kmemleak: Initialise kmemleak after debug_objects_mem_init()
+********************************************************************************
+Stable sha1: eb9f63d0497bdcd721738c42c33acd07cd9558d1
+Stable summary: kmemleak: Do not return a pointer to an object that kmemleak did not get
+Master sha1: 52c3ce4ec5601ee383a14f1485f6bac7b278896e
+Master summary: kmemleak: Do not return a pointer to an object that kmemleak did not get
+********************************************************************************
+Stable sha1: 57791b092659dca5c8194652767678c199e0236c
+Stable summary: m68k: Really wire up sys_pselect6 and sys_ppoll
+Master sha1: d6d42bb2f85d875dc0c421699de5a1401b2af6a6
+Master summary: m68k: Really wire up sys_pselect6 and sys_ppoll
+********************************************************************************
+Stable sha1: 20276a0718c8c01db6f358225b783d1da2134580
+Stable summary: tmpfs: fix highmem swapoff crash regression
+Master sha1: e6c9366b2adb52cba64b359b3050200743c7568c
+Master summary: tmpfs: fix highmem swapoff crash regression
+********************************************************************************
+437 stable commits

@@ -1,0 +1,196 @@
+Stable sha1: f4e4e0fa2b42a7701e833fd04cac70ff0d28fa9f
+Stable summary: [PATCH] Fix compile error in irq.c
+Master sha1: 2e457ef667158840c1be511f5d10dd42c6dbbe46
+Master summary: [SPARC64]: Fix compile error in irq.c
+********************************************************************************
+Stable sha1: e545fd941928c6ff87571e6742f81d7659c0578d
+Stable summary: [PATCH] CVE-2005-2709 sysctl unregistration oops
+Master sha1: 330d57fb98a916fa8e1363846540dd420e99499a
+Master summary: [PATCH] Fix sysctl unregistration oops (CVE-2005-2709)
+********************************************************************************
+Stable sha1: 20b233a95e9d0a146a1c160d0874545323336a50
+Stable summary: [PATCH] br: fix race on bridge del if
+Master sha1: ab4060e858e36129f9319ef0fa055347ad60e1d5
+Master summary: [BRIDGE]: fix race on bridge del if
+********************************************************************************
+Stable sha1: db5356da707a5e8414c6ea9e5d50ce3ef884afce
+Stable summary: [PATCH] key: plug request_key_auth memleak (CAN-2005-3119)
+Master sha1: 74fd92c511bd4a0771ac0faaaef38bb1be3a29f6
+Master summary: [PATCH] key: plug request_key_auth memleak
+********************************************************************************
+Stable sha1: b17681a236a4f0faf237241dea833fc6ada997c0
+Stable summary: [PATCH] Fix drm 'debug' sysfs permissions
+Master sha1: c0758146adbe39514e75ac860ce7e49f865c2297
+Master summary: [PATCH] Fix drm 'debug' sysfs permissions
+********************************************************************************
+Stable sha1: 5be2ff20d0750801919c784e10427ee98d6c5639
+Stable summary: [PATCH] Avoid 'names_cache' memory leak with CONFIG_AUDITSYSCALL
+Master sha1: 829841146878e082613a49581ae252c071057c23
+Master summary: Avoid 'names_cache' memory leak with CONFIG_AUDITSYSCALL
+********************************************************************************
+Stable sha1: d7c6ec0fa0de0b99b3bb66cc0b63e1331ae76984
+Stable summary: [PATCH] Fix userland FPU state corruption.
+Master sha1: ba6399334dd8a75bd295de26496196c720abae0a
+Master summary: [SPARC64]: Fix userland FPU state corruption.
+********************************************************************************
+Stable sha1: 1aa561c7dd019a6723deba2e0d408638e9172f01
+Stable summary: [PATCH] BIC coding bug in Linux 2.6.13
+Master sha1: 42a39450f830c57432fd4e5644fa81f41ce7156d
+Master summary: [TCP]: BIC coding bug in Linux 2.6.13
+********************************************************************************
+Stable sha1: 28f2367459dea7e7d56f16b9528691797e9cbd88
+Stable summary: [PATCH] orinoco: Information leakage due to incorrect padding
+Master sha1: 9bc39bec87ee3e35897fe27441e979e7c208f624
+Master summary: [PATCH] orinoco: Information leakage due to incorrect padding
+********************************************************************************
+Stable sha1: 910573c7c4aced8fd5f45c334cc67862e3424d92
+Stable summary: [PATCH] ieee1394/sbp2: fixes for hot-unplug and module unloading
+Master sha1: db2fd664f8ac3664dfd94d624c0a871bee937bd5
+Master summary: [PATCH] ieee1394: fix for debug output
+********************************************************************************
+Stable sha1: 27489ba07fb2336c9ce616f4e118a81afa78e550
+Stable summary: [PATCH] Don't over-clamp window in tcp_clamp_window()
+Master sha1: 09e9ec87111ba818d8171262b15ba4c357eb1d27
+Master summary: [TCP]: Don't over-clamp window in tcp_clamp_window()
+********************************************************************************
+Stable sha1: fd3fb3e1109b3c0ba63358a17d1ebd845ceebdb0
+Stable summary: [PATCH] tcp: set default congestion control correctly for incoming connections
+Master sha1: 7957aed72b104f7528da484f292442c6f3a131a1
+Master summary: [TCP]: Set default congestion control correctly for incoming connections.
+********************************************************************************
+Stable sha1: 7d9e68d3ec0b72a77c6ce6a272f83844fa4f8e3e
+Stable summary: [PATCH] skge: set mac address oops with bonding
+Master sha1: c2681dd8c71c8fb4ca530f94536550fcd843aae4
+Master summary: [PATCH] skge: set mac address oops with bonding
+********************************************************************************
+Stable sha1: 38e00d341514cce58a4514904fc6562d586ec4dc
+Stable summary: [PATCH] uml - Fix x86_64 page leak
+Master sha1: 7ef939054139ef857cebbec07cbd12d7cf7beedd
+Master summary: [PATCH] uml: fix x86_64 page leak
+********************************************************************************
+Stable sha1: 17d6b7c89bee5d10632bd9d05cd79b943f5794a4
+Stable summary: [PATCH] ipvs: ip_vs_ftp breaks connections using persistence
+Master sha1: 87375ab47cd0ba04124c6d3fd80db5c368f5dcb6
+Master summary: [IPVS]: ip_vs_ftp breaks connections using persistence
+********************************************************************************
+Stable sha1: 6ce0c8dfdfdacc4d370ccd51fa5d4cd28118a9cf
+Stable summary: [PATCH] fix IPv6 per-socket multicast filtering in exact-match case
+Master sha1: 40796c5e8f2a93008e9034b3110a7e7b1fa0fba0
+Master summary: [IPV6]: Fix per-socket multicast filtering in sk_reuse case
+********************************************************************************
+Stable sha1: 99e56fc6ee51c66c0d248c6dea7a45d70e15604e
+Stable summary: [PATCH] Fix fs/exec.c:788 (de_thread()) BUG_ON
+Master sha1: fb085cf1d4294824571815d487daccc0609543f0
+Master summary: [PATCH] Fix fs/exec.c:788 (de_thread()) BUG_ON
+********************************************************************************
+Stable sha1: ef1b2a3b4cd1addfe039a4bb8105098d83bd6503
+Stable summary: [PATCH] yenta oops fix
+Master sha1: c7fb0b35ada6e0e691e70af5591a2006fbec85b5
+Master summary: [PATCH] yenta oops fix
+********************************************************************************
+Stable sha1: 59a79e934f84fe9c0fef0c783fba58e9b5b36519
+Stable summary: [PATCH] USB: ftdi_sio: custom baud rate fix
+Master sha1: f5e09b7cac4a2705f55830db64d448c062e84e8e
+Master summary: [PATCH] USB: ftdi_sio: custom baud rate fix
+********************************************************************************
+Stable sha1: d6d47af4c90009c465c7a465dd201a7115af456a
+Stable summary: [PATCH] Fix up more strange byte writes to the PCI_ROM_ADDRESS config word
+Master sha1: 299cc3c166f7a11f6cc3b66aafbaf75c2aa0e0e2
+Master summary: Fix up more strange byte writes to the PCI_ROM_ADDRESS config word
+********************************************************************************
+Stable sha1: 9c053068c7b8158850d680d8c96f3f11f5804367
+Stable summary: [PATCH] Fix MPOL_F_VERIFY
+Master sha1: 5b952b3c143660b6436fcb299b249cefde61c18d
+Master summary: [PATCH] Fix MPOL_F_VERIFY
+********************************************************************************
+Stable sha1: 81ddd439761f2f2e6837f9746c83864f410a4077
+Stable summary: [PATCH] jfs: jfs_delete_inode must call clear_inode
+Master sha1: b1b5d7f9b7ac6a8e3452ac43a53eebf69fdf5a77
+Master summary: JFS: jfs_delete_inode should always call clear_inode.
+********************************************************************************
+Stable sha1: 504b891bc7cc7fb76e3000b5fe91ca491eb773c5
+Stable summary: [PATCH] Fix DHCP + MASQUERADE problem
+Master sha1: adcb5ad1e5ba3996d53a047c5486efa6e734b413
+Master summary: [NETFILTER]: Fix DHCP + MASQUERADE problem
+********************************************************************************
+Stable sha1: 6829c71237ca54f1b752520ba06eacdae68249dc
+Stable summary: [PATCH] Sun HME: enable and map PCI ROM properly
+Master sha1: ce1289adeb67b5480f35cb257cbf6e9881153783
+Master summary: [PATCH] Sun HME: enable and map PCI ROM properly
+********************************************************************************
+Stable sha1: 0098d9c5f87aaff2efdcb43e30642dad7ce55b19
+Stable summary: [PATCH] Sun GEM ethernet: enable and map PCI ROM properly
+Master sha1: 4120b028dd231743935d954732045a87edda2a0a
+Master summary: Sun GEM ethernet: enable and map PCI ROM properly
+********************************************************************************
+Stable sha1: edf3b5b336f55b8a97142592bf5c1b7944deb9d1
+Stable summary: [PATCH] hpt366: write the full 4 bytes of ROM address, not just low 1 byte
+Master sha1: 9ec4ff421f032f24416217f23b0c82dc9a5f38f6
+Master summary: hpt366: write the full 4 bytes of ROM address, not just low 1 byte
+********************************************************************************
+Stable sha1: 2498037d5a6668b733acc712a3106ffd4e1ef735
+Stable summary: [PATCH] forcedeth: Initialize link settings in every nv_open()
+Master sha1: 1b1b3c9b6d346d441a99e2de0b34f3ba93963ad8
+Master summary: [PATCH] forcedeth: Initialize link settings in every nv_open()
+********************************************************************************
+Stable sha1: 98debffa9114b60138b3dbd4d02ce13f01a07ab4
+Stable summary: [PATCH] Lost sockfd_put() in routing_ioctl()
+Master sha1: d99901d6fdfb4098b9996de89ffbbae890e08288
+Master summary: [PATCH] Lost sockfd_put() in routing_ioctl()
+********************************************************************************
+Stable sha1: 8cd943eb523fa622fec2f8e65e611263babd1249
+Stable summary: [PATCH] lost fput in 32bit ioctl on x86-64
+Master sha1: 35311d6478077f7bfe35c1c653193e658bf32686
+Master summary: [PATCH] lost fput in 32bit ioctl on x86-64
+********************************************************************************
+Stable sha1: 0721a681c617fdd498f2f0f40e69895354baf099
+Stable summary: [PATCH] raw_sendmsg DoS (CAN-2005-2492)
+Master sha1: 6d1cfe3f1752f17e297df60c8bcc6cd6e0a58449
+Master summary: [PATCH] raw_sendmsg DoS on 2.6
+********************************************************************************
+Stable sha1: c255cda2af84db91d19944c092baf5a61c633181
+Stable summary: [PATCH] 32bit sendmsg() flaw (CAN-2005-2490)
+Master sha1: 8920e8f94c44e31a73bdf923b04721e26e88cadd
+Master summary: [PATCH] Fix 32bit sendmsg() flaw
+********************************************************************************
+Stable sha1: cf43ea034180996242226eac042889c5b06c7df7
+Stable summary: [PATCH] Reassembly trim not clearing CHECKSUM_HW
+Master sha1: 48bc41a49c4f3aa760dff84e7f71437f5ed520fe
+Master summary: [IPV4]: Reassembly trim not clearing CHECKSUM_HW
+********************************************************************************
+Stable sha1: 76739be851b4fd112f28dd7c2aaff136def09d64
+Stable summary: [PATCH] Use SA_SHIRQ in sparc specific code.
+Master sha1: 53d0fc27af3a3ab22c0ffb67857adfa18977e681
+Master summary: [RTC]: Use SA_SHIRQ in sparc specific code.
+********************************************************************************
+Stable sha1: e381a0a1169713ef4494d22693896e781b83fcbd
+Stable summary: [PATCH] Fix boundary check in standard multi-block cipher processors
+Master sha1: fe2d5295a11e2ab2d6f4e7ea074816000b32eba3
+Master summary: [CRYPTO] Fix boundary check in standard multi-block cipher processors
+********************************************************************************
+Stable sha1: a49567a4dbfd414f19e5bf828a4b2c540f164ea8
+Stable summary: [PATCH] 2.6.13 breaks libpcap (and tcpdump)
+Master sha1: 1198ad002ad36291817c7bf0308ab9c50ee2571d
+Master summary: [NET]: 2.6.13 breaks libpcap (and tcpdump)
+********************************************************************************
+Stable sha1: 2811d271ee67f4de6c6d7e2c731698f6f9f7746a
+Stable summary: [PATCH] x86: pci_assign_unassigned_resources() update
+Master sha1: 81d4af1340badcd2100c84fbd1bfd13156de41aa
+Master summary: [PATCH] x86: pci_assign_unassigned_resources() update
+********************************************************************************
+Stable sha1: 5163b0a323cf51f1bb322a37fd86d3433ffc9d4a
+Stable summary: [PATCH] Fix PCI ROM mapping
+Master sha1: 8085ce084c0f0144c353963853f81486fc331120
+Master summary: [PATCH] Fix PCI ROM mapping
+********************************************************************************
+Stable sha1: 7a8ad840d817bda420f89963d9650a6f053eeea1
+Stable summary: [PATCH] aacraid: 2.6.13 aacraid bad BUG_ON fix
+Master sha1: 77d71d222e871670300f3e3092e2a06f20c842f0
+Master summary: [SCSI] aacraid: bad BUG_ON fix
+********************************************************************************
+Stable sha1: 6532533a281e5113d74cb403c256be1c6b446f1a
+Stable summary: [PATCH] Kconfig: saa7134-dvb must select tda1004x
+Master sha1: e770e8506110a57c868bbef9706d132285c2090f
+Master summary: [PATCH] dvb: saa7134-dvb must select tda1004x
+********************************************************************************
+39 stable commits

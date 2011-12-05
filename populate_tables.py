@@ -32,9 +32,8 @@ parser.add_argument("encoding", nargs='?', help="encoding of the git repository"
 parser.add_argument("--verify-additions", action='store_true', help="enable verification of commit additions")
 parser.add_argument("--merge-authors", action='store_true', help="enable merging of authors")
 parser.add_argument("--adjust-timezones", action='store_true', help="enable fixing of timezones")
+parser.add_argument("--commit-basic-information", action='store_true', help="create commit basic information")
 parser.add_argument("--log", action='store_true', help="enable logging")
-parser.add_argument("--skip-merge", action='store_true', help="skip author merging")
-parser.add_argument("--skip-manual-fixes", action='store_true', help="skip manual fixes")
 args = parser.parse_args()
 
 LOG_DIRECTORY = 'log'
@@ -43,6 +42,7 @@ CORE = args.directory is not None
 VERIFY_ADDITIONS = args.verify_additions
 MERGE_AUTHORS = args.merge_authors
 ADJUST_TIMEZONES = args.adjust_timezones
+COMMIT_BASIC_INFORMATION = args.commit_basic_information
 LOG = args.log
 
 # Open the log file
@@ -401,7 +401,8 @@ def merge_rawauthors():
         re.IGNORECASE)
 
     # Restrict all of the RawAuthor objects to be from the current repository
-    rawauthor_qs = models.RawAuthor.objects.filter(repository=db_repository)
+    #rawauthor_qs = models.RawAuthor.objects.filter(repository=db_repository)
+    rawauthor_qs = models.RawAuthor.objects.all()
 
     # Create an email lookup to a list of RawAuthors
     email_dict = {}
@@ -506,21 +507,51 @@ def merge_rawauthors():
         rawauthor.save()
         log("Manually merged RawAuthor %d" % rawauthor.pk)
 
-    def manual_unmerge_author(name, email):
-        author = models.Author.objects.get(name=name, email=email)
-        for raw_author in  author.raw_authors.all():
+    def manual_merge_rawauthor(name, email, repository_slug, target_name, target_email, target_repository_slug):
+        kwargs = {'name': name, 'email': email, 'repository': models.Repository.objects.get(slug=repository_slug)}
+        target_kwargs = {'name': target_name, 'email': target_email, 'repository': models.Repository.objects.get(slug=target_repository_slug)}
+        target_ra = models.RawAuthor.get(**target_kwargs)
+        a = target_ra.author
+        ra = models.RawAuthor.get(**kwargs)
+        ra.author = a
+        ra.save()
+
+    def manual_create_author(name, email, repository_slug, target_name, target_email):
+        
+        kwargs = {'name': name, 'email': email, 'repository': models.Repository.objects.get(slug=repository_slug)}
+        ra = models.RawAuthor.get(**kwargs)
+        if not ra.author:
+            author = models.Author.objects.create(name=target_name, email=target_email)
+            ra.author = author
+            ra.save()
+
+    def manual_delete_author(email):
+        author = models.Author.objects.get(email=email)
+        for raw_author in author.raw_authors.all():
             raw_author.author = None
             raw_author.save()
         author.delete()
 
+    manual_delete_author('?')
+    manual_create_author('', 'felipewd@terra.com.br', 'linux',
+                         'Felipe W Damasio', 'felipewd@terra.com.br')
+
+    manual_merge_rawauthor('', 'jejb@titanic.il.steeleye.com', 'linux',
+                           'James Bottomley', 'James.Bottomley@HansenPartnership.com', 'linux')
+    manual_merge_rawauthor('', 'jketreno@io.(none)', 'linux',
+                           'James Ketrenos', 'jketreno@linux.intel.com', 'linux')
+    manual_merge_rawauthor('', 'greg@echidna.(none)', 'linux',
+                           'Greg Kroah-Hartman', 'gregkh@suse.de', 'linux')
+
+
     # Manual merging for Linux
-    if SLUG == "linux":
-        manual_merge_email_to_name("jejb@titanic.il.steeleye.com",
-                                   "James Bottomley")
-        manual_merge_email_to_name("jketreno@io.(none)", "James Ketrenos")
-        manual_merge_email_to_name("greg@echidna.(none)", "Greg Kroah-Hartman")
-        manual_merge_email_to_name("felipewd@terra.com.br", "Felipe W Damasio")
-        manual_unmerge_author('?', '?')
+    #if SLUG == "linux":
+        # manual_merge_email_to_name("jejb@titanic.il.steeleye.com",
+        #                            "James Bottomley")
+        # manual_merge_email_to_name("jketreno@io.(none)", "James Ketrenos")
+        # manual_merge_email_to_name("greg@echidna.(none)", "Greg Kroah-Hartman")
+        # manual_merge_email_to_name("felipewd@terra.com.br", "Felipe W Damasio")
+        # manual_delete_author('?')
 
     # Report unmerged RawAuthors
     for rawauthor in unmerged_qs.all():
@@ -571,30 +602,175 @@ def adjust_timezones():
         tzs['peter_e@gmx.net'] = 'Europe/Helsinki'
         tzs['bruce@momjian.us'] = 'America/New_York'
 
-    for c in models.Commit.objects.filter(repository=db_repository):
-        # Check if there's possibly no timezone information
-        if c.local_time == c.utc_time:
-            try:
-                # Get the timezone
-                tz = timezone(tzs[c.raw_author.author.email])
-            except KeyError:
-                # Handle the special cases
-                if c.raw_author.author.email == 'neilc@samurai.com':
-                    if c.utc_time.year <= 2007:
-                        tz = timezone('America/Toronto')
-                    else:
-                        tz = timezone('America/Los_Angeles')
-                else:
-                    # Reraise the exception
-                    raise KeyError
+    if SLUG == 'xorg':
+        tzs['robin@intercore.com'] = 'America/New_York'
+        tzs['dawes@xfree86.org'] = 'America/New_York'
+        tzs['tsi@ualberta.ca'] = 'America/Edmonton'
+        tzs['alanh@vmware.com'] = 'Europe/London'
+        tzs['eich@ovid.suse.de'] = 'Europe/Berlin'
+        tzs['andersca@gnome.org'] = 'America/New_York'
+        tzs['mharris@redhat.com'] = 'America/Montreal'
+        tzs['mallum@openedhand.com'] = 'Europe/London'
+        tzs['pb@reciva.com'] = 'Europe/London'
+        tzs['eric@anholt.net'] = 'America/Los_Angeles'
+        tzs['zakki@peppermint.jp'] = 'Asia/Tokyo'
+        tzs['kaleb@freedesktop.org'] = 'America/Los_Angeles'
+        tzs['huntharo@msu.edu'] = 'America/Detroit'
+        tzs['jaymz@artificial-stupidity.net'] = 'Australia/Melbourne'
+        tzs['wt@penguintechs.com'] = 'America/Denver'
+        tzs['alan.coopersmith@oracle.com'] = 'America/Los_Angeles'
+        tzs['stuart.kreitman@sun.com'] = 'America/Los_Angeles'
+        tzs['daniel@fooishbar.org'] = 'Europe/Helsinki'
+        tzs['alexander.gottwald@s1999.tu-chemnitz.de'] = 'Europe/Berlin'
+        tzs['torrey@mrcla.com'] = 'America/Los_Angeles'
+        tzs['busterbcook@yahoo.com'] = 'America/Chicago'
+        tzs['fcatrin@tuxpan.com'] = 'America/Santiago'
+        tzs['roland.mainz@nrubsig.org'] = 'Europe/Berlin'
+        tzs['ewalsh@tycho.nsa.gov'] = 'America/New_York'
+        tzs['faith@alephnull.com'] = 'America/New_York'
+        tzs['kcrashcore@bellsouth.net'] = 'America/New_York'
+        tzs['kem@redhat.com'] = 'America/New_York'
+        tzs['sk@sethwklein.net'] = 'America/Chicago'
+        tzs['matthieu.herrb@laas.fr'] = 'Europe/Paris'
+        tzs['ajax@redhat.com'] = 'America/New_York'
+        tzs['alexdeucher@gmail.com'] = 'America/New_York'
+        tzs['hyu@ati.com'] = 'America/New_York'
+        tzs['ssp@redhat.com'] = 'America/New_York'
+        tzs['krh@bitplanet.net'] = 'America/New_York'
+        tzs['volodya@mindspring.com'] = 'America/New_York'
+        tzs['thomas@winischhofer.net'] = 'Europe/Berlin'
+        tzs['davidr@novell.com'] = 'America/New_York'
+        tzs['zack@kde.org'] = 'America/New_York'
+        tzs['lars@trolltech.com'] = 'Europe/Oslo'
+        tzs['ian.d.romanick@intel.com'] = 'America/Los_Angeles'
+        tzs['braun@club-internet.fr'] = 'Europe/Paris'
+        tzs['ralpht@68k.org'] = 'Europe/London'
+        tzs['anderson@netsweng.com'] = 'America/New_York'
+        tzs['clee@c133.org'] = 'America/Los_Angeles'
+        tzs['jonsmirl@yahoo.com'] = 'America/Chicago'
+        tzs['airlied@redhat.com'] = 'Australia/Sydney'
+        tzs['b_diaconescu@yahoo.com'] = 'America/Los_Angeles'
+        tzs['aplattner@nvidia.com'] = 'America/Los_Angeles'
+        tzs['thellstrom@vmware.com'] = 'Europe/Oslo'
+        tzs['Markus.Kuhn@cl.cam.ac.uk'] = 'Europe/London'
+        tzs['felix.kuehling@amd.com'] = 'America/New_York'
+        tzs['michel@daenzer.net'] = 'Europe/Zurich'
+        tzs['kean@armory.com'] = 'America/Los_Angeles'
+        tzs['libv@skynet.be'] = 'Europe/Brussels'
+        tzs['benh@kernel.crashing.org'] = 'Australia/Sydney'
+        tzs['dberkholz@gentoo.org'] = 'America/Los_Angeles'
+        tzs['mhopf@suse.de'] = 'Europe/Berlin'
+        tzs['jbarnes@virtuousgeek.org'] = 'America/Los_Angeles'
+        tzs['reed@glacier.reedmedia.net'] = 'America/Chicago'
+        tzs['warp@agamemnon.b5'] = 'America/New_York'
+        tzs['sroland@vmware.com'] = 'Europe/London'
+        tzs['brian.paul@tungstengraphics.com'] = 'America/Chicago'
+        tzs['dnusinow@debian.org'] = 'America/New_York'
+        tzs['deron.johnson@sun.com'] = 'America/Los_Angeles'
+        tzs['fredrik@kde.org'] = 'Europe/Stockholm'
+        tzs['peter.hutterer@who-t.net'] = 'Australia/Adelaide'
+        tzs['dirk.hohndel@intel.com'] = 'America/Los_Angeles'
 
-                # Modify and save
+        for e, t in tzs.iteritems():
+            try:
+                a = models.Author.objects.get(email=e)
+            except models.Author.MultipleObjectsReturned:
+                a = models.Author.objects.filter(email=e)[0]
+                
+            for c in models.Commit.objects.filter(raw_author__in=a.raw_authors.filter(repository=db_repository)):
+                if c.local_time == c.utc_time and c.utc_time.year < 2007:
+                    tz = timezone(t)
+                    time_utc = c.local_time.replace(tzinfo=utc)
+                    c.local_time = time_utc.astimezone(tz).replace(tzinfo=None)
+                    c.save()
+                    adjustments += 1
+
+        a = models.Author.objects.get(email='keithp@keithp.com')
+        for c in models.Commit.objects.filter(raw_author__in=a.raw_authors.filter(repository=db_repository)):
+            if c.local_time == c.utc_time and c.utc_time.year < 2007:
+                if c.utc_time.year >= 2006 or (c.utc_time.year == 2005 and c.utc_time.month >= 10):
+                    tz = timezone('America/Los_Angeles')
+                else:
+                    tz = timezone('America/New_York')
                 time_utc = c.local_time.replace(tzinfo=utc)
                 c.local_time = time_utc.astimezone(tz).replace(tzinfo=None)
                 c.save()
                 adjustments += 1
+        
+
+
+    # THIS WAS FOR POSTGRESQL
+    # for c in models.Commit.objects.filter(repository=db_repository):
+    #     # Check if there's possibly no timezone information
+    #     if c.local_time == c.utc_time:
+    #         try:
+    #             # Get the timezone
+    #             tz = timezone(tzs[c.raw_author.author.email])
+    #         except KeyError:
+    #             # Handle the special cases
+    #             if c.raw_author.author.email == 'neilc@samurai.com':
+    #                 if c.utc_time.year <= 2007:
+    #                     tz = timezone('America/Toronto')
+    #                 else:
+    #                     tz = timezone('America/Los_Angeles')
+    #             else:
+    #                 # Reraise the exception
+    #                 raise KeyError
+
+    #             # Modify and save
+    #             time_utc = c.local_time.replace(tzinfo=utc)
+    #             c.local_time = time_utc.astimezone(tz).replace(tzinfo=None)
+    #             c.save()
+    #             adjustments += 1
 
     log('%d commits with incorrect timezone information.' % adjustments)
+
+def commit_basic_information():
+    log('start.')
+    introducing = 0
+    fixing = 0
+    total = 0
+    for c in models.Commit.objects.filter(repository=db_repository):
+        # try:
+        #     c.fixing_commit
+        #     fixing += 1
+        # except models.FixingCommit.DoesNotExist:
+        #     pass
+
+        # total += 1
+        is_introducing = False
+        if c.introducing_commits.count() > 0:
+            is_introducing = True
+
+        is_fixing = False
+        if models.FixingCommit.objects.filter(commit=c).count() > 0:
+            is_fixing = True
+
+        week_day = c.local_time.weekday()
+        hour = c.local_time.hour
+
+        lines_code = 0
+        lines_comments = 0
+        lines_other = 0
+        for f in c.additions.all():
+            a = models.CommitFileAddition.objects.get(commit=c, file=f)
+            lines_code += a.lines_code
+            lines_comments += a.lines_comments
+            lines_other += a.lines_other
+
+        models.CommitBasicInformation.objects.get_or_create(commit=c,
+                                                            is_introducing=is_introducing,
+                                                            is_fixing=is_fixing,
+                                                            week_day=week_day,
+                                                            hour=hour,
+                                                            lines_code=lines_code,
+                                                            lines_comments=lines_comments,
+                                                            lines_other=lines_other)
+
+
+    log("%d introducing." % introducing)
+    log("%d fixing." % fixing)
+    log("%d total." % total)
 
 # Global variables
 db_repository = models.Repository.objects.get_or_create(slug=SLUG)[0]
@@ -641,79 +817,85 @@ if MERGE_AUTHORS:
 if ADJUST_TIMEZONES:
     adjust_timezones()
 
+if COMMIT_BASIC_INFORMATION:
+    commit_basic_information()
+
+
+
+def classify_authors():
+
+    for author in models.Author.objects.all():
+        # Get all their datetimes in a sorted list
+        commit_datetimes = []
+        for rawauthor in author.raw_authors.all():
+            for commit in rawauthor.commits.all():
+                # Make sure the commit is valid
+                if commit.utc_time >= commit.repository.first_commit.utc_time and \
+                   commit.utc_time <= commit.repository.last_commit.utc_time:
+                    # Add the datetime to the list (we're using local time here
+                    # so we can compute whether or not this is their day job)
+                    commit_datetimes.append(commit.local_time)
+        commit_datetimes.sort()
+
+        classification = ''
+        # The main classification
+        if len(commit_datetimes) == 1:
+            classification = 'S'
+        elif len(commit_datetimes) < 20:
+            classification = 'O'
+        else:
+            daily_commits = 0
+            weekly_commits = 0
+            monthly_commits = 0
+
+            last_datetime = commit_datetimes[0]
+            ignore_before_datetime = last_datetime + timedelta(minutes=30)
+            for dt in commit_datetimes[1:]:
+                if dt >= ignore_before_datetime:
+                    # Use the delta to see how close the commits are
+                    delta = dt - last_datetime
+                    if delta.days < 7:
+                        daily_commits += 1
+                    elif delta.days < 31:
+                        weekly_commits += 1
+                    else:
+                        monthly_commits += 1
+
+                    # Update the ignore and the last datetime
+                    ignore_before_datetime = dt + timedelta(minutes=30)
+                    last_datetime = dt
+
+            # Whatever has the higher count, classify the author as such
+            if daily_commits >= weekly_commits and \
+               daily_commits >= monthly_commits:
+                classification = 'D'
+            elif weekly_commits >= daily_commits and \
+                 weekly_commits >= monthly_commits:
+                classification = 'W'
+            else:
+                classification = 'M'
+
+            # Check to see if this is their job
+            if classification == 'D':
+                # Count the number of normal work hour commits
+                day_commits = 0
+                for dt in commit_datetimes:
+                    if not (dt.weekday == 5 or dt.weekday == 6) and \
+                       (dt.hour >=8 and dt.hour <= 16):
+                        day_commits += 1
+
+                # We conclude if >85% of their commits are within normal work
+                # then this is their day job
+                if float(day_commits)/float(len(commit_datetimes)) > 0.85:
+                    classification = 'J'
+
+        models.AuthorClassificationInformation.objects.create(author=author, classification=classification)
+
+
+
+
+
 # Close the log file
 if LOG:
     log_file.close()
 
-# def classify_authors():
-#     author_qs = models.Author.objects.filter(
-#         rawauthors__repository=db_repositorysitory).distinct()
-
-#     first_utc_datetime = db_repositorysitory.first_rawcommit.utc_time
-#     last_utc_datetime = db_repositorysitory.last_rawcommit.utc_time
-
-#     for author in author_qs:
-#         # Get all their datetimes in a sorted list
-#         commit_datetimes = []
-#         for rawauthor in author.rawauthors.all():
-#             for commit in rawauthor.rawcommits.all():
-#                 # Make sure the commit is valid
-#                 if commit.utc_time >= first_utc_datetime and \
-#                    commit.utc_time <= last_utc_datetime:
-#                     # Add the datetime to the list (we're using local time here
-#                     # so we can compute whether or not this is their day job)
-#                     commit_datetimes.append(commit.local_time)
-#         commit_datetimes.sort()
-
-#         # The main classification
-#         if len(commit_datetimes) == 1:
-#             author.classification = 'S'
-#         elif len(commit_datetimes) < 20:
-#             author.classification = 'O'
-#         else:
-#             daily_commits = 0
-#             weekly_commits = 0
-#             monthly_commits = 0
-
-#             last_datetime = commit_datetimes[0]
-#             ignore_before_datetime = last_datetime + timedelta(minutes=30)
-#             for dt in commit_datetimes[1:]:
-#                 if dt >= ignore_before_datetime:
-#                     # Use the delta to see how close the commits are
-#                     delta = dt - last_datetime
-#                     if delta.days < 7:
-#                         daily_commits += 1
-#                     elif delta.days < 31:
-#                         weekly_commits += 1
-#                     else:
-#                         monthly_commits += 1
-
-#                     # Update the ignore and the last datetime
-#                     ignore_before_datetime = dt + timedelta(minutes=30)
-#                     last_datetime = dt
-
-#             # Whatever has the higher count, classify the author as such
-#             if daily_commits >= weekly_commits and \
-#                daily_commits >= monthly_commits:
-#                 author.classification = 'D'
-#             elif weekly_commits >= daily_commits and \
-#                  weekly_commits >= monthly_commits:
-#                 author.classification = 'W'
-#             else:
-#                 author.classification = 'M'
-
-#             # Check to see if this is their job
-#             if author.classification == 'D':
-#                 # Count the number of normal work hour commits
-#                 day_commits = 0
-#                 for dt in commit_datetimes:
-#                     if not (dt.weekday == 5 or dt.weekday == 6) and \
-#                        (dt.hour >=8 and dt.hour <= 16):
-#                         day_commits += 1
-
-#                 # We conclude if >85% of their commits are within normal work
-#                 # then this is their day job
-#                 if float(day_commits)/float(len(commit_datetimes)) > 0.85:
-#                     author.classification = 'J'
-
-#         author.save()
