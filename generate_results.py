@@ -4,13 +4,38 @@ from datetime import datetime, timedelta
 import gmpy
 import math
 import os
+import sys
+
+# Set the path
+path = '/home/jon/git/scc-web'
+if path not in sys.path:
+    sys.path.append(path)
+path = '/home/jon/git/scc-web/scc_website'
+if path not in sys.path:
+    sys.path.append(path)
+del path
+
+# Import the Django models
 os.environ['DJANGO_SETTINGS_MODULE']='scc_website.settings'
-from scc_website.apps.scc import models
+from scc_website.scc import models
+
 
 # Command line parser
 parser = argparse.ArgumentParser(description="Python script to generate results from the SCC database.")
 parser.add_argument("--log", action='store_true', help="enable logging")
 args = parser.parse_args()
+
+
+WEEK_DAY_CHOICES = (
+    (2, "Mon"),
+    (3, "Tues"),
+    (4, "Wed"),
+    (5, "Thur"),
+    (6, "Fri"),
+    (7, "Sat"),
+    (1, "Sun"))
+
+
 
 # Logging functions
 if args.log:
@@ -31,33 +56,27 @@ else:
     def log(msg):
         pass
 
-WEEK_DAY_CHOICES = (
-    (2, "Mon"),
-    (3, "Tues"),
-    (4, "Wed"),
-    (5, "Thur"),
-    (6, "Fri"),
-    (7, "Sat"),
-    (1, "Sun"))
-
 def introducing_commits_count(repository, **kwargs):
-    adjusted_kwargs = {}
-    for kv in kwargs.iteritems():
-        adjusted_kwargs["rawcommit__%s" % kv[0]] = kv[1]
-    return models.BugSource.objects.filter(rawcommit__rawauthor__repository=repository, **adjusted_kwargs).values("rawcommit").distinct().count()
+    return repository.commits_introducing().filter(**kwargs).count()
+    # adjusted_kwargs = {}
+    # for kv in kwargs.iteritems():
+    #     adjusted_kwargs["rawcommit__%s" % kv[0]] = kv[1]
+    # return models.BugSource.objects.filter(rawcommit__rawauthor__repository=repository, **adjusted_kwargs).values("rawcommit").distinct().count()
 
 def introducing_commits_count_hour(repository, hour, **kwargs):
-    adjusted_kwargs = {}
-    for kv in kwargs.iteritems():
-        adjusted_kwargs["rawcommit__%s" % kv[0]] = kv[1]
-    return models.BugSource.objects.filter(rawcommit__rawauthor__repository=repository, **adjusted_kwargs).extra(where=['EXTRACT(\'hour\' FROM "scc_rawcommit"."local_time") = %d' % hour]).values("rawcommit").distinct().count()
+    return repository.commits_introducing().filter(basic_information__hour=hour, **kwargs).count()
+    # adjusted_kwargs = {}
+    # for kv in kwargs.iteritems():
+    #     adjusted_kwargs["rawcommit__%s" % kv[0]] = kv[1]
+    # return models.BugSource.objects.filter(rawcommit__rawauthor__repository=repository, **adjusted_kwargs).extra(where=['EXTRACT(\'hour\' FROM "scc_rawcommit"."local_time") = %d' % hour]).values("rawcommit").distinct().count()
 
 def commits_count(repository, **kwargs):
-    return models.RawCommit.objects.filter(rawauthor__repository=repository, **kwargs).count()
+    return repository.commits.filter(**kwargs).count()
+    # return models.RawCommit.objects.filter(rawauthor__repository=repository, **kwargs).count()
 
 def commits_count_hour(repository, hour, **kwargs):
-    return models.RawCommit.objects.filter(rawauthor__repository=repository, **kwargs).extra(where=['EXTRACT(\'hour\' FROM "scc_rawcommit"."local_time") = %d' % hour]).count()
-
+    return repository.commits.filter(basic_information__hour=hour, **kwargs).count()
+    # return models.RawCommit.objects.filter(rawauthor__repository=repository, **kwargs).extra(where=['EXTRACT(\'hour\' FROM "scc_rawcommit"."local_time") = %d' % hour]).count()
 
 def calculate_p_value(expected_prob, actual, total):
     try:
@@ -79,11 +98,12 @@ def calculate_p_value(expected_prob, actual, total):
     return p_value
 
 def bugginess_day(repository):
+
     filename = filename_format % ("%s_bugginess_day" % repository.slug)
     if os.path.exists(filename):
         return
     
-    rows = [x[1] for x in WEEK_DAY_CH1OICES]
+    rows = [x[1] for x in WEEK_DAY_CHOICES]
     columns = ["Introducing Commits", "Commits", "% Buggy Commits", "P-value"]
 
     data = [[0 for j in xrange(2)] for i in xrange(len(rows)+1)]
@@ -153,15 +173,15 @@ def bugginess_frequency(repository):
     if os.path.exists(filename):
         return
     
-    rows = [x[1] for x in models.Author.CLASSIFICATION_CHOICES]
+    rows = [x[1] for x in models.AuthorClassificationInformation.CLASSIFICATION_CHOICES]
     columns = ["Introducing Commits", "Commits", "% Buggy Commits", "P-value"]
 
     data = [[0 for j in xrange(2)] for i in xrange(len(rows)+1)]
     overall_row = len(rows)
 
     i = 0
-    for classification in models.Author.CLASSIFICATION_CHOICES:
-        kwargs = {"rawauthor__author__classification": classification[0]}
+    for classification in models.AuthorClassificationInformation.CLASSIFICATION_CHOICES:
+        kwargs = {"raw_author__author__classification_information__classification": classification[0]}
         introducing_commits = introducing_commits_count(repository, **kwargs)
         commits = commits_count(repository, **kwargs)
 
@@ -191,8 +211,8 @@ def bugginess_experience(repository):
     if os.path.exists(filename):
         return
     
-    last_utc_time = repository.last_rawcommit.utc_time
-    first_utc_time = repository.first_rawcommit.utc_time
+    last_utc_time = repository.last_commit.utc_time
+    first_utc_time = repository.first_commit.utc_time
 
     rows = range(120, (last_utc_time - first_utc_time).days + 120, 120)
     columns = ["Introducing Commits", "Commits", "% Buggy Commits", "P-value"]
@@ -201,24 +221,24 @@ def bugginess_experience(repository):
     overall_row = len(rows)
 
     authors = {}
-    for author in models.Author.objects.filter(repository=repository):
+    for author in models.Author.objects.filter(raw_authors__repository=repository).distinct():
         author_first_utc_time = last_utc_time + timedelta(1)
-        for rawauthor in author.rawauthors.all():
-            for rawcommit in rawauthor.rawcommits.order_by("utc_time"):
+        for rawauthor in author.raw_authors.all():
+            for rawcommit in rawauthor.commits.order_by("utc_time"):
                 if rawcommit.utc_time >= first_utc_time:
                     if rawcommit.utc_time < author_first_utc_time:
                         author_first_utc_time = rawcommit.utc_time
                     break
         authors[author.pk] = author_first_utc_time
 
-    for rawcommit in models.RawCommit.objects.filter(rawauthor__repository=repository):
+    for rawcommit in models.Commit.objects.filter(repository=repository):
         if rawcommit.utc_time >= first_utc_time and rawcommit.utc_time <= last_utc_time:
-            experience = (rawcommit.utc_time - authors[rawcommit.rawauthor.author.pk]).days
+            experience = (rawcommit.utc_time - authors[rawcommit.raw_author.author.pk]).days
         else:
             continue
 
         i = experience/120
-        if rawcommit.bugsources.count() > 0:
+        if rawcommit.basic_information.is_introducing:
             data[i][0] += 1
             data[overall_row][0] += 1
 
@@ -243,8 +263,8 @@ def bugginess_hour_experienced(repository):
     if os.path.exists(filename):
         return
     
-    last_utc_time = repository.last_rawcommit.utc_time
-    first_utc_time = repository.first_rawcommit.utc_time
+    last_utc_time = repository.last_commit.utc_time
+    first_utc_time = repository.first_commit.utc_time
 
     rows = range(24)
     categories = ["< 2 years experience", ">= 2 years experience"]
@@ -255,25 +275,25 @@ def bugginess_hour_experienced(repository):
     overall_row = len(rows)+1
 
     authors = {}
-    for author in models.Author.objects.filter(repository=repository):
+    for author in models.Author.objects.filter(raw_authors__repository=repository).distinct():
         author_first_utc_time = last_utc_time + timedelta(1)
-        for rawauthor in author.rawauthors.all():
-            for rawcommit in rawauthor.rawcommits.order_by("utc_time"):
+        for rawauthor in author.raw_authors.all():
+            for rawcommit in rawauthor.commits.order_by("utc_time"):
                 if rawcommit.utc_time >= first_utc_time:
                     if rawcommit.utc_time < author_first_utc_time:
                         author_first_utc_time = rawcommit.utc_time
                     break
         authors[author.pk] = author_first_utc_time
 
-    for rawcommit in models.RawCommit.objects.filter(rawauthor__repository=repository):
+    for rawcommit in models.Commit.objects.filter(repository=repository):
         if rawcommit.utc_time >= first_utc_time and rawcommit.utc_time <= last_utc_time:
-            experience = (rawcommit.utc_time - authors[rawcommit.rawauthor.author.pk]).days
+            experience = (rawcommit.utc_time - authors[rawcommit.raw_author.author.pk]).days
         else:
             continue
 
         i = rawcommit.local_time.hour
         if experience < 731:
-            if rawcommit.bugsources.count() > 0:
+            if rawcommit.basic_information.is_introducing:
                 data[i][0] += 1
                 data[overall_category_row][0] += 1
                 data[overall_row][0] += 1
@@ -281,7 +301,7 @@ def bugginess_hour_experienced(repository):
             data[overall_category_row][1] += 1
             data[overall_row][1] += 1
         else:
-            if rawcommit.bugsources.count() > 0:
+            if rawcommit.basic_information.is_introducing:
                 data[i][2] += 1
                 data[overall_category_row][2] += 1
                 data[overall_row][0] += 1
@@ -314,7 +334,7 @@ def bugginess_hour_experienced(repository):
 
 filename_format = "results_csv/%s.csv"
 
-for repository in models.Repository.objects.all():
+for repository in [models.Repository.objects.get(slug='xorg')]:
     bugginess_day(repository)
     bugginess_hour(repository)
     bugginess_frequency(repository)

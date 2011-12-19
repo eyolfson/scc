@@ -33,6 +33,7 @@ parser.add_argument("--verify-additions", action='store_true', help="enable veri
 parser.add_argument("--merge-authors", action='store_true', help="enable merging of authors")
 parser.add_argument("--adjust-timezones", action='store_true', help="enable fixing of timezones")
 parser.add_argument("--commit-basic-information", action='store_true', help="create commit basic information")
+parser.add_argument("--classify-authors", action='store_true', help="create commit basic information")
 parser.add_argument("--log", action='store_true', help="enable logging")
 args = parser.parse_args()
 
@@ -43,6 +44,7 @@ VERIFY_ADDITIONS = args.verify_additions
 MERGE_AUTHORS = args.merge_authors
 ADJUST_TIMEZONES = args.adjust_timezones
 COMMIT_BASIC_INFORMATION = args.commit_basic_information
+CLASSIFY_AUTHORS = args.classify_authors
 LOG = args.log
 
 # Open the log file
@@ -257,7 +259,7 @@ class SCCThread(threading.Thread):
         if len(git_commit.parents) == 0:
             lock_repository.acquire()
             if db_repository.first_commit:
-                if db_current_commit.utc_time < db_repository.first_commit.utc_time:
+                if db_commit.utc_time < db_repository.first_commit.utc_time:
                     db_repository.first_commit = db_commit
                     db_repository.save()
                     self.log('Changed "first_commit" to %s.' % sha1)
@@ -510,16 +512,16 @@ def merge_rawauthors():
     def manual_merge_rawauthor(name, email, repository_slug, target_name, target_email, target_repository_slug):
         kwargs = {'name': name, 'email': email, 'repository': models.Repository.objects.get(slug=repository_slug)}
         target_kwargs = {'name': target_name, 'email': target_email, 'repository': models.Repository.objects.get(slug=target_repository_slug)}
-        target_ra = models.RawAuthor.get(**target_kwargs)
+        target_ra = models.RawAuthor.objects.get(**target_kwargs)
         a = target_ra.author
-        ra = models.RawAuthor.get(**kwargs)
+        ra = models.RawAuthor.objects.get(**kwargs)
         ra.author = a
         ra.save()
 
     def manual_create_author(name, email, repository_slug, target_name, target_email):
         
         kwargs = {'name': name, 'email': email, 'repository': models.Repository.objects.get(slug=repository_slug)}
-        ra = models.RawAuthor.get(**kwargs)
+        ra = models.RawAuthor.objects.get(**kwargs)
         if not ra.author:
             author = models.Author.objects.create(name=target_name, email=target_email)
             ra.author = author
@@ -772,55 +774,15 @@ def commit_basic_information():
     log("%d fixing." % fixing)
     log("%d total." % total)
 
-# Global variables
-db_repository = models.Repository.objects.get_or_create(slug=SLUG)[0]
+def commit_linux_stable_information():
 
-if CORE:
-    directory = args.directory
-    if args.encoding:
-        git.Commit.default_encoding = args.encoding
+    db_repository = models.Repository.objects.get(slug='linux')
+    for c in models.Commit.objects.filter(repository=db_repository):
+        is_stable = False
+        if c.linux_stable_commits.count() > 0:
+            is_stable = True
 
-    lock_iter_commits = threading.Lock()
-    lock_repository = threading.Lock()
-    lock_raw_author = threading.Lock()
-    lock_commit = threading.Lock()
-    lock_file = threading.Lock()
-    lock_log = threading.Lock()
-
-    re_c_file_comment = re.compile(r"^\s*(/\*|\*\s|//)")
-    re_c_file = re.compile(r"\.(c|cpp|cc|cp|cxx|c\+\+|h|hpp|hh|hp|hxx|h\+\+)$", re.IGNORECASE)
-    re_fixing_commit_message = re.compile(r"fix", re.I)
-    re_unified_diff_line_numbers = re.compile(r"@@ -(\d+),\d+ \+(\d+),\d+ @@")
-
-    if VERIFY_ADDITIONS:
-        verified_additions = {}
-
-    iter_commits = git.Repo(directory, odbt=git.GitCmdObjectDB).iter_commits("master")
-
-    # Set the last commit to master
-    last_git_commit = git.Repo(directory, odbt=git.GitCmdObjectDB).commit("master")
-    db_commit = get_or_create_db_commit(last_git_commit)
-    db_repository.last_commit = db_commit
-    db_repository.save()
-    log('Set "last_commit" to %s.' % db_commit.sha1)
-
-    num_threads = multiprocessing.cpu_count()
-    threads = [SCCThread(i) for i in xrange(num_threads)]
-    for thread in threads:
-        thread.start()
-    for thread in threads:
-        thread.join()
-
-if MERGE_AUTHORS:
-    merge_rawauthors()
-
-if ADJUST_TIMEZONES:
-    adjust_timezones()
-
-if COMMIT_BASIC_INFORMATION:
-    commit_basic_information()
-
-
+        models.CommitLinuxStableInformation.objects.get_or_create(commit=c,is_stable=is_stable)
 
 def classify_authors():
 
@@ -891,9 +853,56 @@ def classify_authors():
 
         models.AuthorClassificationInformation.objects.create(author=author, classification=classification)
 
+# Global variables
+db_repository = models.Repository.objects.get_or_create(slug=SLUG)[0]
 
+if CORE:
+    directory = args.directory
+    if args.encoding:
+        git.Commit.default_encoding = args.encoding
 
+    lock_iter_commits = threading.Lock()
+    lock_repository = threading.Lock()
+    lock_raw_author = threading.Lock()
+    lock_commit = threading.Lock()
+    lock_file = threading.Lock()
+    lock_log = threading.Lock()
 
+    re_c_file_comment = re.compile(r"^\s*(/\*|\*\s|//)")
+    re_c_file = re.compile(r"\.(c|cpp|cc|cp|cxx|c\+\+|h|hpp|hh|hp|hxx|h\+\+)$", re.IGNORECASE)
+    re_fixing_commit_message = re.compile(r"fix", re.I)
+    re_unified_diff_line_numbers = re.compile(r"@@ -(\d+),\d+ \+(\d+),\d+ @@")
+
+    if VERIFY_ADDITIONS:
+        verified_additions = {}
+
+    iter_commits = git.Repo(directory, odbt=git.GitCmdObjectDB).iter_commits("master")
+
+    # Set the last commit to master
+    last_git_commit = git.Repo(directory, odbt=git.GitCmdObjectDB).commit("master")
+    db_commit = get_or_create_db_commit(last_git_commit)
+    db_repository.last_commit = db_commit
+    db_repository.save()
+    log('Set "last_commit" to %s.' % db_commit.sha1)
+
+    num_threads = multiprocessing.cpu_count()
+    threads = [SCCThread(i) for i in xrange(num_threads)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+
+if MERGE_AUTHORS:
+    merge_rawauthors()
+
+if ADJUST_TIMEZONES:
+    adjust_timezones()
+
+if COMMIT_BASIC_INFORMATION:
+    commit_basic_information()
+
+if CLASSIFY_AUTHORS:
+    classify_authors()
 
 # Close the log file
 if LOG:
