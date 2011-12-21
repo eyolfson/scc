@@ -680,7 +680,10 @@ def adjust_timezones():
                 a = models.Author.objects.filter(email=e)[0]
                 
             for c in models.Commit.objects.filter(raw_author__in=a.raw_authors.filter(repository=db_repository)):
-                if c.local_time == c.utc_time and c.utc_time.year < 2007:
+                if SLUG == 'xorg' and c.utc_time.year >= 2007:
+                    continue
+
+                if c.local_time == c.utc_time:
                     tz = timezone(t)
                     time_utc = c.local_time.replace(tzinfo=utc)
                     c.local_time = time_utc.astimezone(tz).replace(tzinfo=None)
@@ -699,7 +702,7 @@ def adjust_timezones():
                 c.save()
                 adjustments += 1
         
-
+        # NEED TO DO THIS FOR POSTGRESQL TOO!
 
     # THIS WAS FOR POSTGRESQL
     # for c in models.Commit.objects.filter(repository=db_repository):
@@ -903,6 +906,8 @@ if COMMIT_BASIC_INFORMATION:
 
 if CLASSIFY_AUTHORS:
     classify_authors()
+
+classify_authors()
 
 # Close the log file
 if LOG:
